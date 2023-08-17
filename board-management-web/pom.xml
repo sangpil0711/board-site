@@ -11,7 +11,7 @@
    <groupId>kr.co.ymtech</groupId>
    <artifactId>board-management-web</artifactId>
    <version>0.0.1-SNAPSHOT</version>
-   <packaging>war</packaging>
+   <packaging>jar</packaging>
    <name>board-management-web</name>
    <description>Board Management WEB Service</description>
    <properties>
@@ -42,6 +42,10 @@
          <artifactId>spring-security-test</artifactId>
          <scope>test</scope>
       </dependency>
+      <dependency>
+    		<groupId>org.springframework.boot</groupId>
+   		 	<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
    </dependencies>
 
    <build>
