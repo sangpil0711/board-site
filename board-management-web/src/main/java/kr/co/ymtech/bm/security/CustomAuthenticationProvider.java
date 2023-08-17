@@ -19,7 +19,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         
         // TODO 특정 ID, Password가 아니면 로그인 불가하게 설정
         // ID: admin, Password: admin
-        sss
+       
 
         
 		return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<SimpleGrantedAuthority>());
