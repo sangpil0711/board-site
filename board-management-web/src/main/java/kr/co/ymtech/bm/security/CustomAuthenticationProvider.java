@@ -24,7 +24,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         
 		return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<SimpleGrantedAuthority>());
 	}
-	박상현ㅇㅁㄴㅇㅇ민ㅇ마ㅣ아니믕
 
 	@Override
 	public boolean supports(Class<?> authentication) {
