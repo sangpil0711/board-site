@@ -1,6 +1,8 @@
+server:
+  port: 8000
+
 spring:
-    main:
-      web-application-type: none
-    server:
-      port : 8000
-      
+  security:
+    user:
+      name: user
+      password: 1111
