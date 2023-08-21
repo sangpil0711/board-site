@@ -1,4 +1,4 @@
-package kr.co.ymtech.bm;
+package com.javasampleapproach.angularjs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
