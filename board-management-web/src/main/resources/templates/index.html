@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>index</title>
+<meta charset="utf-8">
+<title>Spring Boot - Angularjs Example</title>
+<script src ="http://ajax.googleapis.com/ajax/libs/angularjs/16.2.0/angular.min.js"></script>
+<script src ="js/controller.js"></script>
 </head>
 <body>
-  <h2>Hello Spring Boot!!</h2>
-  <a href="/member/save">회원가입</a>
-  <a href="/member/login">로그인</a>
+	<div ng-app ="app" ng-controller ="controller">
+		<button id = "btn-id" ng-click = "clickfunction()">press for time</button>
+		<p ng-bind="welcome"></p>
+	</div>
+
 </body>
-</html> 
+</html>

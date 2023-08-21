@@ -1,6 +1,6 @@
-
- spring:
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    
+spring:
+    main:
+      web-application-type: none
+    server:
+      port : 8000
+      
