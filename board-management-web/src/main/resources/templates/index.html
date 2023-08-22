@@ -5,11 +5,24 @@
 <title>Spring Boot - Angularjs Example</title>
 <script src="angular.min.js" type="text/javascript"></script>
 <script src="controller.js" type="text/javascript"></script>
+<script>
+	var app = angular.module("myApp",[]);
+	
+	app.controller("myCtrl", function($scope) {
+		$scope.boardlist = [
+			{id : 1, title : 'Title1', writer : 'Writer1'},
+			{id : 2, title : 'Title2', writer : 'Writer2'},
+			{id : 3, title : 'Title3', writer : 'Writer3'},
+			{id : 4, title : 'Title4', writer : 'Writer4'}
+		];
+	});
+</script>
 </head>
-<body ng-app ="app">
-	<div ng-controller ="controller">
-		<button id = "btn-id" ng-click = "clickfunction()">press for time</button>
-		<p ng-bind="welcome"></p> 어플리케이션 데이터를 HTML 뷰에 연결함
+<body ng-app="myApp">                                                                <!-- AngularJS 애플리케이션 정의 -->
+	<div ng-controller="myCtrl">                                               <!-- "controller.js" 컨트롤러 사용 -->
+		<button id="btn-id" ng-click = "clickfunction()">press for time</button>  <!-- 버튼을 누르면 "clickfunction()" 함수 실행 -->
+		<p ng-bind="welcome"></p>                        						    <!-- "welcome" 변수의 값을 화면에 출력 -->
+
 	</div>
 
 </body>

@@ -6,3 +6,5 @@ spring:
     user:
       name: user
       password: 1111
+
+
