@@ -9,6 +9,6 @@ public class WebController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homepage() {
-		return "index";
+		return "index"; // "/" 경로로 GET을 요청하면 "index.html" 반환
 	}
 }
