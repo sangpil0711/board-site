@@ -30,7 +30,7 @@ public class WebController {
 		BoardDTO dto1 = new BoardDTO(); // 객체 생성
 		dto1.setIndex(1); // 값 세팅
 		dto1.setTitle("Sample Title 1");
-	    dto1.setText("Sample Text 1");
+	    dto1.setText("Text 1");
 	    dto1.setUserId("user1");
 	    dto1.setCategory(1);
 	    dto1.setCreateDate(System.currentTimeMillis());
@@ -39,7 +39,7 @@ public class WebController {
 		BoardDTO dto2 = new BoardDTO(); // 객체 생성
 		dto2.setIndex(1); // 값 세팅
 		dto2.setTitle("Sample Title 2");
-		dto2.setText("Sample Text 2");
+		dto2.setText("Text 2");
 		dto2.setUserId("user2");
 		dto2.setCategory(1);
 		dto2.setCreateDate(System.currentTimeMillis());
@@ -48,7 +48,7 @@ public class WebController {
 		BoardDTO dto3 = new BoardDTO(); // 객체 생성
 		dto3.setIndex(1); // 값 세팅
 		dto3.setTitle("Sample Title 3");
-		dto3.setText("Sample Text 3");
+		dto3.setText("Text 3");
 		dto3.setUserId("user3");
 		dto3.setCategory(1);
 		dto3.setCreateDate(System.currentTimeMillis());
@@ -58,16 +58,13 @@ public class WebController {
 		BoardDTO dto4 = new BoardDTO(); // 객체 생성
 		dto4.setIndex(1); // 값 세팅
 		dto4.setTitle("Sample Title 4");
-		dto4.setText("Sample Text 4");
+		dto4.setText("Text 4");
 		dto4.setUserId("user4");
 		dto4.setCategory(1);
 		dto4.setCreateDate(System.currentTimeMillis());
 	    list.add(dto4);
 	    
 	
-		
-	
-		
 		
 		// #3. 2번에서 만든 데이터 반환
 		

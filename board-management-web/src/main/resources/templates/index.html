@@ -32,15 +32,17 @@
 			<td style="width: 200px">Title</td>
 			<td style="width: 80px">content</td>
 			<td style="width: 80px">userid</td>
-			<td style="width: 80px">createdate</td>
+			<td style="width: 200px">createdate</td>
 		</tr>
 		<tr ng-repeat="item in boardlist"> 
-			<td style="width: 40px">{{$index+1}}</td>
-			<td style="width: 200px">{{item.title}}</td>
-			<td style="width: 80px">{{item.Text}}</td>
-			<td style="width: 80px">{{item.UserId}}</td>
-			<td style="width: 80px">{{item.CreateDate}}</td>
-		</tr>
+        	 <td style="width: 40px">{{$index+1}}</td>
+        	 <td style="width: 200px">{{item.title}}</td>
+        	 <td style="width: 80px">{{item.text}}</td>
+        	 <td style="width: 80px">{{item.userId}}</td>
+        	 <td style="width: 200px">
+				 {{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}
+				 </td>
+      </tr>
 	</table>
 	</div>
 </body>
