@@ -9,17 +9,10 @@
 <script>
 	var app = angular.module("myApp",['ngResource']);        // myApp 모듈 생성 시 ngResource를 불러옴
 	
-	 app.controller("myCtrl", function($scope,$resource) {   // myCtrl 컨트롤러 생성 시 $scope, $resource를 사용하여 정의
-	
-		$scope.boardlist = [                                 // $scope에 boardlist 배열을 초기화 시키고 샘플데이터 삽입
-			{id : 1, title : 'Title1', writer : 'Writer1'},
-			{id : 2, title : 'Title2', writer : 'Writer2'},
-			{id : 3, title : 'Title3', writer : 'Writer3'},
-			{id : 4, title : 'Title4', writer : 'Writer4'}
-		];
+	app.controller("myCtrl", function($scope,$resource) {   // myCtrl 컨트롤러 생성 시 $scope, $resource를 사용하여 정의
 		
-		 var BoardResource = $resource('/board');             // $resource를 사용하여 /board 경로에 대한 리소스 생성
-		 $scope.boardlist = BoardResource.query();            // query() 메서드를 사용하여 리소스에서 데이터를 가져와 $scope.boardlist에 할당
+		var BoardResource = $resource('/board');             // $resource를 사용하여 /board 경로에 대한 리소스 생성
+		$scope.boardlist = BoardResource.query();            // query() 메서드를 사용하여 리소스에서 데이터를 가져와 $scope.boardlist에 할당
 		
 		// $resource 사용 -> Rest API 호출 -> html에 데이터 표시
 	});
