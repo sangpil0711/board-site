@@ -1,15 +1,10 @@
-var app = angular.module("myApp", ['ngResource']);
+var app = angular.module("myApp", ['ngResource']); // 'myApp' AngularJS 모듈 생성
 
-		app.factory('BoardFactory', function($resource) {
-			return $resource('/board', null, {
-				query: {
-					method: 'GET',
-					isArray: true,
-					transformResponse: function(data, headersGetter) {
-						var items = angular.fromJson(data);
-						console.log(items);
-						return items;
-					}
-				}
-			});
+app.factory('BoardFactory', function($resource) {  // $resource를 매개변수로 한 'BoardFactory' 팩토리 생성
+	return $resource('/board', null, { // '/board' 경로로 요청을 보낼 리소스 객체 생성 
+		query: {  // 'query' 메소드에 대한 옵션 설정
+			method: 'GET',  // http 요청 메소드를 GET으로 설정
+			isArray: true,  // 가져온 데이터가 배열 형태임을 나타냄
+			}
 		});
+	});
