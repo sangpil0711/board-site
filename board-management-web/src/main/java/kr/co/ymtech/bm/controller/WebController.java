@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,7 +21,8 @@ public class WebController {
 	}
 
 	// "/board" 경로로 GET을 요청하면 BoardDTO 객체의 리스트를 담는 ResponseEntity를 반환하는 getBoard 메서드 정의
-	@RequestMapping(value = "/board", method = RequestMethod.GET)
+//	@RequestMapping(value = "/board", method = RequestMethod.GET)
+	@GetMapping(value = "/board")
 	public ResponseEntity<List<BoardDTO>> getBoard() {
 
 		List<BoardDTO> list = new ArrayList<>(); // BoardDTO 객체의 리스트를 담기 위한 new ArrayList를 생성
