@@ -9,9 +9,9 @@
     <div id="container">
     <header>
 		<div class="head">
-            <button type="button" class="ipp_btn" onclick="location.href='login.html' " style="position: absolute; left: 100px;">IPP 게시판</button>
+            <button type="button" class="ipp_btn" onclick="location.href='main_display.html' ">IPP 게시판</button>
         <ul class="login">
-            <li><input type="text" id="username" style="position: absolute; top:50px; right: 270px;"></li>
+            <li><input type="text" class="username"></li>
             <li><button type="button" class="btn" onclick="location.href='login.html' " style="position: absolute; top:50px; right: 120px;">로그아웃</button></li>
         </ul>
         </div>
@@ -20,12 +20,35 @@
         </div>
         <div>
         <ul class="menu">
-            <li><button type="button" class="btn" onclick="location.href='general.html' ">일반게시판</button></li>
+            <li><button type="button" class="btn" onclick="location.href='general_board.html' ">일반게시판</button></li>
             <li><button type="button" class="btn" onclick="location.href='photo.html' ">사진게시판</button></li>
             <li><button type="button" class="btn" onclick="location.href='dash.html' ">대시보드</button></li>
             <li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>  
         </ul>
     </header>
+
+    <div>
+        <button type="button" class="write_btn" onclick="location.href='board_write.html' ">글쓰기</buttton>
+    </div>
+    
+    <div>
+        <input type="text" style="position:absolute; top: 295px; left: 330px; height: 30px; width: 300px;">
+    </div>
+
+    <div>
+        <button type="button" class="search_btn" onclick="location.href='board_write.html' " style="position: absolute; top: 295px; left: 650px;">검색</buttton>
+    </div>
+
+    <div>
+        <input type="text" class="board_all">
+    </div>
+
+    <select class="board_select">
+        <option>5개</option>
+        <option>10개</option>
+        <option>15개</option>
+        <option>20개</option>
+    </select>
 
     <table class="board">
         <thead>
@@ -74,6 +97,7 @@
           </tr>
         </tbody>
     </table>
-    </div>
+    
+</div>
 </body>
 </html>

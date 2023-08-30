@@ -1,21 +1,23 @@
 .ipp_btn {
     border: none;
     padding: 15px 30px;
-    border-radius: 40px;
+    border-radius: 20px;
     font-size: 30px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    background-color: skyblue;
-    color: white;
+    background-color: white;
+    color: rgb(79, 114, 228);
     font-weight: 600;
+    position: absolute; 
+    left: 100px;
 }
 
 .btn {
-    border: none;
+    border: 1px solid white;
     padding: 15px 30px;
     border-radius: 15px;
     font-size: 15px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    background-color: skyblue;
+    background-color: rgb(79, 114, 228);
     color: white;
     font-weight: 300;
 }
@@ -27,6 +29,29 @@
 .ipp_btn:hover {
     cursor: pointer;
   }
+
+.write_btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 15px;
+    background-color: rgb(79, 114, 228);
+    color: white;
+    font-weight: 300;
+    position: absolute; 
+    top: 290px; 
+    left: 210px;
+}
+
+.write_btn:hover {
+    cursor: pointer;
+}
+
+.search_btn {
+    font-size: 15px;
+    width: 50px;
+    height: 30px;
+}
 
 .board_best {
     display: inline-block;
@@ -50,25 +75,25 @@
 }
 
 h2 {
-    border-bottom: 1px solid skyblue;
-    color: skyblue;
+    border-bottom: 1px solid rgb(79, 114, 228);
+    color: rgb(79, 114, 228);
 }
 
 .best_btn{
-    border: 1px solid skyblue;
+    border: 1px solid rgb(79, 114, 228);
     padding: 15px;
     margin-bottom: -15px;
     border-radius: 15px;
     font-size: 15px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    background-color: white;
-    color: black;
+    background-color: rgb(79, 114, 228);
+    color: white;
     font-weight: 300;
     width: 800px;
     text-align: left;
 }
 
-#num {
+.num {
     width: 30px;
     border: none;
 }
@@ -85,13 +110,16 @@ h2 {
     margin-bottom: 50px;
 }
 
-#username {
+.username {
     border-left-width: 0;
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 1;
     width: 100px;
     margin-top: 20px;
+    position: absolute; 
+    top:50px; 
+    right: 270px;
 }
 
 .head {
@@ -102,8 +130,8 @@ h2 {
 }
 
 .menu {
-    border: 1px solid deepskyblue;
-    background-color: deepskyblue;
+    border: 1px solid rgb(79, 114, 228);
+    background-color: rgb(79, 114, 228);
     width: 100%;
     text-align: center;
     display: flex;
@@ -154,42 +182,71 @@ ul li{
     margin-right: auto;
 }
 
-    .board thead th{
-        border: 1px solid skyblue; 
-        border-width: 3px 0;
-        color: skyblue;
-        font-size: 30px;
-    }
+.board thead th{
+    border: 1px solid rgb(79, 114, 228); 
+    border-width: 3px 0;
+    color: rgb(79, 114, 228);
+    font-size: 30px;
+}
 
-    .board td:first-child, .board th:first-child{
-        width: 5%;
-    }
+.board td:first-child, .board th:first-child{
+    width: 10%;
+}
 
-    .board td:nth-child(2), .board th:nth-child(2){
-        width: 65%;
-    }
+.board td:nth-child(2), .board th:nth-child(2){
+    width: 60%;
+}
 
-    .board td:nth-child(3), .board th:nth-child(3){
-        width: 15%;
-    }
+.board td:nth-child(3), .board th:nth-child(3){
+    width: 15%;
+}
 
-    .board td:nth-child(4), .board th:nth-child(4){
-        width: 15%;
-    }
+.board td:nth-child(4), .board th:nth-child(4){
+    width: 15%;
+}
 
-    .board tbody tr {
-        height: 50px;
-        background-color: skyblue;
-        color: white;
-        font-size: 20px;
-    }
+.board tbody tr {
+    height: 50px;
+    background-color: rgb(79, 114, 228);
+    color: white;
+    font-size: 20px;
+}
     
-    .board tbody td a{
-        text-decoration: none; 
-        color: white;
-    }
+.board tbody td a{
+    text-decoration: none; 
+    color: white;
+}
     
-    .board tbody td a:hover{
-        text-decoration: underline;
-        cursor: pointer;
-    }
+.board tbody td a:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.board_all {
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 1;
+    font-size: 20px;
+    position: absolute;
+    top: 305px;
+    right: 350px;
+    width: 40px;
+}
+
+.board_select {
+    width: 80px;
+    padding: 15px;
+    padding-left: 15px;
+    border: 1px solid #ddd;
+    background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
+    background-size: 30px;
+    appearance: none;
+    font-size: 15px;
+    color: white;
+    background-color: rgb(79, 114, 228) ;
+    position: absolute;
+    top: 290px;
+    right: 230px;
+}
+
