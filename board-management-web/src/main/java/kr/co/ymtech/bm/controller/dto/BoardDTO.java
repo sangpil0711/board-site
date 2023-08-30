@@ -2,18 +2,18 @@ package kr.co.ymtech.bm.controller.dto;
 
 public class BoardDTO {
 
-	private Integer index; // 게시물 항목 변수 선언
+	private Integer index;  //게시물 항목 변수 선언
 	private String title;
 	private String text;
 	private String userId;
 	private Integer category;
 	private Long createDate;
 
-	public Integer getIndex() { // 게시물 index 변환
+	public Integer getIndex() {  //게시물 index 변환
 		return index;
 	}
 
-	public void setIndex(Integer index) { // 게시물 index 설정
+	public void setIndex(Integer index) {  //게시물 index 설정
 		this.index = index;
 	}
 
@@ -25,7 +25,7 @@ public class BoardDTO {
 		this.title = title;
 	}
 
-	public String getText() { // 게시물 text 변환
+	public String getText() {  //게시물 text 변환
 		return text;
 	}
 

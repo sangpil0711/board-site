@@ -21,7 +21,7 @@ public class WebController {
 	}
 
 	// "/board" 경로로 GET을 요청하면 BoardDTO 객체의 리스트를 담는 ResponseEntity를 반환하는 getBoard 메서드 정의
-//	@RequestMapping(value = "/board", method = RequestMethod.GET)
+	// @RequestMapping(value = "/board", method = RequestMethod.GET)
 	@GetMapping(value = "/board")
 	public ResponseEntity<List<BoardDTO>> getBoard() {
 
@@ -36,7 +36,7 @@ public class WebController {
 		dto1.setCreateDate(System.currentTimeMillis());
 		list.add(dto1);
 
-		BoardDTO dto2 = new BoardDTO(); // dto2 객체 생성 및 값 설정 후 리스트 추가
+		BoardDTO dto2 = new BoardDTO();  //dto2 객체 생성 및 값 설정 후 리스트 추가
 		dto2.setIndex(1);
 		dto2.setTitle("Sample Title 2");
 		dto2.setText("Text 2");
@@ -45,7 +45,7 @@ public class WebController {
 		dto2.setCreateDate(System.currentTimeMillis());
 		list.add(dto2);
 
-		BoardDTO dto3 = new BoardDTO(); // dto3 객체 생성 및 값 설정 후 리스트 추가
+		BoardDTO dto3 = new BoardDTO();  //dto3 객체 생성 및 값 설정 후 리스트 추가
 		dto3.setIndex(1);
 		dto3.setTitle("Sample Title 3");
 		dto3.setText("Text 3");
@@ -54,7 +54,7 @@ public class WebController {
 		dto3.setCreateDate(System.currentTimeMillis());
 		list.add(dto3);
 
-		BoardDTO dto4 = new BoardDTO(); // dto1 객체 생성 및 값 설정 후 리스트 추가
+		BoardDTO dto4 = new BoardDTO();  //dto1 객체 생성 및 값 설정 후 리스트 추가
 		dto4.setIndex(1);
 		dto4.setTitle("Sample Title 4");
 		dto4.setText("Text 4");
@@ -65,5 +65,11 @@ public class WebController {
 
 		return new ResponseEntity<List<BoardDTO>>(list, HttpStatus.OK); // 리스트를 담은 ResponseEntity를 생성하여 반환
 	}
+	
+
+	
+	
+	
+	
 
 }

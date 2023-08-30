@@ -2,9 +2,16 @@ server:
   port: 8000
 
 spring:
-  security:
-    user:
-      name: user
-      password: 1111
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: 'false'
+    check-template-location: 'true'
+    suffix: .html
+    
 
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: postgres
+    password: xxxxxxx
+    driver-class-name: org.postgresql.Driver
