@@ -39,7 +39,7 @@
     color: white;
     font-weight: 300;
     position: absolute; 
-    top: 290px; 
+    top: 260px; 
     left: 210px;
 }
 
@@ -48,9 +48,29 @@
 }
 
 .search_btn {
+    border: 1px solid grey;
+    padding: 7px 15px;
+    border-radius: 15px;
     font-size: 15px;
-    width: 50px;
-    height: 30px;
+    background-color: white;
+    color: black;
+    font-weight: 300;
+    font-size: 15px;
+    position: absolute; 
+    top: 262px; 
+    left: 650px;
+}
+
+.search {
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 1;
+    position:absolute; 
+    top: 265px; 
+    left: 330px;
+    height: 30px; 
+    width: 300px;
 }
 
 .board_best {
@@ -122,6 +142,10 @@ h2 {
     right: 270px;
 }
 
+.span {
+    color: black;
+}
+
 .head {
 	display: flex;
 	justify-content: space-between;
@@ -187,6 +211,7 @@ ul li{
     border-width: 3px 0;
     color: rgb(79, 114, 228);
     font-size: 30px;
+    text-align: center;
 }
 
 .board td:first-child, .board th:first-child{
@@ -223,15 +248,10 @@ ul li{
 }
 
 .board_all {
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 1;
     font-size: 20px;
     position: absolute;
-    top: 305px;
+    top: 275px;
     right: 350px;
-    width: 40px;
 }
 
 .board_select {
@@ -246,7 +266,7 @@ ul li{
     color: white;
     background-color: rgb(79, 114, 228) ;
     position: absolute;
-    top: 290px;
+    top: 260px;
     right: 230px;
 }
 

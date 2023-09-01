@@ -2,22 +2,23 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
-    <title>웹프로젝트</title>   
+    <title>웹프로젝트</title> 
+    <link rel="stylesheet" href="css/bootstrap.css">  
     <link rel="stylesheet" href="css/main.css">
+
 </head>
 <body>
     <div id="container">
-    <header>
 		<div class="head">
-            <button type="button" class="ipp_btn" onclick="location.href='main_display.html' ">IPP 게시판</button>
-        <ul class="login">
+            <button type="button" class="ipp_btn" onclick="location.href='main_display.html' ">IPP <span class="span">게시판</span></button>
+        <!--<ul class="login">
             <li><input type="text" class="username"></li>
             <li><button type="button" class="btn" onclick="location.href='login.html' " style="position: absolute; top:50px; right: 120px;">로그아웃</button></li>
-        </ul>
+        </ul>-->
         </div>
-        <div class="user_update">
+        <!--<div class="user_update">
             <button type="button" class="btn" onclick="location.href='user_update.html' " style="position: absolute; top: 110px; right: 170px;">개인정보수정</button>
-        </div>
+        </div>-->
         <div>
         <ul class="menu">
             <li><button type="button" class="btn" onclick="location.href='general_board.html' ">일반게시판</button></li>
@@ -25,30 +26,25 @@
             <li><button type="button" class="btn" onclick="location.href='dash.html' ">대시보드</button></li>
             <li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>  
         </ul>
-    </header>
-
+        </div>
     <div>
         <button type="button" class="write_btn" onclick="location.href='board_write.html' ">글쓰기</buttton>
     </div>
     
     <div>
-        <input type="text" style="position:absolute; top: 295px; left: 330px; height: 30px; width: 300px;">
+        <input type="text" class="search">
+        <button type="button" class="search_btn" onclick="location.href='board_write.html' ">검색</buttton>
     </div>
 
     <div>
-        <button type="button" class="search_btn" onclick="location.href='board_write.html' " style="position: absolute; top: 295px; left: 650px;">검색</buttton>
-    </div>
-
-    <div>
-        <input type="text" class="board_all">
-    </div>
-
+        <p class="board_all">전체 5개</p>
     <select class="board_select">
         <option>5개</option>
         <option>10개</option>
         <option>15개</option>
         <option>20개</option>
     </select>
+    </div>
 
     <table class="board">
         <thead>
@@ -97,6 +93,45 @@
           </tr>
         </tbody>
     </table>
+
+      <div>
+        <ul class="pagination" >
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="first">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">first</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&lsaquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">4</a></li>
+          <li class="page-item"><a class="page-link" href="#">5</a></li>
+          <li class="page-item"><a class="page-link" href="#">6</a></li>
+          <li class="page-item"><a class="page-link" href="#">7</a></li>
+          <li class="page-item"><a class="page-link" href="#">8</a></li>
+          <li class="page-item"><a class="page-link" href="#">9</a></li>
+          <li class="page-item"><a class="page-link" href="#">10</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&rsaquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="last">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">last</span>
+            </a>
+          </li>
+        </ul>
+    </div>
     
 </div>
 </body>
