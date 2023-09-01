@@ -1,3 +1,33 @@
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#container{
+    overflow-y: hidden;
+}
+
+.head {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 50px;
+    margin-left: 200px;
+}
+
+ul{
+    list-style-type: none;
+}
+
+ul li{
+    margin: 25px 15px;
+    font-size: 20px;
+}
+
+.span {
+    color: black;
+}
+
 .ipp_btn {
     border: none;
     padding: 15px 30px;
@@ -22,13 +52,9 @@
     font-weight: 300;
 }
 
-.btn:hover {
+button:hover {
     cursor: pointer;
-  }
-
-.ipp_btn:hover {
-    cursor: pointer;
-  }
+}
 
 .write_btn {
     border: none;
@@ -41,10 +67,6 @@
     position: absolute; 
     top: 260px; 
     left: 210px;
-}
-
-.write_btn:hover {
-    cursor: pointer;
 }
 
 .search_btn {
@@ -73,13 +95,19 @@
     width: 300px;
 }
 
+h2 {
+    border-bottom: 1px solid rgb(79, 114, 228);
+    color: rgb(79, 114, 228);
+}
+
 .board_best {
     display: inline-block;
     margin-left: 200px;
 }
 
-.login{
-    margin-right: 200px;
+.best{
+    display: flex;
+    flex-direction: column;
 }
 
 .reply {
@@ -90,38 +118,21 @@
 .reply_number {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    line-height: 38px;
-}
-
-h2 {
-    border-bottom: 1px solid rgb(79, 114, 228);
-    color: rgb(79, 114, 228);
+    line-height: 40px;
 }
 
 .best_btn{
-    border: 1px solid rgb(79, 114, 228);
+    border: 1px solid white;
     padding: 15px;
     margin-bottom: -15px;
-    border-radius: 15px;
+    border-radius: 10px;
     font-size: 15px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     background-color: rgb(79, 114, 228);
     color: white;
     font-weight: 300;
     width: 800px;
     text-align: left;
-}
-
-.num {
-    width: 30px;
-    border: none;
-}
-
-* { 
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 .user_update {
@@ -142,17 +153,6 @@ h2 {
     right: 270px;
 }
 
-.span {
-    color: black;
-}
-
-.head {
-	display: flex;
-	justify-content: space-between;
-	margin-top: 50px;
-    margin-left: 200px;
-}
-
 .menu {
     border: 1px solid rgb(79, 114, 228);
     background-color: rgb(79, 114, 228);
@@ -167,39 +167,12 @@ h2 {
 }
 
 .menu li {
-    padding: 0 0 0 80px;
-}
-
-.best{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-ul{
-    list-style-type: none;
-}
-
-html, body{
-    width: 100%;
-    height: 100%;
-}
-
-#container{
-    width: 100%;
-    height: 100%;
-    overflow-y: hidden;
-}
-
-ul li{
-    margin: 25px 15px;
-    font-size: 20px;
+    padding: 0 0 0 100px;
 }
 
 .board{
     border-collapse: separate; 
     width: 1500px; 
-    height: 300px;
     border-spacing: 0 10px;
     text-align: center;
     margin-left: auto;
@@ -258,7 +231,7 @@ ul li{
     width: 80px;
     padding: 15px;
     padding-left: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid white;
     background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
     background-size: 30px;
     appearance: none;

@@ -3,18 +3,21 @@
 <head>
     <meta charset="utf-8">
     <title>웹프로젝트</title>
+    <link rel="stylesheet" href="css/bootstrap.css">  
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <div id="container">
-    <header>
 		<div class="head">
-            <button type="button" class="ipp_btn" onclick="location.href='main_display.html' ">IPP 게시판</button>
-        <ul class="login">
-            <li><button type="button" class="btn" onclick="location.href='login.html' " style="position: absolute; right: 270px;">로그인</button></li>
-            <li><button type="button" class="btn" onclick="location.href='join.html' " style="position: absolute; right: 120px;">회원가입</button></li>
-        </ul>
+            <button type="button" class="ipp_btn" onclick="location.href='main_display.html' ">IPP <span class="span">게시판</span></button>
+        <!--<ul class="login">
+            <li><input type="text" class="username"></li>
+            <li><button type="button" class="btn" onclick="location.href='login.html' " style="position: absolute; top:50px; right: 120px;">로그아웃</button></li>
+        </ul>-->
         </div>
+        <!--<div class="user_update">
+            <button type="button" class="btn" onclick="location.href='user_update.html' " style="position: absolute; top: 110px; right: 170px;">개인정보수정</button>
+        </div>-->
         <div>
         <ul class="menu">
             <li><button type="button" class="btn" onclick="location.href='general_board.html' ">일반게시판</button></li>
@@ -23,7 +26,6 @@
             <li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>  
         </ul>
         </div>
-    </header>
 
     <div class="board_best">
         <h2>게시글 베스트</h2>
@@ -36,10 +38,10 @@
     </div>
     <div class="reply">
         <ul class="reply_number">
-            <li>(<input type="text" class="num">)</li>
-            <li>(<input type="text" class="num">)</li>
-            <li>(<input type="text" class="num">)</li>
-            <li>(<input type="text" class="num">)</li>
+            <li>(125)</li>
+            <li>(103)</li>
+            <li>(88)</li>
+            <li>(52)</li>
         </ul>
     </div>
 </div>
