@@ -4708,21 +4708,22 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination {
   display: block;
   text-align: center;
-  width: 1510px;
-  padding: 5px;
-  margin: 100px 0;
+  width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 150px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
   background-color: rgb(79, 114, 228);
   border: 1px solid white;
   border-radius: 4px;
-  position:absolute;
-  left:202px;
 }
 .pagination > li {
   display: inline;
+  font-size: 18px;
 }
 .pagination > li > a,
 .pagination > li > span {
+  display:inline-block;
   position: relative;
   float: none;
   padding: 6px 12px;
@@ -4743,13 +4744,16 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-.pagination > li > a:hover,
-.pagination > li > span:hover,
-.pagination > li > a:focus,
-.pagination > li > span:focus {
-  z-index: 2;
+.pagination > li > .page_item:hover,
+.pagination > li > .page_item:focus {
   color: yellow;
   transform: scale(1.5);
+}
+.pagination > li > .page_icon {
+  font-size: 20px;
+}
+.pagination > li > .page_icon:hover {
+  color: yellow;
 }
 .pagination > .active > a,
 .pagination > .active > span,
@@ -4757,7 +4761,6 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-   z-index: 3;
     color: #fff;
     cursor: default;
     background-color: #464d59;

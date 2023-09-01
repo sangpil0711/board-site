@@ -1,27 +1,15 @@
-* { 
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-#container{
-    overflow-y: hidden;
-}
 
 .head {
-	display: flex;
-	justify-content: space-between;
+	display: inline-block;
 	margin-top: 50px;
-    margin-left: 200px;
 }
 
 ul{
     list-style-type: none;
 }
 
-ul li{
+ul li {
     margin: 25px 15px;
-    font-size: 20px;
 }
 
 .span {
@@ -50,6 +38,32 @@ ul li{
     background-color: rgb(79, 114, 228);
     color: white;
     font-weight: 300;
+}
+
+.menu {
+    border: 1px solid rgb(79, 114, 228);
+    background-color: rgb(79, 114, 228);
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    margin-bottom: 100px;
+    margin-top: 100px;
+}
+
+.menu li {
+    padding: 0 0 0 100px;
+}
+
+
+.menu button {
+    width: 150px;
+}
+
+.menu button:hover {
+    color: black;
 }
 
 button:hover {
@@ -96,8 +110,9 @@ button:hover {
 }
 
 h2 {
-    border-bottom: 1px solid rgb(79, 114, 228);
+    border-bottom: 3px solid rgb(79, 114, 228);
     color: rgb(79, 114, 228);
+    font-weight: 600;
 }
 
 .board_best {
@@ -113,6 +128,10 @@ h2 {
 .reply {
     display: inline-block;
     margin-top: 60px;
+}
+
+.reply li {
+    font-size: 20px;
 }
 
 .reply_number {
@@ -151,23 +170,6 @@ h2 {
     position: absolute; 
     top:50px; 
     right: 270px;
-}
-
-.menu {
-    border: 1px solid rgb(79, 114, 228);
-    background-color: rgb(79, 114, 228);
-    width: 100%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70px;
-    margin-bottom: 100px;
-    margin-top: 100px;
-}
-
-.menu li {
-    padding: 0 0 0 100px;
 }
 
 .board{
