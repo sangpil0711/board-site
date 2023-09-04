@@ -17,7 +17,7 @@ public class WebController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homepage() {
-		return "general_board"; // "/" 경로로 GET을 요청하면 "index.html" 반환
+		return "main_display"; // "/" 경로로 GET을 요청하면 "index.html" 반환
 	}
 	
 	// "/board" 경로로 GET을 요청하면 BoardDTO 객체의 리스트를 담는 ResponseEntity를 반환하는 getBoard 메서드 정의

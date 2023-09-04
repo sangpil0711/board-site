@@ -1,3 +1,6 @@
+#container {
+	overflow-x: hidden;
+}
 
 ul{
     list-style-type: none;
@@ -72,8 +75,8 @@ button:hover {
     color: black;
     font-weight: 300;
     position: absolute; 
-    top: 245px; 
-    left: 210px;
+    top: 240px; 
+    left: 470px;
 }
 
 .search_btn {
@@ -85,8 +88,8 @@ button:hover {
     font-weight: 300;
     font-size: 15px;
     position: absolute; 
-    top: 245px; 
-    left: 650px;
+    top: 240px; 
+    left: 920px;
 }
 
 .search {
@@ -96,8 +99,8 @@ button:hover {
     border-bottom-width: 1;
     outline: none;
     position:absolute; 
-    top: 245px; 
-    left: 330px;
+    top: 240px; 
+    left: 600px;
     height: 30px; 
     width: 300px;
 }
@@ -105,8 +108,8 @@ button:hover {
 .board_all {
     font-size: 15px;
     position: absolute;
-    top: 247px;
-    right: 350px;
+    top: 240px;
+    right: 560px;
 }
 
 .board_select {
@@ -121,8 +124,8 @@ button:hover {
     color: black;
     background-color: white ;
     position: absolute;
-    top: 235px;
-    right: 230px;
+    top: 225px;
+    right: 460px;
 }
 
 h3 {
@@ -188,7 +191,7 @@ h3 {
 
 .board{
     border-collapse: separate; 
-    width: 1500px; 
+    width: 1000px; 
     border-spacing: 0 10px;
     text-align: center;
     margin-top: 150px;
@@ -242,6 +245,90 @@ h3 {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.general_write {
+	border:2px solid grey;
+	color: grey;
+	padding: 5px 0;
+	text-align: center;
+	width: 700px;
+	font-size: 25px;
+	font-weight: 600;
+	margin-top: 100px;
+	margin-bottom: 50px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.title_write p {
+	position: absolute; 
+	left: 610px; 
+	font-size: 25px;
+}
+
+.title_write input {
+	position: absolute; 
+	left: 680px; 
+	width: 630px; 
+	height: 35px; 
+	font-size: 20px;
+}
+
+.content_write input {
+	position: absolute; 
+	left: 610px; 
+	margin-top: 50px; 
+	width: 700px; 
+	height: 300px; 
+	font-size: 15px;
+}
+
+.file_btn {
+	background-color: rgb(173, 173, 173);
+	border: 1px solid black;
+	color:white;
+    position:absolute; 
+    top: 707px; 
+    left: 610px;
+    height: 50px; 
+    width: 120px;
+}
+
+.file_name p {
+	border: 1px solid grey;
+	width: 570px;
+	height: 100px;
+	padding: 5px 10px;
+	position: absolute;
+	left: 740px;
+	top: 707px;
+}
+
+.write_decision input {
+	width: 70px;
+	padding: 10px 5px;
+	background-color: rgb(173, 173, 173);
+	border: 1px solid black;
+	color: white;
+	position: absolute;
+	left: 1140px;
+	top: 820px;
+}
+
+.write_decision button {
+	width: 70px;
+	padding: 10px 5px;
+	border: 1px solid black;
+	background-color: white;
+	position:absolute;
+	left: 1240px;
+	top: 820px;
+}
+
+
+
+
+
 
 
 

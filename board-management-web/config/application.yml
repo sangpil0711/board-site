@@ -6,4 +6,15 @@ spring:
     user:
       name: user
       password: 1111
-
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:templates/ 
+    suffix: .html
+    cache: false
+    mode: HTML
+    

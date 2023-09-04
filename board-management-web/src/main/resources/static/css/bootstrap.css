@@ -4708,7 +4708,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination {
   display: block;
   text-align: center;
-  width: 1500px;
+  width: 1000px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 150px;
@@ -4722,7 +4722,6 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   display:inline-block;
   position: relative;
   float: none;
-  padding: 6px 12px;
   margin-left: 5px;
   line-height: 1.42857143;
   color: grey;
