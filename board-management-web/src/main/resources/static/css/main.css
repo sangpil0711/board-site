@@ -75,7 +75,7 @@ button:hover {
     color: black;
     font-weight: 300;
     position: absolute; 
-    top: 240px; 
+    top: 220px; 
     left: 470px;
 }
 
@@ -88,7 +88,7 @@ button:hover {
     font-weight: 300;
     font-size: 15px;
     position: absolute; 
-    top: 240px; 
+    top: 220px; 
     left: 920px;
 }
 
@@ -99,7 +99,7 @@ button:hover {
     border-bottom-width: 1;
     outline: none;
     position:absolute; 
-    top: 240px; 
+    top: 220px; 
     left: 600px;
     height: 30px; 
     width: 300px;
@@ -108,7 +108,7 @@ button:hover {
 .board_all {
     font-size: 15px;
     position: absolute;
-    top: 240px;
+    top: 220px;
     right: 560px;
 }
 
@@ -124,7 +124,7 @@ button:hover {
     color: black;
     background-color: white ;
     position: absolute;
-    top: 225px;
+    top: 205px;
     right: 460px;
 }
 

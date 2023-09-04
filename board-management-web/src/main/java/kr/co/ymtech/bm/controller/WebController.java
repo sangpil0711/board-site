@@ -20,6 +20,21 @@ public class WebController {
 		return "main_display"; // "/" 경로로 GET을 요청하면 "index.html" 반환
 	}
 	
+	@RequestMapping(value = "/main_display", method = RequestMethod.GET)
+	public String mainpage() {
+		return "main_display"; // "/" 경로로 GET을 요청하면 "index.html" 반환
+	}
+	
+	@RequestMapping(value = "/general_board", method = RequestMethod.GET)
+	public String boardpage() {
+		return "general_board"; // "/" 경로로 GET을 요청하면 "index.html" 반환
+	}
+	
+	@RequestMapping(value = "/general_write", method = RequestMethod.GET)
+	public String writepage() {
+		return "general_write"; // "/" 경로로 GET을 요청하면 "index.html" 반환
+	}
+	
 	// "/board" 경로로 GET을 요청하면 BoardDTO 객체의 리스트를 담는 ResponseEntity를 반환하는 getBoard 메서드 정의
 //	@RequestMapping(value = "/board", method = RequestMethod.GET)
 	@GetMapping(value = "/board")
