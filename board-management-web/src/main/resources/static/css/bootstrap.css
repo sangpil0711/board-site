@@ -4712,10 +4712,6 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   margin-left: auto;
   margin-right: auto;
   margin-top: 150px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-  background-color: rgb(79, 114, 228);
-  border: 1px solid white;
-  border-radius: 4px;
 }
 .pagination > li {
   display: inline;
@@ -4729,7 +4725,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   padding: 6px 12px;
   margin-left: 5px;
   line-height: 1.42857143;
-  color: white;
+  color: grey;
   text-decoration: none;
   border: none;
 }
@@ -4746,14 +4742,14 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 .pagination > li > .page_item:hover,
 .pagination > li > .page_item:focus {
-  color: yellow;
+  color: black;
   transform: scale(1.5);
 }
 .pagination > li > .page_icon {
   font-size: 20px;
 }
 .pagination > li > .page_icon:hover {
-  color: yellow;
+  color: black;
 }
 .pagination > .active > a,
 .pagination > .active > span,

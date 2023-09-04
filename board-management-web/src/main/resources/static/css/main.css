@@ -1,9 +1,4 @@
 
-.head {
-	display: inline-block;
-	margin-top: 50px;
-}
-
 ul{
     list-style-type: none;
 }
@@ -16,84 +11,81 @@ ul li {
     color: black;
 }
 
-.ipp_btn {
-    border: none;
-    padding: 15px 30px;
-    border-radius: 20px;
-    font-size: 30px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    background-color: white;
-    color: rgb(79, 114, 228);
-    font-weight: 600;
-    position: absolute; 
-    left: 100px;
-}
-
-.btn {
-    border: 1px solid white;
-    padding: 15px 30px;
-    border-radius: 15px;
-    font-size: 15px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    background-color: rgb(79, 114, 228);
-    color: white;
-    font-weight: 300;
+.head {
+	display: inline-block;
+    margin-top: 30px;
 }
 
 .menu {
-    border: 1px solid rgb(79, 114, 228);
-    background-color: rgb(79, 114, 228);
-    width: 100%;
+    border-bottom: 1px solid rgb(216, 213, 213);
+    width: 2000px;
+    height: 100px;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70px;
-    margin-bottom: 100px;
-    margin-top: 100px;
 }
 
 .menu li {
-    padding: 0 0 0 100px;
+    padding: 0 0 0 80px;
 }
 
 
-.menu button {
-    width: 150px;
+
+.ipp_btn {
+    border: none;
+    padding: 15px 30px;
+    font-size: 30px;
+    background-color: white;
+    color: rgb(79, 114, 228);
+    font-weight: 600;
+    margin-top: 10px;
+    position: absolute; 
+    left: 200px;
 }
 
-.menu button:hover {
+.btn {
+    border: none;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-size: 25px;
+    background-color:white;
     color: black;
+    font-weight: 600;
 }
 
 button:hover {
     cursor: pointer;
 }
 
+.menu .btn:focus,
+.menu .btn:active {
+    outline: none;
+    box-shadow: none;
+}
+
 .write_btn {
-    border: none;
-    padding: 10px 15px;
-    border-radius: 15px;
+    border: 1px solid grey;
+    padding: 5px 5px;
     font-size: 15px;
-    background-color: rgb(79, 114, 228);
-    color: white;
+    background-color: white;
+    color: black;
     font-weight: 300;
     position: absolute; 
-    top: 260px; 
+    top: 245px; 
     left: 210px;
 }
 
 .search_btn {
     border: 1px solid grey;
-    padding: 7px 15px;
-    border-radius: 15px;
+    padding: 5px 10px;
     font-size: 15px;
     background-color: white;
     color: black;
     font-weight: 300;
     font-size: 15px;
     position: absolute; 
-    top: 262px; 
+    top: 245px; 
     left: 650px;
 }
 
@@ -102,16 +94,40 @@ button:hover {
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 1;
+    outline: none;
     position:absolute; 
-    top: 265px; 
+    top: 245px; 
     left: 330px;
     height: 30px; 
     width: 300px;
 }
 
-h2 {
-    border-bottom: 3px solid rgb(79, 114, 228);
-    color: rgb(79, 114, 228);
+.board_all {
+    font-size: 15px;
+    position: absolute;
+    top: 247px;
+    right: 350px;
+}
+
+.board_select {
+    width: 80px;
+    padding: 10px;
+    padding-left: 15px;
+    border: 1px solid black;
+    background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
+    background-size: 30px;
+    appearance: none;
+    font-size: 15px;
+    color: black;
+    background-color: white ;
+    position: absolute;
+    top: 235px;
+    right: 230px;
+}
+
+h3 {
+    border-bottom: 2px solid black;
+    color: black;
     font-weight: 600;
 }
 
@@ -127,7 +143,7 @@ h2 {
 
 .reply {
     display: inline-block;
-    margin-top: 60px;
+    margin-top: 150px;
 }
 
 .reply li {
@@ -141,15 +157,13 @@ h2 {
 }
 
 .best_btn{
-    border: 1px solid white;
     padding: 15px;
-    margin-bottom: -15px;
-    border-radius: 10px;
+    margin-bottom: -16px;
     font-size: 15px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    background-color: rgb(79, 114, 228);
-    color: white;
-    font-weight: 300;
+    background-color: white;
+    color: black;
+    border: 2px solid grey;
+    font-weight: 500;
     width: 800px;
     text-align: left;
 }
@@ -177,15 +191,16 @@ h2 {
     width: 1500px; 
     border-spacing: 0 10px;
     text-align: center;
+    margin-top: 150px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .board thead th{
-    border: 1px solid rgb(79, 114, 228); 
-    border-width: 3px 0;
-    color: rgb(79, 114, 228);
-    font-size: 30px;
+    border: 1px solid grey; 
+    border-width: 2px 0;
+    color: black;
+    font-size: 20px;
     text-align: center;
 }
 
@@ -207,14 +222,20 @@ h2 {
 
 .board tbody tr {
     height: 50px;
-    background-color: rgb(79, 114, 228);
-    color: white;
-    font-size: 20px;
+    background-color: white;
+    color: black;
+    font-size: 17px;
+}
+
+.board tbody td {
+    border: 1px solid grey;
+    border-width: 1px 0;
+    border-top: none;
 }
     
 .board tbody td a{
     text-decoration: none; 
-    color: white;
+    color: black;
 }
     
 .board tbody td a:hover{
@@ -222,26 +243,5 @@ h2 {
     cursor: pointer;
 }
 
-.board_all {
-    font-size: 20px;
-    position: absolute;
-    top: 275px;
-    right: 350px;
-}
 
-.board_select {
-    width: 80px;
-    padding: 15px;
-    padding-left: 15px;
-    border: 1px solid white;
-    background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
-    background-size: 30px;
-    appearance: none;
-    font-size: 15px;
-    color: white;
-    background-color: rgb(79, 114, 228) ;
-    position: absolute;
-    top: 260px;
-    right: 230px;
-}
 
