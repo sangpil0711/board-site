@@ -7,11 +7,12 @@ spring:
     cache: 'false'
     check-template-location: 'true'
     suffix: .html
-    
-
-
   datasource:
     url: jdbc:postgresql://localhost:5432/testdb
     username: postgres
-    password: xxxxxxx
+    password: '0000'
     driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      platform: postgres
+      

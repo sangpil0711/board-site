@@ -28,14 +28,14 @@ public class PostgreConnectionTest implements ApplicationRunner {
             System.out.println(connection.getMetaData().getUserName());
 
             Statement statement = connection.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS account(ID SERIAL PRIMARY KEY, name VARCHAR(255))";
+            String sql = "";
             statement.executeUpdate(sql);
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
 
-        jdbcTemplate.execute("INSERT INTO account (name) VALUES ('js')");
+        jdbcTemplate.execute("");
 
         return;
     }
