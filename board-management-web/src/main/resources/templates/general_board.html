@@ -59,7 +59,7 @@
 				<tbody>
 					<tr ng-repeat="item in boardlist">
 						<td>{{$index+1}}</td>
-						<td><a href="#">{{item.title}}</a></td>
+						<td><a th:href="@{/general_read}">{{item.title}}</a></td>
 						<td>{{item.userId}}</td>
 						<td>
 							{{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}

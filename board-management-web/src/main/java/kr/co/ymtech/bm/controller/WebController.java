@@ -40,6 +40,16 @@ public class WebController {
 		return "general_manager"; //W "/" 경로로 GET을 요청하면 "index.html" 반환
 	}
 	
+	@RequestMapping(value = "/general_read", method = RequestMethod.GET)
+	public String readpage() {
+		return "general_read"; //W "/" 경로로 GET을 요청하면 "index.html" 반환
+	}
+	
+	@RequestMapping(value = "/general_update", method = RequestMethod.GET)
+	public String updatepage() {
+		return "general_update"; //W "/" 경로로 GET을 요청하면 "index.html" 반환
+	}
+	
 	// "/board" 경로로 GET을 요청하면 BoardDTO 객체의 리스트를 담는 ResponseEntity를 반환하는 getBoard 메서드 정의
 //	@RequestMapping(value = "/board", method = RequestMethod.GET)
 	@GetMapping(value = "/board")

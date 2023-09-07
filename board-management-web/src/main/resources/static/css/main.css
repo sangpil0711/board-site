@@ -263,17 +263,24 @@ h3 {
 	width: 700px;
 	font-size: 25px;
 	font-weight: 600;
-	margin-top: 100px;
-	margin-bottom: 50px;
+	margin-top: 50px;
+	margin-bottom: 30px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-.title_write p {
+.title_write p:first-child {
 	position: absolute; 
 	left: 610px; 
 	font-size: 25px;
 }
+
+.title_write p:nth-child(2) {
+	position: absolute; 
+	left: 700px; 
+	font-size: 25px;
+}
+
 
 .title_write input {
 	position: absolute; 
@@ -283,7 +290,8 @@ h3 {
 	font-size: 20px;
 }
 
-.content_write input {
+.content_write textarea {
+	padding: 15px;
 	position: absolute; 
 	left: 610px; 
 	margin-top: 50px; 
@@ -297,7 +305,7 @@ h3 {
 	border: 1px solid black;
 	color:white;
     position:absolute; 
-    top: 707px; 
+    top: 657px; 
     left: 610px;
     height: 50px; 
     width: 120px;
@@ -310,7 +318,7 @@ h3 {
 	padding: 5px 10px;
 	position: absolute;
 	left: 740px;
-	top: 707px;
+	top: 657px;
 }
 
 .write_decision input {
@@ -321,7 +329,7 @@ h3 {
 	color: white;
 	position: absolute;
 	left: 1140px;
-	top: 820px;
+	top: 770px;
 }
 
 .write_decision button {
@@ -331,13 +339,89 @@ h3 {
 	background-color: white;
 	position:absolute;
 	left: 1240px;
-	top: 820px;
+	top: 770px;
 }
 
+strong {
+	position: absolute;
+	top: 220px;
+	left: 470px;
+	font-size: 25px;
+}
 
+.board_wrap {
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 150px;
+}
 
+.board_view {
+	width: 100%;
+	border-top: 2px solid black;
+	font-size: 20px;
+}
 
+.board_view .title {
+	padding: 20px 15px;
+	border-bottom: 1px dashed #ddd;
+	font-size: 20px;
+	font-weight: 600;
+}
 
+.board_view .info {
+	padding: 15px;
+	border-bottom: 1px solid #999;
+}
 
+.board_view .info dl {
+	display: inline-block;
+	padding: 0 20px;
+}
 
+.board_view .info dl:first-child {
+	padding-left: 0;
+}
+
+.board_view .info dl dt,
+.board_view .info dl dd {
+	display: inline-block;
+	font-size: 17px;
+} 
+
+.board_view .info dl dd {
+	margin-left: 10px;
+	color: #777;
+}
+
+.board_view .content {
+	padding: 20px;
+	border-bottom: 1px solid black;
+	line-height: 160%;
+	font-size: 15px;
+	min-height: 300px;
+}
+
+.read_btn {
+	margin-top: 50px;
+	position: absolute;
+	left: 850px;
+}
+
+.read_btn button {
+	display: inline-block;
+	min-width: 80px;
+	margin-left: 30px;
+	padding: 10px;
+	font-size: 15px;
+}
+
+.read_btn button:first-child {
+	background-color: rgb(173, 173, 173);
+	color: white;
+}
+
+.read_btn button:nth-child(2) {
+	background-color: white;
+}
 

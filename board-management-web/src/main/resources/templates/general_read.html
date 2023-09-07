@@ -6,11 +6,14 @@
 	<title>웹프로젝트</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
 	<link rel="stylesheet" type=text/css th:href="@{/css/main.css}" />
+	<script type="text/javascript" th:src="@{/js/angular.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/angular-resource.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/factory.js}"></script>
 	<script type="text/javascript" th:src="@{/js/board.js}"></script>
 </head>
 
-<body>
-	<div id="container">
+<body ng-app="myApp">
+	<div id="container" ng-controller="BoardCtrl">
 		<div class="head">
 			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/main_display}'|">IPP <span
 					class="span">게시판</span></button>
@@ -23,32 +26,39 @@
 				<li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>
 			</ul>
 		</div>
-
-		<div class="general_write">일반게시판 글쓰기</div>
-
-		<form id="board_form">
-
-			<div class="title_write">
-				<p>제목</p>
-				<input id="title" type="text">
+		<div>
+			<strong>일반게시판</strong>
+		</div>
+		<div class="board_wrap">
+			<div class="board_view">
+				<div class="title">
+					IPP인턴프로젝트
+				</div>
+				<div class="info">
+					<dl>
+						<dt>번호</dt>
+						<dd>1</dd>
+					</dl>
+					<dl>
+						<dt>작성자</dt>
+						<dd>박상현</dd>
+					</dl>
+					<dl>
+						<dt>작성일</dt>
+						<dd>2023.09.07</dd>
+					</dl>
+				</div>
+				<div class="content">
+					IPP인턴프로젝트 입니다.
+				</div>
 			</div>
+		</div>
+		<div class="read_btn">
+			<button type="button" th:onclick="|location.href='@{/general_board}'|">목록</button>
+			<button type="button" th:onclick="|location.href='@{/general_update}'|">수정</button>
+		</div>
 
-			<div class="content_write">
-				<textarea></textarea>
-			</div>
-
-			<div>
-				<button type="button" class="file_btn" onclick="">파일선택<br>(최대 100MB)</button>
-			</div>
-
-			<div class="file_name">
-				<p>IPP 인턴 프로젝트 설계서.pptx<br>
-					IPP 프로젝트 일정.txt</p>
-			</div>
-
-			<div class="write_decision">
-				<input type="submit" value="작성완료">
-				<button type="button" th:onclick="|location.href='@{/general_board}'|">취소</button>
-			</div>
-		</form>
 	</div>
+</body>
+
+</html>
