@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="css/bootstrap.css">  
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
-    <div id="container">
+<body ng-app="myApp">
+    <div id="container" ng-controller="BoardCtrl">
 		<div class="head">
             <button type="button" class="ipp_btn" th:onclick="|location.href='@{/main_display}'|">IPP <span class="span">게시판</span></button>
             <ul class="menu">
@@ -21,10 +21,10 @@
     <div class="board_best">
         <h3>게시글 베스트</h3>
         <ul class="best">
-            <li><button type="button" class="best_btn" onclick="location.href='' ">게시물 1</button></li>
-            <li><button type="button" class="best_btn" onclick="location.href='' ">게시물 2</button></li>
-            <li><button type="button" class="best_btn" onclick="location.href='' ">게시물 3</button></li>
-            <li><button type="button" class="best_btn" onclick="location.href='' ">게시물 4</button></li>  
+            <li><button type="button" class="best_btn" onclick="location.href='#' ">게시물 1</button></li>
+            <li><button type="button" class="best_btn" onclick="location.href='#' ">게시물 2</button></li>
+            <li><button type="button" class="best_btn" onclick="location.href='#' ">게시물 3</button></li>
+            <li><button type="button" class="best_btn" onclick="location.href='#' ">게시물 4</button></li>  
         </ul>
     </div>
     <div class="reply">

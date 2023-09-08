@@ -1,7 +1,9 @@
 var app = angular.module("myApp", ['ngResource']);
 
+
 app.factory('BoardFactory', function($resource) {	// $resource를 매개변수로 한 'BoardFactory' 팩토리 생성
-	return $resource('/board', null, { 				// '/board' 경로로 요청을 보낼 리소스 객체 생성 
+	return $resource('/board/:id', {id: '@_id'}, { 				// '/board' 경로로 요청을 보낼 리소스 객체 생성 
+
 		readBoard: {								
 			method: 'GET', 							// http 요청 메소드를 GET으로 설정
 			headers: {
@@ -10,23 +12,23 @@ app.factory('BoardFactory', function($resource) {	// $resource를 매개변수�
 		},
 		
 		createBoard: {								
-			method: 'POST', 							// http 요청 메소드를 GET으로 설정
+			method: 'POST', 						
 			headers: {
-				"Content- Type": 'application/json', // application/json 타입 선언
+				"Content- Type": 'application/json', 
 			},
 		},
 		
 		updateBoard: {								
-			method: 'PUT', 							// http 요청 메소드를 GET으로 설정
+			method: 'PUT', 							
 			headers: {
-				"Content- Type": 'application/json', // application/json 타입 선언
+				"Content- Type": 'application/json',
 			},
 		},
 		
 		deleteBoard: {									
-			method: 'DELETE', 							// http 요청 메소드를 GET으로 설정
+			method: 'DELETE', 							
 			headers: {
-				"Content- Type": 'application/json', // application/json 타입 선언
+				"Content- Type": 'application/json', 
 			},
 		},
 
