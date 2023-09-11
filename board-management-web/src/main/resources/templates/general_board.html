@@ -58,9 +58,9 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="item in boardlist">
-						<td>{{$index+1}}</td>
-						<td><a th:href="@{board/{{($index+1)}}}">{{item.title}}</a></td>
+					<tr ng-repeat="item in boardlist | orderBy: '-index'">
+						<td>{{item.index}}</td>
+						<td><a th:href="@{board/{{item.index}}}">{{item.title}}</a></td>
 						<td>{{item.userId}}</td>
 						<td>
 							{{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}
