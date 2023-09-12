@@ -9,6 +9,7 @@ public class BoardDTO {
 	private Integer category;
 	private Long createDate;
 
+
 	public Integer getIndex() {  //게시물 index 변환
 		return index;
 	}

@@ -2,15 +2,25 @@ package kr.co.ymtech.bm.controller.dto;
 
 import java.util.Date;
 
+/**
+ * 
+ */
 public class BoardGetDTO {
 
+	// API 작성하는법
+	/** index 설명입니다. */
 	private Integer index;  //게시물 항목 변수 선언
+	/** title 설명입니다. */
 	private String title;
 	private String text;
 	private String userId;
 	private Integer category;
 	private Date createDate;
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Integer getIndex() {  //게시물 index 변환
 		return index;
 	}
