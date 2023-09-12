@@ -3,19 +3,23 @@ package kr.co.ymtech.bm.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-
+/**
+ * 
+ */
 @Repository
 public class BoardRepository implements IBoardRepository {
 
 	@Autowired
 	private  JdbcTemplate jdbcTemplate;
 	
+	/**
+	 * 
+	 */
 	@Override
 	public List<BoardVO> findAll() {
 		
@@ -49,6 +53,9 @@ public class BoardRepository implements IBoardRepository {
 //				rs.getLong("create_date")
 //				));
 	
+	/**
+	 * 
+	 */
 	@Override
 	public Integer boardSave(BoardVO board) {
 	
@@ -62,20 +69,27 @@ public class BoardRepository implements IBoardRepository {
 				); 
 	}
 	
+	/**
+	 * 
+	 */
 	@Override
 	public Integer boardUpdate(BoardVO board) {
 		
-		return jdbcTemplate.update("update board set cotent = ? where Index = ? ",
-				board.getText(),board.getIndex()
-				);
+		return jdbcTemplate.update("update board set cotent = ? where Index = ? ",board.getText(),board.getIndex());
 	}
 	
+	/**
+	 * 
+	 */
 	@Override
 	public Integer boardDelete(Integer index) {
 		
 		return jdbcTemplate.update("update board set title = 'FALSE' where user_id = ?", index);
 	}
 	
+	/**
+	 * 
+	 */
 	@Override
 	public List<BoardVO> indexSearch(Integer index) {
 		

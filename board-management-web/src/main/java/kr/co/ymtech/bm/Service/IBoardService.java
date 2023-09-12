@@ -1,7 +1,6 @@
 package kr.co.ymtech.bm.Service;
 
 import java.util.List;
-
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 
 

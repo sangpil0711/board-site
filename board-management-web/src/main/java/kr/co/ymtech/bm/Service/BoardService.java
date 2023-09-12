@@ -3,14 +3,15 @@ package kr.co.ymtech.bm.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.repository.BoardVO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
 
+/**
+ * 
+ */
 @Service
 public class BoardService implements IBoardService {
 	
@@ -21,6 +22,9 @@ public class BoardService implements IBoardService {
 		this.boardRepository = IboardRepository;
 	}
 	
+	/**
+	 * 
+	 */
 	@Override
 	public List<BoardGetDTO> findAll() {
 		
@@ -36,10 +40,13 @@ public class BoardService implements IBoardService {
 			tmp.setCategory(vo.getCategory());
 			tmp.setCreateDate(new Date(vo.getCreateDate()));
 			findAll.add(tmp);
+			}
+			return findAll;
 		}
-		return findAll;
-	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public Integer boardSave(BoardGetDTO board) {
 		
@@ -53,9 +60,12 @@ public class BoardService implements IBoardService {
 		
 		Integer save = boardRepository.boardSave(vo);
 		
-		return save;
-	}
-		
+			return save;
+		}	
+	
+	/**
+	 * 
+	 */
 	@Override
 	public Integer boardUpdate(BoardGetDTO board) {
 		
@@ -68,12 +78,18 @@ public class BoardService implements IBoardService {
 			return update;
 		}
 		
+	/**
+	 * 
+	 */
 	@Override    
 	public Integer boardDelete(Integer index) {
 		
-		return boardRepository.boardDelete(index);
-	}
+			return boardRepository.boardDelete(index);
+		}
 	
+	/**
+	 * 
+	 */
 	@Override
 	public List<BoardGetDTO> indexSearch(Integer index) {
 		List<BoardVO> list = boardRepository.indexSearch(index);
@@ -88,8 +104,8 @@ public class BoardService implements IBoardService {
 			tmp.setCategory(vo.getCategory());
 			tmp.setCreateDate(new Date(vo.getCreateDate()));
 			res.add(tmp);
+			}
+			return res;
 		}
-		return res;
-	}
 
 }
