@@ -30,19 +30,19 @@
 
 		<div class="general_write">일반게시판 글쓰기</div>
 
-		<form id="board_form">
+		<form id="board_form" th:action="@{/general_board}" method="post">
 
 			<div class="title_write">
 				<p>제목</p>
-				<input id="title" type="text">
+				<input id="title" type="text" name="title" required>
 			</div>
 
 			<div class="content_write">
-				<textarea></textarea>
+				<textarea name="text" required></textarea>
 			</div>
 
 			<div>
-				<button type="button" class="file_btn" onclick="">파일선택<br>(최대 100MB)</button>
+				<button type="button" class="file_btn">파일선택<br>(최대 100MB)</button>
 			</div>
 
 			<div class="file_name">

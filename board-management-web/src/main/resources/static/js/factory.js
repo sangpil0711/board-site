@@ -18,7 +18,7 @@ app.factory('BoardFactory', function($resource) {	// $resource를 매개변수�
 		},
 		
 		updateBoard: {								
-			method: 'PUT', 							
+			method: 'PATCH', 							
 			headers: {
 				"Content-Type": 'application/json',
 			},

@@ -51,8 +51,8 @@
 			</div>
 		</div>
 		<div class="read_btn">
-			<button type="button" th:onclick="|location.href='@{/general_board}'|">목록</button>
-			<button type="button" th:onclick="|location.href='@{/general_update}'|">수정</button>
+			<button type="button" th:onclick="|location.href='@{/board/update/}${dto.index}'|">수정</button>
+			<button type="button" th:onclick="|location.href='@{/general_board}'|">삭제</button>
 		</div>
 
 	</div>

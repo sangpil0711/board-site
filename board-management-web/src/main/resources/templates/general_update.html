@@ -6,6 +6,10 @@
 	<title>웹프로젝트</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
 	<link rel="stylesheet" type=text/css th:href="@{/css/main.css}" />
+	<script type="text/javascript" th:src="@{/js/angular.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/angular-resource.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/angular-route.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/factory.js}"></script>
 	<script type="text/javascript" th:src="@{/js/board.js}"></script>
 </head>
 
@@ -26,21 +30,15 @@
 
 		<div class="general_write">일반게시판 글쓰기</div>
 
-		<form id="board_form">
+		<form id="board_form" th:action="@{'/board/' + ${dto.index}}" method="post">
 
 			<div class="title_write">
 				<p>제목</p>
-				<p>IPP인턴프로젝트</p>
+				<p th:text="${dto.title}"></p>
 			</div>
 
 			<div class="content_write">
-				<textarea>
-IPP인턴프로젝트입니다.
-IPP인턴프로젝트입니다.
-IPP인턴프로젝트입니다.
-IPP인턴프로젝트입니다.
-IPP인턴프로젝트입니다.
-				</textarea>
+				<textarea th:text="${dto.text}" name="newText" required></textarea>
 			</div>
 
 			<div>
@@ -54,7 +52,7 @@ IPP인턴프로젝트입니다.
 
 			<div class="write_decision">
 				<input type="submit" value="수정">
-				<button type="button" th:onclick="|location.href='@{/general_board}'|">취소</button>
+				<button type="button" th:onclick="|location.href='@{/board/}${dto.index}'|">취소</button>
 			</div>
 		</form>
 	</div>
