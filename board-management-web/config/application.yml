@@ -2,22 +2,24 @@ server:
   port: 8000
   
 spring:
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
-  security:
-    user:
-      name: user
-      password: 1111
+  thymeleaf:
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
+    mode: HTML
+    cache: false
   devtools:
     livereload:
       enabled: true
     restart:
-      enabled: true
-  thymeleaf:
-    check-template-location: true
-    prefix: classpath:templates/ 
-    suffix: .html
-    cache: false
-    mode: HTML
+      enabled: true 
+    
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: postgres
+    password: '0000'
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      platform: postgres
+      
