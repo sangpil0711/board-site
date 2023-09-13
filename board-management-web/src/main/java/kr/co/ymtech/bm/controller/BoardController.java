@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,44 +26,36 @@ import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
  */
 @RestController
 public class BoardController {
-
 	/**
 	 * Controller-Service 연결
 	 */
 	@Autowired
 	private final IBoardService boardService;
 
-	/**
-	 * @param boardService
-	 */
 	public BoardController(BoardService boardService) {
 		this.boardService = boardService;
 	}
 	
 	
-	
-	
-	/*
-	 * @RequestMapping(value = "/general_board", method = RequestMethod.GET) public
-	 * String boardpage() {
-	 * 
-	 * 
-	 * 
-	 * return "general_board"; // "/" 경로로 GET을 요청하면 "index.html" 반환 }
-	 */
-	
-	@PostMapping(value = "/general_board")
-	public String writeBoard(@RequestParam("title") String title, @RequestParam("text") String text) {
-
-		BoardDTO newBoard = new BoardDTO();
-		newBoard.setTitle(title);
-		newBoard.setText(text);
-		newBoard.setUserId("admin");
-		newBoard.setCreateDate(System.currentTimeMillis());
-
-		return "redirect:/general_board";
-	}
-	
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	public String homepage() {
+//		return "main_display";
+//	}
+//	
+//	@RequestMapping(value = "/main_display", method = RequestMethod.GET)
+//	public String mainpage() {
+//		return "main_display"; 
+//	}
+//
+//	@RequestMapping(value = "/general_board", method = RequestMethod.GET)
+//	public String boardpage() {
+//		return "general_board";
+//	}
+//
+//	@RequestMapping(value = "/general_write", method = RequestMethod.GET)
+//	public String writepage() {
+//		return "general_write"; 
+//	}
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
@@ -79,7 +70,7 @@ public class BoardController {
 	    modelAndView.addObject("boardlist", boardlist);
 	    return modelAndView;
 	}
-
+	
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드
 	 * 

@@ -26,12 +26,17 @@ public class HomeController {
 
 	@RequestMapping(value = "/main_display", method = RequestMethod.GET)
 	public String mainpage() {
-		return "main_display"; // "/" 경로로 GET을 요청하면 "index.html" 반환
+		return "main_display"; 
+	}
+
+	@RequestMapping(value = "/general_board", method = RequestMethod.GET)
+	public String boardpage() {
+		return "general_board";
 	}
 
 	@RequestMapping(value = "/general_write", method = RequestMethod.GET)
 	public String writepage() {
-		return "general_write"; // "/" 경로로 GET을 요청하면 "index.html" 반환
+		return "general_write"; 
 	}
 	
 	@RequestMapping(value = "/board/update/{id}", method = RequestMethod.GET)
