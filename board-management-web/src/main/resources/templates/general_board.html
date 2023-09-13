@@ -60,7 +60,7 @@
 				<tbody>
 					<tr ng-repeat="item in boardlist | orderBy: '-index'">
 						<td>{{item.index}}</td>
-						<td><a th:href="@{boards/{{item.index}}}">{{item.title}}</a></td>
+						<td><a ng-href="boards/{{item.index}}">{{item.title}}</a></td>
 						<td>{{item.userId}}</td>
 						<td>
 							{{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}

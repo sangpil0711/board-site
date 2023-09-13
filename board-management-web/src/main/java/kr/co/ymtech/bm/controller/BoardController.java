@@ -37,38 +37,18 @@ public class BoardController {
 	}
 	
 	
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String homepage() {
-//		return "main_display";
-//	}
-//	
-//	@RequestMapping(value = "/main_display", method = RequestMethod.GET)
-//	public String mainpage() {
-//		return "main_display"; 
-//	}
-//
-//	@RequestMapping(value = "/general_board", method = RequestMethod.GET)
-//	public String boardpage() {
-//		return "general_board";
-//	}
-//
-//	@RequestMapping(value = "/general_write", method = RequestMethod.GET)
-//	public String writepage() {
-//		return "general_write"; 
-//	}
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
 	 * @return :저장되어 있는 정보를 모두 변수 boardlist에 담고 ResponseEntity 를 사용하여 응답한다. Http
 	 *         상태코드는 HttpStatus.ok 로 성공상태 200을 나타내준다.
 	 */
-	@GetMapping(value = "/general_board")
-	public ModelAndView boardlistGet() {
+	@GetMapping(value = "/boards")
+	public ResponseEntity<List<BoardGetDTO>> boardlistGet() {
+		
 	    List<BoardGetDTO> boardlist = boardService.findAll();
-	    ModelAndView modelAndView = new ModelAndView("general_board");
-	    
-	    modelAndView.addObject("boardlist", boardlist);
-	    return modelAndView;
+
+	    return new ResponseEntity<List<BoardGetDTO>>(boardlist, HttpStatus.OK);
 	}
 	
 	/**

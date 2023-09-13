@@ -15,49 +15,48 @@
 
 <body ng-app="myApp">
 	<div id="container" ng-controller="BoardCtrl">
-		<div class="head">
-			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/main_display}'|">IPP <span
-					class="span">게시판</span></button>
-			<ul class="menu">
-				<li><button type="button" class="btn" th:onclick="|location.href='@{/general_board}'|">일반게시판</button>
-				</li>
-				<li><button type="button" class="btn" th:onclick="|location.href='@{/general_manager}'|">사진게시판</button>
-				</li>
-				<li><button type="button" class="btn" onclick="location.href='dash.html' ">대시보드</button></li>
-				<li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>
-			</ul>
-		</div>
-		<div>
-			<strong>일반게시판</strong>
-		</div>
-		<div class="board_wrap">
-			<div class="board_view">
-				<div class="title" th:text="${dto.title}"></div>
-				<div class="info">
-					<dl>
-						<dt>번호</dt>
-						<dd th:text="${dto.index}"></dd>
-					</dl>
-					<dl>
-						<dt>작성자</dt>
-						<dd th:text="${dto.userId}"></dd>
-					</dl>
-					<dl>
-						<dt>작성일</dt>
-						<dd th:text="${#dates.format(dto.createDate, 'yyyy-MM-dd HH:mm:ss')}"></dd>
-					</dl>
+<!--		<div class="head">-->
+<!--			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/main_display}'|">IPP <span-->
+<!--					class="span">게시판</span></button>-->
+<!--			<ul class="menu">-->
+<!--				<li><button type="button" class="btn" th:onclick="|location.href='@{/general_board}'|">일반게시판</button>-->
+<!--				</li>-->
+<!--				<li><button type="button" class="btn" th:onclick="|location.href='@{/general_manager}'|">사진게시판</button>-->
+<!--				</li>-->
+<!--				<li><button type="button" class="btn" onclick="location.href='dash.html' ">대시보드</button></li>-->
+<!--				<li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>-->
+<!--			</ul>-->
+<!--		</div>-->
+			<div  ng-view>
+				<strong>일반게시판</strong>
+			</div>
+			<div class="board_wrap">
+				<div class="board_view">
+					<div class="title" th:text="${dto.title}"></div>
+					<div class="info">
+						<dl>
+							<dt>번호</dt>
+							<dd th:text="${dto.index}"></dd>
+						</dl>
+						<dl>
+							<dt>작성자</dt>
+							<dd th:text="${dto.userId}"></dd>
+						</dl>
+						<dl>
+							<dt>작성일</dt>
+							<dd th:text="${#dates.format(dto.createDate, 'yyyy-MM-dd HH:mm:ss')}"></dd>
+						</dl>
+					</div>
+					<div class="content" th:text="${dto.text}"></div>
 				</div>
-				<div class="content" th:text="${dto.text}"></div>
+			</div>
+			<div class="read_btn">
+				<button type="button" th:onclick="|location.href='@{/board/update/}${dto.index}'|">수정</button>
+				<form th:action="@{'/board/delete/' + ${dto.index}}" th:method="delete">
+					<button type="submit">삭제</button>
+				</form>
 			</div>
 		</div>
-		<div class="read_btn">
-			<button type="button" th:onclick="|location.href='@{/board/update/}${dto.index}'|">수정</button>
-			<form th:action="@{'/board/delete/' + ${dto.index}}" th:method="delete">
-				<button type="submit">삭제</button>
-			</form>
-		</div>
-
-	</div>
 </body>
 
 </html>

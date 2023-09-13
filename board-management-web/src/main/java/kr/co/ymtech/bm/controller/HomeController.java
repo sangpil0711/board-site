@@ -62,10 +62,10 @@ public class HomeController {
 		return "redirect:/board/{id}";
 	}
 
-	@GetMapping(value = "/board/{id}")
-	public ModelAndView readpage(@PathVariable Integer id) {
+	@GetMapping(value = "/board/{index}")
+	public ModelAndView readpage(@PathVariable Integer index) {
 		ModelAndView model = new ModelAndView();
-		BoardDTO boardDTO = getBoardDTOById(id);
+		BoardDTO boardDTO = getBoardDTOById(index);
 
 		model.addObject("dto", boardDTO);
 		model.setViewName("general_read");
