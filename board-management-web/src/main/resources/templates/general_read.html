@@ -52,7 +52,9 @@
 		</div>
 		<div class="read_btn">
 			<button type="button" th:onclick="|location.href='@{/board/update/}${dto.index}'|">수정</button>
-			<button type="button" th:onclick="|location.href='@{/general_board}'|">삭제</button>
+			<form th:action="@{'/board/delete/' + ${dto.index}}" th:method="delete">
+				<button type="submit">삭제</button>
+			</form>
 		</div>
 
 	</div>

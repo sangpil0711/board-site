@@ -30,7 +30,7 @@
 
 		<div class="general_write">일반게시판 글쓰기</div>
 
-		<form id="board_form" th:action="@{'/board/' + ${dto.index}}" method="post">
+		<form id="board_form" th:action="@{'/board/update/' + ${dto.index}}" th:method="patch">
 
 			<div class="title_write">
 				<p>제목</p>

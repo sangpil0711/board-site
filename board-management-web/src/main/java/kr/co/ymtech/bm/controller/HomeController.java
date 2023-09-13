@@ -18,6 +18,8 @@ import kr.co.ymtech.bm.controller.dto.BoardDTO;
 
 @Controller
 public class HomeController {
+	
+	private List<BoardDTO> boardList = new ArrayList<>();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homepage() {
@@ -38,6 +40,20 @@ public class HomeController {
 	public String writepage() {
 		return "general_write"; // "/" 경로로 GET을 요청하면 "index.html" 반환
 	}
+	
+	@DeleteMapping("/board/delete/{id}")
+    public String deleteBoard(@PathVariable Integer id) {
+		
+		deleteBoardById(id);
+        
+        return "redirect:/general_board";
+    }
+	
+	private void deleteBoardById(Integer id) {
+		
+        boardList.removeIf(boardDTO -> boardDTO.getIndex().equals(id));
+        
+    }
 
 	@RequestMapping(value = "/board/update/{id}", method = RequestMethod.GET)
 	public ModelAndView updatepage(@PathVariable Integer id) {
@@ -51,8 +67,7 @@ public class HomeController {
 		return model;
 	}
 	
-	//@PatchMapping(value = "/board/{id}")
-	@RequestMapping(value = "/board/{id}", method = {RequestMethod.PATCH, RequestMethod.POST})
+	@PatchMapping(value = "/board/update/{id}")
 	public String updateBoard(@PathVariable Integer id, @RequestParam("newText") String newText) {
 
 		BoardDTO newBoard = getBoardDTOById(id);
