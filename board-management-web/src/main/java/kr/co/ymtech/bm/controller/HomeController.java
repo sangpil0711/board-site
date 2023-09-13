@@ -19,8 +19,6 @@ import kr.co.ymtech.bm.controller.dto.BoardDTO;
 @Controller
 public class HomeController {
 	
-	private List<BoardDTO> boardList = new ArrayList<>();
-
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homepage() {
 		return "main_display"; // "/" 경로로 GET을 요청하면 "index.html" 반환
@@ -31,30 +29,11 @@ public class HomeController {
 		return "main_display"; // "/" 경로로 GET을 요청하면 "index.html" 반환
 	}
 
-	@RequestMapping(value = "/general_board", method = RequestMethod.GET)
-	public String boardpage() {
-		return "general_board"; // "/" 경로로 GET을 요청하면 "index.html" 반환
-	}
-
 	@RequestMapping(value = "/general_write", method = RequestMethod.GET)
 	public String writepage() {
 		return "general_write"; // "/" 경로로 GET을 요청하면 "index.html" 반환
 	}
 	
-	@DeleteMapping("/board/delete/{id}")
-    public String deleteBoard(@PathVariable Integer id) {
-		
-		deleteBoardById(id);
-        
-        return "redirect:/general_board";
-    }
-	
-	private void deleteBoardById(Integer id) {
-		
-        boardList.removeIf(boardDTO -> boardDTO.getIndex().equals(id));
-        
-    }
-
 	@RequestMapping(value = "/board/update/{id}", method = RequestMethod.GET)
 	public ModelAndView updatepage(@PathVariable Integer id) {
 
@@ -76,18 +55,6 @@ public class HomeController {
 		System.out.println(newText);
 
 		return "redirect:/board/{id}";
-	}
-
-	@PostMapping(value = "/general_board")
-	public String writeBoard(@RequestParam("title") String title, @RequestParam("text") String text) {
-
-		BoardDTO newBoard = new BoardDTO();
-		newBoard.setTitle(title);
-		newBoard.setText(text);
-		newBoard.setUserId("admin");
-		newBoard.setCreateDate(System.currentTimeMillis());
-
-		return "redirect:/general_board";
 	}
 
 	@GetMapping(value = "/board/{id}")
@@ -148,4 +115,21 @@ public class HomeController {
 
 		return null;
 	}
+
+
+	/*
+	 * @DeleteMapping("/board/delete/{id}") public String deleteBoard(@PathVariable
+	 * Integer id) {
+	 * 
+	 * deleteBoardById(id);
+	 * 
+	 * return "redirect:/general_board"; }
+	 * 
+	 * private void deleteBoardById(Integer id) {
+	 * 
+	 * boardList.removeIf(boardDTO -> boardDTO.getIndex().equals(id));
+	 * 
+	 * }
+	 */
+
 }

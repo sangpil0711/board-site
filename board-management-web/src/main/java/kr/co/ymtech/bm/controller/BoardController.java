@@ -1,6 +1,7 @@
 package kr.co.ymtech.bm.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,15 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
 import kr.co.ymtech.bm.Service.BoardService;
 import kr.co.ymtech.bm.Service.IBoardService;
+import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 
 /**
@@ -33,19 +40,44 @@ public class BoardController {
 	public BoardController(BoardService boardService) {
 		this.boardService = boardService;
 	}
+	
+	
+	
+	
+	/*
+	 * @RequestMapping(value = "/general_board", method = RequestMethod.GET) public
+	 * String boardpage() {
+	 * 
+	 * 
+	 * 
+	 * return "general_board"; // "/" 경로로 GET을 요청하면 "index.html" 반환 }
+	 */
+	
+	@PostMapping(value = "/general_board")
+	public String writeBoard(@RequestParam("title") String title, @RequestParam("text") String text) {
 
+		BoardDTO newBoard = new BoardDTO();
+		newBoard.setTitle(title);
+		newBoard.setText(text);
+		newBoard.setUserId("admin");
+		newBoard.setCreateDate(System.currentTimeMillis());
+
+		return "redirect:/general_board";
+	}
+	
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
 	 * @return :저장되어 있는 정보를 모두 변수 boardlist에 담고 ResponseEntity 를 사용하여 응답한다. Http
 	 *         상태코드는 HttpStatus.ok 로 성공상태 200을 나타내준다.
 	 */
-	@GetMapping(value = "/boards")
-	public ResponseEntity<List<BoardGetDTO>> boardlistGet() {
-
-		List<BoardGetDTO> boardlist = boardService.findAll();
-
-		return new ResponseEntity<List<BoardGetDTO>>(boardlist, HttpStatus.OK);
+	@GetMapping(value = "/general_board")
+	public ModelAndView boardlistGet() {
+	    List<BoardGetDTO> boardlist = boardService.findAll();
+	    ModelAndView modelAndView = new ModelAndView("general_board");
+	    
+	    modelAndView.addObject("boardlist", boardlist);
+	    return modelAndView;
 	}
 
 	/**
