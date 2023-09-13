@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import kr.co.ymtech.bm.Service.BoardService;
 import kr.co.ymtech.bm.Service.IBoardService;
@@ -20,20 +22,36 @@ import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
  */
 @RestController
 public class BoardController {
-
 	/**
 	 * Controller-Service 연결
 	 */
 	@Autowired
 	private final IBoardService boardService;
 
-	/**
-	 * @param boardService
-	 */
 	public BoardController(BoardService boardService) {
 		this.boardService = boardService;
 	}
-
+	
+	
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	public String homepage() {
+//		return "main_display";
+//	}
+//	
+//	@RequestMapping(value = "/main_display", method = RequestMethod.GET)
+//	public String mainpage() {
+//		return "main_display"; 
+//	}
+//
+//	@RequestMapping(value = "/general_board", method = RequestMethod.GET)
+//	public String boardpage() {
+//		return "general_board";
+//	}
+//
+//	@RequestMapping(value = "/general_write", method = RequestMethod.GET)
+//	public String writepage() {
+//		return "general_write"; 
+//	}
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
@@ -47,7 +65,7 @@ public class BoardController {
 
 		return new ResponseEntity<List<BoardGetDTO>>(boardlist, HttpStatus.OK);
 	}
-
+	
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드
 	 * 
