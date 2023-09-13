@@ -1,6 +1,6 @@
 server:
   port: 8000
-  
+
 spring:
   thymeleaf:
     prefix: classpath:/templates/
@@ -12,14 +12,13 @@ spring:
     livereload:
       enabled: true
     restart:
-      enabled: true 
-    
+      enabled: true
+
   datasource:
     url: jdbc:postgresql://localhost:5432/testdb
     username: postgres
-    password: '0000'
+    password: "0000"
     driver-class-name: org.postgresql.Driver
   sql:
     init:
       platform: postgres
-      
