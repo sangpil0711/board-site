@@ -8,13 +8,18 @@ spring:
     suffix: .html
     mode: HTML
     cache: false
-    
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
   datasource:
     url: jdbc:postgresql://localhost:5432/testdb
     username: postgres
-    password: '0000'
+    password: "0000"
     driver-class-name: org.postgresql.Driver
   sql:
     init:
       platform: postgres
-      
