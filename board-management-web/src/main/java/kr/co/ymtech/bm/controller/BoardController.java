@@ -2,6 +2,9 @@ package kr.co.ymtech.bm.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +38,6 @@ public class BoardController {
 	public BoardController(BoardService boardService) {
 		this.boardService = boardService;
 	}
-	
 	
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
@@ -110,5 +112,5 @@ public class BoardController {
 
 		return new ResponseEntity<List<BoardGetDTO>>(boardlistIndex, HttpStatus.OK);
 	}
-
+	
 }

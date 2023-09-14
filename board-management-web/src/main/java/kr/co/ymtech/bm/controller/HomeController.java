@@ -24,22 +24,23 @@ public class HomeController {
 		return "main_display"; // "/" 경로로 GET을 요청하면 "index.html" 반환
 	}
 
-	@RequestMapping(value = "/main_display", method = RequestMethod.GET)
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainpage() {
-		return "main_display"; 
+		return "main_display";
 	}
 
-	@RequestMapping(value = "/general_board", method = RequestMethod.GET)
+	@RequestMapping(value = "/board", method = RequestMethod.GET)
 	public String boardpage() {
 		return "general_board";
 	}
 
-	@RequestMapping(value = "/general_write", method = RequestMethod.GET)
+	@RequestMapping(value = "/board/write", method = RequestMethod.GET)
 	public String writepage() {
 		return "general_write"; 
 	}
 	
-	@RequestMapping(value = "/board/update/{id}", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/boards/update/{id}", method = RequestMethod.GET)
 	public ModelAndView updatepage(@PathVariable Integer id) {
 
 		ModelAndView model = new ModelAndView();
@@ -51,7 +52,19 @@ public class HomeController {
 		return model;
 	}
 	
-	@PatchMapping(value = "/board/update/{id}")
+	@PostMapping(value = "/board/write")
+	public String writeBoard(@RequestParam("title") String title, @RequestParam("text") String text) {
+
+		BoardDTO newBoard = new BoardDTO();
+		newBoard.setTitle(title);
+		newBoard.setText(text);
+		newBoard.setUserId("admin");
+		newBoard.setCreateDate(System.currentTimeMillis());
+
+		return "redirect:/board";
+	}
+	
+	@PatchMapping(value = "/boards/update/{id}")
 	public String updateBoard(@PathVariable Integer id, @RequestParam("newText") String newText) {
 
 		BoardDTO newBoard = getBoardDTOById(id);
