@@ -58,7 +58,7 @@ public class BoardController {
 	 * 
 	 * @param : board는 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
 	 * 
-	 * @return : 게시물을 DB에 저장하고 성공하면 1 실패하면 0을 boardlistSave 변수에 담아 반환한다.
+	 * @return : 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환한다.
 	 */
 	@PostMapping(value = "/boards")
 	public ResponseEntity<Integer> boardSave(@RequestBody BoardGetDTO board) {

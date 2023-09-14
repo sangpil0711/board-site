@@ -64,8 +64,8 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer boardSave(BoardVO board) {
 
-		return jdbcTemplate.update("insert into board values(?, ?, ?, ?, ?, ?)", 
-				board.getIndex(), 
+		return jdbcTemplate.update("insert into board(title, content, user_Id, category, create_Date) values(?, ?, ?, ?, ?)", 
+//				board.getIndex(), 
 				board.getTitle(),
 				board.getText(), 
 				board.getUserId(), 
@@ -73,14 +73,14 @@ public class BoardRepository implements IBoardRepository {
 				board.getCreateDate()
 				);
 	}
-
+	
 	/**
 	 * 게시물 내용(text)을 수정 하는 메소드
 	 */
 	@Override
 	public Integer boardUpdate(BoardVO board) {
 
-		return jdbcTemplate.update("update board set cotent = ? where Index = ? ", board.getText(), board.getIndex());
+		return jdbcTemplate.update("update board set cotent = ? where index = ? ", board.getText(), board.getIndex());
 	}
 
 	/**

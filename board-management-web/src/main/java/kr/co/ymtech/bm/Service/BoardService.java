@@ -14,7 +14,7 @@ import kr.co.ymtech.bm.repository.IBoardRepository;
  */
 @Service
 public class BoardService implements IBoardService {
-
+	
 	/**
 	 * Service-Repository 연결
 	 */
@@ -54,7 +54,7 @@ public class BoardService implements IBoardService {
 	public Integer boardSave(BoardGetDTO board) {
 
 		BoardVO vo = new BoardVO(); // dto -> vo 변환
-		vo.setIndex(board.getIndex());
+//		vo.setIndex(board.getIndex());
 		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
 		vo.setUserId(board.getUserId());

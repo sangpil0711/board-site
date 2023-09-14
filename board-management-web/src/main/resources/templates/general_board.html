@@ -16,12 +16,12 @@
 <body ng-app="myApp">
 	<div id="container" ng-controller="BoardCtrl">
 		<div class="head">
-			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/display}'|">IPP <span
+			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/main}'|">IPP <span
 					class="span">게시판</span></button>
 			<ul class="menu">
 				<li><button type="button" class="btn" th:onclick="|location.href='@{/board}'|">일반게시판</button>
 				</li>
-				<li><button type="button" class="btn" th:onclick="|location.href='@{/general_manager}'|">사진게시판</button>
+				<li><button type="button" class="btn" th:onclick="|location.href='@{/board}'|">사진게시판</button>
 				</li>
 				<li><button type="button" class="btn" onclick="location.href='dash.html' ">대시보드</button></li>
 				<li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>

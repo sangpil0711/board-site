@@ -3,6 +3,7 @@ package kr.co.ymtech.bm.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,11 +15,24 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.co.ymtech.bm.Service.BoardService;
+import kr.co.ymtech.bm.Service.IBoardService;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
+import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 
 @Controller
 public class HomeController {
 	
+	@Autowired
+	private final IBoardService boardService;
+
+	public HomeController(BoardService boardService) {
+		this.boardService = boardService;
+	}
+	
+
+	private List<BoardDTO> boardList = new ArrayList<>();
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homepage() {
 		return "main_display"; // "/" 경로로 GET을 요청하면 "index.html" 반환
@@ -44,9 +58,9 @@ public class HomeController {
 	public ModelAndView updatepage(@PathVariable Integer id) {
 
 		ModelAndView model = new ModelAndView();
-		BoardDTO boardDTO = getBoardDTOById(id);
+		BoardDTO board = getBoardDTOById(id);
 
-		model.addObject("dto", boardDTO);
+		model.addObject("dto", board);
 		model.setViewName("general_update");
 
 		return model;
@@ -75,14 +89,26 @@ public class HomeController {
 		return "redirect:/board/{id}";
 	}
 
+	@PostMapping(value = "/general_board")
+	public String writeBoard(@RequestParam("title") String title, @RequestParam("text") String text) {
+
+		BoardDTO newBoard = new BoardDTO();
+		newBoard.setTitle(title);
+		newBoard.setText(text);
+		newBoard.setUserId("admin");
+		newBoard.setCreateDate(System.currentTimeMillis());
+
+		return "redirect:/general_board";
+	}
+
 	@GetMapping(value = "/board/{index}")
 	public ModelAndView readpage(@PathVariable Integer index) {
 		ModelAndView model = new ModelAndView();
-		BoardDTO boardDTO = getBoardDTOById(index);
+		List<BoardGetDTO> boardlistIndex = boardService.indexSearch(index);
 
-		model.addObject("dto", boardDTO);
+		model.addObject("dto", boardlistIndex);
 		model.setViewName("general_read");
-
+		
 		return model;
 	}
 
