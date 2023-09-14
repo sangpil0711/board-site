@@ -32,26 +32,6 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 	
-	
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String homepage() {
-//		return "main_display";
-//	}
-//	
-//	@RequestMapping(value = "/main_display", method = RequestMethod.GET)
-//	public String mainpage() {
-//		return "main_display"; 
-//	}
-//
-//	@RequestMapping(value = "/general_board", method = RequestMethod.GET)
-//	public String boardpage() {
-//		return "general_board";
-//	}
-//
-//	@RequestMapping(value = "/general_write", method = RequestMethod.GET)
-//	public String writepage() {
-//		return "general_write"; 
-//	}
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
@@ -71,7 +51,7 @@ public class BoardController {
 	 * 
 	 * @param : board는 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
 	 * 
-	 * @return : 게시물을 DB에 저장하고 성공하면 1 실패하면 0을 boardlistSave 변수에 담아 반환한다.
+	 * @return : 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환한다.
 	 */
 	@PostMapping(value = "/boards")
 	public ResponseEntity<Integer> boardSave(@RequestBody BoardGetDTO board) {

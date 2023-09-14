@@ -94,7 +94,7 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
-s
+
 	<build>
 		<plugins>
 			<plugin>
