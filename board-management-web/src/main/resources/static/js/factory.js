@@ -5,6 +5,7 @@ app.factory('BoardFactory', function($resource) {	// $resource를 매개변수�
 
 		readBoard: {								
 			method: 'GET', 							// http 요청 메소드를 GET으로 설정
+			isArray: true,
 			headers: {
 				"Content-Type": 'application/json', // application/json 타입 선언
 			},

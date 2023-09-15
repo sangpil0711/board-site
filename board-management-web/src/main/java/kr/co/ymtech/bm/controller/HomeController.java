@@ -29,9 +29,6 @@ public class HomeController {
 	public HomeController(BoardService boardService) {
 		this.boardService = boardService;
 	}
-	
-
-	private List<BoardDTO> boardList = new ArrayList<>();
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homepage() {
@@ -89,31 +86,20 @@ public class HomeController {
 		return "redirect:/board/{id}";
 	}
 
-	@PostMapping(value = "/general_board")
-	public String writeBoard(@RequestParam("title") String title, @RequestParam("text") String text) {
-
-		BoardDTO newBoard = new BoardDTO();
-		newBoard.setTitle(title);
-		newBoard.setText(text);
-		newBoard.setUserId("admin");
-		newBoard.setCreateDate(System.currentTimeMillis());
-
-		return "redirect:/general_board";
-	}
-
 	@GetMapping(value = "/board/{index}")
 	public ModelAndView readpage(@PathVariable Integer index) {
+		
 		ModelAndView model = new ModelAndView();
-		List<BoardGetDTO> boardlistIndex = boardService.indexSearch(index);
-
-		model.addObject("dto", boardlistIndex);
+		
 		model.setViewName("general_read");
+		
+		model.addObject("index", index);
 		
 		return model;
 	}
 
-	private BoardDTO getBoardDTOById(Integer id) {
-		if (id == 1) {
+	private BoardDTO getBoardDTOById(Integer index) {
+		if (index == 1) {
 			BoardDTO dto1 = new BoardDTO();
 			dto1.setIndex(1);
 			dto1.setTitle("Sample Title 1");
@@ -124,7 +110,7 @@ public class HomeController {
 			return dto1;
 		}
 
-		else if (id == 2) {
+		else if (index == 2) {
 			BoardDTO dto2 = new BoardDTO();
 			dto2.setIndex(2);
 			dto2.setTitle("Sample Title 2");
@@ -135,7 +121,7 @@ public class HomeController {
 			return dto2;
 		}
 
-		else if (id == 3) {
+		else if (index == 3) {
 			BoardDTO dto3 = new BoardDTO();
 			dto3.setIndex(3);
 			dto3.setTitle("Sample Title 3");
@@ -146,7 +132,7 @@ public class HomeController {
 			return dto3;
 		}
 
-		else if (id == 4) {
+		else if (index == 4) {
 			BoardDTO dto4 = new BoardDTO();
 			dto4.setIndex(4);
 			dto4.setTitle("Sample Title 4");
