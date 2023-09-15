@@ -10,16 +10,16 @@ public interface IBoardRepository {
 	List<BoardVO> findAll();
 	
 	// 게시물 저장
-	Integer boardSave(BoardVO board);
+	Integer saveBoard(BoardVO board);
 	
 	// 게시물 수정
-	Integer boardUpdate(BoardVO board);
+	Integer updateBoard(BoardVO board);
 	
 	// 게시물 삭제
-	Integer boardDelete(Integer index);
+	Integer deleteBoard(Integer index);
 
 	// 특정 인덱스의 게시물 조회
-	List<BoardVO> indexSearch(Integer index);
+	List<BoardVO> searchByIndex(Integer index);
 
 
 	
