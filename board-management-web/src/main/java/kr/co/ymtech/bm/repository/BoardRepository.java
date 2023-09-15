@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import kr.co.ymtech.bm.repository.vo.BoardVO;
+
 /**
  * 일반게시판 Repository 클래스
  */

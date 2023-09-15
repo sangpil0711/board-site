@@ -1,21 +1,20 @@
-package kr.co.ymtech.bm.Service;
+package kr.co.ymtech.bm.service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
-import kr.co.ymtech.bm.repository.BoardVO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
+import kr.co.ymtech.bm.repository.vo.BoardVO;
 
 /**
  * 일반게시판 Service 클래스
  */
 @Service
 public class BoardService implements IBoardService {
-	
+
 	/**
 	 * Service-Repository 연결
 	 */
@@ -60,9 +59,7 @@ public class BoardService implements IBoardService {
 		vo.setText(board.getText());
 		vo.setUserId(board.getUserId());
 		vo.setCategory(board.getCategory());
-		
-		Instant currentTime = Instant.now();
-		vo.setCreateDate(currentTime.toEpochMilli());
+		vo.setCreateDate(new Date().getTime());
 
 		Integer save = boardRepository.saveBoard(vo);
 

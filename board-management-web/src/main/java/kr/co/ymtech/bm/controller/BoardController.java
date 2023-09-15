@@ -11,16 +11,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import kr.co.ymtech.bm.Service.BoardService;
-import kr.co.ymtech.bm.Service.IBoardService;
+
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
+import kr.co.ymtech.bm.service.BoardService;
+import kr.co.ymtech.bm.service.IBoardService;
 
 /**
  * 일반게시판 Controller 클래스 객체에 데이터를 담아 반환해야 하니 RestController 사용
  */
 @RestController
 public class BoardController {
-	
+
 	/**
 	 * Controller-Service 연결
 	 */

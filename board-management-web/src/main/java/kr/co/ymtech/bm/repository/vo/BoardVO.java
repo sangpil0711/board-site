@@ -1,8 +1,8 @@
-package kr.co.ymtech.bm.repository;
+package kr.co.ymtech.bm.repository.vo;
 
 public class BoardVO {
 
-	private Integer index; // 게시물 항목 변수 선언
+	private Integer index;
 	private String title;
 	private String text;
 	private String userId;
@@ -68,6 +68,25 @@ public class BoardVO {
 
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
+	}
+	
+	@Override
+	public String toString() { // 게시물 항목을 문자열로 변환하여 반환
+		StringBuilder builder = new StringBuilder();
+		builder.append("BoardDTO [index=");
+		builder.append(index);
+		builder.append(", title=");
+		builder.append(title);
+		builder.append(", text=");
+		builder.append(text);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", category=");
+		builder.append(category);
+		builder.append(", createDate=");
+		builder.append(createDate);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

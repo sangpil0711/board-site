@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import kr.co.ymtech.bm.Service.BoardService;
-import kr.co.ymtech.bm.Service.IBoardService;
+
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
+import kr.co.ymtech.bm.service.BoardService;
+import kr.co.ymtech.bm.service.IBoardService;
 
 @Controller
 public class HomeController {
@@ -101,12 +102,11 @@ public class HomeController {
 	@GetMapping(value = "/board/{index}")
 	public ModelAndView readpage(@PathVariable Integer index) {
 		ModelAndView model = new ModelAndView();
-		BoardDTO Board = new BoardDTO();
-
-		model.addObject("dto", Board);
-		model.setViewName("general_read");
-
-		return model;
+	      
+	      model.setViewName("general_read");
+	      model.addObject("index", index);
+	      
+	      return model;
 	}
 
 	private BoardDTO getBoardDTOById(Integer id) {

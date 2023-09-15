@@ -1,4 +1,4 @@
-package kr.co.ymtech.bm.Service;
+package kr.co.ymtech.bm.service;
 
 import java.util.List;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
@@ -8,7 +8,13 @@ public interface IBoardService {
 	// 모든 게시물 조회
 	public List<BoardGetDTO> findAll();
 
-	// 게시물 저장
+	/**
+	 * 
+	 * @param board
+	 * @return
+	 * 
+	 * 
+	 */
 	Integer saveBoard(BoardGetDTO board);
 
 	// 게시물 수정
