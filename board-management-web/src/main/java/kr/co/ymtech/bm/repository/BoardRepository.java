@@ -62,7 +62,7 @@ public class BoardRepository implements IBoardRepository {
 	 * 게시물 정보를 저장하는 메소드
 	 */
 	@Override
-	public Integer boardSave(BoardVO board) {
+	public Integer saveBoard(BoardVO board) {
 
 		return jdbcTemplate.update("insert into board(title, content, user_Id, category, create_Date) values(?, ?, ?, ?, ?)", 
 //				board.getIndex(), 
@@ -78,7 +78,7 @@ public class BoardRepository implements IBoardRepository {
 	 * 게시물 내용(text)을 수정 하는 메소드
 	 */
 	@Override
-	public Integer boardUpdate(BoardVO board) {
+	public Integer updateBoard(BoardVO board) {
 
 		return jdbcTemplate.update("update board set cotent = ? where index = ? ", board.getText(), board.getIndex());
 	}
@@ -87,7 +87,7 @@ public class BoardRepository implements IBoardRepository {
 	 * 게시물을 삭제하는 메소드
 	 */
 	@Override
-	public Integer boardDelete(Integer index) {
+	public Integer deleteBoard(Integer index) {
 
 		return jdbcTemplate.update("delete from board where index = ?", index);
 	}
@@ -96,7 +96,7 @@ public class BoardRepository implements IBoardRepository {
 	 * 특정 게시물 번호를 이용하여 해당 번호의 정보를 조회하는 메소드
 	 */
 	@Override
-	public List<BoardVO> indexSearch(Integer index) {
+	public List<BoardVO> searchByIndex(Integer index) {
 
 		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
 

@@ -2,7 +2,6 @@ package kr.co.ymtech.bm.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,22 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import kr.co.ymtech.bm.Service.BoardService;
 import kr.co.ymtech.bm.Service.IBoardService;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
-import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	private final IBoardService boardService;
 
 	public HomeController(BoardService boardService) {
 		this.boardService = boardService;
 	}
-	
 
 	private List<BoardDTO> boardList = new ArrayList<>();
 
@@ -40,7 +36,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainpage() {
-		return "main_display"; 
+		return "main_display";
 	}
 
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
@@ -50,22 +46,22 @@ public class HomeController {
 
 	@RequestMapping(value = "/board/write", method = RequestMethod.GET)
 	public String writepage() {
-		return "general_write"; 
+		return "general_write";
 	}
-	
+
 	@DeleteMapping("/board/delete/{id}")
-    public String deleteBoard(@PathVariable Integer id) {
-		
+	public String deleteBoard(@PathVariable Integer id) {
+
 		deleteBoardById(id);
-        
-        return "redirect:/general_board";
-    }
-	
+
+		return "redirect:/general_board";
+	}
+
 	private void deleteBoardById(Integer id) {
-		
-        boardList.removeIf(boardDTO -> boardDTO.getIndex().equals(id));
-        
-    }
+
+		boardList.removeIf(boardDTO -> boardDTO.getIndex().equals(id));
+
+	}
 
 	@RequestMapping(value = "/board/update/{id}", method = RequestMethod.GET)
 	public ModelAndView updatepage(@PathVariable Integer id) {
@@ -78,13 +74,13 @@ public class HomeController {
 
 		return model;
 	}
-	
+
 	@PatchMapping(value = "/board/update/{id}")
 	public String updateBoard(@PathVariable Integer id, @RequestParam("newText") String newText) {
 
 		BoardDTO newBoard = getBoardDTOById(id);
 		newBoard.setText(newText);
-		
+
 		System.out.println(newText);
 
 		return "redirect:/board/{id}";
@@ -105,11 +101,11 @@ public class HomeController {
 	@GetMapping(value = "/board/{index}")
 	public ModelAndView readpage(@PathVariable Integer index) {
 		ModelAndView model = new ModelAndView();
-		List<BoardGetDTO> boardlistIndex = boardService.indexSearch(index);
+		BoardDTO Board = new BoardDTO();
 
-		model.addObject("dto", boardlistIndex);
+		model.addObject("dto", Board);
 		model.setViewName("general_read");
-		
+
 		return model;
 	}
 

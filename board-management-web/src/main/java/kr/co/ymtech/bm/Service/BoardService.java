@@ -1,5 +1,6 @@
 package kr.co.ymtech.bm.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +52,7 @@ public class BoardService implements IBoardService {
 	 * 게시물 정보를 저장하는 메소드
 	 */
 	@Override
-	public Integer boardSave(BoardGetDTO board) {
+	public Integer saveBoard(BoardGetDTO board) {
 
 		BoardVO vo = new BoardVO(); // dto -> vo 변환
 //		vo.setIndex(board.getIndex());
@@ -59,9 +60,11 @@ public class BoardService implements IBoardService {
 		vo.setText(board.getText());
 		vo.setUserId(board.getUserId());
 		vo.setCategory(board.getCategory());
-		vo.setCreateDate(new Date().getTime());
+		
+		Instant currentTime = Instant.now();
+		vo.setCreateDate(currentTime.toEpochMilli());
 
-		Integer save = boardRepository.boardSave(vo);
+		Integer save = boardRepository.saveBoard(vo);
 
 		return save;
 	}
@@ -70,13 +73,13 @@ public class BoardService implements IBoardService {
 	 * 게시물 내용(text)을 수정 하는 메소드
 	 */
 	@Override
-	public Integer boardUpdate(BoardGetDTO board) {
+	public Integer updateBoard(BoardGetDTO board) {
 
 		BoardVO vo = new BoardVO(); // dto -> vo 변환
 		vo.setIndex(board.getIndex());
 		vo.setText(board.getText());
 
-		Integer update = boardRepository.boardUpdate(vo);
+		Integer update = boardRepository.updateBoard(vo);
 
 		return update;
 	}
@@ -85,17 +88,17 @@ public class BoardService implements IBoardService {
 	 * 게시물을 삭제하는 메소드
 	 */
 	@Override
-	public Integer boardDelete(Integer index) {
+	public Integer deleteBoard(Integer index) {
 
-		return boardRepository.boardDelete(index);
+		return boardRepository.deleteBoard(index);
 	}
 
 	/**
 	 * 특정 게시물 번호를 이용하여 해당 번호의 정보를 조회하는 메소드
 	 */
 	@Override
-	public List<BoardGetDTO> indexSearch(Integer index) {
-		List<BoardVO> list = boardRepository.indexSearch(index);
+	public List<BoardGetDTO> searchByIndex(Integer index) {
+		List<BoardVO> list = boardRepository.searchByIndex(index);
 
 		List<BoardGetDTO> res = new ArrayList<>(); // vo -> dto 변환
 		for (BoardVO vo : list) {
@@ -105,7 +108,7 @@ public class BoardService implements IBoardService {
 			tmp.setText(vo.getText());
 			tmp.setUserId(vo.getUserId());
 			tmp.setCategory(vo.getCategory());
-			tmp.setCreateDate(new Date(vo.getCreateDate()));
+			tmp.setCreateDate(new Date(vo.getCreateDate())); //
 			res.add(tmp);
 		}
 		return res;

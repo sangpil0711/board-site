@@ -9,15 +9,15 @@ public interface IBoardService {
 	public List<BoardGetDTO> findAll();
 
 	// 게시물 저장
-	Integer boardSave(BoardGetDTO board);
+	Integer saveBoard(BoardGetDTO board);
 
 	// 게시물 수정
-	Integer boardUpdate(BoardGetDTO board);
+	Integer updateBoard(BoardGetDTO board);
 
 	// 게시물 삭제
-	Integer boardDelete(Integer index);
+	Integer deleteBoard(Integer index);
 
 	// 특정 인덱스의 게시물 조회
-	public List<BoardGetDTO> indexSearch(Integer index);
+	public List<BoardGetDTO> searchByIndex(Integer index);
 
 }

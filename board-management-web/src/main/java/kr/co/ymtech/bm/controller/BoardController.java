@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import kr.co.ymtech.bm.Service.BoardService;
 import kr.co.ymtech.bm.Service.IBoardService;
@@ -22,6 +20,7 @@ import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
  */
 @RestController
 public class BoardController {
+	
 	/**
 	 * Controller-Service 연결
 	 */
@@ -31,7 +30,7 @@ public class BoardController {
 	public BoardController(BoardService boardService) {
 		this.boardService = boardService;
 	}
-	
+
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
@@ -39,13 +38,13 @@ public class BoardController {
 	 *         상태코드는 HttpStatus.ok 로 성공상태 200을 나타내준다.
 	 */
 	@GetMapping(value = "/boards")
-	public ResponseEntity<List<BoardGetDTO>> boardlistGet() {
+	public ResponseEntity<List<BoardGetDTO>> findAll() {
 
 		List<BoardGetDTO> boardlist = boardService.findAll();
 
 		return new ResponseEntity<List<BoardGetDTO>>(boardlist, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드
 	 * 
@@ -54,9 +53,9 @@ public class BoardController {
 	 * @return : 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환한다.
 	 */
 	@PostMapping(value = "/boards")
-	public ResponseEntity<Integer> boardSave(@RequestBody BoardGetDTO board) {
+	public ResponseEntity<Integer> saveBoard(@RequestBody BoardGetDTO board) {
 
-		Integer boardlistSave = boardService.boardSave(board);
+		Integer boardlistSave = boardService.saveBoard(board);
 
 		return new ResponseEntity<Integer>(boardlistSave, HttpStatus.OK);
 	}
@@ -69,9 +68,9 @@ public class BoardController {
 	 * @return : 업데이트 한 게시물 내용을 boardlistUpdate 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 */
 	@PatchMapping("/boards")
-	public ResponseEntity<Integer> boardUpdate(@RequestBody BoardGetDTO board) {
+	public ResponseEntity<Integer> updateBoard(@RequestBody BoardGetDTO board) {
 
-		Integer boardlistUpdate = boardService.boardUpdate(board);
+		Integer boardlistUpdate = boardService.updateBoard(board);
 
 		return new ResponseEntity<Integer>(boardlistUpdate, HttpStatus.OK);
 	}
@@ -84,9 +83,9 @@ public class BoardController {
 	 * @return : 게시물을 삭제 후 boardlistDelete 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 */
 	@DeleteMapping("/boards/{index}")
-	public ResponseEntity<Integer> boardDelete(@PathVariable Integer index) {
+	public ResponseEntity<Integer> deleteBoard(@PathVariable Integer index) {
 
-		Integer boardlistDelete = boardService.boardDelete(index);
+		Integer boardlistDelete = boardService.deleteBoard(index);
 
 		return new ResponseEntity<Integer>(boardlistDelete, HttpStatus.OK);
 	}
@@ -99,9 +98,9 @@ public class BoardController {
 	 * @return : 해당 번호의 게시물 정보를 boardlistIndex 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 */
 	@GetMapping("/boards/{index}")
-	public ResponseEntity<List<BoardGetDTO>> indexSearch(@PathVariable Integer index) {
+	public ResponseEntity<List<BoardGetDTO>> searchByIndex(@PathVariable Integer index) {
 
-		List<BoardGetDTO> boardlistIndex = boardService.indexSearch(index);
+		List<BoardGetDTO> boardlistIndex = boardService.searchByIndex(index);
 
 		return new ResponseEntity<List<BoardGetDTO>>(boardlistIndex, HttpStatus.OK);
 	}
