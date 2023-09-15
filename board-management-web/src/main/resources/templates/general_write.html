@@ -16,10 +16,10 @@
 <body>
 	<div id="container">
 		<div class="head">
-			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/main_display}'|">IPP <span
+			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/main}'|">IPP <span
 					class="span">게시판</span></button>
 			<ul class="menu">
-				<li><button type="button" class="btn" th:onclick="|location.href='@{/general_board}'|">일반게시판</button>
+				<li><button type="button" class="btn" th:onclick="|location.href='@{/board}'|">일반게시판</button>
 				</li>
 				<li><button type="button" class="btn" th:onclick="|location.href='@{/general_manager}'|">사진게시판</button>
 				</li>
@@ -30,7 +30,7 @@
 
 		<div class="general_write">일반게시판 글쓰기</div>
 
-		<form id="board_form" th:action="@{/general_board}" method="post">
+		<form id="board_form" th:action="@{/board}" method="post">
 
 			<div class="title_write">
 				<p>제목</p>
@@ -52,7 +52,7 @@
 
 			<div class="write_decision">
 				<input type="submit" value="작성완료">
-				<button type="button" th:onclick="|location.href='@{/general_board}'|">취소</button>
+				<button type="button" th:onclick="|location.href='@{/board}'|">취소</button>
 			</div>
 		</form>
 	</div>

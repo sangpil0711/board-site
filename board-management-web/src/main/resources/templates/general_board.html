@@ -11,6 +11,9 @@
 	<script type="text/javascript" th:src="@{/js/angular-route.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/factory.js}"></script>
 	<script type="text/javascript" th:src="@{/js/board.js}"></script>
+	<script>
+		var current;
+	</script>
 </head>
 
 <body ng-app="myApp">
@@ -19,7 +22,7 @@
 			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/main}'|">IPP <span
 					class="span">게시판</span></button>
 			<ul class="menu">
-				<li><button type="button" class="btn" th:onclick="|location.href='@{/boards}'|">일반게시판</button>
+				<li><button type="button" class="btn" th:onclick="|location.href='@{/board}'|">일반게시판</button>
 				</li>
 				<li><button type="button" class="btn" th:onclick="|location.href='@{/board}'|">사진게시판</button>
 				</li>
@@ -27,13 +30,14 @@
 				<li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>
 			</ul>
 		</div>
+		
 		<div>
 			<button type="button" class="write_btn" th:onclick="|location.href='@{/board/write}'|">글쓰기</buttton>
 		</div>
 
 		<div>
 			<input type="text" class="search">
-			<button type="button" class="search_btn" onclick="location.href='board_write.html' ">검색</buttton>
+			<button type="button" class="search_btn">검색</buttton>
 		</div>
 
 		<div>
@@ -60,7 +64,7 @@
 				<tbody>
 					<tr ng-repeat="item in boardlist | orderBy: '-index'">
 						<td>{{item.index}}</td>
-						<td><a th:href="@{/board/{{item.index}}}">{{item.title}}</a></td>
+						<td><a ng-href="board/{{item.index}}">{{item.title}}</a></td>
 						<td>{{item.userId}}</td>
 						<td>
 							{{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}

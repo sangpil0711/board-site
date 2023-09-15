@@ -1,15 +1,18 @@
-app.controller("BoardCtrl", function($scope, BoardFactory) { // 'myCtrl' 컨트롤러 생성
+app.controller("BoardCtrl", function($scope, BoardFactory) {
 
-	BoardFactory.query({}, function(res) { // 'BoardFactory'의 'query'메소드 호출
-		$scope.boardlist = res; // $scope 객체의 'boardlist'에 데이터 할당
+	BoardFactory.query({}, function(response) {
+		$scope.boardlist = response;
 	});
+
+	$scope.getDataByIndex = function(index) {
+		BoardFactory.readBoard({ index: index }, function(response) {
+			$scope.board = response[0];
+		});
+	};
 	
-	BoardFactory.readBoard({}, function(res) {
-		$scope.board = res;
-	});
+	if (current != undefined) {
+		let index = current;
+		$scope.getDataByIndex(index);
+	}
 	
-	BoardFactory.createBoard({}, function() {
-		
-	});
 });
-

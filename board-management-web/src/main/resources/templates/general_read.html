@@ -11,6 +11,15 @@
 	<script type="text/javascript" th:src="@{/js/angular-route.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/factory.js}"></script>
 	<script type="text/javascript" th:src="@{/js/board.js}"></script>
+	<script th:inline="javascript">
+		
+			/*<![CDATA[*/
+
+			var current = /*[[${index}]]*/;
+			
+			/*]]>*/
+
+	</script>
 </head>
 
 <body ng-app="myApp">
@@ -27,36 +36,33 @@
 				<li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>
 			</ul>
 		</div>
-		<div>
-			<strong>일반게시판</strong>
-		</div>
+		<strong>일반게시판</strong>
 		<div class="board_wrap">
 			<div class="board_view">
-				<div class="title" th:text="${dto.title}"></div>
+				<div class="title">{{board.title}}</div>
 				<div class="info">
 					<dl>
 						<dt>번호</dt>
-						<dd th:text="${dto.index}"></dd>
+						<dd>{{board.index}}</dd>
 					</dl>
 					<dl>
 						<dt>작성자</dt>
-						<dd th:text="${dto.userId}"></dd>
+						<dd>{{board.userId}}</dd>
 					</dl>
 					<dl>
 						<dt>작성일</dt>
-						<dd th:text="${#dates.format(dto.createDate, 'yyyy-MM-dd HH:mm:ss')}"></dd>
+						<dd>{{board.createDate}}</dd>
 					</dl>
 				</div>
-				<div class="content" th:text="${dto.text}"></div>
+				<div class="content">{{board.text}}</div>
 			</div>
 		</div>
 		<div class="read_btn">
-			<button type="button" th:onclick="|location.href='@{/board/update/}${dto.index}'|">수정</button>
-			<form th:action="@{'/board/delete/' + ${dto.index}}" th:method="delete">
+			<button type="button">수정</button>
+			<form>
 				<button type="submit">삭제</button>
 			</form>
 		</div>
-
 	</div>
 </body>
 
