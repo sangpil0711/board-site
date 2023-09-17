@@ -1,12 +1,10 @@
 app.controller("BoardDelete", function($scope, BoardFactory, $window) {
-	
     $scope.remove = function(index) {
 		 BoardFactory.deleteBoard({index: index}, function() {
         if (!index) return; // 예외처리
 
        
             var idx = -1;
-            
             for (var i = 0; i < $scope.boardlist.length; i++) {
                 if ($scope.boardlist[i].index === index) {
                     idx = i;
@@ -15,7 +13,7 @@ app.controller("BoardDelete", function($scope, BoardFactory, $window) {
             }
 
             if (idx === -1) return; // 예외처리
-            
+
             $scope.boardlist.splice(idx, 1); // JavaScript에서의 array의 삭제
         });
     };
