@@ -62,7 +62,7 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="item in boardlist | orderBy: '-index'">
+					<tr ng-repeat="item in boardlist">
 						<td>{{item.index}}</td>
 						<td><a ng-href="board/{{item.index}}">{{item.title}}</a></td>
 						<td>{{item.userId}}</td>

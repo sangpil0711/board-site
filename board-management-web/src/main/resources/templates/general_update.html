@@ -10,11 +10,20 @@
 	<script type="text/javascript" th:src="@{/js/angular-resource.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/angular-route.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/factory.js}"></script>
-	<script type="text/javascript" th:src="@{/js/board.js}"></script>
+	<script type="text/javascript" th:src="@{/js/update.js}"></script>
+	<script th:inline="javascript">
+
+		/*<![CDATA[*/
+
+		var current = /*[[${index}]]*/;
+
+		/*]]>*/
+
+	</script>
 </head>
 
-<body>
-	<div id="container">
+<body ng-app="myApp">
+	<div id="container" ng-controller="BoardUpdate">
 		<div class="head">
 			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/main}'|">IPP <span
 					class="span">게시판</span></button>
@@ -30,15 +39,15 @@
 
 		<div class="general_write">일반게시판 글쓰기</div>
 
-		<form id="board_form" th:action="@{'/board/update/' + ${dto.index}}" th:method="patch">
+		<form id="board_form" th:action="@{'/board/update/' + ${board.index}}" th:method="patch">
 
 			<div class="title_write">
 				<p>제목</p>
-				<p th:text="${dto.title}"></p>
+				<p>{{board.title}}</p>
 			</div>
 
 			<div class="content_write">
-				<textarea th:text="${dto.text}" name="newText" required></textarea>
+				<textarea name="newText" required>{{board.text}}</textarea>
 			</div>
 
 			<div>
