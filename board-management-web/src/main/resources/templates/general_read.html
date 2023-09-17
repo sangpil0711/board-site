@@ -10,20 +10,21 @@
 	<script type="text/javascript" th:src="@{/js/angular-resource.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/angular-route.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/factory.js}"></script>
-	<script type="text/javascript" th:src="@{/js/board.js}"></script>
+	<script type="text/javascript" th:src="@{/js/read.js}"></script>
+	<script type="text/javascript" th:src="@{/js/delete.js}"></script>
 	<script th:inline="javascript">
-		
-			/*<![CDATA[*/
 
-			var current = /*[[${index}]]*/;
-			
-			/*]]>*/
+		/*<![CDATA[*/
+
+		var current = /*[[${index}]]*/;
+
+		/*]]>*/
 
 	</script>
 </head>
 
 <body ng-app="myApp">
-	<div id="container" ng-controller="BoardCtrl">
+	<div id="container" ng-controller="BoardRead">
 		<div class="head">
 			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/main}'|">IPP <span
 					class="span">게시판</span></button>
@@ -57,13 +58,15 @@
 				<div class="content">{{board.text}}</div>
 			</div>
 		</div>
-		<div class="read_btn">
-			<button type="button">수정</button>
-			<form>
+			</div>
+		<div class="read_btn" ng-controller="BoardDelete">
+			<button type="button" ng-click="redirectToUpdate(board.index)">수정</button>
+			<form th:action="@{/board/delete/}" th:method="delete">
 				<button type="submit">삭제</button>
 			</form>
 		</div>
-	</div>
+
+
 </body>
 
 </html>

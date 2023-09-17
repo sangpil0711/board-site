@@ -66,12 +66,12 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer saveBoard(BoardVO board) {
 
-		return jdbcTemplate.update("insert into board(title, content, user_Id, category, create_Date) values(?, ?, ?, ?, ?)", 
+		return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", 
 //				board.getIndex(), 
 				board.getTitle(),
 				board.getText(), 
-				board.getUserId(), 
-				board.getCategory(), 
+//				board.getUserId(), 
+//				board.getCategory(), 
 				board.getCreateDate()
 				);
 	}

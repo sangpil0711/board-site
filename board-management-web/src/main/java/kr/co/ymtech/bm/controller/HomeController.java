@@ -1,7 +1,5 @@
 package kr.co.ymtech.bm.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import kr.co.ymtech.bm.Service.BoardService;
+import kr.co.ymtech.bm.Service.IBoardService;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
-import kr.co.ymtech.bm.service.BoardService;
-import kr.co.ymtech.bm.service.IBoardService;
+import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 
 @Controller
 public class HomeController {
@@ -28,58 +26,108 @@ public class HomeController {
 		this.boardService = boardService;
 	}
 
-	private List<BoardDTO> boardList = new ArrayList<>();
-
+	/**
+	 * Method : "/" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
+	 * 
+	 * @return : "main_display.html"을 반환
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homepage() {
 		return "main_display"; // "/" 경로로 GET을 요청하면 "index.html" 반환
 	}
 
+	/**
+	 * Method : "/main" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
+	 * 
+	 * @return : "main_display.html"을 반환
+	 */
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainpage() {
 		return "main_display";
 	}
 
+	/**
+	 * Method : "/board" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
+	 * 
+	 * @return : "general_board.html"을 반환
+	 */
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
 	public String boardpage() {
 		return "general_board";
 	}
 
+	/**
+	 * Method : "/board/write" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
+	 * 
+	 * @return : "general_write.html"을 반환
+	 */
 	@RequestMapping(value = "/board/write", method = RequestMethod.GET)
 	public String writepage() {
 		return "general_write";
 	}
 
-	@DeleteMapping("/board/delete/{id}")
-	public String deleteBoard(@PathVariable Integer id) {
-
-		deleteBoardById(id);
-
-		return "redirect:/general_board";
-	}
-
-	private void deleteBoardById(Integer id) {
-
-		boardList.removeIf(boardDTO -> boardDTO.getIndex().equals(id));
-
-	}
-
-	@RequestMapping(value = "/board/update/{id}", method = RequestMethod.GET)
-	public ModelAndView updatepage(@PathVariable Integer id) {
+	/**
+	 * Method : "/board/update/{id}" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
+	 * 
+	 * @param id
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/board/update/{index}", method = RequestMethod.GET)
+	public ModelAndView updatepage(@PathVariable Integer index) {
 
 		ModelAndView model = new ModelAndView();
-		BoardDTO board = getBoardDTOById(id);
 
-		model.addObject("dto", board);
+		model.addObject("index", index);
+		
 		model.setViewName("general_update");
 
 		return model;
 	}
 
-	@PatchMapping(value = "/board/update/{id}")
-	public String updateBoard(@PathVariable Integer id, @RequestParam("newText") String newText) {
+	/**
+	 * Method : "/board/write" 경로로 'POST' 요청이 들어오면 return 값을 반환하는 메소드
+	 * 
+	 * @param boardGetDTO
+	 * @param title
+	 * @param text
+	 * 
+	 * @return
+	 */
+	@PostMapping(value = "/board/write")
+	public String writeBoard(BoardGetDTO board) {
 
-		BoardDTO newBoard = getBoardDTOById(id);
+		boardService.saveBoard(board);
+
+		return "redirect:/board";
+	}
+
+	@DeleteMapping("/board/delete/{index}")
+	public ModelAndView removeBoard(@PathVariable Integer index) {
+		
+		boardService.deleteBoard(index);
+		
+		ModelAndView model = new ModelAndView();
+		
+		model.setViewName("general_board");
+		
+		model.addObject("index", index);
+
+		return model;
+	}
+
+	/**
+	 * Method : "/board/update/{id}" 경로로 'PATCH' 요청이 들어오면 return 값을 반환하는 메소드
+	 * 
+	 * @param id
+	 * @param newText
+	 * 
+	 * @return
+	 */
+	@PatchMapping(value = "/board/update/{index}")
+	public String updateBoard(@PathVariable Integer index, @RequestParam("newText") String newText) {
+
+		BoardDTO newBoard = getBoardDTOById(index);
 		newBoard.setText(newText);
 
 		System.out.println(newText);
@@ -87,30 +135,27 @@ public class HomeController {
 		return "redirect:/board/{id}";
 	}
 
-	@PostMapping(value = "/general_board")
-	public String writeBoard(@RequestParam("title") String title, @RequestParam("text") String text) {
-
-		BoardDTO newBoard = new BoardDTO();
-		newBoard.setTitle(title);
-		newBoard.setText(text);
-		newBoard.setUserId("admin");
-		newBoard.setCreateDate(System.currentTimeMillis());
-
-		return "redirect:/general_board";
-	}
-
+	/**
+	 * Method : "/board/{index}" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
+	 * 
+	 * @param index : 게시물의 번호를 나타내는 index
+	 * 
+	 * @return : 화면에는 "general_read.html"을 반환하고 "index"에 index 값을 할당하여 반환
+	 */
 	@GetMapping(value = "/board/{index}")
 	public ModelAndView readpage(@PathVariable Integer index) {
+
 		ModelAndView model = new ModelAndView();
-	      
-	      model.setViewName("general_read");
-	      model.addObject("index", index);
-	      
-	      return model;
+
+		model.setViewName("general_read");
+
+		model.addObject("index", index);
+
+		return model;
 	}
 
-	private BoardDTO getBoardDTOById(Integer id) {
-		if (id == 1) {
+	private BoardDTO getBoardDTOById(Integer index) {
+		if (index == 1) {
 			BoardDTO dto1 = new BoardDTO();
 			dto1.setIndex(1);
 			dto1.setTitle("Sample Title 1");
@@ -121,7 +166,7 @@ public class HomeController {
 			return dto1;
 		}
 
-		else if (id == 2) {
+		else if (index == 2) {
 			BoardDTO dto2 = new BoardDTO();
 			dto2.setIndex(2);
 			dto2.setTitle("Sample Title 2");
@@ -132,7 +177,7 @@ public class HomeController {
 			return dto2;
 		}
 
-		else if (id == 3) {
+		else if (index == 3) {
 			BoardDTO dto3 = new BoardDTO();
 			dto3.setIndex(3);
 			dto3.setTitle("Sample Title 3");
@@ -143,7 +188,7 @@ public class HomeController {
 			return dto3;
 		}
 
-		else if (id == 4) {
+		else if (index == 4) {
 			BoardDTO dto4 = new BoardDTO();
 			dto4.setIndex(4);
 			dto4.setTitle("Sample Title 4");
@@ -156,4 +201,5 @@ public class HomeController {
 
 		return null;
 	}
+
 }
