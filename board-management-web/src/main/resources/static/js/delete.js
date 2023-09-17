@@ -1,4 +1,5 @@
 app.controller("BoardDelete", function($scope, BoardFactory, $window) {
+	
     $scope.remove = function(index) {
 		 BoardFactory.deleteBoard({index: index}, function() {
         if (!index) return; // 예외처리
@@ -28,6 +29,7 @@ app.controller("BoardDelete", function($scope, BoardFactory, $window) {
 
     // current가 정의되어 있다면 getDataByIndex 호출
     if (current !== undefined) {
-        $scope.remove(current);
+		let index = current;
+        $scope.remove(index);
     }
 });

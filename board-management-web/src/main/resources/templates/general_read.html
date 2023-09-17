@@ -58,13 +58,14 @@
 				<div class="content">{{board.text}}</div>
 			</div>
 		</div>
-			</div>
-		<div class="read_btn" ng-controller="BoardDelete">
-			<button type="button" ng-click="redirectToUpdate(board.index)">수정</button>
-			<form th:action="@{/board/delete/}" th:method="delete">
-				<button type="submit">삭제</button>
-			</form>
-		</div>
+	</div>
+	
+	<div class="read_btn" ng-controller="BoardDelete">
+		<button type="button" ng-click="redirectToUpdate(board.index)">수정</button>
+		<form th:action="@{'/board/delete/' + board.index}" th:method="delete">
+			<button type="submit">삭제</button>
+		</form>
+	</div>
 
 
 </body>

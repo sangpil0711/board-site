@@ -105,13 +105,13 @@ public class HomeController {
 	@DeleteMapping("/board/delete/{index}")
 	public ModelAndView removeBoard(@PathVariable Integer index) {
 		
-		boardService.deleteBoard(index);
-		
 		ModelAndView model = new ModelAndView();
 		
-		model.setViewName("general_board");
+		model.setViewName("redirect:/general_board");
 		
 		model.addObject("index", index);
+		
+		boardService.deleteBoard(index);
 
 		return model;
 	}
