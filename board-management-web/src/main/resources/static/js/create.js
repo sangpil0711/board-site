@@ -11,11 +11,7 @@ app.controller("BoardCreate", function($scope, BoardFactory) {
 				newId = $scope.boardlist[$scope.boardlist.length - 1].id + 1;
 			}
 
-			var newItem = {
-				index: newIndex, title: $scope.boardForm.title, writer: $scope.boardForm.writer
-			};
-
-			$scope.boardlist.push(newItem); //배열에 요소 추가
+			$scope.boardlist.push(newIndex); //배열에 요소 추가
 		
 		});
 	}
