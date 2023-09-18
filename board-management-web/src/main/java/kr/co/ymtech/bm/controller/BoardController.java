@@ -1,10 +1,6 @@
 package kr.co.ymtech.bm.controller;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +11,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.ymtech.bm.Service.BoardService;
-import kr.co.ymtech.bm.Service.IBoardService;
+import kr.co.ymtech.bm.controller.dto.CommentDTO;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
+import kr.co.ymtech.bm.service.BoardService;
+import kr.co.ymtech.bm.service.IBoardService;
 
 /**
  * 일반게시판 Controller 클래스 객체에 데이터를 담아 반환해야 하니 RestController 사용
  */
 @RestController
 public class BoardController {
-	
+
 	/**
 	 * Controller-Service 연결
 	 */
@@ -45,11 +41,11 @@ public class BoardController {
 	 *         상태코드는 HttpStatus.ok 로 성공상태 200을 나타내준다.
 	 */
 	@GetMapping(value = "/boards")
-	public ResponseEntity<List<BoardGetDTO>> boardlistGet() {
-		
-	    List<BoardGetDTO> boardlist = boardService.findAll();
+	public ResponseEntity<List<BoardGetDTO>> findAll() {
 
-	    return new ResponseEntity<List<BoardGetDTO>>(boardlist, HttpStatus.OK);
+		List<BoardGetDTO> boardlist = boardService.findAll();
+
+		return new ResponseEntity<List<BoardGetDTO>>(boardlist, HttpStatus.OK);
 	}
 
 	/**
@@ -60,7 +56,7 @@ public class BoardController {
 	 * @return : 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환한다.
 	 */
 	@PostMapping(value = "/boards")
-	public ResponseEntity<Integer> saveBoard(@RequestBody BoardGetDTO board) {
+	public ResponseEntity<Integer> saveBoard(@RequestBody BoardDTO board) {
 
 		Integer boardlistSave = boardService.saveBoard(board);
 
@@ -112,4 +108,15 @@ public class BoardController {
 		return new ResponseEntity<List<BoardGetDTO>>(boardlistIndex, HttpStatus.OK);
 	}
 	
+	@PostMapping("/boards/{}")
+	public ResponseEntity<Integer> saveComment(@RequestBody CommentDTO board){
+		
+		Integer boardCommentSave = boardService.saveComment(board);
+		
+		return new ResponseEntity<Integer>(boardCommentSave, HttpStatus.OK);
+	}
+	
+	
+	
+
 }

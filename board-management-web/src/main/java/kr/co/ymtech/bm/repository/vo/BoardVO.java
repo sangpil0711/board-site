@@ -1,9 +1,6 @@
-package kr.co.ymtech.bm.controller.dto;
+package kr.co.ymtech.bm.repository.vo;
 
-/**
- * 게시물 정보를 저장하는 클래스
- */
-public class BoardDTO {
+public class BoardVO {
 
 	/** index : 게시글 번호 */
 	private Integer index;
@@ -17,6 +14,32 @@ public class BoardDTO {
 	private Integer category;
 	/** createDate : 게시글 작성일 */
 	private Long createDate;
+
+	/**
+	 * Method : 기본 생성자
+	 */
+	public BoardVO() {
+		super();
+	}
+
+	/**
+	 * Method : 모든 필드를 초기화하는 생성자
+	 * 
+	 * @param index      : 게시글의 인덱스
+	 * @param title      : 게시글 제목
+	 * @param text       : 게시글 내용
+	 * @param userId     : 게시글 작성자의 사용자 ID
+	 * @param category   : 게시글 카테고리
+	 * @param createDate : 게시글 생성 날짜
+	 */
+	public BoardVO(Integer index, String title, String text, String userId, Integer category, Long createDate) {
+		this.index = index;
+		this.title = title;
+		this.text = text;
+		this.userId = userId;
+		this.category = category;
+		this.createDate = createDate;
+	}
 
 	/**
 	 * Method : 게시물 index 반환하는 메소드
@@ -143,6 +166,7 @@ public class BoardDTO {
 	 * 
 	 * @return : 문자열을 반환
 	 */
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

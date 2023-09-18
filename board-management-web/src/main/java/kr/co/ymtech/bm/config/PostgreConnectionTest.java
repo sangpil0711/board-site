@@ -23,13 +23,7 @@ public class PostgreConnectionTest implements ApplicationRunner {
     @Override 
     public void run(ApplicationArguments args) throws Exception {
         try (Connection connection = dataSource.getConnection()) {
-            System.out.println( dataSource.getClass());
-            System.out.println(connection.getMetaData().getURL());
-            System.out.println(connection.getMetaData().getUserName());
-
-            Statement statement = connection.createStatement();
-            String sql = "";
-            statement.executeUpdate(sql);
+           
         } catch (Exception e) {
             e.printStackTrace();
             return;
