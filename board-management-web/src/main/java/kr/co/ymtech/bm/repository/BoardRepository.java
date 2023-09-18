@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import kr.co.ymtech.bm.repository.vo.CommentVO;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
 
 /**
@@ -149,5 +150,19 @@ public class BoardRepository implements IBoardRepository {
 //				rs.getLong("create_date")
 //				));
 //	}
+	
+	@Override
+	public Integer saveComment(CommentVO board) {
+
+		return jdbcTemplate.update("insert into board(board_index, ﻿content, ﻿create_Date) values(?, ?, ?, ?)", 
+//				board.getIndex(), 
+				board.getBoardIndex(),
+				board.getText(),
+//				board.getParentIndex()
+//				board.getUserId(), 
+				board.getCreateDate()
+				);
+	}
+	
 
 }

@@ -1,6 +1,7 @@
 package kr.co.ymtech.bm.repository;
 
 import java.util.List;
+
 import kr.co.ymtech.bm.repository.vo.BoardVO;
 
 /**
@@ -40,5 +41,7 @@ public interface IBoardRepository {
 	 * @param board : index는 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
 	 */
 	public List<BoardVO> searchByIndex(Integer index);
+	
+	
 
 }

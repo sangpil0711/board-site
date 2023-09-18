@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.ymtech.bm.controller.dto.BoardCommentDTO;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
@@ -135,5 +136,27 @@ public class BoardService implements IBoardService {
 		}
 		return res;
 	}
+	
+	@Override
+	public Integer saveComment(BoardCommentDTO board) {
+
+		BoardVO vo = new BoardVO(); // dto -> vo 변환
+//		vo.setIndex(board.getIndex());
+		vo.setTitle(board.getTitle());
+		vo.setText(board.getText());
+//		vo.setUserId(board.getUserId()); 
+//		vo.setCategory(board.getCategory());
+		
+		if(board.getCreateDate()== null) {
+			vo.setCreateDate(new Date().getTime());
+		} else {
+			vo.setCreateDate(board.getCreateDate());
+		}
+		
+		Integer save = boardRepository.saveBoard(vo);
+
+		return save;
+	}
+	
 
 }

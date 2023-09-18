@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.ymtech.bm.controller.dto.CommentDTO;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.service.BoardService;
@@ -106,5 +107,16 @@ public class BoardController {
 
 		return new ResponseEntity<List<BoardGetDTO>>(boardlistIndex, HttpStatus.OK);
 	}
+	
+	@PostMapping("/boards/{}")
+	public ResponseEntity<Integer> saveComment(@RequestBody CommentDTO board){
+		
+		Integer boardCommentSave = boardService.saveComment(board);
+		
+		return new ResponseEntity<Integer>(boardCommentSave, HttpStatus.OK);
+	}
+	
+	
+	
 
 }
