@@ -68,5 +68,24 @@ public class BoardGetDTO {
 	public void setCreateDate(Date createDate) { // 게시물 createDate 설정
 		this.createDate = createDate;
 	}
+	
+	@Override
+	public String toString() { // 게시물 항목을 문자열로 변환하여 반환
+		StringBuilder builder = new StringBuilder();
+		builder.append("BoardDTO [index=");
+		builder.append(index);
+		builder.append(", title=");
+		builder.append(title);
+		builder.append(", text=");
+		builder.append(text);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", category=");
+		builder.append(category);
+		builder.append(", createDate=");
+		builder.append(createDate);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

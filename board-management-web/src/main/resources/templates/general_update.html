@@ -39,15 +39,14 @@
 
 		<div class="general_write">일반게시판 글쓰기</div>
 
-			<div class="title_write">
-				<p>제목</p>
-				<p>{{board.title}}</p>
-			</div>
-
+		<div class="title_write">
+			<p>제목</p>
+			<p>{{board.title}}</p>
+		</div>
+		 <form>
 			<div class="content_write">
-				<textarea name="newText" required>{{board.text}}</textarea>
+				<textarea name="text" required ng-model="board.text"></textarea>
 			</div>
-
 			<div>
 				<button type="button" class="file_btn">파일선택<br>(최대 100MB)</button>
 			</div>
@@ -61,4 +60,5 @@
 				<input type="button" ng-click="update(board.index)" value="수정">
 				<button type="button" ng-click="redirectToUpdate(board.index)">취소</button>
 			</div>
+		</form>
 	</div>

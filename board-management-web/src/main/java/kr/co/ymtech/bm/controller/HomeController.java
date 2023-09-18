@@ -125,17 +125,15 @@ public class HomeController {
 	 * @return
 	 */
 	@PatchMapping(value = "/board/update/{index}")
-	public String updateBoard(@PathVariable Integer index, @RequestParam("newText") String newText, @RequestBody BoardGetDTO board) {
+	public ModelAndView updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
 
-		BoardDTO newBoard = getBoardDTOById(index);
+		ModelAndView model = new ModelAndView();
 		
-		newBoard.setText(newText);
-
-		System.out.println(newText);
+		model.addObject("index", index);
 		
 		boardService.updateBoard(board);
 
-		return "redirect:/board/{id}";
+		return model;
 	}
 
 	/**
@@ -155,54 +153,6 @@ public class HomeController {
 		model.addObject("index", index);
 
 		return model;
-	}
-
-	private BoardDTO getBoardDTOById(Integer index) {
-		if (index == 1) {
-			BoardDTO dto1 = new BoardDTO();
-			dto1.setIndex(1);
-			dto1.setTitle("Sample Title 1");
-			dto1.setText("Text 1");
-			dto1.setUserId("user1");
-			dto1.setCategory(1);
-			dto1.setCreateDate(System.currentTimeMillis());
-			return dto1;
-		}
-
-		else if (index == 2) {
-			BoardDTO dto2 = new BoardDTO();
-			dto2.setIndex(2);
-			dto2.setTitle("Sample Title 2");
-			dto2.setText("Text 2");
-			dto2.setUserId("user2");
-			dto2.setCategory(1);
-			dto2.setCreateDate(System.currentTimeMillis());
-			return dto2;
-		}
-
-		else if (index == 3) {
-			BoardDTO dto3 = new BoardDTO();
-			dto3.setIndex(3);
-			dto3.setTitle("Sample Title 3");
-			dto3.setText("Text 3");
-			dto3.setUserId("user3");
-			dto3.setCategory(1);
-			dto3.setCreateDate(System.currentTimeMillis());
-			return dto3;
-		}
-
-		else if (index == 4) {
-			BoardDTO dto4 = new BoardDTO();
-			dto4.setIndex(4);
-			dto4.setTitle("Sample Title 4");
-			dto4.setText("Text 4");
-			dto4.setUserId("user4");
-			dto4.setCategory(1);
-			dto4.setCreateDate(System.currentTimeMillis());
-			return dto4;
-		}
-
-		return null;
 	}
 
 }

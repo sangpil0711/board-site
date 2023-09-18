@@ -74,8 +74,8 @@ public class BoardController {
 	 * 
 	 * @return : 업데이트 한 게시물 내용을 boardlistUpdate 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 */
-	@PatchMapping("/boards")
-	public ResponseEntity<Integer> updateBoard(@RequestBody BoardGetDTO board) {
+	@PatchMapping("/boards/{index}")
+	public ResponseEntity<Integer> updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
 
 		Integer boardlistUpdate = boardService.updateBoard(board);
 
