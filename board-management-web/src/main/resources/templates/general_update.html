@@ -39,8 +39,6 @@
 
 		<div class="general_write">일반게시판 글쓰기</div>
 
-		<form id="board_form" th:action="@{'/board/update/' + ${board.index}}" th:method="patch">
-
 			<div class="title_write">
 				<p>제목</p>
 				<p>{{board.title}}</p>
@@ -51,7 +49,7 @@
 			</div>
 
 			<div>
-				<button type="button" class="file_btn" onclick="">파일선택<br>(최대 100MB)</button>
+				<button type="button" class="file_btn">파일선택<br>(최대 100MB)</button>
 			</div>
 
 			<div class="file_name">
@@ -60,8 +58,7 @@
 			</div>
 
 			<div class="write_decision">
-				<input type="submit" value="수정">
-				<button type="button" th:onclick="|location.href='@{/board/}${dto.index}'|">취소</button>
+				<input type="button" ng-click="update(board.index)" value="수정">
+				<button type="button" ng-click="redirectToUpdate(board.index)">취소</button>
 			</div>
-		</form>
 	</div>

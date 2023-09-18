@@ -93,7 +93,7 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer updateBoard(BoardVO board) {
 
-		return jdbcTemplate.update("update board set cotent = ? where index = ? ", board.getText(), board.getIndex());
+		return jdbcTemplate.update("update board set content = ? where index = ? ", board.getText(), board.getIndex());
 	}
 
 	/**

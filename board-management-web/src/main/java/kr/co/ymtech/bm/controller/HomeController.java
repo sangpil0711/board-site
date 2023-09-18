@@ -7,14 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import kr.co.ymtech.bm.Service.BoardService;
+import kr.co.ymtech.bm.Service.IBoardService;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
-import kr.co.ymtech.bm.service.BoardService;
-import kr.co.ymtech.bm.service.IBoardService;
 
 @Controller
 public class HomeController {
@@ -95,7 +97,7 @@ public class HomeController {
 	 * @return
 	 */
 	@PostMapping(value = "/board/write")
-	public String writeBoard(BoardDTO board) {
+	public String writeBoard(BoardGetDTO board) {
 
 		boardService.saveBoard(board);
 
@@ -105,13 +107,11 @@ public class HomeController {
 	@DeleteMapping("/board/delete/{index}")
 	public ModelAndView removeBoard(@PathVariable Integer index) {
 		
-		boardService.deleteBoard(index);
-		
 		ModelAndView model = new ModelAndView();
 		
-		model.setViewName("general_board");
-		
 		model.addObject("index", index);
+		
+		boardService.deleteBoard(index);
 
 		return model;
 	}
@@ -125,12 +125,15 @@ public class HomeController {
 	 * @return
 	 */
 	@PatchMapping(value = "/board/update/{index}")
-	public String updateBoard(@PathVariable Integer index, @RequestParam("newText") String newText) {
+	public String updateBoard(@PathVariable Integer index, @RequestParam("newText") String newText, @RequestBody BoardGetDTO board) {
 
 		BoardDTO newBoard = getBoardDTOById(index);
+		
 		newBoard.setText(newText);
 
 		System.out.println(newText);
+		
+		boardService.updateBoard(board);
 
 		return "redirect:/board/{id}";
 	}
