@@ -6,10 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.ymtech.bm.controller.dto.BoardCommentDTO;
+import kr.co.ymtech.bm.controller.dto.CommentDTO;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
+import kr.co.ymtech.bm.repository.ICommentRepository;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
 
 /**
@@ -22,11 +23,18 @@ public class BoardService implements IBoardService {
 	 * Service-Repository 연결
 	 */
 	private final IBoardRepository boardRepository;
-
+	private final ICommentRepository commentRepository;
+	
+	
 	@Autowired
-	private BoardService(IBoardRepository IboardRepository) {
+	private BoardService(IBoardRepository IboardRepository,ICommentRepository IcommentRepository) {
 		this.boardRepository = IboardRepository;
+		this.commentRepository = IcommentRepository;
 	}
+	
+	
+
+	
 
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
@@ -138,11 +146,11 @@ public class BoardService implements IBoardService {
 	}
 	
 	@Override
-	public Integer saveComment(BoardCommentDTO board) {
+	public Integer saveComment(CommentDTO board) {
 
 		BoardVO vo = new BoardVO(); // dto -> vo 변환
 //		vo.setIndex(board.getIndex());
-		vo.setTitle(board.getTitle());
+//		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
 //		vo.setUserId(board.getUserId()); 
 //		vo.setCategory(board.getCategory());
@@ -156,6 +164,14 @@ public class BoardService implements IBoardService {
 		Integer save = boardRepository.saveBoard(vo);
 
 		return save;
+	}
+
+
+
+
+
+	public ICommentRepository getCommentRepository() {
+		return commentRepository;
 	}
 	
 

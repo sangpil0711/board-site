@@ -151,18 +151,7 @@ public class BoardRepository implements IBoardRepository {
 //				));
 //	}
 	
-	@Override
-	public Integer saveComment(CommentVO board) {
 
-		return jdbcTemplate.update("insert into board(board_index, ﻿content, ﻿create_Date) values(?, ?, ?, ?)", 
-//				board.getIndex(), 
-				board.getBoardIndex(),
-				board.getText(),
-//				board.getParentIndex()
-//				board.getUserId(), 
-				board.getCreateDate()
-				);
-	}
 	
 
 }
