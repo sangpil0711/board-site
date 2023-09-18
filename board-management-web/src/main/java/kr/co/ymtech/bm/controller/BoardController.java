@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.service.BoardService;
 import kr.co.ymtech.bm.service.IBoardService;
@@ -54,7 +55,7 @@ public class BoardController {
 	 * @return : 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환한다.
 	 */
 	@PostMapping(value = "/boards")
-	public ResponseEntity<Integer> saveBoard(@RequestBody BoardGetDTO board) {
+	public ResponseEntity<Integer> saveBoard(@RequestBody BoardDTO board) {
 
 		Integer boardlistSave = boardService.saveBoard(board);
 

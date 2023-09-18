@@ -2,19 +2,19 @@ package kr.co.ymtech.bm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import kr.co.ymtech.bm.Service.BoardService;
-import kr.co.ymtech.bm.Service.IBoardService;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
+import kr.co.ymtech.bm.service.BoardService;
+import kr.co.ymtech.bm.service.IBoardService;
 
 @Controller
 public class HomeController {
@@ -95,7 +95,7 @@ public class HomeController {
 	 * @return
 	 */
 	@PostMapping(value = "/board/write")
-	public String writeBoard(BoardGetDTO board) {
+	public String writeBoard(BoardDTO board) {
 
 		boardService.saveBoard(board);
 

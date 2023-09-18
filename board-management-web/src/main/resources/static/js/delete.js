@@ -26,8 +26,5 @@ app.controller("BoardDelete", function($scope, BoardFactory, $window) {
     }
     };
 
-    // current가 정의되어 있다면 getDataByIndex 호출
-    if (current !== undefined) {
-        $scope.remove(current);
-    }
+ 
 });

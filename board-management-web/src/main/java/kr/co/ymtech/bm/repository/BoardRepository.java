@@ -21,9 +21,11 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-
+	
 	/**
-	 * 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
+	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
+	 * 
+	 * @return : DB에 있는 정보를 조회하는 query 함수 실행
 	 */
 	@Override
 	public List<BoardVO> findAll() {
@@ -59,9 +61,14 @@ public class BoardRepository implements IBoardRepository {
 //				rs.getInt("category"),
 //				rs.getLong("create_date")
 //				));
+	
 
 	/**
-	 * 게시물 정보를 저장하는 메소드
+	 * Method : 게시물 정보를 저장하는 메소드
+	 * 
+	 * @param : board는 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
+	 * 
+	 * @return : 게시물 정보를 DB에 저장하는 update 함수 실행
 	 */
 	@Override
 	public Integer saveBoard(BoardVO board) {
@@ -77,7 +84,11 @@ public class BoardRepository implements IBoardRepository {
 	}
 	
 	/**
-	 * 게시물 내용(text)을 수정 하는 메소드
+	 * Method : 게시물 내용(text)을 수정 하는 메소드
+	 * 
+	 * @param : board는 클라이언트가 요청한 게시물 내용을 담고 있다.
+	 * 
+	 * @return : DB에 있는 게시물 정보를 수정하는 update 함수 실행
 	 */
 	@Override
 	public Integer updateBoard(BoardVO board) {
@@ -86,7 +97,11 @@ public class BoardRepository implements IBoardRepository {
 	}
 
 	/**
-	 * 게시물을 삭제하는 메소드
+	 * Method : 게시물을 삭제하는 메소드
+	 * 
+	 * @param : index는 게시물의 번호를 담고 있고 게시물 번호를 보고 삭제
+	 * 
+	 * @return : DB에 있는 해당 index 번호의 게시물 정보를 삭제하는 update 함수 실행
 	 */
 	@Override
 	public Integer deleteBoard(Integer index) {
@@ -95,7 +110,11 @@ public class BoardRepository implements IBoardRepository {
 	}
 
 	/**
-	 * 특정 게시물 번호를 이용하여 해당 번호의 정보를 조회하는 메소드
+	 * Method : 특정 게시물 번호를 이용하여 해당 번호의 정보를 조회하는 메소드
+	 * 
+	 * @param : index는 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
+	 * 
+	 * @return : 해당 번호의 게시물 정보를 조회하는 query 함수 실행
 	 */
 	@Override
 	public List<BoardVO> searchByIndex(Integer index) {
