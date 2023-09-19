@@ -3,6 +3,7 @@ package kr.co.ymtech.bm.service;
 import java.util.List;
 
 import kr.co.ymtech.bm.controller.dto.CommentDTO;
+import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 
@@ -42,9 +43,19 @@ public interface IBoardService {
 	 * 
 	 * @param board : index는 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
 	 */
-	public List<BoardGetDTO> searchByIndex(Integer index);
+	public BoardGetDTO searchByIndex(Integer index);
 	
 	
 	public Integer saveComment(CommentDTO comment);
+	
+
+	public CommentGetDTO findComment(Integer boardIndex);
+	
+	
+	public Integer updateComment(CommentGetDTO comment);
+
+	public Integer deleteComment(Integer index);
+	
+
 
 }

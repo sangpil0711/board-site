@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import kr.co.ymtech.bm.repository.vo.CommentVO;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
 
 /**
@@ -118,7 +116,7 @@ public class BoardRepository implements IBoardRepository {
 	 * @return : 해당 번호의 게시물 정보를 조회하는 query 함수 실행
 	 */
 	@Override
-	public List<BoardVO> searchByIndex(Integer index) {
+	public BoardVO searchByIndex(Integer index) {
 
 		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
 
@@ -136,7 +134,8 @@ public class BoardRepository implements IBoardRepository {
 				return member;
 			}
 		};
-		return jdbcTemplate.query("select * from board where index = ?", mapper, index);
+		
+		return jdbcTemplate.queryForObject("select * from board where index = ?", mapper, index);
 	}
 
 //		return jdbcTemplate.query("select * from board where index =? or name title ? ", new Object[] {index,"%"},(rs,rowNum) -> 
