@@ -9,6 +9,9 @@
 	<script type="text/javascript" th:src="@{/js/angular.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/angular-resource.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/angular-route.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/angular-animate.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/angular-sanitize.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/ui-bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/factory.js}"></script>
 	<script type="text/javascript" th:src="@{/js/board.js}"></script>
 	<script>
@@ -30,7 +33,7 @@
 				<li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>
 			</ul>
 		</div>
-		
+
 		<div>
 			<button type="button" class="write_btn" th:onclick="|location.href='@{/board/write}'|">글쓰기</buttton>
 		</div>
@@ -42,7 +45,7 @@
 
 		<div>
 			<p class="board_all">전체 5개</p>
-			<select class="board_select">
+			<select class="board_select" ng-model="pageSize" ng-change="loadData()">
 				<option>5개</option>
 				<option>10개</option>
 				<option>15개</option>
@@ -75,24 +78,13 @@
 		</div>
 
 		<div>
-			<ul class="pagination">
-				<li><a href="#" class="page_icon">&laquo;</a></li>
-				<li><a href="#" class="page_icon">&lsaquo;</a></li>
-				<li><a href="#" class="page_item">1</a></li>
-				<li><a href="#" class="page_item">2</a></li>
-				<li><a href="#" class="page_item">3</a></li>
-				<li><a href="#" class="page_item">4</a></li>
-				<li><a href="#" class="page_item">5</a></li>
-				<li><a href="#" class="page_item">6</a></li>
-				<li><a href="#" class="page_item">7</a></li>
-				<li><a href="#" class="page_item">8</a></li>
-				<li><a href="#" class="page_item">9</a></li>
-				<li><a href="#" class="page_item">10</a></li>
-				<li><a href="#" class="page_icon">&rsaquo;</a></li>
-				<li><a href="#" class="page_icon">&raquo;</a></li>
+			<ul uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage"
+				class="pagination-lg" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+				last-text="&raquo;">
 			</ul>
 		</div>
 	</div>
+
 </body>
 
 </html>

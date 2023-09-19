@@ -9,12 +9,15 @@
 	<script type="text/javascript" th:src="@{/js/angular.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/angular-resource.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/angular-route.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/angular-animate.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/angular-sanitize.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/ui-bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/factory.js}"></script>
 	<script type="text/javascript" th:src="@{/js/create.js}"></script>
 </head>
 
 <body ng-app="myApp">
-	<div id="container" ng-controller="BoardCreate">
+	<div id="container">
 		<div class="head">
 			<button type="button" class="ipp_btn" th:onclick="|location.href='@{/main}'|">IPP <span
 					class="span">게시판</span></button>

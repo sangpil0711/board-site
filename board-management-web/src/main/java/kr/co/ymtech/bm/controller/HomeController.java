@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
@@ -21,6 +20,12 @@ import kr.co.ymtech.bm.service.IBoardService;
 @Controller
 public class HomeController {
 
+	/**
+	 * Controller-Service 연결
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 황상필
+	 */
 	@Autowired
 	private final IBoardService boardService;
 
@@ -31,7 +36,10 @@ public class HomeController {
 	/**
 	 * Method : "/" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
 	 * 
-	 * @return : "main_display.html"을 반환
+	 * @return : "main_display.html" 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 황상필
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homepage() {
@@ -41,7 +49,10 @@ public class HomeController {
 	/**
 	 * Method : "/main" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
 	 * 
-	 * @return : "main_display.html"을 반환
+	 * @return : "main_display.html" 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 황상필
 	 */
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainpage() {
@@ -51,7 +62,10 @@ public class HomeController {
 	/**
 	 * Method : "/board" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
 	 * 
-	 * @return : "general_board.html"을 반환
+	 * @return : "general_board.html" 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 황상필
 	 */
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
 	public String boardpage() {
@@ -61,7 +75,10 @@ public class HomeController {
 	/**
 	 * Method : "/board/write" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
 	 * 
-	 * @return : "general_write.html"을 반환
+	 * @return : "general_write.html" 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 황상필
 	 */
 	@RequestMapping(value = "/board/write", method = RequestMethod.GET)
 	public String writepage() {
@@ -69,18 +86,19 @@ public class HomeController {
 	}
 
 	/**
-	 * Method : "/board/update/{id}" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
+	 * Method : "/board/update/{index}" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
 	 * 
-	 * @param id
+	 * @param index : 수정할 게시글 번호
 	 * 
-	 * @return
+	 * @return : model에 뷰를 "general_update.html"로 할당하여 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 황상필
 	 */
 	@RequestMapping(value = "/board/update/{index}", method = RequestMethod.GET)
 	public ModelAndView updatepage(@PathVariable Integer index) {
 
 		ModelAndView model = new ModelAndView();
-
-		model.addObject("index", index);
 		
 		model.setViewName("general_update");
 
@@ -90,11 +108,12 @@ public class HomeController {
 	/**
 	 * Method : "/board/write" 경로로 'POST' 요청이 들어오면 return 값을 반환하는 메소드
 	 * 
-	 * @param boardGetDTO
-	 * @param title
-	 * @param text
+	 * @param board : 작성할 게시글의 객체
 	 * 
-	 * @return
+	 * @return : "/board" 경로로 요청하여 "general_board.html" 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 황상필
 	 */
 	@PostMapping(value = "/board/write")
 	public String writeBoard(BoardDTO board) {
@@ -104,44 +123,52 @@ public class HomeController {
 		return "redirect:/board";
 	}
 
+		/**
+		 * Method : "/board/delete/{index}" 경로로 'DELETE' 요청이 들어오면 return 값을 반환하는 메소드
+		 * 
+		 * @param index : 삭제할 게시글의 번호
+		 * 
+		 * @return : "/board" 경로로 요청하여 "general_board.html" 반환
+		 * 
+		 * 작성일 : 2023.09.18
+		 * 작성자 : 황상필
+		 */
 	@DeleteMapping("/board/delete/{index}")
-	public ModelAndView removeBoard(@PathVariable Integer index) {
-		
-		ModelAndView model = new ModelAndView();
-		
-		model.addObject("index", index);
+	public String removeBoard(@PathVariable Integer index) {
 		
 		boardService.deleteBoard(index);
 
-		return model;
+		return "redirect:/board";
 	}
 
 	/**
-	 * Method : "/board/update/{id}" 경로로 'PATCH' 요청이 들어오면 return 값을 반환하는 메소드
+	 * Method : "/board/update/{index}" 경로로 'PATCH' 요청이 들어오면 return 값을 반환하는 메소드
 	 * 
-	 * @param id
-	 * @param newText
+	 * @param index : 수정할 게시글 번호
+	 * @param board : 수정된 게시글 정보를 담은 객체
 	 * 
-	 * @return
+	 * @return : "/board/{index}" 경로로 요청하여 "general_read.html" 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 황상필
 	 */
 	@PatchMapping(value = "/board/update/{index}")
-	public ModelAndView updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
-
-		ModelAndView model = new ModelAndView();
-		
-		model.addObject("index", index);
+	public String updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
 		
 		boardService.updateBoard(board);
 
-		return model;
+		return "redirect:/board/{index}";
 	}
 
 	/**
 	 * Method : "/board/{index}" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
 	 * 
-	 * @param index : 게시물의 번호를 나타내는 index
+	 * @param index : 조회할 게시글의 번호
 	 * 
-	 * @return : 화면에는 "general_read.html"을 반환하고 "index"에 index 값을 할당하여 반환
+	 * @return : model에 뷰를 "general_read.html"로 할당하여 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 황상필
 	 */
 	@GetMapping(value = "/board/{index}")
 	public ModelAndView readpage(@PathVariable Integer index) {
@@ -150,9 +177,6 @@ public class HomeController {
 
 		model.setViewName("general_read");
 
-		model.addObject("index", index);
-
 		return model;
 	}
-  황상필
 }
