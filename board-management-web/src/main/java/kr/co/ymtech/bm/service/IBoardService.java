@@ -44,6 +44,7 @@ public interface IBoardService {
 	 */
 	public List<BoardGetDTO> searchByIndex(Integer index);
 	
-	public Integer saveComment(CommentDTO board);
+	
+	public Integer saveComment(CommentDTO comment);
 
 }
