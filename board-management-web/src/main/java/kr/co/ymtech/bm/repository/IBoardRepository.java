@@ -40,8 +40,8 @@ public interface IBoardRepository {
 	 * 
 	 * @param board : index는 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
 	 */
-	public List<BoardVO> searchByIndex(Integer index);
+	public BoardVO searchByIndex(Integer index);
 	
-	
+
 
 }
