@@ -4,7 +4,8 @@ import kr.co.ymtech.bm.repository.vo.CommentVO;
 
 public interface ICommentRepository {
 
-	public Integer saveComment(CommentVO board);
+	public Integer saveComment(CommentVO comment);
+
 	
 	
 	

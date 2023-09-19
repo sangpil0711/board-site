@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import kr.co.ymtech.bm.controller.dto.CommentDTO;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.repository.ICommentRepository;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
+import kr.co.ymtech.bm.repository.vo.CommentVO;
 
 /**
  * 일반게시판 Service 클래스
@@ -32,8 +32,6 @@ public class BoardService implements IBoardService {
 		this.commentRepository = IcommentRepository;
 	}
 	
-	
-
 	
 
 	/**
@@ -146,22 +144,22 @@ public class BoardService implements IBoardService {
 	}
 	
 	@Override
-	public Integer saveComment(CommentDTO board) {
+	public Integer saveComment(CommentDTO comment) {
 
-		BoardVO vo = new BoardVO(); // dto -> vo 변환
+		CommentVO vo = new CommentVO(); // dto -> vo 변환
 //		vo.setIndex(board.getIndex());
-//		vo.setTitle(board.getTitle());
-		vo.setText(board.getText());
+		vo.setBoardIndex(comment.getBoardIndex());
+		vo.setText(comment.getText());
 //		vo.setUserId(board.getUserId()); 
-//		vo.setCategory(board.getCategory());
+		vo.setCreateDate(comment.getCreateDate());
 		
-		if(board.getCreateDate()== null) {
+		if(comment.getCreateDate()== null) {
 			vo.setCreateDate(new Date().getTime());
 		} else {
-			vo.setCreateDate(board.getCreateDate());
+			vo.setCreateDate(comment.getCreateDate());
 		}
 		
-		Integer save = boardRepository.saveBoard(vo);
+		Integer save = commentRepository.saveComment(vo);
 
 		return save;
 	}
@@ -170,9 +168,7 @@ public class BoardService implements IBoardService {
 
 
 
-	public ICommentRepository getCommentRepository() {
-		return commentRepository;
-	}
+	
 	
 
 }

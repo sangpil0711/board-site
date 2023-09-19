@@ -14,15 +14,15 @@ public class CommentRepository implements ICommentRepository {
 
 	
 	@Override
-	public Integer saveComment(CommentVO board) {
+	public Integer saveComment(CommentVO comment) {
 
-		return jdbcTemplate.update("insert into board(board_index, ﻿content, ﻿create_Date) values(?, ?, ?, ?)", 
-//				board.getIndex(), 
-				board.getBoardIndex(),
-				board.getText(),
-//				board.getParentIndex()
-//				board.getUserId(), 
-				board.getCreateDate()
+		return jdbcTemplate.update("insert into comment(board_index, ﻿content, ﻿create_Date) values(?, ?, ?)", 
+//				comment.getIndex(), 
+				comment.getBoardIndex(),
+				comment.getText(),
+//				comment.getParentIndex()
+//				comment.getUserId(), 
+				comment.getCreateDate()
 				);
 	}
 }

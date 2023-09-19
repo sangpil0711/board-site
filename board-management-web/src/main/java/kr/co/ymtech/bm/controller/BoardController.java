@@ -108,10 +108,12 @@ public class BoardController {
 		return new ResponseEntity<List<BoardGetDTO>>(boardlistIndex, HttpStatus.OK);
 	}
 	
-	@PostMapping("/boards/{}")
-	public ResponseEntity<Integer> saveComment(@RequestBody CommentDTO board){
+	
+	
+	@PostMapping("/comments")
+	public ResponseEntity<Integer> saveComment(@RequestBody CommentDTO comment){
 		
-		Integer boardCommentSave = boardService.saveComment(board);
+		Integer boardCommentSave = boardService.saveComment(comment);
 		
 		return new ResponseEntity<Integer>(boardCommentSave, HttpStatus.OK);
 	}
