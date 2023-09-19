@@ -47,7 +47,7 @@ public class BoardRepository implements IBoardRepository {
 				return member;
 			}
 		};
-		return jdbcTemplate.query("select * from board", mapper);
+		return jdbcTemplate.query("SELECT (ROW_NUMBER() OVER()) AS index, title, content, user_id, category, create_date FROM board order by index desc", mapper);
 	}
 
 	// ->
