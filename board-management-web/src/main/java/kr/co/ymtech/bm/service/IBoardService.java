@@ -48,13 +48,15 @@ public interface IBoardService {
 	
 	public Integer saveComment(CommentDTO comment);
 	
-
-	public CommentGetDTO findComment(Integer boardIndex);
+	
+	public CommentGetDTO findComment(Integer boardIndex, Integer commentIndex);
 	
 	
 	public Integer updateComment(CommentGetDTO comment);
 
+	
 	public Integer deleteComment(Integer index);
+
 	
 
 

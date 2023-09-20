@@ -147,12 +147,17 @@ public class BoardService implements IBoardService {
 	public Integer saveComment(CommentDTO comment) {
 
 		CommentVO vo = new CommentVO(); // dto -> vo 변환
-//		vo.setIndex(board.getIndex());
-		vo.setBoardIndex(comment.getBoardIndex());
-		vo.setText(comment.getText());
-//		vo.setUserId(comment.getUserId()); 
-		vo.setCreateDate(comment.getCreateDate());
 		
+		if(comment.getParentIndex() != null) {         //대댓글인 경우
+		vo.setBoardIndex(comment.getBoardIndex());    
+		vo.setText(comment.getText());
+		vo.setParentIndex(comment.getParentIndex());
+		} else {                                        //댓글인 경우
+		vo.setBoardIndex(comment.getBoardIndex());     
+		vo.setText(comment.getText());
+		}
+		
+		vo.setCreateDate(comment.getCreateDate());
 		if(comment.getCreateDate()== null) {
 			vo.setCreateDate(new Date().getTime());
 		} else {
@@ -165,10 +170,10 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public CommentGetDTO findComment(Integer boardIndex) {
+	public CommentGetDTO findComment(Integer boardIndex, Integer commentIndex) {
 		CommentVO vo = commentRepository.findComment(boardIndex);
 
-			CommentGetDTO dto = new CommentGetDTO();
+			CommentGetDTO dto = new CommentGetDTO();  // vo -> dto 변환
 			dto.setIndex(vo.getIndex());
 			dto.setBoardIndex(vo.getBoardIndex());
 			dto.setText(vo.getText());
@@ -178,7 +183,7 @@ public class BoardService implements IBoardService {
 			return dto;
 	}
 
-	@Override
+	@Override 
 	public Integer updateComment(CommentGetDTO comment) {
 
 		CommentVO vo = new CommentVO(); // dto -> vo 변환

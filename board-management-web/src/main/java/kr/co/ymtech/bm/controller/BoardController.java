@@ -120,9 +120,9 @@ public class BoardController {
 	}
 	
 	@GetMapping("/comments/{boardIndex}")
-	public ResponseEntity<CommentGetDTO> findComment(@PathVariable Integer boardIndex) {
+	public ResponseEntity<CommentGetDTO> findComment(@PathVariable Integer boardIndex, Integer commentIndex) {
 
-		CommentGetDTO boardCommentIndex = boardService.findComment(boardIndex);
+		CommentGetDTO boardCommentIndex = boardService.findComment(boardIndex,commentIndex);
 
 		return new ResponseEntity<CommentGetDTO>(boardCommentIndex, HttpStatus.OK);
 	}
