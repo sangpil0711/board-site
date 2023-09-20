@@ -130,21 +130,17 @@ public class BoardService implements IBoardService {
 	 * @return : 해당 번호의 게시물 정보를 res 변수에 담고 반환한다.
 	 */
 	@Override
-	public List<BoardGetDTO> searchByIndex(Integer index) {
-		List<BoardVO> list = boardRepository.searchByIndex(index);
+	public BoardGetDTO searchByIndex(Integer index) {
+		BoardVO vo = boardRepository.searchByIndex(index);
 
-		List<BoardGetDTO> res = new ArrayList<>(); // vo -> dto 변환
-		for (BoardVO vo : list) {
-			BoardGetDTO tmp = new BoardGetDTO();
-			tmp.setIndex(vo.getIndex());
-			tmp.setTitle(vo.getTitle());
-			tmp.setText(vo.getText());
-			tmp.setUserId(vo.getUserId());
-			tmp.setCategory(vo.getCategory());
-			tmp.setCreateDate(new Date(vo.getCreateDate()));
-			res.add(tmp);
-		}
-		return res;
+			BoardGetDTO dto = new BoardGetDTO(); // vo -> dto 변환
+			dto.setIndex(vo.getIndex());
+			dto.setTitle(vo.getTitle());
+			dto.setText(vo.getText());
+			dto.setUserId(vo.getUserId());
+			dto.setCategory(vo.getCategory());
+			dto.setCreateDate(new Date(vo.getCreateDate()));
+		return dto;
 	}
 	
 	@Override
