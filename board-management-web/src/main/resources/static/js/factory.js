@@ -1,7 +1,15 @@
-var app = angular.module("myApp", ['ngResource', 'ngRoute']);
+/**
+ * 'ngResource'와 'ngRoute'를 의존하는 angular module을 생성하여 app에 할당
+ * $resource 함수를 사용하는 factory	생성
+ * "/boards/:index" 경로에 따른 'GET', 'POST', 'PATCH', 'DELETE' 메소드 생성
+ * 
+ * 작성일 : 2023.09.01
+ * 작성자 : 황상필
+ */
+var app = angular.module("myApp", ['ngResource', 'ngRoute', 'ui.bootstrap']);
 
-app.factory('BoardFactory', function($resource) {	// $resource를 매개변수로 한 'BoardFactory' 팩토리 생성
-	return $resource('/boards/:index', { index: '@index' }, { 				// '/board' 경로로 요청을 보낼 리소스 객체 생성 
+app.factory('BoardFactory', function($resource) {
+	return $resource('/boards/:index', { index: '@index' }, { 
 
 		query: {
 			method: 'GET',
@@ -9,10 +17,10 @@ app.factory('BoardFactory', function($resource) {	// $resource를 매개변수�
 		},
 
 		readBoard: {
-			method: 'GET', 							// http 요청 메소드를 GET으로 설정
+			method: 'GET', 						
 			isArray: true,
 			headers: {
-				"Content-Type": 'application/json', // application/json 타입 선언
+				"Content-Type": 'application/json',
 			},
 		},
 

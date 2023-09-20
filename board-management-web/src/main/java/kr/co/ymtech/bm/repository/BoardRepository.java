@@ -45,7 +45,7 @@ public class BoardRepository implements IBoardRepository {
 				return member;
 			}
 		};
-		return jdbcTemplate.query("SELECT (ROW_NUMBER() OVER()) AS index, title, content, user_id, category, create_date FROM board order by index desc", mapper);
+		return jdbcTemplate.query("select * from board order by index desc", mapper);
 	}
 
 	// ->
@@ -116,7 +116,7 @@ public class BoardRepository implements IBoardRepository {
 	 * @return : 해당 번호의 게시물 정보를 조회하는 query 함수 실행
 	 */
 	@Override
-	public BoardVO searchByIndex(Integer index) {
+	public List<BoardVO> searchByIndex(Integer index) {
 
 		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
 
@@ -135,7 +135,7 @@ public class BoardRepository implements IBoardRepository {
 			}
 		};
 		
-		return jdbcTemplate.queryForObject("select * from board where index = ?", mapper, index);
+		return jdbcTemplate.query("select * from board where index = ?", mapper, index);
 	}
 
 //		return jdbcTemplate.query("select * from board where index =? or name title ? ", new Object[] {index,"%"},(rs,rowNum) -> 

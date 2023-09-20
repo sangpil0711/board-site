@@ -9,6 +9,9 @@
 	<script type="text/javascript" th:src="@{/js/angular.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/angular-resource.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/angular-route.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/angular-animate.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/angular-sanitize.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/ui-bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/factory.js}"></script>
 	<script type="text/javascript" th:src="@{/js/read.js}"></script>
 	<script th:inline="javascript">
@@ -42,16 +45,12 @@
 				<div class="title">{{board.title}}</div>
 				<div class="info">
 					<dl>
-						<dt>번호</dt>
-						<dd>{{board.index}}</dd>
-					</dl>
-					<dl>
 						<dt>작성자</dt>
 						<dd>{{board.userId}}</dd>
 					</dl>
 					<dl>
 						<dt>작성일</dt>
-						<dd>{{board.createDate}}</dd>
+						<dd>{{board.createDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;{{board.createDate | date:'HH:mm:ss'}}</dd>
 					</dl>
 				</div>
 				<div class="content">{{board.text}}</div>

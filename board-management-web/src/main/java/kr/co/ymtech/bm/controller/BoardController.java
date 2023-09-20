@@ -56,7 +56,7 @@ public class BoardController {
 	 * 
 	 * @return : 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환한다.
 	 */
-	@PostMapping(value = "/board")
+	@PostMapping(value = "/boards")
 	public ResponseEntity<Integer> saveBoard(@RequestBody BoardDTO board) {
 
 		Integer boardlistSave = boardService.saveBoard(board);
@@ -71,8 +71,8 @@ public class BoardController {
 	 * 
 	 * @return : 업데이트 한 게시물 내용을 boardlistUpdate 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 */
-	@PatchMapping("/board")
-	public ResponseEntity<Integer> updateBoard(@RequestBody BoardGetDTO board) {
+	@PatchMapping("/boards/{index}")
+	public ResponseEntity<Integer> updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
 
 		Integer boardlistUpdate = boardService.updateBoard(board);
 
@@ -102,11 +102,11 @@ public class BoardController {
 	 * @return : 해당 번호의 게시물 정보를 boardlistIndex 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 */
 	@GetMapping("/boards/{index}")
-	public ResponseEntity<BoardGetDTO> searchByIndex(@PathVariable Integer index) {
+	public ResponseEntity<List<BoardGetDTO>> searchByIndex(@PathVariable Integer index) {
 
-		BoardGetDTO boardlistIndex = boardService.searchByIndex(index);
+		List<BoardGetDTO> boardlistIndex = boardService.searchByIndex(index);
 
-		return new ResponseEntity<BoardGetDTO>(boardlistIndex, HttpStatus.OK);
+		return new ResponseEntity<List<BoardGetDTO>>(boardlistIndex, HttpStatus.OK);
 	}
 	
 	
