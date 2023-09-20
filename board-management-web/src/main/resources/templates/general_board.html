@@ -44,13 +44,9 @@
 		</div>
 
 		<div>
-			<p class="board_all">전체 5개</p>
-			<select class="board_select" ng-model="pageSize" ng-change="loadData()">
-				<option>5개</option>
-				<option>10개</option>
-				<option>15개</option>
-				<option>20개</option>
-			</select>
+			<p class="board_all">전체 {{totalItems}}개</p>
+			<select class="board_select" ng-model="view" ng-change="setItemsPerPage(view)"  ng-options="num for num in [5, 10, 15, 20]"></select>
+			<p class="select_text">개씩 보기</p>
 		</div>
 
 		<div>
@@ -65,8 +61,8 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="item in boardlist">
-						<td>{{item.index}}</td>
+					<tr ng-repeat="item in boardlist.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+						<td>{{(totalItems - $index) - ( (currentPage - 1) * view )}}</td>
 						<td><a ng-href="board/{{item.index}}">{{item.title}}</a></td>
 						<td>{{item.userId}}</td>
 						<td>
@@ -78,9 +74,9 @@
 		</div>
 
 		<div>
-			<ul uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage"
-				class="pagination-lg" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
-				last-text="&raquo;">
+			<ul uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" max-size="maxSize"
+				ng-change="pageChanged()" items-per-page="itemsPerPage" class="pagination-lg" previous-text="&lsaquo;"
+				next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
 			</ul>
 		</div>
 	</div>

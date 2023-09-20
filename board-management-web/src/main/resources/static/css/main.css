@@ -106,16 +106,16 @@ button:hover {
 }
 
 .board_all {
-    font-size: 15px;
+    font-size: 17px;
     position: absolute;
-    top: 220px;
-    right: 560px;
+    top: 215px;
+    right: 610px;
 }
 
 .board_select {
-    width: 80px;
-    padding: 10px;
-    padding-left: 15px;
+    width: 60px;
+    padding: 7px;
+    padding-left: 10px;
     border: 1px solid black;
     background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
     background-size: 30px;
@@ -124,8 +124,15 @@ button:hover {
     color: black;
     background-color: white ;
     position: absolute;
-    top: 205px;
+    top: 208px;
+    right: 530px;
+}
+
+.select_text {
+	position: absolute;
+	top: 217px;
     right: 460px;
+    font-size: 15px;
 }
 
 h3 {

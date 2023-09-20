@@ -6,7 +6,7 @@
  * 작성일 : 2023.09.01
  * 작성자 : 황상필
  */
-var app = angular.module("myApp", ['ngResource', 'ngRoute', 'ngAnimate', 'ngSanitize', 'ui.bootstrap']);
+var app = angular.module("myApp", ['ngResource', 'ngRoute', 'ui.bootstrap']);
 
 app.factory('BoardFactory', function($resource) {
 	return $resource('/boards/:index', { index: '@index' }, { 

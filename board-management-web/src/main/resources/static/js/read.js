@@ -10,14 +10,14 @@ app.controller("BoardRead", function($scope, $window, BoardFactory) {
 	$scope.getDataByIndex = function(index) {
 		BoardFactory.readBoard({ index: index }, function(response) {
 			$scope.board = response[0];
+			$scope.board.index = response[0].index;
 		});
 	};
-	
-	console.log($scope.board);
 
 	if (current != undefined) {
 		let index = current;
 		$scope.getDataByIndex(index);
+		console.log(index);
 	}
 
 	$scope.remove = function(index) {
