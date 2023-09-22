@@ -1,0 +1,34 @@
+
+
+<body ng-app="myApp">
+	<div id="container">
+
+		<div class="general_write">일반게시판 글쓰기</div>
+
+		<form id="board_form" th:action="@{/board/write}" method="post">
+
+			<div class="title_write">
+				<p>제목</p>
+				<input id="title" type="text" name="title" required>
+			</div>
+
+			<div class="content_write">
+				<textarea name="text" required></textarea>
+			</div>
+
+			<div>
+				<button type="button" class="file_btn">파일선택<br>(최대 100MB)</button>
+			</div>
+
+			<div class="file_name">
+				<p>IPP 인턴 프로젝트 설계서.pptx<br>
+					IPP 프로젝트 일정.txt</p>
+			</div>
+
+			<div class="write_decision">
+				<input type="submit" value="작성완료">
+				<button type="button" th:onclick="|location.href='@{/board}'|">취소</button>
+			</div>
+		</form>
+	</div>
+</body>

@@ -1,34 +1,30 @@
 /**
  * $scope, $window 객체와 BoardFactory 서비스를 사용하는 controller 생성
- * BoardFactory의 readBoard와 deleteBoard 메소드를 이용하여 게시글 상세 조회 및 게시글 삭제 구현
+ * general_read.html에 필요한 메서드 작성
  * 
  * 작성일 : 2023.09.15
  * 작성자 : 황상필
  */
-app.controller("BoardRead", function($scope, $window, BoardFactory) {
+app.controller("BoardRead", function($rootScope, $scope, $window, BoardFactory) {
 
 	$scope.getDataByIndex = function(index) {
-		BoardFactory.readBoard({ index: index }, function(response) {
-			$scope.board = response[0];
-			$scope.board.index = response[0].index;
+		BoardFactory.readBoard({index: index}, function(response) {
+			$scope.board = response;
 		});
 	};
-
-	if (current != undefined) {
-		let index = current;
-		$scope.getDataByIndex(index);
-		console.log(index);
-	}
 
 	$scope.remove = function(index) {
 		BoardFactory.deleteBoard({ index: index }, function() {
-		var updateUrl = '/board';
-		$window.location.href = updateUrl;
+			var updateUrl = '/board';
+			$window.location.href = updateUrl;
 		});
 	};
 
-	$scope.redirectToUpdate = function(index) {
-		var updateUrl = '/board/update/' + index;
-		$window.location.href = updateUrl;
-	};
+	$scope.updateBoard = function() {
+		$rootScope.selectMenu('static/templates/general_update.html');
+	}
+	
+	$scope.backBoard = function() {
+		$rootScope.selectMenu('static/templates/general_board.html');
+	}
 });

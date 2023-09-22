@@ -18,7 +18,7 @@ app.factory('BoardFactory', function($resource) {
 
 		readBoard: {
 			method: 'GET', 						
-			isArray: true,
+			isArray: false,
 			headers: {
 				"Content-Type": 'application/json',
 			},
@@ -33,6 +33,7 @@ app.factory('BoardFactory', function($resource) {
 
 		updateBoard: {
 			method: 'PATCH',
+			isArray: false,
 			headers: {
 				"Content-Type": 'application/json',
 			},

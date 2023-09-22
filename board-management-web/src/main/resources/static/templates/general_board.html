@@ -1,0 +1,48 @@
+<div id="container" ng-controller="BoardCtrl">
+	<div>
+		<button type="button" class="write_btn" ng-click="writeBoard()">글쓰기</buttton>
+	</div>
+
+	<div>
+		<input type="text" class="search">
+		<button type="button" class="search_btn">검색</buttton>
+	</div>
+
+	<div>
+		<p class="board_all">전체 {{totalItems}}개</p>
+		<select class="board_select" ng-model="view" ng-change="setItemsPerPage(view)"
+			ng-options="num for num in [5, 10, 15, 20]"></select>
+		<p class="select_text">개씩 보기</p>
+	</div>
+
+	<div class="board_box">
+		<table class="board">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr ng-repeat="item in boardlist.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+					<td>{{(totalItems - $index) - ( (currentPage - 1) * view )}}</td>
+					<td><a ng-click="readBoard()">{{item.title}}</a></td>
+					<td>{{item.userId}}</td>
+					<td>
+						{{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div>
+		<ul uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" max-size="maxSize"
+			items-per-page="itemsPerPage" class="pagination-lg" previous-text="&lsaquo;" next-text="&rsaquo;"
+			first-text="&laquo;" last-text="&raquo;">
+		</ul>
+	</div>
+</div>

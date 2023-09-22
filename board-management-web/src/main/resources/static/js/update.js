@@ -5,28 +5,26 @@
  * 작성일 : 2023.09.18
  * 작성자 : 황상필
  */
-app.controller("BoardUpdate", function($scope, BoardFactory, $window) {
+app.controller("BoardUpdate", function($rootScope, $scope, BoardFactory, $window) {
 
 	$scope.getDataByIndex = function(index) {
 		BoardFactory.readBoard({ index: index }, function(response) {
-			$scope.board = response[0];
+			$scope.board = response;
 		});
 	};
 
-	if (current != undefined) {
-		let index = current;
-		$scope.getDataByIndex(index);
-	}
-
 	$scope.update = function(index) {
-		BoardFactory.updateBoard({ index: index }, $scope.board, function() {
+		BoardFactory.updateBoard({ index: index }, function() {
 
 			var updateUrl = '/board/' + index;
 			$window.location.href = updateUrl;
 
 		});
 	};
-
+	
+	$scope.cancleUpdate = function() {
+		$rootScope.selectMenu('static/templates/general_read.html');
+	}
 
 	$scope.redirectToUpdate = function(index) {
 		var updateUrl = '/board/' + index;

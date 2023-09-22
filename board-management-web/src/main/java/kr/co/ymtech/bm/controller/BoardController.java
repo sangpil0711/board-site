@@ -143,9 +143,4 @@ public class BoardController {
 		return new ResponseEntity<Integer>(boardCommentDelete, HttpStatus.OK);
 	}
 	
-	
-	
-	
-	
-
 }
