@@ -5,26 +5,36 @@
  * 작성일 : 2023.09.15
  * 작성자 : 황상필
  */
-app.controller("BoardRead", function($rootScope, $scope, $window, BoardFactory) {
+app.controller("BoardRead", function($scope, $window, BoardFactory, $routeParams, $sce) {
+
+	var index = $routeParams.index;
 
 	$scope.getDataByIndex = function(index) {
-		BoardFactory.readBoard({index: index}, function(response) {
+		BoardFactory.readBoard({ index: index }, function(response) {
 			$scope.board = response;
 		});
 	};
 
+//	$scope.formatText = function(text) {
+//		var text = document.getElementById("contents").value;
+//		text = text.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+//		document.getElementById("contents").value = text;
+//	};
+
+	$scope.getDataByIndex(index);
+
 	$scope.remove = function(index) {
 		BoardFactory.deleteBoard({ index: index }, function() {
-			var updateUrl = '/board';
-			$window.location.href = updateUrl;
+			$window.location.href = '#!/board';
 		});
 	};
 
-	$scope.updateBoard = function() {
-		$rootScope.selectMenu('static/templates/general_update.html');
+	$scope.redirectToUpdate = function(index) {
+		$window.location.href = '#!/board/update/' + index;
 	}
-	
-	$scope.backBoard = function() {
-		$rootScope.selectMenu('static/templates/general_board.html');
+
+	$scope.redirectToBoard = function() {
+		$window.location.href = '#!/board';
 	}
+
 });

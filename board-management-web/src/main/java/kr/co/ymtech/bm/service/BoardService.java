@@ -102,6 +102,7 @@ public class BoardService implements IBoardService {
 
 		BoardVO vo = new BoardVO(); // dto -> vo 변환
 		vo.setIndex(board.getIndex());
+		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
 
 		Integer update = boardRepository.updateBoard(vo);

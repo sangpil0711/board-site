@@ -113,7 +113,7 @@ button:hover {
 }
 
 .board_select {
-	width: 60px;
+	width: 120px;
 	padding: 7px;
 	padding-left: 10px;
 	border: 1px solid black;
@@ -125,14 +125,7 @@ button:hover {
 	background-color: white;
 	position: absolute;
 	top: 208px;
-	right: 530px;
-}
-
-.select_text {
-	position: absolute;
-	top: 217px;
 	right: 460px;
-	font-size: 15px;
 }
 
 h3 {
@@ -439,4 +432,9 @@ strong {
 
 .read_btn button:nth-child(2) {
 	background-color: white;
+}
+
+pre {
+	background-color: white;
+	border: none;
 }

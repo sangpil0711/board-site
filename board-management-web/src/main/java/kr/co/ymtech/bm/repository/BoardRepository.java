@@ -33,7 +33,7 @@ public class BoardRepository implements IBoardRepository {
 
 			@Override
 			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException { // ResultSet에 결과값을 담아 BoardVO에 담음
-				BoardVO member = new BoardVO(
+				BoardVO member = new BoardVO(	
 						rs.getInt("index"), 
 						rs.getString("title"), 
 						rs.getString("content"),
@@ -45,7 +45,7 @@ public class BoardRepository implements IBoardRepository {
 				return member;
 			}
 		};
-		return jdbcTemplate.query("select * from board order by index desc", mapper);
+		return jdbcTemplate.query("select * from board order by index desc offset 0 limit 5", mapper);
 	}
 
 	// ->
@@ -92,7 +92,7 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer updateBoard(BoardVO board) {
 
-		return jdbcTemplate.update("update board set content = ? where index = ? ", board.getText(), board.getIndex());
+		return jdbcTemplate.update("update board set title = ?, content = ? where index = ? ", board.getTitle(), board.getText(), board.getIndex());
 	}
 
 	/**

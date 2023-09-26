@@ -5,7 +5,7 @@
  * 작성일 : 2023.09.01
  * 작성자 : 황상필
  */
-app.controller("BoardCtrl", function($rootScope, $scope, BoardFactory) {
+app.controller("BoardCtrl", function($scope, BoardFactory, $window) {
 
 	BoardFactory.query({}, function(response) {
 		$scope.boardlist = response;
@@ -21,12 +21,12 @@ app.controller("BoardCtrl", function($rootScope, $scope, BoardFactory) {
 		$scope.currentPage = 1;
 	}
 
-	$scope.writeBoard = function() {
-		$rootScope.selectMenu('static/templates/general_write.html');
+	$scope.redirectToWrite = function() {
+		$window.location.href = '#!/board/write';
 	}
 	
-	$scope.readBoard = function() {
-		$rootScope.selectMenu('static/templates/general_read.html');
+	$scope.redirectToRead = function(index) {
+		$window.location.href = '#!/board/read/' + index;
 	}
 
 });

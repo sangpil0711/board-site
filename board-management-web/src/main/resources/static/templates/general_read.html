@@ -3,9 +3,9 @@
 		<div id="container" ng-controller="BoardRead">
 			<strong>일반게시판</strong>
 			<div class="read_btn">
-				<button type="button" ng-click="updateBoard()">수정</button>
+				<button type="button" ng-click="redirectToUpdate(board.index)">수정</button>
 				<button type="button" ng-click="remove(board.index)">삭제</button>
-				<button type="button" ng-click="backBoard()">목록</button>
+				<button type="button" ng-click="redirectToBoard()">목록</button>
 			</div>
 			<div class="board_wrap">
 				<div class="board_view">
@@ -22,7 +22,7 @@
 							</dd>
 						</dl>
 					</div>
-					<div class="content">{{board.text}}</div>
+					<pre class="content">{{board.text}}</pre>
 				</div>
 
 			</div>

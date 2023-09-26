@@ -5,26 +5,14 @@
  * 작성일 : 2023.09.01
  * 작성자 : 황상필
  */
-app.controller("BoardMain", function($rootScope, $scope) {
-
-	$scope.template = {
-		url: 'static/templates/main_display.html'
-	}
+app.controller("BoardMain", function($scope, $window) {
 
 	$scope.redirectToMain = function() {
-
-		$scope.template.url = 'static/templates/main_display.html';
-
+		$window.location.href = '/';
 	};
 
 	$scope.redirectToBoard = function() {
-
-		$scope.template.url = 'static/templates/general_board.html';
-
+		$window.location.href = '#!/board';
 	};
-	
-	$rootScope.selectMenu = function(url) {
-		$scope.template.url = url;
-	}
 
 });
