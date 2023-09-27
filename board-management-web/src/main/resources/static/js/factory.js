@@ -18,11 +18,9 @@ app.config(function($routeProvider){
 	})
 	.when("/board/write", {
 		templateUrl: "static/templates/general_write.html",
-		controller: 'BoardWrite'
 	})
 	.when("/board/read/:index", {
 		templateUrl: "static/templates/general_read.html",
-		controller: 'BoardRead'
 	})
 	.when("/board/update/:index", {
 		templateUrl: "static/templates/general_update.html"
@@ -30,11 +28,11 @@ app.config(function($routeProvider){
 });
 
 app.factory('BoardFactory', function($resource) {
-	return $resource('/boards/:index', { index: '@index' }, { 
+	return $resource('/boards/:index', { index: '@index', pageNumber: '@pageNumber', pageSize: '@pageSize' }, { 
 
 		query: {
 			method: 'GET',
-			isArray: true,
+			isArray: false,
 		},
 
 		readBoard: {

@@ -23,11 +23,14 @@ app.controller("BoardRead", function($scope, $window, BoardFactory, $routeParams
 
 	$scope.getDataByIndex(index);
 
-	$scope.remove = function(index) {
-		BoardFactory.deleteBoard({ index: index }, function() {
-			$window.location.href = '#!/board';
-		});
-	};
+	 $scope.remove = function(index) {
+        var confirmDelete = confirm("게시물을 삭제하시겠습니까?");
+        if (confirmDelete) {
+            BoardFactory.deleteBoard({ index: index }, function() {
+                $window.location.href = '#!/board';
+            });
+        }
+    };
 
 	$scope.redirectToUpdate = function(index) {
 		$window.location.href = '#!/board/update/' + index;

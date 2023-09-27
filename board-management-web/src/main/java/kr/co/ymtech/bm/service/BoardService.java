@@ -9,13 +9,14 @@ import org.springframework.stereotype.Service;
 
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
+import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.CommentDTO;
 import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
-import kr.co.ymtech.bm.repository.CommentRepository;
 import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.repository.ICommentRepository;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
 import kr.co.ymtech.bm.repository.vo.CommentVO;
+import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
  * 일반게시판 Service 클래스
@@ -36,19 +37,13 @@ public class BoardService implements IBoardService {
 		this.commentRepository = IcommentRepository;
 	}
 	
-	
-
-	/**
-	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
-	 * 
-	 * @return : findAll 변수에 vo -> dto 변환된 값들을 담아 반환
-	 */
 	@Override
-	public List<BoardGetDTO> findAll() {
-
-		List<BoardVO> list = boardRepository.findAll();
-
-		List<BoardGetDTO> findAll = new ArrayList<>(); // vo -> dto 변환
+    public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, Integer totalCount) {
+		
+        List<BoardVO> list = boardRepository.findPage(pageNumber, pageSize);
+        List<PageVO> boardCount = boardRepository.findAll(totalCount);
+        
+        List<BoardGetDTO> findPage = new ArrayList<>(); // vo -> dto 변환
 		for (BoardVO vo : list) {
 			BoardGetDTO tmp = new BoardGetDTO();
 			tmp.setIndex(vo.getIndex());
@@ -57,9 +52,39 @@ public class BoardService implements IBoardService {
 			tmp.setUserId(vo.getUserId());
 			tmp.setCategory(vo.getCategory());
 			tmp.setCreateDate(new Date(vo.getCreateDate()));
-			findAll.add(tmp);
+			findPage.add(tmp);
 		}
-		return findAll;
+
+        BoardPageDTO boardPageDTO = new BoardPageDTO();
+        boardPageDTO.setBoardList(list);
+        boardPageDTO.setPageList(boardCount);
+
+        return boardPageDTO;
+    }
+	
+	/**
+	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
+	 * 
+	 * @return : findAll 변수에 vo -> dto 변환된 값들을 담아 반환
+	 */
+	@Override
+	public List<BoardGetDTO> findPage(Integer pageNumber, Integer pageSize) {
+
+		List<BoardVO> list = boardRepository.findPage(pageNumber, pageSize);
+		
+
+		List<BoardGetDTO> findPage = new ArrayList<>(); // vo -> dto 변환
+		for (BoardVO vo : list) {
+			BoardGetDTO tmp = new BoardGetDTO();
+			tmp.setIndex(vo.getIndex());
+			tmp.setTitle(vo.getTitle());
+			tmp.setText(vo.getText());
+			tmp.setUserId(vo.getUserId());
+			tmp.setCategory(vo.getCategory());
+			tmp.setCreateDate(new Date(vo.getCreateDate()));
+			findPage.add(tmp);
+		}
+		return findPage;
 	}
 
 	/**

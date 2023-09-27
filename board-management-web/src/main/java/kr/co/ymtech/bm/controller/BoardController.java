@@ -1,7 +1,5 @@
 package kr.co.ymtech.bm.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
+import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.CommentDTO;
 import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
 import kr.co.ymtech.bm.service.BoardService;
@@ -42,11 +42,11 @@ public class BoardController {
 	 *         상태코드는 HttpStatus.ok 로 성공상태 200을 나타내준다.
 	 */
 	@GetMapping(value = "/boards")
-	public ResponseEntity<List<BoardGetDTO>> findAll() {
+	public ResponseEntity<BoardPageDTO> findBoardPage(Integer pageNumber, Integer pageSize, Integer totalCount) {
 
-		List<BoardGetDTO> boardlist = boardService.findAll();
+		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, pageSize, totalCount);
 
-		return new ResponseEntity<List<BoardGetDTO>>(boardlist, HttpStatus.OK);
+		return new ResponseEntity<BoardPageDTO>(boardlist, HttpStatus.OK);
 	}
 
 	/**

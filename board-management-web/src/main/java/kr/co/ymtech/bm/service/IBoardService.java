@@ -2,20 +2,23 @@ package kr.co.ymtech.bm.service;
 
 import java.util.List;
 
-import kr.co.ymtech.bm.controller.dto.CommentDTO;
-import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
+import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
+import kr.co.ymtech.bm.controller.dto.CommentDTO;
+import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
 
 /**
  * 일반게시판 Service 인터페이스
  */
 public interface IBoardService {
+	
+	public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, Integer totalCount);
 
 	/**
 	 * 게시물에 저장되어 있는 정보를 모두 조회
 	 */
-	public List<BoardGetDTO> findAll();
+	public List<BoardGetDTO> findPage(Integer pageNumber, Integer pageSize);
 
 	/**
 	 * 게시물 정보를 저장

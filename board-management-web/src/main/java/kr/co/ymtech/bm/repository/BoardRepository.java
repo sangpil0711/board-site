@@ -2,12 +2,16 @@ package kr.co.ymtech.bm.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
 import kr.co.ymtech.bm.repository.vo.BoardVO;
+import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
  * 일반게시판 Repository 클래스
@@ -21,16 +25,20 @@ public class BoardRepository implements IBoardRepository {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	
+	
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
 	 * @return : DB에 있는 정보를 조회하는 query 함수 실행
 	 */
 	@Override
-	public List<BoardVO> findAll() {
+	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize) {
+		
+		Integer offset = (pageNumber - 1) * pageSize;
 
 		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
-
+			
 			@Override
 			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException { // ResultSet에 결과값을 담아 BoardVO에 담음
 				BoardVO member = new BoardVO(	
@@ -45,7 +53,24 @@ public class BoardRepository implements IBoardRepository {
 				return member;
 			}
 		};
-		return jdbcTemplate.query("select * from board order by index desc offset 0 limit 5", mapper);
+		return jdbcTemplate.query("select * from board order by index desc offset ? limit ?", mapper, offset, pageSize);
+	}
+	
+	/**
+	 * Method : DB에 저장되어 있는 총 게시물의 수를 조회하는 메소드
+	 * 
+	 * @return : pageVO 클래스에 있는 객체를 하나만 포함하는 리스트를 생성 후 반환
+	 */
+	@Override
+	public List<PageVO> findAll(Integer totalCount) {
+		
+	    Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM board", Integer.class);
+
+	    totalCount = count;
+	    
+	    PageVO pageVO = new PageVO();
+	    pageVO.setTotalCount(totalCount);
+	    return Collections.singletonList(pageVO);
 	}
 
 	// ->
@@ -129,7 +154,7 @@ public class BoardRepository implements IBoardRepository {
 						rs.getString("user_id"), 
 						rs.getInt("category"), 
 						rs.getLong("create_date")
-						);
+					);
 
 				return member;
 			}
