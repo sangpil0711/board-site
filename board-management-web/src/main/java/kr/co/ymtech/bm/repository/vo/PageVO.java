@@ -2,7 +2,7 @@ package kr.co.ymtech.bm.repository.vo;
 
 public class PageVO {
 	
-	/** index : 게시글 번호 */
+	/** totalCount : 총 게시글 수  */
 	private Integer totalCount;
 
 	/**

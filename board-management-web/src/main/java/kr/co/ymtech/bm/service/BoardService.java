@@ -38,10 +38,11 @@ public class BoardService implements IBoardService {
 	}
 	
 	@Override
-    public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, Integer totalCount) {
+    public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
 		
-        List<BoardVO> list = boardRepository.findPage(pageNumber, pageSize);
-        List<PageVO> boardCount = boardRepository.findAll(totalCount);
+		List<BoardVO> list = boardRepository.findPage(pageNumber, pageSize, searchType, keyword);
+
+	    List<PageVO> boardCount = boardRepository.findAll(searchType, keyword);
         
         List<BoardGetDTO> findPage = new ArrayList<>(); // vo -> dto 변환
 		for (BoardVO vo : list) {
@@ -61,31 +62,6 @@ public class BoardService implements IBoardService {
 
         return boardPageDTO;
     }
-	
-	/**
-	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
-	 * 
-	 * @return : findAll 변수에 vo -> dto 변환된 값들을 담아 반환
-	 */
-	@Override
-	public List<BoardGetDTO> findPage(Integer pageNumber, Integer pageSize) {
-
-		List<BoardVO> list = boardRepository.findPage(pageNumber, pageSize);
-		
-
-		List<BoardGetDTO> findPage = new ArrayList<>(); // vo -> dto 변환
-		for (BoardVO vo : list) {
-			BoardGetDTO tmp = new BoardGetDTO();
-			tmp.setIndex(vo.getIndex());
-			tmp.setTitle(vo.getTitle());
-			tmp.setText(vo.getText());
-			tmp.setUserId(vo.getUserId());
-			tmp.setCategory(vo.getCategory());
-			tmp.setCreateDate(new Date(vo.getCreateDate()));
-			findPage.add(tmp);
-		}
-		return findPage;
-	}
 
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드

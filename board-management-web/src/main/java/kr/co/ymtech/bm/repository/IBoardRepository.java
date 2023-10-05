@@ -13,12 +13,12 @@ public interface IBoardRepository {
 	/**
 	 * 게시물에 저장되어 있는 정보를 모두 조회
 	 */
-	public List<PageVO> findAll(Integer totalCount);
-
+	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize, String searchType, String keyword);
+	
 	/**
 	 * 게시물에 저장되어 있는 정보를 모두 조회
 	 */
-	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize);
+	public List<PageVO> findAll(String searchType, String keyword);
 
 	/**
 	 * 게시물 정보를 저장

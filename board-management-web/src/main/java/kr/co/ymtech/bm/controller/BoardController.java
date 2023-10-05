@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
@@ -42,9 +43,10 @@ public class BoardController {
 	 *         상태코드는 HttpStatus.ok 로 성공상태 200을 나타내준다.
 	 */
 	@GetMapping(value = "/boards")
-	public ResponseEntity<BoardPageDTO> findBoardPage(Integer pageNumber, Integer pageSize, Integer totalCount) {
-
-		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, pageSize, totalCount);
+	@ResponseBody
+	public ResponseEntity<BoardPageDTO> findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
+		
+		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, pageSize, searchType, keyword);
 
 		return new ResponseEntity<BoardPageDTO>(boardlist, HttpStatus.OK);
 	}

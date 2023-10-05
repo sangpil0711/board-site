@@ -24,68 +24,73 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	
-	
+
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
 	 * @return : DB에 있는 정보를 조회하는 query 함수 실행
 	 */
 	@Override
-	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize) {
-		
+	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
+
 		Integer offset = (pageNumber - 1) * pageSize;
 
+		String sql = "SELECT * FROM board ";
+
+		if ("title".equals(searchType)) {
+		    sql += "WHERE title LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+		} else if ("content".equals(searchType)) {
+		    sql += "WHERE content LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+		} else if ("user_id".equals(searchType)) {
+		    sql += "WHERE user_id LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+		} else {
+			sql += "ORDER BY index DESC";
+		}
+
 		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
-			
+
 			@Override
 			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException { // ResultSet에 결과값을 담아 BoardVO에 담음
-				BoardVO member = new BoardVO(	
+				BoardVO member = new BoardVO(
 						rs.getInt("index"), 
 						rs.getString("title"), 
 						rs.getString("content"),
 						rs.getString("user_id"), 
 						rs.getInt("category"), 
-						rs.getLong("create_date")
-						);
+						rs.getLong("create_date"));
 
 				return member;
 			}
 		};
-		return jdbcTemplate.query("select * from board order by index desc offset ? limit ?", mapper, offset, pageSize);
+		
+		return jdbcTemplate.query(sql, mapper, "%" + keyword + "%", offset, pageSize);
 	}
-	
+
 	/**
 	 * Method : DB에 저장되어 있는 총 게시물의 수를 조회하는 메소드
 	 * 
 	 * @return : pageVO 클래스에 있는 객체를 하나만 포함하는 리스트를 생성 후 반환
 	 */
 	@Override
-	public List<PageVO> findAll(Integer totalCount) {
+	public List<PageVO> findAll(String searchType, String keyword) {
 		
-	    Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM board", Integer.class);
-
-	    totalCount = count;
+	    String sql = "SELECT COUNT(*) FROM board";
+	    
+	    if ("title".equals(searchType)) {
+	        sql += " WHERE title LIKE ?";
+	    } else if ("content".equals(searchType)) {
+	        sql += " WHERE content LIKE ?";
+	    } else if ("user_id".equals(searchType)) {
+	        sql += " WHERE user_id LIKE ?";
+	    }
+	    
+	    Integer count = jdbcTemplate.queryForObject(sql, Integer.class, "%" + keyword + "%");
 	    
 	    PageVO pageVO = new PageVO();
-	    pageVO.setTotalCount(totalCount);
+	    pageVO.setTotalCount(count);
+	    
 	    return Collections.singletonList(pageVO);
 	}
-
-	// ->
-	// https://velog.io/@ogu1208/spring-JdbcTemplate%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%BF%BC%EB%A6%AC-%EC%8B%A4%ED%96%89
-
-//		return jdbcTemplate.query("select * from board",(rs, rowNum) -> new BoardVO(
-//				
-//				rs.getInt("index"),
-//				rs.getString("title"),
-//				rs.getString("content"),
-//				rs.getString("user_id"),
-//				rs.getInt("category"),
-//				rs.getLong("create_date")
-//				));
-	
 
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드
@@ -97,16 +102,10 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer saveBoard(BoardVO board) {
 
-		return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", 
-//				board.getIndex(), 
-				board.getTitle(),
-				board.getText(), 
-//				board.getUserId(), 
-//				board.getCategory(), 
-				board.getCreateDate()
-				);
+		return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", board.getTitle(),
+				board.getText(), board.getCreateDate());
 	}
-	
+
 	/**
 	 * Method : 게시물 내용(text)을 수정 하는 메소드
 	 * 
@@ -117,7 +116,8 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer updateBoard(BoardVO board) {
 
-		return jdbcTemplate.update("update board set title = ?, content = ? where index = ? ", board.getTitle(), board.getText(), board.getIndex());
+		return jdbcTemplate.update("update board set title = ?, content = ? where index = ? ", board.getTitle(),
+				board.getText(), board.getIndex());
 	}
 
 	/**
@@ -153,29 +153,13 @@ public class BoardRepository implements IBoardRepository {
 						rs.getString("content"),
 						rs.getString("user_id"), 
 						rs.getInt("category"), 
-						rs.getLong("create_date")
-					);
+						rs.getLong("create_date"));
 
 				return member;
 			}
 		};
-		
+
 		return jdbcTemplate.queryForObject("select * from board where index = ?", mapper, index);
 	}
-
-//		return jdbcTemplate.query("select * from board where index =? or name title ? ", new Object[] {index,"%"},(rs,rowNum) -> 
-//		
-//		new BoardDTO(	
-//				rs.getInt("index"),
-//				rs.getString("title"),
-//				rs.getString("content"),
-//				rs.getString("user_id"),
-//				rs.getInt("category"),
-//				rs.getLong("create_date")
-//				));
-//	}
-	
-
-	
 
 }

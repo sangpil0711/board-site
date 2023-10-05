@@ -79,6 +79,19 @@ button:hover {
 	left: 470px;
 }
 
+.type_select {
+	width: 90px;
+	height: 35px;
+	padding: 7px;
+	padding-left: 10px;
+	background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
+	background-size: 30px;
+	appearance: none;
+	position: absolute;
+	top: 220px;
+	left: 620px;
+}
+
 .search_btn {
 	border: 1px solid grey;
 	padding: 5px 10px;
@@ -89,7 +102,7 @@ button:hover {
 	font-size: 15px;
 	position: absolute;
 	top: 220px;
-	left: 920px;
+	left: 1050px;
 }
 
 .search {
@@ -100,7 +113,7 @@ button:hover {
 	outline: none;
 	position: absolute;
 	top: 220px;
-	left: 600px;
+	left: 730px;
 	height: 30px;
 	width: 300px;
 }
@@ -109,7 +122,7 @@ button:hover {
 	font-size: 17px;
 	position: absolute;
 	top: 215px;
-	right: 610px;
+	left: 1220px;
 }
 
 .board_select {
@@ -125,7 +138,7 @@ button:hover {
 	background-color: white;
 	position: absolute;
 	top: 208px;
-	right: 460px;
+	left: 1330px;
 }
 
 h3 {

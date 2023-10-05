@@ -16,15 +16,32 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window) {
 		{ name: '15개씩 보기', value: 15 },
 		{ name: '20개씩 보기', value: 20 }
 	];
+	$scope.searchType = 'title';
+	$scope.keyword = '';
+	$scope.types = [
+		{ name: '제목', value: 'title' },
+		{ name: '내용', value: 'content' },
+		{ name: '작성자', value: 'user_id' }
+	];
 
 	let findPage = function() {
-		BoardFactory.query({ pageNumber: $scope.currentPage, pageSize: $scope.itemsPerPage }, function(response) {
+		BoardFactory.query({ pageNumber: $scope.currentPage, pageSize: $scope.itemsPerPage, searchType: $scope.searchType, keyword: $scope.keyword }, function(response) {
 			$scope.boardlist = response.boardList;
 			$scope.totalItems = response.pageList[0].totalCount;
-			console.log(response);
 		});
 	}
 
+	$scope.search = function() {
+		if ($scope.keyword != '') {
+			findPage();
+		} else {
+			$window.alert("검색어를 입력해주세요.")
+		}
+	}
+
+	$scope.changeSearchType = function(selectType) {
+		$scope.searchType = selectType;
+	};
 
 	$scope.setItemsPerPage = function() {
 		findPage();

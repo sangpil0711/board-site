@@ -15,12 +15,6 @@ app.controller("BoardRead", function($scope, $window, BoardFactory, $routeParams
 		});
 	};
 
-//	$scope.formatText = function(text) {
-//		var text = document.getElementById("contents").value;
-//		text = text.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-//		document.getElementById("contents").value = text;
-//	};
-
 	$scope.getDataByIndex(index);
 
 	 $scope.remove = function(index) {

@@ -6,37 +6,40 @@
  * 작성일 : 2023.09.01
  * 작성자 : 황상필
  */
-var app = angular.module("myApp", ['ngResource', 'ngRoute', 'ngSanitize', 'ui.bootstrap']);
+var app = angular.module("myApp", ['ngResource', 'ngRoute', 'ui.bootstrap']);
 
-app.config(function($routeProvider){
+app.config(function($routeProvider) {
 	$routeProvider
-	.when("/", {
-		templateUrl: "static/templates/main_display.html"
-	})
-	.when("/board", {
-		templateUrl: "static/templates/general_board.html",
-	})
-	.when("/board/write", {
-		templateUrl: "static/templates/general_write.html",
-	})
-	.when("/board/read/:index", {
-		templateUrl: "static/templates/general_read.html",
-	})
-	.when("/board/update/:index", {
-		templateUrl: "static/templates/general_update.html"
-	});
+		.when("/", {
+			templateUrl: "static/templates/main_display.html"
+		})
+		.when("/board", {
+			templateUrl: "static/templates/general_board.html",
+		})
+		.when("/board/write", {
+			templateUrl: "static/templates/general_write.html",
+		})
+		.when("/board/read/:index", {
+			templateUrl: "static/templates/general_read.html",
+		})
+		.when("/board/update/:index", {
+			templateUrl: "static/templates/general_update.html"
+		});
 });
 
 app.factory('BoardFactory', function($resource) {
-	return $resource('/boards/:index', { index: '@index', pageNumber: '@pageNumber', pageSize: '@pageSize' }, { 
+	return $resource('/boards/:index', null, {
 
 		query: {
 			method: 'GET',
 			isArray: false,
+			headers: {
+				"Content-Type": 'application/json',
+			},
 		},
 
 		readBoard: {
-			method: 'GET', 						
+			method: 'GET',
 			isArray: false,
 			headers: {
 				"Content-Type": 'application/json',

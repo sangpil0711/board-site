@@ -1,7 +1,5 @@
 package kr.co.ymtech.bm.service;
 
-import java.util.List;
-
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
@@ -13,12 +11,7 @@ import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
  */
 public interface IBoardService {
 	
-	public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, Integer totalCount);
-
-	/**
-	 * 게시물에 저장되어 있는 정보를 모두 조회
-	 */
-	public List<BoardGetDTO> findPage(Integer pageNumber, Integer pageSize);
+	public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword);
 
 	/**
 	 * 게시물 정보를 저장
