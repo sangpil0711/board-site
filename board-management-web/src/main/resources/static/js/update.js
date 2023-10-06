@@ -5,7 +5,14 @@
  * 작성일 : 2023.09.18
  * 작성자 : 황상필
  */
-app.controller("BoardUpdate", function($scope, BoardFactory, $window) {
+app.controller("BoardUpdate", function($scope, BoardFactory, $window, $routeParams) {
+
+	var index = $routeParams.index;
+
+	$scope.board = {
+		title: null,
+		text: null
+	}
 
 	$scope.getDataByIndex = function(index) {
 		BoardFactory.readBoard({ index: index }, function(response) {
@@ -13,23 +20,15 @@ app.controller("BoardUpdate", function($scope, BoardFactory, $window) {
 		});
 	};
 
-	if (current != undefined) {
-		let index = current;
-		$scope.getDataByIndex(index);
-	}
+	$scope.getDataByIndex(index);
 
 	$scope.update = function(index) {
 		BoardFactory.updateBoard({ index: index }, $scope.board, function() {
-
-			var updateUrl = '/board/' + index;
-			$window.location.href = updateUrl;
-
+			$window.location.href = '#!/board/read/' + index;
 		});
 	};
 
-
-	$scope.redirectToUpdate = function(index) {
-		var updateUrl = '/board/' + index;
-		$window.location.href = updateUrl;
+	$scope.redirectToRead = function(index) {
+		$window.location.href = '#!/board/read/' + index;
 	};
 });

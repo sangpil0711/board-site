@@ -3,6 +3,7 @@ package kr.co.ymtech.bm.repository;
 import java.util.List;
 
 import kr.co.ymtech.bm.repository.vo.BoardVO;
+import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
  * 일반게시판 IBoardRepository 인터페이스
@@ -11,14 +12,19 @@ import kr.co.ymtech.bm.repository.vo.BoardVO;
  * 작성자 : 박상현
  */
 public interface IBoardRepository {
-
+	
 	/**
 	 * 게시물에 저장되어 있는 정보를 모두 조회
 	 * 
 	 * 작성일 : 2023.09.18
 	 * 작성자 : 박상현
 	 */
-	public List<BoardVO> findAll();
+	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize, String searchType, String keyword);
+	
+	/**
+	 * 게시물에 저장되어 있는 정보를 모두 조회
+	 */
+	public List<PageVO> findAll(String searchType, String keyword);
 
 	/**
 	 * 게시물 정보를 저장

@@ -2,237 +2,252 @@
 	overflow-x: hidden;
 }
 
-ul{
-    list-style-type: none;
+ul {
+	list-style-type: none;
 }
 
 ul li {
-    margin: 25px 15px;
+	margin: 25px 15px;
 }
 
 .span {
-    color: black;
+	color: black;
 }
 
 .head {
 	display: inline-block;
-    margin-top: 30px;
+	margin-top: 30px;
 }
 
 .menu {
-    border-bottom: 1px solid rgb(216, 213, 213);
-    width: 2000px;
-    height: 100px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	border-bottom: 1px solid rgb(216, 213, 213);
+	width: 2000px;
+	height: 100px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .menu li {
-    padding: 0 0 0 80px;
+	padding: 0 0 0 80px;
 }
 
 
 
 .ipp_btn {
-    border: none;
-    padding: 15px 30px;
-    font-size: 30px;
-    background-color: white;
-    color: rgb(79, 114, 228);
-    font-weight: 600;
-    margin-top: 10px;
-    position: absolute; 
-    left: 200px;
+	border: none;
+	padding: 15px 30px;
+	font-size: 30px;
+	background-color: white;
+	color: rgb(79, 114, 228);
+	font-weight: 600;
+	margin-top: 10px;
+	position: absolute;
+	left: 200px;
 }
 
 .btn {
-    border: none;
-    padding: 15px 30px;
-    border-radius: 15px;
-    font-size: 25px;
-    background-color:white;
-    color: black;
-    font-weight: 600;
+	border: none;
+	padding: 15px 30px;
+	border-radius: 15px;
+	font-size: 25px;
+	background-color: white;
+	color: black;
+	font-weight: 600;
 }
 
 button:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .menu .btn:focus,
 .menu .btn:active {
-    outline: none;
-    box-shadow: none;
+	outline: none;
+	box-shadow: none;
 }
 
 .write_btn {
-    border: 1px solid grey;
-    padding: 5px 5px;
-    font-size: 15px;
-    background-color: white;
-    color: black;
-    font-weight: 300;
-    position: absolute; 
-    top: 220px; 
-    left: 470px;
+	border: 1px solid grey;
+	padding: 5px 5px;
+	font-size: 15px;
+	background-color: white;
+	color: black;
+	font-weight: 300;
+	position: absolute;
+	top: 220px;
+	left: 470px;
+}
+
+.type_select {
+	width: 90px;
+	height: 35px;
+	padding: 7px;
+	padding-left: 10px;
+	background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
+	background-size: 30px;
+	appearance: none;
+	position: absolute;
+	top: 220px;
+	left: 620px;
 }
 
 .search_btn {
-    border: 1px solid grey;
-    padding: 5px 10px;
-    font-size: 15px;
-    background-color: white;
-    color: black;
-    font-weight: 300;
-    font-size: 15px;
-    position: absolute; 
-    top: 220px; 
-    left: 920px;
+	border: 1px solid grey;
+	padding: 5px 10px;
+	font-size: 15px;
+	background-color: white;
+	color: black;
+	font-weight: 300;
+	font-size: 15px;
+	position: absolute;
+	top: 220px;
+	left: 1050px;
 }
 
 .search {
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 1;
-    outline: none;
-    position:absolute; 
-    top: 220px; 
-    left: 600px;
-    height: 30px; 
-    width: 300px;
+	border-left-width: 0;
+	border-right-width: 0;
+	border-top-width: 0;
+	border-bottom-width: 1;
+	outline: none;
+	position: absolute;
+	top: 220px;
+	left: 730px;
+	height: 30px;
+	width: 300px;
 }
 
 .board_all {
-    font-size: 17px;
-    position: absolute;
-    top: 215px;
-    right: 610px;
+	font-size: 17px;
+	position: absolute;
+	top: 215px;
+	left: 1220px;
 }
 
 .board_select {
-    width: 60px;
-    padding: 7px;
-    padding-left: 10px;
-    border: 1px solid black;
-    background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
-    background-size: 30px;
-    appearance: none;
-    font-size: 15px;
-    color: black;
-    background-color: white ;
-    position: absolute;
-    top: 208px;
-    right: 530px;
-}
-
-.select_text {
+	width: 120px;
+	padding: 7px;
+	padding-left: 10px;
+	border: 1px solid black;
+	background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
+	background-size: 30px;
+	appearance: none;
+	font-size: 15px;
+	color: black;
+	background-color: white;
 	position: absolute;
-	top: 217px;
-    right: 460px;
-    font-size: 15px;
+	top: 208px;
+	left: 1330px;
 }
 
 h3 {
-    border-bottom: 2px solid black;
-    color: black;
-    font-weight: 600;
+	border-bottom: 2px solid black;
+	color: black;
+	font-weight: 600;
 }
 
 .board_best {
-    display: inline-block;
-    margin-left: 200px;
+	display: inline-block;
+	margin-left: 200px;
 }
 
-.best{
-    display: flex;
-    flex-direction: column;
+.best {
+	display: flex;
+	flex-direction: column;
 }
 
 .reply {
-    display: inline-block;
-    margin-top: 150px;
+	display: inline-block;
+	margin-top: 150px;
 }
 
 .reply li {
-    font-size: 20px;
+	font-size: 20px;
 }
 
 .reply_number {
-    display: flex;
-    flex-direction: column;
-    line-height: 40px;
+	display: flex;
+	flex-direction: column;
+	line-height: 40px;
 }
 
-.best_btn{
-    padding: 15px;
-    margin-bottom: -16px;
-    font-size: 15px;
-    background-color: white;
-    color: black;
-    border: 2px solid grey;
-    font-weight: 500;
-    width: 800px;
-    text-align: left;
+.best_btn {
+	padding: 15px;
+	margin-bottom: -16px;
+	font-size: 15px;
+	background-color: white;
+	color: black;
+	border: 2px solid grey;
+	font-weight: 500;
+	width: 800px;
+	text-align: left;
 }
 
 .user_update {
-    float: right;
-    margin-right: 280px;
-    margin-bottom: 50px;
+	float: right;
+	margin-right: 280px;
+	margin-bottom: 50px;
 }
 
 .username {
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 1;
-    width: 100px;
-    margin-top: 20px;
-    position: absolute; 
-    top:50px; 
-    right: 270px;
+	border-left-width: 0;
+	border-right-width: 0;
+	border-top-width: 0;
+	border-bottom-width: 1;
+	width: 100px;
+	margin-top: 20px;
+	position: absolute;
+	top: 50px;
+	right: 270px;
 }
 
-.board{
-    border-collapse: separate; 
-    width: 1000px; 
-    border-spacing: 0 10px;
-    text-align: center;
-    margin-top: 150px;
-    margin-left: auto;
-    margin-right: auto;
-}
+/*.board_box {*/
+/*	overflow-y: scroll;*/
+/*}*/
 
-.board thead th{
+.board {
+	border-collapse: separate;
 	width: 1000px;
-    border: 1px solid grey; 
-    border-width: 2px 0;
-    color: black;
-    font-size: 20px;
-    text-align: center;
+	border-spacing: 0 10px;
+	text-align: center;
+	margin-top: 150px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.board td:first-child, .board th:first-child{
-    width: 10%;
+.board thead th {
+	width: 1000px;
+	border: 1px solid grey;
+	border-width: 2px 0;
+	color: black;
+	font-size: 20px;
+	text-align: center;
 }
 
-.board td:nth-child(2), .board th:nth-child(2){
-    width: 55%;
+.board td:first-child,
+.board th:first-child {
+	width: 10%;
 }
 
-.board td:nth-child(3), .board th:nth-child(3){
-    width: 15%;
+.board td:nth-child(2),
+.board th:nth-child(2) {
+	width: 55%;
 }
 
-.board td:nth-child(4), .board th:nth-child(4){
-    width: 15%;
+.board td:nth-child(3),
+.board th:nth-child(3) {
+	width: 15%;
 }
 
-.board td:nth-child(5), .board th:nth-child(5){
-    width: 5%;
+.board td:nth-child(4),
+.board th:nth-child(4) {
+	width: 15%;
+}
+
+.board td:nth-child(5),
+.board th:nth-child(5) {
+	width: 5%;
 }
 
 .board tbody {
@@ -240,30 +255,30 @@ h3 {
 }
 
 .board tbody tr {
-    height: 50px;
-    background-color: white;
-    color: black;
-    font-size: 17px;
+	height: 50px;
+	background-color: white;
+	color: black;
+	font-size: 17px;
 }
 
 .board tbody td {
-    border: 1px solid grey;
-    border-width: 1px 0;
-    border-top: none;
+	border: 1px solid grey;
+	border-width: 1px 0;
+	border-top: none;
 }
-    
-.board tbody td a{
-    text-decoration: none; 
-    color: black;
+
+.board tbody td a {
+	text-decoration: none;
+	color: black;
 }
-    
-.board tbody td a:hover{
-    text-decoration: underline;
-    cursor: pointer;
+
+.board tbody td a:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .general_write {
-	border:2px solid grey;
+	border: 2px solid grey;
 	color: grey;
 	padding: 5px 0;
 	text-align: center;
@@ -277,45 +292,45 @@ h3 {
 }
 
 .title_write p:first-child {
-	position: absolute; 
-	left: 610px; 
+	position: absolute;
+	left: 610px;
 	font-size: 25px;
 }
 
 .title_write p:nth-child(2) {
-	position: absolute; 
-	left: 700px; 
+	position: absolute;
+	left: 700px;
 	font-size: 25px;
 }
 
 
 .title_write input {
-	position: absolute; 
-	left: 680px; 
-	width: 630px; 
-	height: 35px; 
+	position: absolute;
+	left: 680px;
+	width: 630px;
+	height: 35px;
 	font-size: 20px;
 }
 
 .content_write textarea {
 	padding: 15px;
-	position: absolute; 
-	left: 610px; 
-	margin-top: 50px; 
-	width: 700px; 
-	height: 300px; 
+	position: absolute;
+	left: 610px;
+	margin-top: 50px;
+	width: 700px;
+	height: 300px;
 	font-size: 15px;
 }
 
 .file_btn {
 	background-color: rgb(173, 173, 173);
 	border: 1px solid black;
-	color:white;
-    position:absolute; 
-    top: 657px; 
-    left: 610px;
-    height: 50px; 
-    width: 120px;
+	color: white;
+	position: absolute;
+	top: 657px;
+	left: 610px;
+	height: 50px;
+	width: 120px;
 }
 
 .file_name p {
@@ -344,7 +359,7 @@ h3 {
 	padding: 10px 5px;
 	border: 1px solid black;
 	background-color: white;
-	position:absolute;
+	position: absolute;
 	left: 1240px;
 	top: 770px;
 }
@@ -394,7 +409,7 @@ strong {
 .board_view .info dl dd {
 	display: inline-block;
 	font-size: 17px;
-} 
+}
 
 .board_view .info dl dd {
 	margin-left: 10px;
@@ -410,16 +425,16 @@ strong {
 }
 
 .read_btn {
-	margin-top: 85px;
 	position: absolute;
 	right: 470px;
+	margin-top: 85px;
 }
 
 .read_btn button {
 	display: inline-block;
-	min-width: 80px;
+	min-width: 70px;
 	margin-left: 30px;
-	padding: 10px;
+	padding: 5px;
 	font-size: 15px;
 }
 
@@ -432,3 +447,7 @@ strong {
 	background-color: white;
 }
 
+pre {
+	background-color: white;
+	border: none;
+}

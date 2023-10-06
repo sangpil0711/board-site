@@ -3,6 +3,9 @@ package kr.co.ymtech.bm.service;
 import java.util.List;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
+import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
+import kr.co.ymtech.bm.controller.dto.CommentDTO;
+import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
 
 /**
  * 일반게시판 Service 클래스

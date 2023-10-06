@@ -2,12 +2,16 @@ package kr.co.ymtech.bm.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
 import kr.co.ymtech.bm.repository.vo.BoardVO;
+import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
  * 일반게시판 BoardRepository 클래스
@@ -26,7 +30,7 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	/**
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
@@ -36,7 +40,21 @@ public class BoardRepository implements IBoardRepository {
 	 * 작성자 : 박상현
 	 */
 	@Override
-	public List<BoardVO> findAll() {
+	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
+
+		Integer offset = (pageNumber - 1) * pageSize;
+
+		String sql = "SELECT * FROM board ";
+
+		if ("title".equals(searchType)) {
+		    sql += "WHERE title LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+		} else if ("content".equals(searchType)) {
+		    sql += "WHERE content LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+		} else if ("user_id".equals(searchType)) {
+		    sql += "WHERE user_id LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+		} else {
+			sql += "ORDER BY index DESC";
+		}
 
 		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
 
@@ -48,13 +66,13 @@ public class BoardRepository implements IBoardRepository {
 						rs.getString("content"),
 						rs.getString("user_id"), 
 						rs.getInt("category"), 
-						rs.getLong("create_date")
-						);
+						rs.getLong("create_date"));
 
 				return member;
 			}
 		};
-		return jdbcTemplate.query("select * from board order by index desc", mapper);
+		
+		return jdbcTemplate.query(sql, mapper, "%" + keyword + "%", offset, pageSize);
 	}
 
 	// ->
@@ -83,16 +101,10 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer saveBoard(BoardVO board) {
 
-		return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", 
-//				board.getIndex(), 
-				board.getTitle(),
-				board.getText(), 
-//				board.getUserId(), 
-//				board.getCategory(), 
-				board.getCreateDate()
-				);
+		return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", board.getTitle(),
+				board.getText(), board.getCreateDate());
 	}
-	
+
 	/**
 	 * Method : 게시물 내용(text)을 수정 하는 메소드
 	 * 
@@ -106,7 +118,8 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer updateBoard(BoardVO board) {
 
-		return jdbcTemplate.update("update board set content = ? where index = ? ", board.getText(), board.getIndex());
+		return jdbcTemplate.update("update board set title = ?, content = ? where index = ? ", board.getTitle(),
+				board.getText(), board.getIndex());
 	}
 
 	/**
@@ -148,29 +161,13 @@ public class BoardRepository implements IBoardRepository {
 						rs.getString("content"),
 						rs.getString("user_id"), 
 						rs.getInt("category"), 
-						rs.getLong("create_date")
-						);
+						rs.getLong("create_date"));
 
 				return member;
 			}
 		};
-		
+
 		return jdbcTemplate.queryForObject("select * from board where index = ?", mapper, index);
 	}
-
-//		return jdbcTemplate.query("select * from board where index =? or name title ? ", new Object[] {index,"%"},(rs,rowNum) -> 
-//		
-//		new BoardDTO(	
-//				rs.getInt("index"),
-//				rs.getString("title"),
-//				rs.getString("content"),
-//				rs.getString("user_id"),
-//				rs.getInt("category"),
-//				rs.getLong("create_date")
-//				));
-//	}
-	
-
-	
 
 }

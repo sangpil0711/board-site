@@ -48,11 +48,13 @@ public class BoardService implements IBoardService {
 	 * 작성자 : 박상현
 	 */
 	@Override
-	public List<BoardGetDTO> findAll() {
+    public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
+		
+		List<BoardVO> list = boardRepository.findPage(pageNumber, pageSize, searchType, keyword);
 
-		List<BoardVO> list = boardRepository.findAll();
-
-		List<BoardGetDTO> findAll = new ArrayList<>(); // vo -> dto 변환
+	    List<PageVO> boardCount = boardRepository.findAll(searchType, keyword);
+        
+        List<BoardGetDTO> findPage = new ArrayList<>(); // vo -> dto 변환
 		for (BoardVO vo : list) {
 			BoardGetDTO tmp = new BoardGetDTO();
 			tmp.setIndex(vo.getIndex());
@@ -61,10 +63,15 @@ public class BoardService implements IBoardService {
 			tmp.setUserId(vo.getUserId());
 			tmp.setCategory(vo.getCategory());
 			tmp.setCreateDate(new Date(vo.getCreateDate()));
-			findAll.add(tmp);
+			findPage.add(tmp);
 		}
-		return findAll;
-	}
+
+        BoardPageDTO boardPageDTO = new BoardPageDTO();
+        boardPageDTO.setBoardList(list);
+        boardPageDTO.setPageList(boardCount);
+
+        return boardPageDTO;
+    }
 
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드
@@ -112,6 +119,7 @@ public class BoardService implements IBoardService {
 
 		BoardVO vo = new BoardVO(); // dto -> vo 변환
 		vo.setIndex(board.getIndex());
+		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
 
 		Integer update = boardRepository.updateBoard(vo);

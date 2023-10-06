@@ -1,7 +1,5 @@
 package kr.co.ymtech.bm.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +9,12 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
+import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.CommentDTO;
 import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
 import kr.co.ymtech.bm.controller.dto.CommentSearchDTO;
@@ -49,11 +50,12 @@ public class BoardController {
 	 * 작성자 : 박상현
 	 */
 	@GetMapping(value = "/boards")
-	public ResponseEntity<List<BoardGetDTO>> findAll() {
+	@ResponseBody
+	public ResponseEntity<BoardPageDTO> findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
+		
+		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, pageSize, searchType, keyword);
 
-		List<BoardGetDTO> boardlist = boardService.findAll();
-
-		return new ResponseEntity<List<BoardGetDTO>>(boardlist, HttpStatus.OK);
+		return new ResponseEntity<BoardPageDTO>(boardlist, HttpStatus.OK);
 	}
 
 	/**
@@ -128,6 +130,5 @@ public class BoardController {
 		return new ResponseEntity<BoardGetDTO>(boardlistIndex, HttpStatus.OK);
 	}
 	
-
 
 }

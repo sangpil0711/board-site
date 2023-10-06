@@ -3,6 +3,7 @@ server:
 
 spring:
   mvc:
+    static-path-pattern: static/**
     hiddenmethod:
       filter:
         enabled: true
@@ -19,9 +20,9 @@ spring:
       enabled: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/testdb
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: "0000"
+    password: "tkdvlf2136@@"
     driver-class-name: org.postgresql.Driver
   sql:
     init:

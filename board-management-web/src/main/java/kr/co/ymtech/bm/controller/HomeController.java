@@ -23,8 +23,7 @@ public class HomeController {
 	/**
 	 * Controller-Service 연결
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 황상필
+	 * 작성일 : 2023.09.18 작성자 : 황상필
 	 */
 	@Autowired
 	private final IBoardService boardService;
@@ -38,12 +37,16 @@ public class HomeController {
 	 * 
 	 * @return : "main_display.html" 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 황상필
+	 *         작성일 : 2023.09.18 작성자 : 황상필
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String homepage() {
-		return "main_display"; // "/" 경로로 GET을 요청하면 "index.html" 반환
+	public ModelAndView homepage() {
+
+		ModelAndView model = new ModelAndView();
+
+		model.setViewName("main");
+
+		return model;
 	}
 
 	/**
@@ -51,12 +54,16 @@ public class HomeController {
 	 * 
 	 * @return : "main_display.html" 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 황상필
+	 *         작성일 : 2023.09.18 작성자 : 황상필
 	 */
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String mainpage() {
-		return "main_display";
+	public ModelAndView mainpage() {
+
+		ModelAndView model = new ModelAndView();
+
+		model.setViewName("main_display");
+
+		return model;
 	}
 
 	/**
@@ -64,12 +71,16 @@ public class HomeController {
 	 * 
 	 * @return : "general_board.html" 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 황상필
+	 *         작성일 : 2023.09.18 작성자 : 황상필
 	 */
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
-	public String boardpage() {
-		return "general_board";
+	public ModelAndView boardpage() {
+
+		ModelAndView model = new ModelAndView();
+
+		model.setViewName("general_board");
+
+		return model;
 	}
 
 	/**
@@ -77,12 +88,16 @@ public class HomeController {
 	 * 
 	 * @return : "general_write.html" 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 황상필
+	 *         작성일 : 2023.09.18 작성자 : 황상필
 	 */
 	@RequestMapping(value = "/board/write", method = RequestMethod.GET)
-	public String writepage() {
-		return "general_write";
+	public ModelAndView writepage() {
+
+		ModelAndView model = new ModelAndView();
+
+		model.setViewName("general_write");
+
+		return model;
 	}
 
 	/**
@@ -92,14 +107,13 @@ public class HomeController {
 	 * 
 	 * @return : model에 뷰를 "general_update.html"로 할당하여 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 황상필
+	 *         작성일 : 2023.09.18 작성자 : 황상필
 	 */
 	@RequestMapping(value = "/board/update/{index}", method = RequestMethod.GET)
 	public ModelAndView updatepage(@PathVariable Integer index) {
 
 		ModelAndView model = new ModelAndView();
-		
+
 		model.setViewName("general_update");
 
 		return model;
@@ -112,33 +126,39 @@ public class HomeController {
 	 * 
 	 * @return : "/board" 경로로 요청하여 "general_board.html" 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 황상필
+	 *         작성일 : 2023.09.18 작성자 : 황상필
 	 */
 	@PostMapping(value = "/board/write")
-	public String writeBoard(BoardDTO board) {
+	public ModelAndView writeBoard(BoardDTO board) {
+
+		ModelAndView model = new ModelAndView();
+
+		model.setViewName("redirect:/board");
 
 		boardService.saveBoard(board);
 
-		return "redirect:/board";
+		return model;
 	}
 
-		/**
-		 * Method : "/board/delete/{index}" 경로로 'DELETE' 요청이 들어오면 return 값을 반환하는 메소드
-		 * 
-		 * @param index : 삭제할 게시글의 번호
-		 * 
-		 * @return : "/board" 경로로 요청하여 "general_board.html" 반환
-		 * 
-		 * 작성일 : 2023.09.18
-		 * 작성자 : 황상필
-		 */
+	/**
+	 * Method : "/board/delete/{index}" 경로로 'DELETE' 요청이 들어오면 return 값을 반환하는 메소드
+	 * 
+	 * @param index : 삭제할 게시글의 번호
+	 * 
+	 * @return : "/board" 경로로 요청하여 "general_board.html" 반환
+	 * 
+	 *         작성일 : 2023.09.18 작성자 : 황상필
+	 */
 	@DeleteMapping("/board/delete/{index}")
-	public String removeBoard(@PathVariable Integer index) {
+	public ModelAndView removeBoard(@PathVariable Integer index) {
+
+		ModelAndView model = new ModelAndView();
+
+		model.setViewName("redirect:/board");
 		
 		boardService.deleteBoard(index);
 
-		return "redirect:/board";
+		return model;
 	}
 
 	/**
@@ -149,15 +169,18 @@ public class HomeController {
 	 * 
 	 * @return : "/board/{index}" 경로로 요청하여 "general_read.html" 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 황상필
+	 *         작성일 : 2023.09.18 작성자 : 황상필
 	 */
 	@PatchMapping(value = "/board/update/{index}")
-	public String updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
+	public ModelAndView updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
+
+		ModelAndView model = new ModelAndView();
+
+		model.setViewName("redirect:/board/{index}");
 		
 		boardService.updateBoard(board);
 
-		return "redirect:/board/{index}";
+		return model;
 	}
 
 	/**
@@ -167,8 +190,7 @@ public class HomeController {
 	 * 
 	 * @return : model에 뷰를 "general_read.html"로 할당하여 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 황상필
+	 *         작성일 : 2023.09.18 작성자 : 황상필
 	 */
 	@GetMapping(value = "/board/{index}")
 	public ModelAndView readpage(@PathVariable Integer index) {
