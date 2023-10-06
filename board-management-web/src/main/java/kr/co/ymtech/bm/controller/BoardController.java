@@ -17,6 +17,7 @@ import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.CommentDTO;
 import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
+import kr.co.ymtech.bm.controller.dto.CommentSearchDTO;
 import kr.co.ymtech.bm.service.BoardService;
 import kr.co.ymtech.bm.service.IBoardService;
 
@@ -28,6 +29,9 @@ public class BoardController {
 
 	/**
 	 * Controller-Service 연결
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@Autowired
 	private final IBoardService boardService;
@@ -46,6 +50,9 @@ public class BoardController {
 	 * 
 	 * @return : 저장되어 있는 정보를 모두 변수 boardlist에 담고 ResponseEntity 를 사용하여 응답한다. Http
 	 *         상태코드는 HttpStatus.ok 로 성공상태 200을 나타내준다.
+	 *         
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@GetMapping(value = "/boards")
 	@ResponseBody
@@ -62,6 +69,9 @@ public class BoardController {
 	 * @param : board는 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
 	 * 
 	 * @return : 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환한다.
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@PostMapping(value = "/boards")
 	public ResponseEntity<Integer> saveBoard(@RequestBody BoardDTO board) {
@@ -77,6 +87,9 @@ public class BoardController {
 	 * @param : board는 클라이언트가 요청한 게시물 내용을 담고 있다.
 	 * 
 	 * @return : 업데이트 한 게시물 내용을 boardlistUpdate 변수에 담고 ResponseEntity 를 사용하여 응답한다.
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@PatchMapping("/boards/{index}")
 	public ResponseEntity<Integer> updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
@@ -92,6 +105,9 @@ public class BoardController {
 	 * @param : index는 게시물의 번호를 담고 있고 게시물 번호를 보고 삭제
 	 * 
 	 * @return : 게시물을 삭제 후 boardlistDelete 변수에 담고 ResponseEntity 를 사용하여 응답한다.
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@DeleteMapping("/boards/{index}")
 	public ResponseEntity<Integer> deleteBoard(@PathVariable Integer index) {
@@ -107,47 +123,17 @@ public class BoardController {
 	 * @param : index는 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
 	 * 
 	 * @return : 해당 번호의 게시물 정보를 boardlistIndex 변수에 담고 ResponseEntity 를 사용하여 응답한다.
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@GetMapping("/boards/{index}")
-	public ResponseEntity<BoardGetDTO>searchByIndex(@PathVariable Integer index) {
+	public ResponseEntity<BoardGetDTO> searchByIndex(@PathVariable Integer index) {
 
 		BoardGetDTO boardlistIndex = boardService.searchByIndex(index);
 
 		return new ResponseEntity<BoardGetDTO>(boardlistIndex, HttpStatus.OK);
 	}
 	
-	
-	
-	@PostMapping("/comment")
-	public ResponseEntity<Integer> saveComment(@RequestBody CommentDTO comment){
-		
-		Integer boardCommentSave = boardService.saveComment(comment);
-		
-		return new ResponseEntity<Integer>(boardCommentSave, HttpStatus.OK);
-	}
-	
-	@GetMapping("/comments/{boardIndex}")
-	public ResponseEntity<CommentGetDTO> findComment(@PathVariable Integer boardIndex, Integer commentIndex) {
 
-		CommentGetDTO boardCommentIndex = boardService.findComment(boardIndex,commentIndex);
-
-		return new ResponseEntity<CommentGetDTO>(boardCommentIndex, HttpStatus.OK);
-	}
-	
-	@PatchMapping("/comment")
-	public ResponseEntity<Integer> updateComment(@RequestBody CommentGetDTO comment) {
-
-		Integer boardCommentUpdate = boardService.updateComment(comment);
-
-		return new ResponseEntity<Integer>(boardCommentUpdate, HttpStatus.OK);
-	}
-	
-	@DeleteMapping("/comments/{index}")
-	public ResponseEntity<Integer> deleteComment(@PathVariable Integer index) {
-
-		Integer boardCommentDelete = boardService.deleteComment(index);
-
-		return new ResponseEntity<Integer>(boardCommentDelete, HttpStatus.OK);
-	}
-	
 }

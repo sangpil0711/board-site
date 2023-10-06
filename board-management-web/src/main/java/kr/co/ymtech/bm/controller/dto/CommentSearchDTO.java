@@ -1,4 +1,7 @@
-package kr.co.ymtech.bm.repository.vo;
+package kr.co.ymtech.bm.controller.dto;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 댓글 정보를 저장하는 클래스
@@ -6,7 +9,7 @@ package kr.co.ymtech.bm.repository.vo;
  * 작성일 : 2023.09.20
  * 작성자 : 박상현
  */
-public class CommentVO {
+public class CommentSearchDTO {
 
 	/** index : 댓글 번호 */
 	private Integer index;
@@ -19,40 +22,9 @@ public class CommentVO {
 	/** userId : 댓글 작성자 아이디 */
 	private String userId;
 	/** createDate : 댓글 작성일 */
-	private Long createDate;
-
-	/**
-	 * Method : 기본 생성자
-	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
-	 */
-	public CommentVO() {
-		super();
-	}
-
-	/**
-	 * Method : 모든 필드를 초기화하는 생성자
-	 * 
-	 * @param index       : 댓글 번호
-	 * @param boardIndex  : 게시글 번호
-	 * @param text        : 댓글 내용
-	 * @param parentIndex : 상위 댓글 번호
-	 * @param userId      : 댓글 작성자의 사용자 ID
-	 * @param createDate  : 댓글 생성 날짜
-	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
-	 */
-	public CommentVO(Integer index, Integer boardIndex, String text, Integer parentIndex, String userId,
-			Long createDate) {
-		this.index = index;
-		this.boardIndex = boardIndex;
-		this.text = text;
-		this.parentIndex = parentIndex;
-		this.userId = userId;
-		this.createDate = createDate;
-	}
+	private Date createDate;
+	/** childs : 대댓글 */
+	private List<CommentSearchDTO> childs; // 대댓글
 
 	/**
 	 * Method : 댓글 index 반환하는 메소드
@@ -192,7 +164,7 @@ public class CommentVO {
 	 * 작성일 : 2023.09.20
 	 * 작성자 : 박상현
 	 */
-	public Long getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
@@ -206,8 +178,34 @@ public class CommentVO {
 	 * 작성일 : 2023.09.20
 	 * 작성자 : 박상현
 	 */
-	public void setCreateDate(Long createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	/**
+	 * Method : 대댓글 childs 반환하는 메소드
+	 * 
+	 * @return : 대댓글 childs 반환
+	 * 
+	 * 작성일 : 2023.09.21
+	 * 작성자 : 박상현
+	 */
+	public List<CommentSearchDTO> getChilds() {
+		return childs;
+	}
+
+	/**
+	 * Method : 대댓글 childs 설정하는 메소드
+	 * 
+	 * @param : childs는 설정할 childs 값을 가지고 있다.
+	 * 
+	 * @return : 대댓글 childs 값 설정
+	 * 
+	 * 작성일 : 2023.09.21
+	 * 작성자 : 박상현
+	 */
+	public void setChilds(List<CommentSearchDTO> childs) {
+		this.childs = childs;
 	}
 
 }
