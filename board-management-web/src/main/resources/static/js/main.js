@@ -13,6 +13,7 @@ app.controller("BoardMain", function($scope, $window) {
 
 	$scope.redirectToBoard = function() {
 		$window.location.href = '#!/board';
+		$window.location.reload();
 	};
 
 });

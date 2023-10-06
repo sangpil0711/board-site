@@ -35,18 +35,23 @@ public class BoardController {
 	public BoardController(BoardService boardService) {
 		this.boardService = boardService;
 	}
-
+	
 	/**
-	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
+	 * Method : 게시물에 저장되어 있는 정보를 조회 및 검색하는 메소드
 	 * 
-	 * @return :저장되어 있는 정보를 모두 변수 boardlist에 담고 ResponseEntity 를 사용하여 응답한다. Http
+	 * @param pageNumber : 게시판 페이지 번호
+	 * @param itemSize : 게시판 페이지 당 게시글 개수
+	 * @param searchType : 게시글 검색에 필요한 검색 유형
+	 * @param keyword : 게시글 검색에 필요한 검색어
+	 * 
+	 * @return : 저장되어 있는 정보를 모두 변수 boardlist에 담고 ResponseEntity 를 사용하여 응답한다. Http
 	 *         상태코드는 HttpStatus.ok 로 성공상태 200을 나타내준다.
 	 */
 	@GetMapping(value = "/boards")
 	@ResponseBody
-	public ResponseEntity<BoardPageDTO> findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
+	public ResponseEntity<BoardPageDTO> findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword) {
 		
-		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, pageSize, searchType, keyword);
+		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, itemSize, searchType, keyword);
 
 		return new ResponseEntity<BoardPageDTO>(boardlist, HttpStatus.OK);
 	}

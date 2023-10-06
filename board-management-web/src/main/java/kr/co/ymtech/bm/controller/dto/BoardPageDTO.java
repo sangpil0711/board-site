@@ -4,54 +4,55 @@ import java.util.List;
 
 import kr.co.ymtech.bm.repository.vo.BoardVO;
 import kr.co.ymtech.bm.repository.vo.PageVO;
-import kr.co.ymtech.bm.repository.vo.SearchVO;
 
+/**
+ * 게시글 정보, 총 게시글 수, 게시글 검색을 포함하는 클래스
+ */
 public class BoardPageDTO {
+	
     private List<BoardVO> list;
     private List<PageVO> totalCount;
-    private List<SearchVO> searchVO;
 
     /**
-     * @return the boardList
+     * Method : BoardVO를 반환하는 메소드
+     * 
+     * @return : BoardVO를 할당받은 list 반환
      */
     public List<BoardVO> getBoardList() {
         return list;
     }
 
     /**
-     * @param boardList the boardList to set
+     * Method : BoardVO를 설정하는 메소드
+     * 
+     * @param boardList : 설정할 BoardVO
+     * 
+     * @return : BoardVO 값 설정
      */
     public void setBoardList(List<BoardVO> boardList) {
         this.list = boardList;
     }
 
     /**
-     * @return the pageList
+     * Method : PageVO를 반환하는 메소드
+     * 
+     * @return : PageVO를 할당받은 totalCount 반환
      */
     public List<PageVO> getPageList() {
         return totalCount;
     }
 
     /**
-     * @param pageList the pageList to set
+     * Method : PageVO를 설정하는 메소드
+     * 
+     * @param pageList : 설정할 PageVO
+     * 
+     * @return : PageVO 값 설정
      */
     public void setPageList(List<PageVO> pageList) {
         this.totalCount = pageList;
     }
 
-    /**
-     * @return the searchVO
-     */
-    public List<SearchVO> getSearchVO() {
-        return searchVO;
-    }
-
-    /**
-     * @param searchVO the searchVO to set
-     */
-    public void setSearchVO(List<SearchVO> searchVO) {
-        this.searchVO = searchVO;
-    }
 
     @Override
     public String toString() {
@@ -60,8 +61,6 @@ public class BoardPageDTO {
         builder.append(list);
         builder.append(", totalCount=");
         builder.append(totalCount);
-        builder.append(", searchVO="); // 추가된 SearchVO 필드
-        builder.append(searchVO); // 추가된 SearchVO 필드
         builder.append("]");
         return builder.toString();
     }

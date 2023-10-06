@@ -1,5 +1,9 @@
 /**
  * angular module을 생성하여 app에 할당
+ * 
+ * $routeProvider 함수를 사용하는 config 생성
+ * 각 경로에 따른 라우팅 설정
+ * 
  * $resource 함수를 사용하는 factory	생성
  * "/boards/:index" 경로에 따른 'GET', 'POST', 'PATCH', 'DELETE' 메소드 생성
  * 

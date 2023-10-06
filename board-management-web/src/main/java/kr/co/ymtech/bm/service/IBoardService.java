@@ -11,7 +11,15 @@ import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
  */
 public interface IBoardService {
 	
-	public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword);
+	/**
+	 * 조건에 따른 게시글 정보 조회
+	 * 
+	 * @param pageNumber : 게시판 페이지 번호
+	 * @param itemSize : 게시판 페이지 당 게시글 개수
+	 * @param searchType : 게시글 검색에 필요한 검색 유형
+	 * @param keyword : 게시글 검색에 필요한 검색어
+	 */
+	public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword);
 
 	/**
 	 * 게시물 정보를 저장

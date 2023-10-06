@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import kr.co.ymtech.bm.repository.vo.BoardVO;
+import kr.co.ymtech.bm.repository.vo.FileVO;
 import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
@@ -26,14 +27,19 @@ public class BoardRepository implements IBoardRepository {
 	private JdbcTemplate jdbcTemplate;
 
 	/**
-	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
+	 * Method : 게시물에 저장되어 있는 정보를 조회 및 검색하는 메소드
 	 * 
-	 * @return : DB에 있는 정보를 조회하는 query 함수 실행
+	 * @param : 페이지 번호, 페이지 당 게시글 수, 검색 유형, 검색어를 사용하여 검색 결과에 따른 페이지네이션 구현
+	 * 
+	 * @return : DB에 있는 정보를 조회 및 검색하는 query 함수 실행
+	 * 
+	 * 작성자 : 황상필
+	 * 작성일 : 2023.10.05
 	 */
 	@Override
-	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
+	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword) {
 
-		Integer offset = (pageNumber - 1) * pageSize;
+		Integer offset = (pageNumber - 1) * itemSize;
 
 		String sql = "SELECT * FROM board ";
 
@@ -43,8 +49,6 @@ public class BoardRepository implements IBoardRepository {
 		    sql += "WHERE content LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
 		} else if ("user_id".equals(searchType)) {
 		    sql += "WHERE user_id LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
-		} else {
-			sql += "ORDER BY index DESC";
 		}
 
 		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
@@ -63,13 +67,18 @@ public class BoardRepository implements IBoardRepository {
 			}
 		};
 		
-		return jdbcTemplate.query(sql, mapper, "%" + keyword + "%", offset, pageSize);
+		return jdbcTemplate.query(sql, mapper, "%" + keyword + "%", offset, itemSize);
 	}
 
 	/**
-	 * Method : DB에 저장되어 있는 총 게시물의 수를 조회하는 메소드
+	 * Method : DB에 저장되어 있는 게시물 수를 조회하는 메소드
+	 * 
+	 * @param : 검색 유형, 검색어를 매개변수로 사용하여 검색 결과에 따른 게시글 수 제공
 	 * 
 	 * @return : pageVO 클래스에 있는 객체를 하나만 포함하는 리스트를 생성 후 반환
+	 * 
+	 * 작성자 : 황상필
+	 * 작성일 : 2023.10.05
 	 */
 	@Override
 	public List<PageVO> findAll(String searchType, String keyword) {
@@ -91,6 +100,13 @@ public class BoardRepository implements IBoardRepository {
 	    
 	    return Collections.singletonList(pageVO);
 	}
+	
+	@Override
+	public Integer saveFile(FileVO file) {
+	    return jdbcTemplate.update("insert into file(uuid, board_index, file_location, original_filename) values(?, ?, ?, ?)",
+	            file.getFileId(), file.getBoardIndex(), file.getFilePath(), file.getFileName());
+	    
+	}
 
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드
@@ -101,7 +117,6 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Override
 	public Integer saveBoard(BoardVO board) {
-
 		return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", board.getTitle(),
 				board.getText(), board.getCreateDate());
 	}

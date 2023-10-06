@@ -67,80 +67,6 @@ button:hover {
 	box-shadow: none;
 }
 
-.write_btn {
-	border: 1px solid grey;
-	padding: 5px 5px;
-	font-size: 15px;
-	background-color: white;
-	color: black;
-	font-weight: 300;
-	position: absolute;
-	top: 220px;
-	left: 470px;
-}
-
-.type_select {
-	width: 90px;
-	height: 35px;
-	padding: 7px;
-	padding-left: 10px;
-	background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
-	background-size: 30px;
-	appearance: none;
-	position: absolute;
-	top: 220px;
-	left: 620px;
-}
-
-.search_btn {
-	border: 1px solid grey;
-	padding: 5px 10px;
-	font-size: 15px;
-	background-color: white;
-	color: black;
-	font-weight: 300;
-	font-size: 15px;
-	position: absolute;
-	top: 220px;
-	left: 1050px;
-}
-
-.search {
-	border-left-width: 0;
-	border-right-width: 0;
-	border-top-width: 0;
-	border-bottom-width: 1;
-	outline: none;
-	position: absolute;
-	top: 220px;
-	left: 730px;
-	height: 30px;
-	width: 300px;
-}
-
-.board_all {
-	font-size: 17px;
-	position: absolute;
-	top: 215px;
-	left: 1220px;
-}
-
-.board_select {
-	width: 120px;
-	padding: 7px;
-	padding-left: 10px;
-	border: 1px solid black;
-	background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
-	background-size: 30px;
-	appearance: none;
-	font-size: 15px;
-	color: black;
-	background-color: white;
-	position: absolute;
-	top: 208px;
-	left: 1330px;
-}
-
 h3 {
 	border-bottom: 2px solid black;
 	color: black;
@@ -202,22 +128,98 @@ h3 {
 	right: 270px;
 }
 
-/*.board_box {*/
-/*	overflow-y: scroll;*/
-/*}*/
+.write_btn {
+	border: 1px solid grey;
+	padding: 5px 5px;
+	font-size: 15px;
+	background-color: white;
+	color: black;
+	font-weight: 300;
+	position: relative;
+	top: 50px;
+	left: 470px;
+}
+
+.type_select {
+	width: 90px;
+	height: 35px;
+	padding: 7px;
+	padding-left: 10px;
+	background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
+	background-size: 30px;
+	appearance: none;
+	position: relative;
+	top: 15px;
+	left: 620px;
+}
+
+.search_btn {
+	border: 1px solid grey;
+	padding: 5px 10px;
+	font-size: 15px;
+	background-color: white;
+	color: black;
+	font-weight: 300;
+	font-size: 15px;
+	position: relative;
+	top: 15px;
+	left: 680px;
+}
+
+.search {
+	border-left-width: 0;
+	border-right-width: 0;
+	border-top-width: 0;
+	border-bottom-width: 1;
+	outline: none;
+	position: relative;
+	top: 15px;
+	left: 650px;
+	height: 30px;
+	width: 300px;
+}
+
+.board_all {
+	font-size: 17px;
+	position: relative;
+	top: -15px;
+	left: 1220px;
+}
+
+.board_select {
+	width: 120px;
+	padding: 7px;
+	padding-left: 10px;
+	border: 1px solid black;
+	background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
+	background-size: 30px;
+	appearance: none;
+	font-size: 15px;
+	color: black;
+	background-color: white;
+	position: relative;
+	top: -55px;
+	left: 1330px;
+}
+
+.board_box {
+	position: relative; 
+}
 
 .board {
 	border-collapse: separate;
-	width: 1000px;
-	border-spacing: 0 10px;
+	width: 1060px;
 	text-align: center;
-	margin-top: 150px;
+	margin-top: 0px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-.board thead th {
-	width: 1000px;
+.board thead tr th {
+	display: inline-block;
+	position: sticky;
+	top: 0;
+	background-color: #fff;
 	border: 1px solid grey;
 	border-width: 2px 0;
 	color: black;
@@ -225,33 +227,11 @@ h3 {
 	text-align: center;
 }
 
-.board td:first-child,
-.board th:first-child {
-	width: 10%;
-}
-
-.board td:nth-child(2),
-.board th:nth-child(2) {
-	width: 55%;
-}
-
-.board td:nth-child(3),
-.board th:nth-child(3) {
-	width: 15%;
-}
-
-.board td:nth-child(4),
-.board th:nth-child(4) {
-	width: 15%;
-}
-
-.board td:nth-child(5),
-.board th:nth-child(5) {
-	width: 5%;
-}
-
 .board tbody {
-	width: 1000px;
+	display: inline-block;
+	width: 1060px;
+	max-height: 250px;
+	overflow: overlay;
 }
 
 .board tbody tr {
@@ -259,7 +239,29 @@ h3 {
 	background-color: white;
 	color: black;
 	font-size: 17px;
+	width: 1060px;
 }
+
+.board td:first-child,
+.board th:first-child {
+	width: 106px;
+}
+
+.board td:nth-child(2),
+.board th:nth-child(2) {
+	width: 583px;
+}
+
+.board td:nth-child(3),
+.board th:nth-child(3) {
+	width: 159px;
+}
+
+.board td:nth-child(4),
+.board th:nth-child(4) {
+	width: 212px;
+}
+
 
 .board tbody td {
 	border: 1px solid grey;

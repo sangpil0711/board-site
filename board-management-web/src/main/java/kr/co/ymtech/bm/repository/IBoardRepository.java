@@ -3,6 +3,7 @@ package kr.co.ymtech.bm.repository;
 import java.util.List;
 
 import kr.co.ymtech.bm.repository.vo.BoardVO;
+import kr.co.ymtech.bm.repository.vo.FileVO;
 import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
@@ -11,12 +12,26 @@ import kr.co.ymtech.bm.repository.vo.PageVO;
 public interface IBoardRepository {
 	
 	/**
-	 * 게시물에 저장되어 있는 정보를 모두 조회
+	 * 검색 조건에 따른 게시글 표시와 페이지네이션 구현
+	 * 
+	 * @param pageNumber : 게시판 페이지 번호
+	 * @param itemSize : 게시판 페이지 당 게시글 개수
+	 * @param searchType : 게시글 검색에 필요한 검색 유형
+	 * @param keyword : 게시글 검색에 필요한 검색어
+	 * 
+	 * 작성자 : 황상필
+	 * 작성일 : 2023.10.05
 	 */
-	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize, String searchType, String keyword);
+	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword);
 	
 	/**
-	 * 게시물에 저장되어 있는 정보를 모두 조회
+	 * 화면에 표시되는 게시글 수 조회
+	 * 
+	 * @param searchType : 게시글 검색에 필요한 검색 유형
+	 * @param keyword : 게시글 검색에 필요한 검색어
+	 * 
+	 * 작성자 : 황상필
+	 * 작성일 : 2023.10.05
 	 */
 	public List<PageVO> findAll(String searchType, String keyword);
 
@@ -26,6 +41,13 @@ public interface IBoardRepository {
 	 * @param board : 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
 	 */
 	public Integer saveBoard(BoardVO board);
+	
+	/**
+	 * 게시물 정보를 저장
+	 * 
+	 * @param board : 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
+	 */
+	public Integer saveFile(FileVO file);
 
 	/**
 	 * 게시물 내용(text)을 수정
