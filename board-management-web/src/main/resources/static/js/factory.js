@@ -18,7 +18,7 @@ app.factory('BoardFactory', function($resource) {
 
 		readBoard: {
 			method: 'GET', 						
-			isArray: true,
+			isArray: false,
 			headers: {
 				"Content-Type": 'application/json',
 			},

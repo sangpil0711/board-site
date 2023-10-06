@@ -10,13 +10,19 @@ import org.springframework.stereotype.Repository;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
 
 /**
- * 일반게시판 Repository 클래스
+ * 일반게시판 BoardRepository 클래스
+ * 
+ * 작성일 : 2023.09.18
+ * 작성자 : 박상현
  */
 @Repository
 public class BoardRepository implements IBoardRepository {
 
 	/**
 	 * jdbc사용 DB 연결
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -25,6 +31,9 @@ public class BoardRepository implements IBoardRepository {
 	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
 	 * @return : DB에 있는 정보를 조회하는 query 함수 실행
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@Override
 	public List<BoardVO> findAll() {
@@ -61,13 +70,15 @@ public class BoardRepository implements IBoardRepository {
 //				rs.getLong("create_date")
 //				));
 	
-
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드
 	 * 
 	 * @param : board는 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
 	 * 
 	 * @return : 게시물 정보를 DB에 저장하는 update 함수 실행
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@Override
 	public Integer saveBoard(BoardVO board) {
@@ -88,6 +99,9 @@ public class BoardRepository implements IBoardRepository {
 	 * @param : board는 클라이언트가 요청한 게시물 내용을 담고 있다.
 	 * 
 	 * @return : DB에 있는 게시물 정보를 수정하는 update 함수 실행
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@Override
 	public Integer updateBoard(BoardVO board) {
@@ -101,6 +115,9 @@ public class BoardRepository implements IBoardRepository {
 	 * @param : index는 게시물의 번호를 담고 있고 게시물 번호를 보고 삭제
 	 * 
 	 * @return : DB에 있는 해당 index 번호의 게시물 정보를 삭제하는 update 함수 실행
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@Override
 	public Integer deleteBoard(Integer index) {
@@ -114,6 +131,9 @@ public class BoardRepository implements IBoardRepository {
 	 * @param : index는 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
 	 * 
 	 * @return : 해당 번호의 게시물 정보를 조회하는 query 함수 실행
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	@Override
 	public BoardVO searchByIndex(Integer index) {

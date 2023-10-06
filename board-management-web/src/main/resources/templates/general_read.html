@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<title>웹프로젝트</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+	<link rel="stylesheet" type=text/css th:href="@{/css/comment.css}" />
 	<link rel="stylesheet" type=text/css th:href="@{/css/main.css}" />
 	<script type="text/javascript" th:src="@{/js/angular.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/angular-resource.min.js}"></script>
@@ -40,6 +41,10 @@
 			</ul>
 		</div>
 		<strong>일반게시판</strong>
+		<div class="read_btn">
+			<button type="button" ng-click="redirectToUpdate(board.index)">수정</button>
+				<button type="button" ng-click="remove(board.index)">삭제</button>
+		</div>
 		<div class="board_wrap">
 			<div class="board_view">
 				<div class="title">{{board.title}}</div>
@@ -57,18 +62,24 @@
 			</div>
 			
 		</div>
-		        <div class="card-header">댓글</div>
-        <ul id="reply--box" class="list-group">
-            <li id="reply--1" class="list-group-item d-flex justify-content-between">
-                <div>댓글 내용입니다.!</div>
-
-		<div class="read_btn">
-			<button type="button" ng-click="redirectToUpdate(board.index)">수정</button>
-				<button type="button" ng-click="remove(board.index)">삭제</button>
-		</div>
+		<div>
+		<ul class="comment">
+			<li class="comment-form">
+				<form id="commentFrm">
+					<h4> 댓글쓰기 <span></span></h4>
+					<span class="ps_box">
+						<input type="text" placeholder="댓글 내용을 입력해주세요.",class="int" name="content"/>
+					</span>
+					<input type="submit" class="btn" value="등록" />
+				</form>
+			</li>
+			<li id="comment-list"></li>
+		</ul>
+	</div>
 	</div>
 
-
 </body>
+	
+	
 
 </html>

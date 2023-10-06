@@ -4,6 +4,9 @@ import java.util.Date;
 
 /**
  * 게시물 정보를 저장하는 클래스
+ * 
+ * 작성일 : 2023.09.18
+ * 작성자 : 박상현
  */
 public class BoardGetDTO {
 
@@ -25,6 +28,9 @@ public class BoardGetDTO {
 	 * Method : 게시물 index 반환하는 메소드
 	 * 
 	 * @return : 게시물 index 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public Integer getIndex() {
 		return index;
@@ -36,6 +42,9 @@ public class BoardGetDTO {
 	 * @param : index는 설정할 index 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 index 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setIndex(Integer index) {
 		this.index = index;
@@ -45,6 +54,9 @@ public class BoardGetDTO {
 	 * Method : 게시물 title 반환하는 메소드
 	 * 
 	 * @return : 게시물 title 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public String getTitle() {
 		return title;
@@ -56,6 +68,9 @@ public class BoardGetDTO {
 	 * @param : title는 설정할 title 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 title 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -65,6 +80,9 @@ public class BoardGetDTO {
 	 * Method : 게시물 text 반환하는 메소드
 	 * 
 	 * @return : 게시물 text 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public String getText() {
 		return text;
@@ -76,6 +94,9 @@ public class BoardGetDTO {
 	 * @param : text는 설정할 text 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 text 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setText(String text) {
 		this.text = text;
@@ -85,6 +106,9 @@ public class BoardGetDTO {
 	 * Method : 게시물 userId 반환하는 메소드
 	 * 
 	 * @return : 게시물 userId 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public String getUserId() {
 		return userId;
@@ -96,6 +120,9 @@ public class BoardGetDTO {
 	 * @param : userId는 설정할 userId 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 userId 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
@@ -105,6 +132,9 @@ public class BoardGetDTO {
 	 * Method : 게시물 category 반환하는 메소드
 	 * 
 	 * @return : 게시물 category 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public Integer getCategory() {
 		return category;
@@ -116,6 +146,9 @@ public class BoardGetDTO {
 	 * @param : category는 설정할 category 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 category 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setCategory(Integer category) {
 		this.category = category;
@@ -125,6 +158,9 @@ public class BoardGetDTO {
 	 * Method : 게시물 createDate 반환하는 메소드
 	 * 
 	 * @return : 게시물 createDate 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public Date getCreateDate() {
 		return createDate;
@@ -136,11 +172,22 @@ public class BoardGetDTO {
 	 * @param : createDate는 설정할 createDate 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 createDate 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 
+	/**
+	 * Method : 객체(게시글 항목)를 문자열로 변환하는 메서드
+	 * 
+	 * @return : 문자열을 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.context.annotation.Bean;
 
+// Spring Boot에서 애플리케이션을 실행하는 중요한 역할
 @SpringBootApplication
 public class BoardManagementWebApplication {
 

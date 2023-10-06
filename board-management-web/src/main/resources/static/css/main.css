@@ -410,9 +410,9 @@ strong {
 }
 
 .read_btn {
-	margin-top: 50px;
+	margin-top: 85px;
 	position: absolute;
-	left: 850px;
+	right: 470px;
 }
 
 .read_btn button {

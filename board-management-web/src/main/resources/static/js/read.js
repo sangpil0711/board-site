@@ -9,8 +9,7 @@ app.controller("BoardRead", function($scope, $window, BoardFactory) {
 
 	$scope.getDataByIndex = function(index) {
 		BoardFactory.readBoard({ index: index }, function(response) {
-			$scope.board = response[0];
-			$scope.board.index = response[0].index;
+			$scope.board = response;
 		});
 	};
 

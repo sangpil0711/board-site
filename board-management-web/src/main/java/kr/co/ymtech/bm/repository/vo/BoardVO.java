@@ -1,5 +1,11 @@
 package kr.co.ymtech.bm.repository.vo;
 
+/**
+ * 게시물 정보를 저장하는 클래스
+ * 
+ * 작성일 : 2023.09.18
+ * 작성자 : 박상현
+ */
 public class BoardVO {
 
 	/** index : 게시글 번호 */
@@ -17,8 +23,16 @@ public class BoardVO {
 
 	/**
 	 * Method : 기본 생성자
+	 * 
+	 * DTO는 주로 데이터 전송과 관련있으므로 getter setter 메서드를 가지고 있어 생성자를 사용안해도 됨
+	 * VO는 값 그 자체 므로 객체로 설계되어 객체 생성 시점에 값이 설정되고 이후에는 변경되지 않아야 하므로 생성자를 사용해야한다.
+	 * 기본생성자 사용 이유 :  기본 생성자를 정의하지 않으면 컴파일러가 자동으로 생성,
+	 *                   하지만 매개변수가 있는 생성자를 정의할경우 기본 생성자는 자동으로 생성되지 않으므로 사용해야한다. 	  
+	 *                   
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
-	public BoardVO() {
+	public BoardVO() {                       
 		super();
 	}
 
@@ -31,6 +45,9 @@ public class BoardVO {
 	 * @param userId     : 게시글 작성자의 사용자 ID
 	 * @param category   : 게시글 카테고리
 	 * @param createDate : 게시글 생성 날짜
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public BoardVO(Integer index, String title, String text, String userId, Integer category, Long createDate) {
 		this.index = index;
@@ -45,6 +62,9 @@ public class BoardVO {
 	 * Method : 게시물 index 반환하는 메소드
 	 * 
 	 * @return : 게시물 index 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public Integer getIndex() {
 		return index;
@@ -56,6 +76,9 @@ public class BoardVO {
 	 * @param : index는 설정할 index 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 index 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setIndex(Integer index) {
 		this.index = index;
@@ -65,6 +88,9 @@ public class BoardVO {
 	 * Method : 게시물 title 반환하는 메소드
 	 * 
 	 * @return : 게시물 title 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public String getTitle() {
 		return title;
@@ -76,6 +102,9 @@ public class BoardVO {
 	 * @param : title는 설정할 title 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 title 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -85,6 +114,9 @@ public class BoardVO {
 	 * Method : 게시물 text 반환하는 메소드
 	 * 
 	 * @return : 게시물 text 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public String getText() {
 		return text;
@@ -96,6 +128,9 @@ public class BoardVO {
 	 * @param : text는 설정할 text 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 text 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setText(String text) {
 		this.text = text;
@@ -105,6 +140,9 @@ public class BoardVO {
 	 * Method : 게시물 userId 반환하는 메소드
 	 * 
 	 * @return : 게시물 userId 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public String getUserId() {
 		return userId;
@@ -116,6 +154,9 @@ public class BoardVO {
 	 * @param : userId는 설정할 userId 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 userId 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
@@ -125,6 +166,9 @@ public class BoardVO {
 	 * Method : 게시물 category 반환하는 메소드
 	 * 
 	 * @return : 게시물 category 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public Integer getCategory() {
 		return category;
@@ -136,6 +180,9 @@ public class BoardVO {
 	 * @param : category는 설정할 category 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 category 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setCategory(Integer category) {
 		this.category = category;
@@ -145,6 +192,9 @@ public class BoardVO {
 	 * Method : 게시물 createDate 반환하는 메소드
 	 * 
 	 * @return : 게시물 createDate 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public Long getCreateDate() {
 		return createDate;
@@ -156,6 +206,9 @@ public class BoardVO {
 	 * @param : createDate는 설정할 createDate 값을 가지고 있다.
 	 * 
 	 * @return : 게시물 createDate 값 설정
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
@@ -164,9 +217,13 @@ public class BoardVO {
 	/**
 	 * Method : 객체(게시글 항목)를 문자열로 변환하는 메서드
 	 * 
+	 * BoardDTO 클래스의 필드 값을 문자열로 표현하여 반환하기 위해 쓰임
+	 * 
 	 * @return : 문자열을 반환
+	 * 
+	 * 작성일 : 2023.09.18
+	 * 작성자 : 박상현
 	 */
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
