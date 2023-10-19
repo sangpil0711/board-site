@@ -54,6 +54,8 @@ app.controller("BoardWrite", function($scope, $location, BoardFactory, FileFacto
 	$scope.redirectToBoard = function() {
 		$location.path('/board');
 	}
+	
+	
 
 	$scope.saveFile = function() {
 		console.log($scope.selectedFiles);

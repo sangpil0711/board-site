@@ -34,14 +34,14 @@ public class CommentController {
 	 *
 	 * @return 댓글 정보를 DB에 저장하고 성공하면 1, 실패하면 0을 boardCommentSave 변수에 담아 반환한다.
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
-	@PostMapping("/boards/comment")
-	public ResponseEntity<Integer> insertComment(@RequestBody CommentDTO comment) {
+	@PostMapping("/boards/{boardIndex}/comments")
+	public ResponseEntity<Integer> insertComment(@PathVariable Integer boardIndex, @RequestBody CommentDTO comment) {
 
 		Integer boardCommentInsert = commentService.insertComment(comment);
-
+		 
 		return new ResponseEntity<Integer>(boardCommentInsert, HttpStatus.OK);
 	}
 	
@@ -52,18 +52,18 @@ public class CommentController {
 	 * 
 	 * @return  해당 게시물 번호로 댓글 정보를 조회하여 boardCommentIndex 변수에 담아 반환한다.
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 //	@GetMapping("/comments/{boardIndex}")
 	@GetMapping("/boards/{boardIndex}/comments")
-	public ResponseEntity<List<CommentSearchDTO>> findComment(@PathVariable Integer boardIndex) {
-
-		List<CommentSearchDTO> boardCommentIndex = commentService.findComment(boardIndex);
-
+	public ResponseEntity<List<CommentSearchDTO>> findComments(@PathVariable Integer boardIndex) {
+		
+		List<CommentSearchDTO> boardCommentIndex = commentService.findComments(boardIndex);
+		
 		return new ResponseEntity<List<CommentSearchDTO>>(boardCommentIndex, HttpStatus.OK);
 	}
-
+	
 	/**
 	 * Method : 댓글 정보를 수정하는 메소드
 	 * 
@@ -71,10 +71,10 @@ public class CommentController {
 	 * 
 	 * @return 업데이트 한 댓글 내용을 boardCommentUpdate 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
-	@PatchMapping("/comment/{index}")
+	@PatchMapping("/boards/{boardIndex}/comments/{index}")
 	public ResponseEntity<Integer> updateComment(@PathVariable Integer index, @RequestBody CommentGetDTO comment) {
 
 		Integer boardCommentUpdate = commentService.updateComment(comment);
@@ -89,35 +89,16 @@ public class CommentController {
 	 * 
 	 * @return 댓글을 삭제 후 boardCommentDelete 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
-	@DeleteMapping("/comment/{index}")
+	@DeleteMapping("/boards/{boardIndex}/comments/{index}")
 	public ResponseEntity<Integer> deleteComment(@PathVariable Integer index) {
 
 		Integer boardCommentDelete = commentService.deleteComment(index);
 
 		return new ResponseEntity<Integer>(boardCommentDelete, HttpStatus.OK);
 	}
-	
-	/**
-	 * Method : 해당 번호 게시글에 관련된 댓글 전체 정보를 삭제하는 메소드
-	 * 
-	 * @param boardIndex : boardIndex는 게시글 번호를 담고 있고 게시글 번호를 보고 댓글 전체 삭제
-	 * 
-	 * @return 댓글을 삭제 후 boardCommentAllDelete 변수에 담고 ResponseEntity 를 사용하여 응답한다.
-	 * 
-	 * 작성일 : 2023.09.27
-	 * 작성자 : 박상현
-	 */
-	@DeleteMapping("/comments/{boardIndex}")
-	public ResponseEntity<Integer> deleteAllComment(@PathVariable Integer boardIndex) {
-
-		Integer boardCommentAllDelete = commentService.deleteAllComment(boardIndex);
-
-		return new ResponseEntity<Integer>(boardCommentAllDelete, HttpStatus.OK);
-	}
-	
 	
 	
 }

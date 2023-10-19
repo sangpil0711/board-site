@@ -3,8 +3,8 @@ package kr.co.ymtech.bm.controller.dto;
 /**
  * 댓글 정보를 저장하는 클래스
  * 
- * 작성일 : 2023.09.20
- * 작성자 : 박상현
+ * @author 박상현
+ * @since  2023.09.20
  */
 public class CommentDTO {
 
@@ -26,8 +26,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 index 반환
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public Integer getIndex() {
 		return index;
@@ -40,8 +40,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 index 값 설정
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public void setIndex(Integer index) {
 		this.index = index;
@@ -52,8 +52,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 BoardIndex 반환
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public Integer getBoardIndex() {
 		return boardIndex;
@@ -66,8 +66,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 boardIndex 값 설정
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public void setBoardIndex(Integer boardIndex) {
 		this.boardIndex = boardIndex;
@@ -78,8 +78,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 Text 반환
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public String getText() {
 		return text;
@@ -92,8 +92,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 Text 값 설정
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public void setText(String text) {
 		this.text = text;
@@ -104,8 +104,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 ParentIndex 반환
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public Integer getParentIndex() {
 		return parentIndex;
@@ -118,8 +118,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 parentIndex 값 설정
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public void setParentIndex(Integer parentIndex) {
 		this.parentIndex = parentIndex;
@@ -130,8 +130,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 userId 반환
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public String getUserId() {
 		return userId;
@@ -144,8 +144,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 userId 값 설정
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
@@ -156,8 +156,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 createDate 반환
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public Long getCreateDate() {
 		return createDate;
@@ -170,8 +170,8 @@ public class CommentDTO {
 	 * 
 	 * @return : 댓글 createDate 값 설정
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;

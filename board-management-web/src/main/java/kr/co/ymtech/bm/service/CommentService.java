@@ -3,8 +3,10 @@ package kr.co.ymtech.bm.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import kr.co.ymtech.bm.controller.dto.CommentDTO;
 import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
 import kr.co.ymtech.bm.controller.dto.CommentSearchDTO;
@@ -14,14 +16,14 @@ import kr.co.ymtech.bm.repository.vo.CommentVO;
 /**
  * 일반게시판 CommentService 클래스
  * 
- *  작성일 : 2023.09.20
- *  작성자 : 박상현
+ * @author 박상현
+ * @since  2023.09.20
  */
 @Service
-public class CommentService implements ICommentService{
-	
+public class CommentService implements ICommentService {
+
 	private final ICommentRepository commentRepository;
-	
+
 	@Autowired
 	private CommentService(ICommentRepository IcommentRepository) {
 		this.commentRepository = IcommentRepository;
@@ -34,8 +36,8 @@ public class CommentService implements ICommentService{
 	 * 
 	 * @return : 댓글을 DB에 저장하고 성공하면 1, 실패하면 0을 savecomment 변수에 담아 반환한다.
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	@Override
 	public Integer insertComment(CommentDTO comment) {
@@ -46,12 +48,12 @@ public class CommentService implements ICommentService{
 		vo.setText(comment.getText());
 		vo.setParentIndex(comment.getParentIndex());
 		vo.setCreateDate(new Date().getTime());
-		
+
 		Integer insertcomment = commentRepository.insertComment(vo);
 
 		return insertcomment;
 	}
-	
+
 	/**
 	 * Method : 게시물 번호를 이용하여 댓글 정보들을 조회하는 메소드
 	 * 
@@ -59,16 +61,16 @@ public class CommentService implements ICommentService{
 	 * 
 	 * @return : 해당 번호의 게시물 정보를 findComment 변수에 담고 반환한다.
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.27
 	 */
 	@Override
-	public List<CommentSearchDTO> findComment(Integer boardIndex) {
-		List<CommentVO> list = commentRepository.findComment(boardIndex);
+	public List<CommentSearchDTO> findComments(Integer boardIndex) {
+		List<CommentVO> commentList = commentRepository.findComments(boardIndex);
 
-		List<CommentSearchDTO> findComment = new ArrayList<>(); // 댓글 리스트
+		List<CommentSearchDTO> findComments = new ArrayList<>(); // 댓글 리스트
 
-		for (CommentVO vo : list) {
+		for (CommentVO vo : commentList) {
 			CommentSearchDTO dto = new CommentSearchDTO(); // vo -> dto 변환
 			dto.setIndex(vo.getIndex());
 			dto.setBoardIndex(vo.getBoardIndex());
@@ -78,24 +80,21 @@ public class CommentService implements ICommentService{
 			dto.setCreateDate(new Date(vo.getCreateDate()));
 
 			if (vo.getParentIndex() != null) { // 대댓글이라면, 해당 댓글 ID에 대한 객체를 찾은 후, childs 변수에 넣어줌
-				for (CommentSearchDTO DTO : findComment) {
-					if (DTO.getIndex().equals(vo.getParentIndex())) {
-						if (DTO.getChilds() == null) { 			//NullPointerException 오류 처리
-							DTO.setChilds(new ArrayList<>());	//null 값을 가지고 있는 객체를 호출할 때 발생하니 null일시 처리해줌
+				for (CommentSearchDTO searchDto : findComments) {
+					if (searchDto.getIndex().equals(vo.getParentIndex())) {
+						if (searchDto.getChilds() == null) { // NullPointerException 오류 처리
+							searchDto.setChilds(new ArrayList<>()); // null 값을 가지고 있는 객체를 호출할 때 발생하니 null일시 처리해줌
 						}
-						DTO.getChilds().add(dto);
+						searchDto.getChilds().add(dto);
 						break;
 					}
 				}
 			} else { //
-				findComment.add(dto); // 댓글인 경우, 바로 findComment 리스트에 추가
+				findComments.add(dto); // 댓글인 경우, 바로 findComments 리스트에 추가
 			}
 		}
 
-		// 정렬을 원하는 방식으로 정렬 (예: 날짜순 정렬)
-//	    Collections.sort(findComment, (c1, c2) -> c1.getCreateDate().compareTo(c2.getCreateDate()));
-
-		return findComment;
+		return findComments;
 	}
 
 	/**
@@ -105,8 +104,8 @@ public class CommentService implements ICommentService{
 	 * 
 	 * @return : 업데이트 한 댓글 내용을 updatecomment 변수에 담고 반환한다.
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	@Override
 	public Integer updateComment(CommentGetDTO comment) {
@@ -127,32 +126,18 @@ public class CommentService implements ICommentService{
 	 * 
 	 * @return : CommentRepository 에서 deleteComment 함수를 실행시킨다.
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.27
 	 */
 	@Override
 	public Integer deleteComment(Integer index) {
+	    // 댓글과 관련된 대댓글을 모두 삭제
+	    commentRepository.deleteChildComments(index);
+	    
+	    // 댓글 삭제
+	    Integer deleteComment = commentRepository.deleteComment(index);
 
-		return commentRepository.deleteComment(index);
+	    return deleteComment;
 	}
-	
-	/**
-	 * Method : 해당 번호 게시글에 관련된 댓글 전체 정보를 삭제하는 메소드
-	 * 
-	 * @param boardIndex : boardIndex는 게시글 번호를 담고 있고 게시글 번호를 보고 댓글 전체 삭제
-	 * 
-	 * @return : CommentRepository 에서 deleteAllComment 함수를 실행시킨다.
-	 * 
-	 * 작성일 : 2023.09.27
-	 * 작성자 : 박상현
-	 */
-	@Override
-	public Integer deleteAllComment(Integer boardIndex) {
 
-		return commentRepository.deleteAllComment(boardIndex);
-	}
-	
-	
-	
-	
 }

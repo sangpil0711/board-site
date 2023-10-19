@@ -20,5 +20,16 @@ app.controller("BoardMain", function($scope, $location, $route) {
 		$location.path('/board');
 		$route.reload();
 	}
+	$scope.redirectToGeneralBoard = function() {
+		$window.location.href = '#!/board';
+		$window.location.reload();
+	};
+	
+	$scope.redirectToPhotoBoard = function() {
+		$window.location.href = '#!/photo';
+		$window.location.reload();
+	};
+	
+	
 
 })

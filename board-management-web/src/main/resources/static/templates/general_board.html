@@ -1,7 +1,7 @@
 <div id="container" ng-controller="BoardCtrl">
-	<div>
-		<button type="button" class="write_btn" ng-click="redirectToWrite()">글쓰기</buttton>
-	</div>
+    <div>
+        <button type="button" class="write_btn" ng-click="redirectToWrite()">글쓰기</button>
+    </div>
 
 	<div>
 		<select class="type_select" ng-model="searchType" ng-change="changeSearchType(searchType)"
@@ -17,16 +17,36 @@
 			ng-options="option.value as option.name for option in options"></select>
 	</div>
 
-	<div class="board_box">
-		<table class="board">
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-				</tr>
-			</thead>
+    <div class="board_box">
+        <table class="board">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in boardlist">
+                    <td>{{item.index}}</td>
+                    <td><a ng-click="redirectToRead(item.index)">{{item.title}}</a></td>
+                    <td>{{item.userId}}</td>
+                    <td>
+                        {{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}
+                    </td>
+                </tr>
+                <tr ng-if="item.childs && item.childs.length > 0" ng-repeat="child in item.childs">
+                    <td></td>
+                    <td style="padding-left: 20px;">{{child.text}}</td>
+                    <td>{{child.userId}}</td>
+                    <td>
+                        {{child.createDate | date:'yyyy-MM-dd'}}<br>{{child.createDate | date:'HH:mm:ss'}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 			<tbody>
 				<tr ng-if="boardlist.length > 0" ng-repeat="item in boardlist">

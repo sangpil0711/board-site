@@ -2,10 +2,8 @@ package kr.co.ymtech.bm.service;
 
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
@@ -16,8 +14,8 @@ import kr.co.ymtech.bm.repository.vo.BoardVO;
 /**
  * 일반게시판 BoardService 클래스
  * 
- *  작성일 : 2023.09.18
- *  작성자 : 박상현
+ * @author 박상현
+ * @since  2023.09.18
  */
 @Service
 public class BoardService implements IBoardService {
@@ -25,8 +23,8 @@ public class BoardService implements IBoardService {
 	/**
 	 * BoardService-BoardRepository 연결
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	private final IBoardRepository boardRepository;
 	private final ICommentRepository commentRepository;
@@ -105,8 +103,8 @@ public class BoardService implements IBoardService {
 	 * 
 	 * @return : 업데이트 한 게시물 내용을 update 변수에 담고 반환한다.
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@Override
 	public Integer updateBoard(BoardGetDTO board) {
@@ -128,8 +126,8 @@ public class BoardService implements IBoardService {
 	 * 
 	 * @return : Repository 에서 deleteBoard 함수를 실행시킨다.
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@Override
 	public Integer deleteBoard(Integer index) {
@@ -146,8 +144,8 @@ public class BoardService implements IBoardService {
 	 * 
 	 * @return : 해당 번호의 게시물 정보를 res 변수에 담고 반환한다.
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@Override
 	public BoardGetDTO searchByIndex(Integer index) {

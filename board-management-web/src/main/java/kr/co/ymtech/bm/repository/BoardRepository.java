@@ -3,19 +3,17 @@ package kr.co.ymtech.bm.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import kr.co.ymtech.bm.repository.vo.BoardVO;
 
 /**
  * 일반게시판 BoardRepository 클래스
  * 
- * 작성일 : 2023.09.18
- * 작성자 : 박상현
+ * @author 박상현
+ * @since  2023.09.18
  */
 @Repository
 public class BoardRepository implements IBoardRepository {
@@ -23,8 +21,8 @@ public class BoardRepository implements IBoardRepository {
 	/**
 	 * jdbc사용 DB 연결
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -116,9 +114,8 @@ public class BoardRepository implements IBoardRepository {
 	 * 
 	 * @return : 게시물 정보를 DB에 저장하는 update 함수 실행
 	 * 
-	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@Override
 	public Integer saveBoard(BoardVO board) {
@@ -133,8 +130,8 @@ public class BoardRepository implements IBoardRepository {
 	 * 
 	 * @return : DB에 있는 게시물 정보를 수정하는 update 함수 실행
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@Override
 	public Integer updateBoard(BoardVO board) {
@@ -149,8 +146,8 @@ public class BoardRepository implements IBoardRepository {
 	 * 
 	 * @return : DB에 있는 해당 index 번호의 게시물 정보를 삭제하는 update 함수 실행
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@Override
 	public Integer deleteBoard(Integer index) {
@@ -164,8 +161,8 @@ public class BoardRepository implements IBoardRepository {
 	 * 
 	 * @return : 해당 번호의 게시물 정보를 조회하는 query 함수 실행
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@Override
 	public BoardVO searchByIndex(Integer index) {
@@ -187,6 +184,28 @@ public class BoardRepository implements IBoardRepository {
 		};
 
 		return jdbcTemplate.queryForObject("select * from board where index = ?", mapper, index);
+	}
+	
+	
+
+	@Override
+	public List<PageVO> findAll(String searchType, String keyword) {
+		String sql = "SELECT COUNT(*) FROM board";
+	       
+	       if ("title".equals(searchType)) {
+	           sql += " WHERE title LIKE ?";
+	       } else if ("content".equals(searchType)) {
+	           sql += " WHERE content LIKE ?";
+	       } else if ("user_id".equals(searchType)) {
+	           sql += " WHERE user_id LIKE ?";
+	       }
+	       
+	       Integer count = jdbcTemplate.queryForObject(sql, Integer.class, "%" + keyword + "%");
+	       
+	       PageVO pageVO = new PageVO();
+	       pageVO.setTotalCount(count);
+	       
+	       return Collections.singletonList(pageVO);
 	}
 
 }

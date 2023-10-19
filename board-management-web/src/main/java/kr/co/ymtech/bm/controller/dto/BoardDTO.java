@@ -3,8 +3,8 @@ package kr.co.ymtech.bm.controller.dto;
 /**
  * 게시물 정보를 저장하는 클래스
  * 
- * 작성일 : 2023.09.18
- * 작성자 : 박상현
+ * @author 박상현
+ * @since  2023.09.20
  */
 public class BoardDTO {
 
@@ -26,8 +26,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 index 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public Integer getIndex() {
 		return index;
@@ -40,8 +40,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 index 값 설정
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public void setIndex(Integer index) {
 		this.index = index;
@@ -52,8 +52,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 title 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public String getTitle() {
 		return title;
@@ -66,8 +66,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 title 값 설정
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -78,8 +78,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 text 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public String getText() {
 		return text;
@@ -92,8 +92,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 text 값 설정
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public void setText(String text) {
 		this.text = text;
@@ -104,8 +104,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 userId 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public String getUserId() {
 		return userId;
@@ -118,8 +118,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 userId 값 설정
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
@@ -130,8 +130,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 category 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public Integer getCategory() {
 		return category;
@@ -144,8 +144,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 category 값 설정
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public void setCategory(Integer category) {
 		this.category = category;
@@ -156,8 +156,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 createDate 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public Long getCreateDate() {
 		return createDate;
@@ -170,8 +170,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 게시물 createDate 값 설정
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
@@ -182,8 +182,8 @@ public class BoardDTO {
 	 * 
 	 * @return : 문자열로 표현하여 반환
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@Override
 	public String toString() {	

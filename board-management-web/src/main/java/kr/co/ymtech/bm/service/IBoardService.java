@@ -5,10 +5,10 @@ import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 
 /**
- * 일반게시판 Service 클래스
+ * 일반게시판 IboardService 인터페이스
  * 
- *  작성일 : 2023.09.18
- *  작성자 : 박상현
+ * @author 박상현
+ * @since  2023.09.18
  */
 public interface IBoardService {
 	
@@ -42,8 +42,8 @@ public interface IBoardService {
 	 * 
 	 * @param board : board는 클라이언트가 수정할 부분의 게시물 내용을 담고 있다.
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public Integer updateBoard(BoardGetDTO board);
 
@@ -52,8 +52,8 @@ public interface IBoardService {
 	 * 
 	 * @param index : index는 게시물의 번호를 담고 있고 게시물 번호를 보고 삭제
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public Integer deleteBoard(Integer index);
 
@@ -62,8 +62,8 @@ public interface IBoardService {
 	 * 
 	 * @param board : index는 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public BoardGetDTO searchByIndex(Integer index);
 	
