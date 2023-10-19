@@ -6,8 +6,8 @@ import kr.co.ymtech.bm.repository.vo.CommentVO;
 /**
  * 일반게시판 ICommentRepository 인터페이스
  * 
- * 작성일 : 2023.09.18
- * 작성자 : 박상현
+ * @author 박상현
+ * @since  2023.09.20
  */
 public interface ICommentRepository {
 
@@ -16,8 +16,8 @@ public interface ICommentRepository {
 	 * 
 	 * @param comment : index는 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public Integer insertComment(CommentVO comment);
 
@@ -26,18 +26,18 @@ public interface ICommentRepository {
 	 * 
 	 * @param boardIndex : indboardIndexex는 게시물 번호를 담고 있고 해당 번호의 댓글 정보들을 조회
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
-	public List<CommentVO> findComment(Integer boardIndex);
+	public List<CommentVO> findComments(Integer boardIndex);
 
 	/**
 	 * Method : 댓글 내용(text)을 수정
 	 * 
 	 * @param comment : comment는 사용자 수정할 부분의 댓글 내용을 담고 있다.
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public Integer updateComment(CommentVO comment);
 
@@ -46,8 +46,8 @@ public interface ICommentRepository {
 	 * 
 	 * @param index : index는 댓글 번호를 담고 있고 댓글 번호를 보고 삭제
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public Integer deleteComment(Integer index);
 
@@ -58,9 +58,14 @@ public interface ICommentRepository {
 	 * 
 	 * @return : DB에 있는 해당 boardIndex 번호의 댓글 전체를 삭제하는 update 함수 실행
 	 * 
-	 * 작성일 : 2023.09.27
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	public Integer deleteAllComment(Integer boardIndex);
+
+	public Integer deleteChildComments(Integer index);
+
+	
+	
 
 }

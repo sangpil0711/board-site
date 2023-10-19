@@ -58,6 +58,14 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window) {
 	$scope.redirectToRead = function(index) {
 		$window.location.href = '#!/board/read/' + index;
 	}
+	
+//		$scope.redirectToWrite = function() {
+//		$window.location.href = '#!/photo/write';
+//	}
+//
+//	$scope.redirectToRead = function(index) {
+//		$window.location.href = '#!/photo/read/' + index;
+//	}
 
 	findPage();
 

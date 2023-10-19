@@ -23,6 +23,9 @@ import kr.co.ymtech.bm.service.IBoardService;
 
 /**
  * 일반게시판 Controller 클래스 객체에 데이터를 담아 반환해야 하니 RestController 사용
+ * 
+ * @author 박상현
+ * @since  2023.09.18
  */
 @RestController
 public class BoardController {
@@ -30,8 +33,8 @@ public class BoardController {
 	/**
 	 * Controller-Service 연결
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@Autowired
 	private final IBoardService boardService;
@@ -57,16 +60,15 @@ public class BoardController {
 
 		return new ResponseEntity<BoardPageDTO>(boardlist, HttpStatus.OK);
 	}
-
+	
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드
 	 * 
 	 * @param : board는 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
-	 * 
 	 * @return : 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환한다.
-	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 *
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@PostMapping(value = "/boards")
 	public ResponseEntity<Integer> saveBoard(@RequestBody BoardDTO board) {
@@ -79,12 +81,12 @@ public class BoardController {
 	/**
 	 * Method : 게시물 내용(text)을 수정 하는 메소드
 	 * 
-	 * @param : board는 클라이언트가 요청한 게시물 내용을 담고 있다.
+	 * @param : index는 수정할 게시물 번호를 담고 있고 board는 클라이언트가 요청한 게시물 내용을 담고 있다.
 	 * 
 	 * @return : 업데이트 한 게시물 내용을 boardlistUpdate 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@PatchMapping("/boards/{index}")
 	public ResponseEntity<Integer> updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
@@ -101,8 +103,8 @@ public class BoardController {
 	 * 
 	 * @return : 게시물을 삭제 후 boardlistDelete 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@DeleteMapping("/boards/{index}")
 	public ResponseEntity<Integer> deleteBoard(@PathVariable Integer index) {
@@ -119,8 +121,8 @@ public class BoardController {
 	 * 
 	 * @return : 해당 번호의 게시물 정보를 boardlistIndex 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	@GetMapping("/boards/{index}")
 	public ResponseEntity<BoardGetDTO> searchByIndex(@PathVariable Integer index) {

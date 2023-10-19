@@ -11,8 +11,16 @@ app.controller("BoardMain", function($scope, $window) {
 		$window.location.href = '/';
 	};
 
-	$scope.redirectToBoard = function() {
+	$scope.redirectToGeneralBoard = function() {
 		$window.location.href = '#!/board';
+		$window.location.reload();
 	};
+	
+	$scope.redirectToPhotoBoard = function() {
+		$window.location.href = '#!/photo';
+		$window.location.reload();
+	};
+	
+	
 
 });

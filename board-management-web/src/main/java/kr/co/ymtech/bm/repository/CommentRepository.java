@@ -14,8 +14,8 @@ import kr.co.ymtech.bm.repository.vo.CommentVO;
 /**
  * 일반게시판 CommentRepository 클래스
  * 
- * 작성일 : 2023.09.20
- * 작성자 : 박상현
+ * @author 박상현
+ * @since  2023.09.20
  */
 @Repository
 public class CommentRepository implements ICommentRepository {
@@ -23,8 +23,8 @@ public class CommentRepository implements ICommentRepository {
 	/**
 	 * jdbc사용 DB 연결
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -36,8 +36,8 @@ public class CommentRepository implements ICommentRepository {
 	 * 
 	 * @return : 댓글 정보를 DB에 저장하는 update 함수 실행
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	@Override
 	public Integer insertComment(CommentVO comment) {
@@ -59,11 +59,11 @@ public class CommentRepository implements ICommentRepository {
 	 * 
 	 * @return : DB에 있는 댓글정보를 조회하는 query 함수 실행
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	@Override
-	public List<CommentVO> findComment(Integer boardIndex) {
+	public List<CommentVO> findComments(Integer boardIndex) {
 
 		RowMapper<CommentVO> mapper = new RowMapper<CommentVO>() {
 
@@ -90,8 +90,8 @@ public class CommentRepository implements ICommentRepository {
 	 * 
 	 * @return : DB에 있는 댓글 정보를 수정하는 update 함수 실행
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.20
 	 */
 	@Override
 	public Integer updateComment(CommentVO comment) {
@@ -106,14 +106,23 @@ public class CommentRepository implements ICommentRepository {
 	 * 
 	 * @return : DB에 있는 해당 index 번호의 댓글 정보를 삭제하는 update 함수 실행
 	 * 
-	 * 작성일 : 2023.09.20
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.27
 	 */
 	@Override
 	public Integer deleteComment(Integer index) {
+	 
+	    Integer deleteComment = jdbcTemplate.update("delete from comment where index = ?", index);
 
-		return jdbcTemplate.update("delete from comment where index = ?", index);
+	    return deleteComment;
 	}
+	
+	@Override
+	public Integer deleteChildComments(Integer index) {
+		
+		return jdbcTemplate.update("delete from comment where parent_index = ?", index);
+	} 
+	
 	
 	/**
 	 * Method : 해당 게시글 번호의 댓글 전체를 삭제하는 메소드
@@ -122,8 +131,8 @@ public class CommentRepository implements ICommentRepository {
 	 * 
 	 * @return : DB에 있는 해당 boardIndex 번호의 댓글 전체를 삭제하는 update 함수 실행
 	 * 
-	 * 작성일 : 2023.09.27
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.27
 	 */
 	@Override
 	public Integer deleteAllComment(Integer boardIndex) {

@@ -1,35 +1,32 @@
 package kr.co.ymtech.bm.service;
 
-import java.util.List;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
-import kr.co.ymtech.bm.controller.dto.CommentDTO;
-import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
 
 /**
- * 일반게시판 Service 클래스
+ * 일반게시판 IboardService 인터페이스
  * 
- *  작성일 : 2023.09.18
- *  작성자 : 박상현
+ * @author 박상현
+ * @since  2023.09.18
  */
 public interface IBoardService {
 
 	/**
-	 * 게시물에 저장되어 있는 정보를 모두 조회
+	 * 게시물에 저장되어 있는 정보를 모두 조회ㄴ
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
-	public List<BoardGetDTO> findAll();
+	public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword);
 
 	/**
 	 * 게시물 정보를 저장
 	 * 
 	 * @param board : 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public Integer saveBoard(BoardDTO board);
 
@@ -38,8 +35,8 @@ public interface IBoardService {
 	 * 
 	 * @param board : board는 클라이언트가 수정할 부분의 게시물 내용을 담고 있다.
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public Integer updateBoard(BoardGetDTO board);
 
@@ -48,8 +45,8 @@ public interface IBoardService {
 	 * 
 	 * @param index : index는 게시물의 번호를 담고 있고 게시물 번호를 보고 삭제
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public Integer deleteBoard(Integer index);
 
@@ -58,8 +55,8 @@ public interface IBoardService {
 	 * 
 	 * @param board : index는 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
 	 * 
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * @author 박상현
+	 * @since  2023.09.18
 	 */
 	public BoardGetDTO searchByIndex(Integer index);
 	

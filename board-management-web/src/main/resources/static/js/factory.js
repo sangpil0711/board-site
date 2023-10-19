@@ -24,6 +24,18 @@ app.config(function($routeProvider) {
 		})
 		.when("/board/update/:index", {
 			templateUrl: "static/templates/general_update.html"
+		})
+		.when("/photo", {
+			templateUrl: "static/templates/photo_board.html"
+		})
+		.when("/photo/write", {
+			templateUrl: "static/templates/photo_write.html"
+		})
+		.when("/photo/read/:index", {
+			templateUrl: "static/templates/photo_read.html"
+		})
+		.when("/photo/update/:index", {
+			templateUrl: "static/templates/photo_update.html"
 		});
 });
 
@@ -32,7 +44,6 @@ app.factory('BoardFactory', function($resource) {
 
 		query: {
 			method: 'GET',
-			isArray: false,
 			headers: {
 				"Content-Type": 'application/json',
 			},
@@ -40,7 +51,6 @@ app.factory('BoardFactory', function($resource) {
 
 		readBoard: {
 			method: 'GET',
-			isArray: false,
 			headers: {
 				"Content-Type": 'application/json',
 			},
@@ -52,10 +62,9 @@ app.factory('BoardFactory', function($resource) {
 				"Content-Type": 'application/json',
 			},
 		},
-
+			
 		updateBoard: {
 			method: 'PATCH',
-			isArray: false,
 			headers: {
 				"Content-Type": 'application/json',
 			},
@@ -70,4 +79,47 @@ app.factory('BoardFactory', function($resource) {
 
 	});
 });
+
+
+	/**
+	 * Method : 해당 게시글에 댓글을 추가,수정,삭제,조회 하는 함수
+	 * 
+	 * @author 박상현
+	 * @since 2023.10.11
+	 */
+app.factory('CommentFactory', function($resource) {
+	return $resource('/boards/:boardIndex/comments/:index', null, {
+ 
+		getComment: {
+			method: 'GET',
+			isArray: true,
+			headers: {
+				"Content-Type": 'application/json',
+			},
+		},
+
+		insertComment: {
+			method: 'POST',
+			headers: {
+				"Content-Type": 'application/json',
+			},
+		},
+
+		updateComment: {
+			method: 'PATCH',
+			headers: {
+				"Content-Type": 'application/json',
+			},
+		},
+		
+		deleteComment: {
+			method: 'DELETE',
+			headers: {
+				"Content-Type": 'application/json',
+			},
+		},
+
+	});
+});
+
 
