@@ -1,37 +1,58 @@
-/**
- * $scope, $window 객체와 BoardFactory 서비스를 사용하는 controller 생성
- * general_read.html에 필요한 메서드 작성
- * 
- * 작성일 : 2023.09.15
- * 작성자 : 황상필
- */
-app.controller("BoardRead", function($scope, $window, BoardFactory, $routeParams, $sce) {
+app.controller("BoardRead", function($scope, $location, BoardFactory, $routeParams) {
 
-	var index = $routeParams.index;
+	let index = $routeParams.index;
 
-	$scope.getDataByIndex = function(index) {
+	/**
+	 * @function getDataByIndex 게시판 번호에 맞는 데이터를 불러오는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 09. 15.
+	 */
+	let getDataByIndex = function() {
 		BoardFactory.readBoard({ index: index }, function(response) {
 			$scope.board = response;
-		});
-	};
+		})
+	}
 
-	$scope.getDataByIndex(index);
+	getDataByIndex();
 
+	/**
+	 * @function remove 게시판 번호에 맞는 데이터를 삭제하는 함수
+	 * 
+	 * @param index 해당 게시판 번호
+	 * 
+	 * @author 황상필
+	 * @since 2023. 09. 15.
+	 */
 	 $scope.remove = function(index) {
-        var confirmDelete = confirm("게시물을 삭제하시겠습니까?");
+        let confirmDelete = confirm("게시물을 삭제하시겠습니까?");
         if (confirmDelete) {
             BoardFactory.deleteBoard({ index: index }, function() {
-                $window.location.href = '#!/board';
-            });
+                $location.path('/board');
+            })
         }
-    };
+    }
 
+	/**
+	 * @function redirectToUpdate general_update.html로 이동하는 함수
+	 * 
+	 * @param index 해당 게시판 번호
+	 * 
+	 * @author 황상필
+	 * @since 2023. 09. 15.
+	 */
 	$scope.redirectToUpdate = function(index) {
-		$window.location.href = '#!/board/update/' + index;
+		$location.path('/board/update/' + index);
 	}
 
+	/**
+	 * @function redirectToBoard general_board.html로 이동하는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 09. 15.
+	 */
 	$scope.redirectToBoard = function() {
-		$window.location.href = '#!/board';
+		$location.path('/board');
 	}
 
-});
+})

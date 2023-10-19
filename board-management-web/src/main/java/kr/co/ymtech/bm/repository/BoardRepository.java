@@ -2,7 +2,6 @@ package kr.co.ymtech.bm.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import kr.co.ymtech.bm.repository.vo.BoardVO;
-import kr.co.ymtech.bm.repository.vo.FileVO;
-import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
  * 일반게시판 BoardRepository 클래스
@@ -33,14 +30,19 @@ public class BoardRepository implements IBoardRepository {
 	private JdbcTemplate jdbcTemplate;
 
 	/**
-	 * Method : 게시물에 저장되어 있는 정보를 조회 및 검색하는 메소드
+	 * @Method findPage 게시물에 저장되어 있는 정보를 조회 및 검색하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#findPage(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String)
+	 *
+	 * @param pageNumber 게시판 페이지 번호
+	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
 	 * 
-	 * @param : 페이지 번호, 페이지 당 게시글 수, 검색 유형, 검색어를 사용하여 검색 결과에 따른 페이지네이션 구현
-	 * 
-	 * @return : DB에 있는 정보를 조회 및 검색하는 query 함수 실행
-	 * 
-	 * 작성자 : 황상필
-	 * 작성일 : 2023.10.05
+	 * @return DB에 있는 정보를 조회 및 검색하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
 	@Override
 	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword) {
@@ -77,17 +79,20 @@ public class BoardRepository implements IBoardRepository {
 	}
 
 	/**
-	 * Method : DB에 저장되어 있는 게시물 수를 조회하는 메소드
+	 * @Method findAll DB에 저장되어 있는 게시물 수를 조회하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#findCount(java.lang.String, java.lang.String)
+	 *
+	 * @param stkdearchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
 	 * 
-	 * @param : 검색 유형, 검색어를 매개변수로 사용하여 검색 결과에 따른 게시글 수 제공
-	 * 
-	 * @return : pageVO 클래스에 있는 객체를 하나만 포함하는 리스트를 생성 후 반환
-	 * 
-	 * 작성자 : 황상필
-	 * 작성일 : 2023.10.05
+	 * @return PageVO 클래스에 있는 객체를 하나만 포함하는 리스트를 생성 후 반환
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
 	@Override
-	public List<PageVO> findAll(String searchType, String keyword) {
+	public Integer findCount(String searchType, String keyword) {
 		
 	    String sql = "SELECT COUNT(*) FROM board";
 	    
@@ -101,17 +106,7 @@ public class BoardRepository implements IBoardRepository {
 	    
 	    Integer count = jdbcTemplate.queryForObject(sql, Integer.class, "%" + keyword + "%");
 	    
-	    PageVO pageVO = new PageVO();
-	    pageVO.setTotalCount(count);
-	    
-	    return Collections.singletonList(pageVO);
-	}
-	
-	@Override
-	public Integer saveFile(FileVO file) {
-	    return jdbcTemplate.update("insert into file(uuid, board_index, file_location, original_filename) values(?, ?, ?, ?)",
-	            file.getFileId(), file.getBoardIndex(), file.getFilePath(), file.getFileName());
-	    
+	    return count;
 	}
 
 	/**
@@ -121,12 +116,13 @@ public class BoardRepository implements IBoardRepository {
 	 * 
 	 * @return : 게시물 정보를 DB에 저장하는 update 함수 실행
 	 * 
+	 * 
 	 * 작성일 : 2023.09.18
 	 * 작성자 : 박상현
 	 */
 	@Override
 	public Integer saveBoard(BoardVO board) {
-		return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", board.getTitle(),
+		  return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", board.getTitle(),
 				board.getText(), board.getCreateDate());
 	}
 
@@ -142,7 +138,6 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Override
 	public Integer updateBoard(BoardVO board) {
-
 		return jdbcTemplate.update("update board set title = ?, content = ? where index = ? ", board.getTitle(),
 				board.getText(), board.getIndex());
 	}
@@ -159,7 +154,6 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Override
 	public Integer deleteBoard(Integer index) {
-
 		return jdbcTemplate.update("delete from board where index = ?", index);
 	}
 

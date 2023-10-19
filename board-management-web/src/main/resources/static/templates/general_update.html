@@ -1,30 +1,27 @@
+<div id="container" ng-controller="BoardUpdate">
 
-<body ng-app="myApp">
-	<div id="container" ng-controller="BoardUpdate">
+	<div class="general_write">일반게시판 글쓰기</div>
 
-		<div class="general_write">일반게시판 글쓰기</div>
-
-		<div class="title_write">
-			<p>제목</p>
-			<input id="title" type="text" name="title" ng-model="board.title" required>
-		</div>
-		 <form>
-			<div class="content_write">
-				<textarea name="text" ng-model="board.text" required></textarea>
-			</div>
-			<div>
-				<button type="button" class="file_btn">파일선택<br>(최대 100MB)</button>
-			</div>
-
-			<div class="file_name">
-				<p>IPP 인턴 프로젝트 설계서.pptx<br>
-					IPP 프로젝트 일정.txt</p>
-			</div>
-
-			<div class="write_decision">
-				<input type="button" ng-click="update(board.index)" value="수정">
-				<button type="button" ng-click="redirectToRead(board.index)">취소</button>
-			</div>
-		</form>
+	<div class="title_write">
+		<p>제목</p>
+		<input id="title" type="text" name="title" ng-model="board.title" required>
 	</div>
-</body>
+	
+	<div class="content_write">
+		<textarea name="text" ng-model="board.text" required></textarea>
+	</div>
+	
+	<div>
+		<button type="button" class="file_btn">파일선택<br>(최대 100MB)</button>
+	</div>
+
+	<div class="file_name">
+		<p>IPP 인턴 프로젝트 설계서.pptx<br>
+			IPP 프로젝트 일정.txt</p>
+	</div>
+
+	<div class="write_decision">
+		<input type="button" ng-click="update(board.index)" value="수정">
+		<button type="button" ng-click="redirectToRead(board.index)">취소</button>
+	</div>
+</div>

@@ -207,7 +207,7 @@ h3 {
 }
 
 .board {
-	border-collapse: separate;
+	border-collapse: collapse;
 	width: 1060px;
 	text-align: center;
 	margin-top: 0px;
@@ -230,7 +230,7 @@ h3 {
 .board tbody {
 	display: inline-block;
 	width: 1060px;
-	max-height: 250px;
+	max-height: 260px;
 	overflow: overlay;
 }
 
@@ -329,20 +329,21 @@ h3 {
 	border: 1px solid black;
 	color: white;
 	position: absolute;
-	top: 657px;
+	top: 690px;
 	left: 610px;
-	height: 50px;
+	height: 100px;
 	width: 120px;
 }
 
-.file_name p {
+.file_name {
 	border: 1px solid grey;
 	width: 570px;
 	height: 100px;
 	padding: 5px 10px;
 	position: absolute;
 	left: 740px;
-	top: 657px;
+	top: 690px;
+	overflow: overlay;
 }
 
 .write_decision input {
@@ -353,7 +354,7 @@ h3 {
 	color: white;
 	position: absolute;
 	left: 1140px;
-	top: 770px;
+	top: 820px;
 }
 
 .write_decision button {
@@ -363,7 +364,7 @@ h3 {
 	background-color: white;
 	position: absolute;
 	left: 1240px;
-	top: 770px;
+	top: 820px;
 }
 
 strong {
@@ -452,4 +453,14 @@ strong {
 pre {
 	background-color: white;
 	border: none;
+}
+
+.reset_btn {
+    background-color: white;
+    border: 1px solid grey;
+    padding: 5px;
+    width: 100px;
+    position: absolute;
+    right: 610px;
+    top: 630px;
 }

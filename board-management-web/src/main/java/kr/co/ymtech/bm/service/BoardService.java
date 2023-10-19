@@ -2,7 +2,6 @@ package kr.co.ymtech.bm.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,14 +9,9 @@ import org.springframework.stereotype.Service;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
-import kr.co.ymtech.bm.controller.dto.CommentDTO;
-import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.repository.ICommentRepository;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
-import kr.co.ymtech.bm.repository.vo.CommentVO;
-import kr.co.ymtech.bm.repository.vo.FileVO;
-import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
  * 일반게시판 BoardService 클래스
@@ -39,44 +33,53 @@ public class BoardService implements IBoardService {
 
 
 	@Autowired
-	private BoardService(IBoardRepository IboardRepository,ICommentRepository IcommentRepository) {
+	private BoardService(IBoardRepository IboardRepository, ICommentRepository IcommentRepository) {
 		this.boardRepository = IboardRepository;
 		this.commentRepository = IcommentRepository;
 	}
-	
+
 	/**
-	 * Method : 조건에 따른 게시글 정보를 DB에서 받아오는 메소드
+	 * @Method findBoardPage 조건에 따른 게시글 정보를 DB에서 받아오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IBoardService#findBoardPage(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String)
+	 *
+	 * @param pageNumber 게시판 페이지 번호
+	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
 	 * 
-	 * @param : 페이지 번호, 페이지 당 게시글 수, 검색 유형, 검색어를 사용하여 검색 결과에 따른 페이지네이션 구현
-	 * 
-	 * @return : findPage 메소드와 findAll 메소드를 boardPageDTO 변수에 담아 반환한다.
-	 * 
-	 * 작성자 : 황상필
-	 * 작성일 : 2023.10.05
+	 * @return findPage 메소드와 findAll 메소드를 boardPageDTO 변수에 담아 반환
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
 	@Override
     public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword) {
 		
-		List<BoardVO> list = boardRepository.findPage(pageNumber, itemSize, searchType, keyword);
+		List<BoardVO> boardList = boardRepository.findPage(pageNumber, itemSize, searchType, keyword);
 
-	    List<PageVO> boardCount = boardRepository.findAll(searchType, keyword);
+	    Integer boardCount = boardRepository.findCount(searchType, keyword);
 
-        BoardPageDTO boardPageDTO = new BoardPageDTO();
-        boardPageDTO.setBoardList(list);
-        boardPageDTO.setPageList(boardCount);
+        BoardPageDTO boardPage = new BoardPageDTO();
+        boardPage.setBoardList(boardList);
+        boardPage.setTotalCount(boardCount);
 
-        return boardPageDTO;
+        return boardPage;
     }
 
 	/**
-	 * Method : 게시물 정보를 저장하는 메소드
+	 * @Method saveBoard 게시물 정보를 저장하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IBoardService#saveBoard(kr.co.ymtech.bm.controller.dto.BoardDTO, java.util.List, java.util.List)
+	 *
+	 * @param board 클라이언트가 저장하려고 하는 게시물 정보
+	 * @param filePaths 업로드 된 파일 위치
+	 * @param fileNames 업로드 된 파일 이름
 	 * 
-	 * @param : board는 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
-	 * 
-	 * @return : 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 save 변수에 담아 반환한다.
-	 * 
-	 * 작성자 : 황상필
-	 * 작성일 : 2023.10.05
+	 * @return
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
 	@Override
 	public Integer saveBoard(BoardDTO board) {
@@ -89,13 +92,7 @@ public class BoardService implements IBoardService {
 	    } else {
 	        vo.setCreateDate(board.getCreateDate());
 	    }
-
-//	    FileVO file = new FileVO();
-//	    file.setFileId(UUID.randomUUID().toString());
-//	    file.setBoardIndex(vo.getIndex());
-//	    file.setFilePath("filePath");
-//	    file.setFileName("fileName");
-
+	    
 	    Integer save = boardRepository.saveBoard(vo);
 
 	    return save;

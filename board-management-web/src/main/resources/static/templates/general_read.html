@@ -1,34 +1,36 @@
-
-	<body ng-app="myApp">
-		<div id="container" ng-controller="BoardRead">
-			<strong>일반게시판</strong>
-			<div class="read_btn">
-				<button type="button" ng-click="redirectToUpdate(board.index)">수정</button>
-				<button type="button" ng-click="remove(board.index)">삭제</button>
-				<button type="button" ng-click="redirectToBoard()">목록</button>
+<div id="container" ng-controller="BoardRead">
+	<strong>일반게시판</strong>
+	<div class="read_btn">
+		<button type="button" ng-click="redirectToUpdate(board.index)">수정</button>
+		<button type="button" ng-click="remove(board.index)">삭제</button>
+		<button type="button" ng-click="redirectToBoard()">목록</button>
+	</div>
+	<div class="board_wrap">
+		<div class="board_view">
+			<div class="title">{{board.title}}</div>
+			<div class="info">
+				<dl>
+					<dt>작성자</dt>
+					<dd>{{board.userId}}</dd>
+				</dl>
+				<dl>
+					<dt>작성일</dt>
+					<dd>{{board.createDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;{{board.createDate |
+						date:'HH:mm:ss'}}
+					</dd>
+				</dl>
 			</div>
-			<div class="board_wrap">
-				<div class="board_view">
-					<div class="title">{{board.title}}</div>
-					<div class="info">
-						<dl>
-							<dt>작성자</dt>
-							<dd>{{board.userId}}</dd>
-						</dl>
-						<dl>
-							<dt>작성일</dt>
-							<dd>{{board.createDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;{{board.createDate |
-								date:'HH:mm:ss'}}
-							</dd>
-						</dl>
-					</div>
-					<pre class="content">{{board.text}}</pre>
-				</div>
-
-			</div>
-			<div class="card-header">댓글</div>
-			<ul id="reply--box" class="list-group">
-				<li id="reply--1" class="list-group-item d-flex justify-content-between">
-					<div>댓글 내용입니다.!</div>
+			<pre class="content">{{board.text}}</pre>
 		</div>
-	</body>
+		<div>
+			<ul class="comment">
+				<li class="comment-form">
+					<h4> 댓글 </h4>
+					<input type="text" class="comment_box" placeholder="댓글 내용을 입력해주세요." ,class="int" name="content" />
+					<input type="button" class="btn1" value="등록" />
+				</li>
+				<li id="comment-list"></li>
+			</ul>
+		</div>
+	</div>
+</div>
