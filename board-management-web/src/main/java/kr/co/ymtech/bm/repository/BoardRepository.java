@@ -2,14 +2,12 @@ package kr.co.ymtech.bm.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
-import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
  * 일반게시판 BoardRepository 클래스
@@ -30,17 +28,24 @@ public class BoardRepository implements IBoardRepository {
 	private JdbcTemplate jdbcTemplate;
 
 	/**
-	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
+	 * @Method findPage 게시물에 저장되어 있는 정보를 조회 및 검색하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#findPage(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String)
+	 *
+	 * @param pageNumber 게시판 페이지 번호
+	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
 	 * 
-	 * @return : DB에 있는 정보를 조회하는 query 함수 실행
-	 * 
-	 * @author 박상현
-	 * @since  2023.09.18
+	 * @return DB에 있는 정보를 조회 및 검색하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
 	@Override
-	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
+	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword) {
 
-		Integer offset = (pageNumber - 1) * pageSize;
+		Integer offset = (pageNumber - 1) * itemSize;
 
 		String sql = "SELECT * FROM board ";
 
@@ -50,8 +55,6 @@ public class BoardRepository implements IBoardRepository {
 		    sql += "WHERE content LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
 		} else if ("user_id".equals(searchType)) {
 		    sql += "WHERE user_id LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
-		} else {
-			sql += "ORDER BY index DESC";
 		}
 
 		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
@@ -70,22 +73,40 @@ public class BoardRepository implements IBoardRepository {
 			}
 		};
 		
-		return jdbcTemplate.query(sql, mapper, "%" + keyword + "%", offset, pageSize);
+		return jdbcTemplate.query(sql, mapper, "%" + keyword + "%", offset, itemSize);
 	}
 
-	// ->
-	// https://velog.io/@ogu1208/spring-JdbcTemplate%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%BF%BC%EB%A6%AC-%EC%8B%A4%ED%96%89
+	/**
+	 * @Method findAll DB에 저장되어 있는 게시물 수를 조회하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#findCount(java.lang.String, java.lang.String)
+	 *
+	 * @param stkdearchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
+	 * 
+	 * @return PageVO 클래스에 있는 객체를 하나만 포함하는 리스트를 생성 후 반환
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
+	 */
+	@Override
+	public Integer findCount(String searchType, String keyword) {
+		
+	    String sql = "SELECT COUNT(*) FROM board";
+	    
+	    if ("title".equals(searchType)) {
+	        sql += " WHERE title LIKE ?";
+	    } else if ("content".equals(searchType)) {
+	        sql += " WHERE content LIKE ?";
+	    } else if ("user_id".equals(searchType)) {
+	        sql += " WHERE user_id LIKE ?";
+	    }
+	    
+	    Integer count = jdbcTemplate.queryForObject(sql, Integer.class, "%" + keyword + "%");
+	    
+	    return count;
+	}
 
-//		return jdbcTemplate.query("select * from board",(rs, rowNum) -> new BoardVO(
-//				
-//				rs.getInt("index"),
-//				rs.getString("title"),
-//				rs.getString("content"),
-//				rs.getString("user_id"),
-//				rs.getInt("category"),
-//				rs.getLong("create_date")
-//				));
-	
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드
 	 * 
@@ -98,8 +119,7 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Override
 	public Integer saveBoard(BoardVO board) {
-
-		return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", board.getTitle(),
+		  return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", board.getTitle(),
 				board.getText(), board.getCreateDate());
 	}
 
@@ -115,7 +135,6 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Override
 	public Integer updateBoard(BoardVO board) {
-
 		return jdbcTemplate.update("update board set title = ?, content = ? where index = ? ", board.getTitle(),
 				board.getText(), board.getIndex());
 	}
@@ -132,7 +151,6 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Override
 	public Integer deleteBoard(Integer index) {
-
 		return jdbcTemplate.update("delete from board where index = ?", index);
 	}
 

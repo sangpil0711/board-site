@@ -3,7 +3,6 @@ package kr.co.ymtech.bm.repository;
 import java.util.List;
 
 import kr.co.ymtech.bm.repository.vo.BoardVO;
-import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
  * 일반게시판 IBoardRepository 인터페이스
@@ -14,17 +13,28 @@ import kr.co.ymtech.bm.repository.vo.PageVO;
 public interface IBoardRepository {
 	
 	/**
-	 * 게시물에 저장되어 있는 정보를 모두 조회
+	 * @Method findPage 검색 조건에 따른 게시글 표시와 페이지네이션 구현
+	 *
+	 * @param pageNumber 게시판 페이지 번호
+	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
 	 * 
-	 * @author 박상현
-	 * @since  2023.09.18
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
-	public List<BoardVO> findPage(Integer pageNumber, Integer pageSize, String searchType, String keyword);
+	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword);
 	
 	/**
-	 * 게시물에 저장되어 있는 정보를 모두 조회
+	 * @Method findAll 화면에 표시되는 게시글 수 조회
+	 *
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
-	public List<PageVO> findAll(String searchType, String keyword);
+	public Integer findCount(String searchType, String keyword);
 
 	/**
 	 * 게시물 정보를 저장

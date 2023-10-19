@@ -1,11 +1,4 @@
-/**
- * $scope 객체와 BoardFactory 서비스를 사용하는 controller 생성
- * BoardFactory의 query 메소드를 이용하여 게시글 목록 조회 및 페이지네이션 구현
- * 
- * 작성일 : 2023.09.01
- * 작성자 : 황상필
- */
-app.controller("BoardCtrl", function($scope, BoardFactory, $window) {
+app.controller("BoardCtrl", function($scope, BoardFactory, $window, $location) {
 
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 5;
@@ -24,39 +17,81 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window) {
 		{ name: '작성자', value: 'user_id' }
 	];
 
-	let findPage = function() {
-		BoardFactory.query({ pageNumber: $scope.currentPage, pageSize: $scope.itemsPerPage, searchType: $scope.searchType, keyword: $scope.keyword }, function(response) {
-			$scope.boardlist = response.boardList;
-			$scope.totalItems = response.pageList[0].totalCount;
-		});
+	/**
+	 * @function findPage 요청에 따른 게시판 목록과 게시판 총 게시글 수를 반환하는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 09. 01.
+	 */
+	let findBoardList = function() {
+		BoardFactory.readBoard({
+			pageNumber: $scope.currentPage,
+			itemSize: $scope.itemsPerPage,
+			searchType: $scope.searchType,
+			keyword: $scope.keyword
+		},
+			function(response) {
+				$scope.boardlist = response.boardList;
+				$scope.totalItems = response.totalCount;
+			})
 	}
 
+	/**
+	 * @function search 검색어 입력에 따른 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 05.
+	 */
 	$scope.search = function() {
 		if ($scope.keyword != '') {
-			findPage();
+			findBoardList();
 		} else {
-			$window.alert("검색어를 입력해주세요.")
+			alert("검색어를 입력해주세요.");
 		}
 	}
 
+	/**
+	 * @function changeSearchType 검색 유형 변경 함수
+	 * 
+	 * @param selectType 선택된 게시판 검색 유형
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 05.
+	 */
 	$scope.changeSearchType = function(selectType) {
 		$scope.searchType = selectType;
-	};
-
-	$scope.setItemsPerPage = function() {
-		findPage();
 	}
 
-	$scope.changePage = function() {
-		findPage();
+	/**
+	 * @function updatePage 페이지 번호 변경 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 05.
+	 */
+	$scope.updatePage = function() {
+		findBoardList();
 	}
 
+	/**
+	 * @function redirectToWrite general_write.html로 이동하는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 09. 01.
+	 */
 	$scope.redirectToWrite = function() {
-		$window.location.href = '#!/board/write';
+		$location.path('/board/write');
 	}
 
+	/**
+	 * @function redirectToRead general_read.html로 이동하는 함수
+	 * 
+	 * @param index 해당 게시판 번호
+	 * 
+	 * @author 황상필
+	 * @since 2023. 09. 01.
+	 */
 	$scope.redirectToRead = function(index) {
-		$window.location.href = '#!/board/read/' + index;
+		$location.path('/board/read/' + index);
 	}
 	
 //		$scope.redirectToWrite = function() {
@@ -67,6 +102,6 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window) {
 //		$window.location.href = '#!/photo/read/' + index;
 //	}
 
-	findPage();
+	findBoardList();
 
-});
+})

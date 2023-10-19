@@ -9,15 +9,13 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
-import kr.co.ymtech.bm.controller.dto.CommentDTO;
-import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
-import kr.co.ymtech.bm.controller.dto.CommentSearchDTO;
 import kr.co.ymtech.bm.service.BoardService;
 import kr.co.ymtech.bm.service.IBoardService;
 
@@ -44,31 +42,41 @@ public class BoardController {
 	}
 
 	/**
-	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
 	 * 
-	 * @return :저장되어 있는 정보를 모두 변수 boardlist에 담고 ResponseEntity 를 사용하여 응답한다. Http
+	 * @Method findBoardPage 게시물에 저장되어 있는 정보를 조회 및 검색하는 메소드
+	 *
+	 * @param pageNumber : 게시판 페이지 번호
+	 * @param itemSize   : 게시판 페이지 당 게시글 개수
+	 * @param searchType : 게시글 검색에 필요한 검색 유형
+	 * @param keyword    : 게시글 검색에 필요한 검색어
+	 * 
+	 * @return 저장되어 있는 정보를 모두 변수 boardlist에 담고 ResponseEntity 를 사용하여 응답한다. Http
 	 *         상태코드는 HttpStatus.ok 로 성공상태 200을 나타내준다.
-	 *         
-	 * 작성일 : 2023.09.18
-	 * 작성자 : 박상현
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
 	@GetMapping(value = "/boards")
 	@ResponseBody
-	public ResponseEntity<BoardPageDTO> findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
-		
-		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, pageSize, searchType, keyword);
+	public ResponseEntity<BoardPageDTO> findBoardPage(@RequestParam Integer pageNumber, @RequestParam Integer itemSize,
+			@RequestParam String searchType, @RequestParam String keyword) {
+
+		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, itemSize, searchType, keyword);
 
 		return new ResponseEntity<BoardPageDTO>(boardlist, HttpStatus.OK);
 	}
 	
 	/**
-	 * Method : 게시물 정보를 저장하는 메소드
-	 * 
-	 * @param : board는 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
-	 * @return : 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환한다.
+	 * @Method saveBoard 게시물 정보를 저장하는 메소드
 	 *
-	 * @author 박상현
-	 * @since  2023.09.18
+	 * @param board     클라이언트가 저장하려고 하는 게시물 정보
+	 * @param filePaths 업로드 된 파일의 위치
+	 * @param fileNames 업로드 된 파일의 이름
+	 * 
+	 * @return 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환한다.
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 10.
 	 */
 	@PostMapping(value = "/boards")
 	public ResponseEntity<Integer> saveBoard(@RequestBody BoardDTO board) {
@@ -131,6 +139,5 @@ public class BoardController {
 
 		return new ResponseEntity<BoardGetDTO>(boardlistIndex, HttpStatus.OK);
 	}
-	
 
 }

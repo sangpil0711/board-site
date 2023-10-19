@@ -1,6 +1,5 @@
 package kr.co.ymtech.bm.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.repository.ICommentRepository;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
-import kr.co.ymtech.bm.repository.vo.PageVO;
 
 /**
  * 일반게시판 BoardService 클래스
@@ -33,47 +31,48 @@ public class BoardService implements IBoardService {
 
 
 	@Autowired
-	private BoardService(IBoardRepository IboardRepository,ICommentRepository IcommentRepository) {
+	private BoardService(IBoardRepository IboardRepository, ICommentRepository IcommentRepository) {
 		this.boardRepository = IboardRepository;
 		this.commentRepository = IcommentRepository;
 	}
 
 	/**
-	 * Method : 게시물에 저장되어 있는 정보를 모두 조회하는 메소드
+	 * @Method findBoardPage 조건에 따른 게시글 정보를 DB에서 받아오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IBoardService#findBoardPage(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String)
+	 *
+	 * @param pageNumber 게시판 페이지 번호
+	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
 	 * 
-	 * @return : findAll 변수에 vo -> dto 변환된 값들을 담아 반환
-	 * 
-	 * @author 박상현
-	 * @since  2023.09.18
+	 * @return findPage 메소드와 findAll 메소드를 boardPageDTO 변수에 담아 반환
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
 	@Override
-    public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword) {
+    public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword) {
 		
-		List<BoardVO> list = boardRepository.findPage(pageNumber, pageSize, searchType, keyword);
+		List<BoardVO> boardList = boardRepository.findPage(pageNumber, itemSize, searchType, keyword);
 
-	    List<PageVO> boardCount = boardRepository.findAll(searchType, keyword);
-        
-        List<BoardGetDTO> findPage = new ArrayList<>(); // vo -> dto 변환
-		for (BoardVO vo : list) {
-			BoardGetDTO tmp = new BoardGetDTO();
-			tmp.setIndex(vo.getIndex());
-			tmp.setTitle(vo.getTitle());
-			tmp.setText(vo.getText());
-			tmp.setUserId(vo.getUserId());
-			tmp.setCategory(vo.getCategory());
-			tmp.setCreateDate(new Date(vo.getCreateDate()));
-			findPage.add(tmp);
-		}
+	    Integer boardCount = boardRepository.findCount(searchType, keyword);
 
-        BoardPageDTO boardPageDTO = new BoardPageDTO();
-        boardPageDTO.setBoardList(list);
-        boardPageDTO.setPageList(boardCount);
+        BoardPageDTO boardPage = new BoardPageDTO();
+        boardPage.setBoardList(boardList);
+        boardPage.setTotalCount(boardCount);
 
-        return boardPageDTO;
+        return boardPage;
     }
 
 	/**
-	 * Method : 게시물 정보를 저장하는 메소드
+	 * @Method saveBoard 게시물 정보를 저장하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IBoardService#saveBoard(kr.co.ymtech.bm.controller.dto.BoardDTO, java.util.List, java.util.List)
+	 *
+	 * @param board 클라이언트가 저장하려고 하는 게시물 정보
+	 * @param filePaths 업로드 된 파일 위치
+	 * @param fileNames 업로드 된 파일 이름
 	 * 
 	 * @param : board는 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
 	 * 
@@ -84,23 +83,19 @@ public class BoardService implements IBoardService {
 	 */
 	@Override
 	public Integer saveBoard(BoardDTO board) {
+	    BoardVO vo = new BoardVO(); 
+	    vo.setTitle(board.getTitle());
+	    vo.setText(board.getText());
 
-		BoardVO vo = new BoardVO(); // dto -> vo 변환
-//		vo.setIndex(board.getIndex());
-		vo.setTitle(board.getTitle());
-		vo.setText(board.getText());
-//		vo.setUserId(board.getUserId()); 
-//		vo.setCategory(board.getCategory());
+	    if (board.getCreateDate() == null) {
+	        vo.setCreateDate(new Date().getTime());
+	    } else {
+	        vo.setCreateDate(board.getCreateDate());
+	    }
+	    
+	    Integer save = boardRepository.saveBoard(vo);
 
-		if (board.getCreateDate() == null) {
-			vo.setCreateDate(new Date().getTime());
-		} else {
-			vo.setCreateDate(board.getCreateDate());
-		}
-
-		Integer save = boardRepository.saveBoard(vo);
-
-		return save;
+	    return save;
 	}
 
 	/**

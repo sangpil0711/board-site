@@ -11,22 +11,29 @@ import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
  * @since  2023.09.18
  */
 public interface IBoardService {
-
+	
 	/**
-	 * 게시물에 저장되어 있는 정보를 모두 조회ㄴ
-	 * 
-	 * @author 박상현
-	 * @since  2023.09.18
+	 * @Method findBoardPage 조건에 따른 게시글 정보를 조회하는 메소드
+	 *
+	 * @param pageNumber 게시판 페이지 번호
+	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
-	public BoardPageDTO findBoardPage(Integer pageNumber, Integer pageSize, String searchType, String keyword);
+	public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword);
 
 	/**
-	 * 게시물 정보를 저장
-	 * 
-	 * @param board : 클라이언트가 저장하려고 하는 게시물 정보를 담고 있다.
-	 * 
-	 * @author 박상현
-	 * @since  2023.09.18
+	 * @Method saveBoard 게시물 정보를 저장하는 메소드
+	 *
+	 * @param board 클라이언트가 저장하려고 하는 게시물 정보
+	 * @param filePaths 업로드 된 파일 위치
+	 * @param fileNames 업로드 된 파일 이름
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
 	public Integer saveBoard(BoardDTO board);
 

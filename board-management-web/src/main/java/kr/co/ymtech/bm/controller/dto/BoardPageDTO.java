@@ -3,66 +3,78 @@ package kr.co.ymtech.bm.controller.dto;
 import java.util.List;
 
 import kr.co.ymtech.bm.repository.vo.BoardVO;
-import kr.co.ymtech.bm.repository.vo.PageVO;
-import kr.co.ymtech.bm.repository.vo.SearchVO;
 
+/**
+ * 게시글 정보, 총 게시글 수, 게시글 검색을 포함하는 클래스
+ * 
+ * @author 황상필
+ * @since 2023. 10. 05.
+ */
 public class BoardPageDTO {
+	
     private List<BoardVO> list;
-    private List<PageVO> totalCount;
-    private List<SearchVO> searchVO;
+    private Integer totalCount;
 
     /**
-     * @return the boardList
+     * @Method getBoardList BoardVO를 반환하는 메소드
+     *
+     * @return BoardVO를 할당받은 list 반환
+     *
+     * @author 황상필
+     * @since 2023. 10. 05.
      */
     public List<BoardVO> getBoardList() {
         return list;
     }
 
     /**
-     * @param boardList the boardList to set
+     * 
+     * @Method setBoardList BoardVO를 설정하는 메소드
+     *
+     * @param boardList 설정할 BoardVO
+     *
+     * @author 황상필
+     * @since 2023. 10. 05.
      */
     public void setBoardList(List<BoardVO> boardList) {
         this.list = boardList;
     }
 
     /**
-     * @return the pageList
+     * 
+     * @Method getPageList PageVO를 반환하는 메소드
+     *
+     * @return PageVO를 할당받은 totalCount 반환
+     *
+     * @author 황상필
+     * @since 2023. 10. 05.
      */
-    public List<PageVO> getPageList() {
+    public Integer getTotalCount() {
         return totalCount;
     }
 
     /**
-     * @param pageList the pageList to set
+     * 
+     * @Method setPageList PageVO를 설정하는 메소드
+     *
+     * @param pageList 설정할 PageVO
+     *
+     * @author 황상필
+     * @since 2023. 10. 05.
      */
-    public void setPageList(List<PageVO> pageList) {
-        this.totalCount = pageList;
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
     }
 
-    /**
-     * @return the searchVO
-     */
-    public List<SearchVO> getSearchVO() {
-        return searchVO;
-    }
-
-    /**
-     * @param searchVO the searchVO to set
-     */
-    public void setSearchVO(List<SearchVO> searchVO) {
-        this.searchVO = searchVO;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("BoardPageDTO [list=");
-        builder.append(list);
-        builder.append(", totalCount=");
-        builder.append(totalCount);
-        builder.append(", searchVO="); // 추가된 SearchVO 필드
-        builder.append(searchVO); // 추가된 SearchVO 필드
-        builder.append("]");
-        return builder.toString();
-    }
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("BoardPageDTO [list=");
+		builder.append(list);
+		builder.append(", totalCount=");
+		builder.append(totalCount);
+		builder.append("]");
+		return builder.toString();
+	}
+    
 }
