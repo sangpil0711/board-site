@@ -1,4 +1,4 @@
-app.controller("BoardCtrl", function($scope, BoardFactory, $window, $location) {
+app.controller("BoardCtrl", function($scope, BoardFactory, $location) {
 
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 5;
@@ -17,6 +17,10 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window, $location) {
 		{ name: '작성자', value: 'user_id' }
 	];
 
+
+//		$scope.boardlist = [];
+//		$scope.totalItems = [];
+		const CATEGORY = 0;
 	/**
 	 * @function findPage 요청에 따른 게시판 목록과 게시판 총 게시글 수를 반환하는 함수
 	 * 
@@ -25,6 +29,7 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window, $location) {
 	 */
 	let findBoardList = function() {
 		BoardFactory.readBoard({
+			category : CATEGORY,
 			pageNumber: $scope.currentPage,
 			itemSize: $scope.itemsPerPage,
 			searchType: $scope.searchType,
@@ -34,7 +39,7 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window, $location) {
 				$scope.boardlist = response.boardList;
 				$scope.totalItems = response.totalCount;
 			})
-	}
+	};
 
 	/**
 	 * @function search 검색어 입력에 따른 함수
@@ -48,7 +53,7 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window, $location) {
 		} else {
 			alert("검색어를 입력해주세요.");
 		}
-	}
+	};
 
 	/**
 	 * @function changeSearchType 검색 유형 변경 함수
@@ -60,7 +65,7 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window, $location) {
 	 */
 	$scope.changeSearchType = function(selectType) {
 		$scope.searchType = selectType;
-	}
+	};
 
 	/**
 	 * @function updatePage 페이지 번호 변경 함수
@@ -70,7 +75,7 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window, $location) {
 	 */
 	$scope.updatePage = function() {
 		findBoardList();
-	}
+	};
 
 	/**
 	 * @function redirectToWrite general_write.html로 이동하는 함수
@@ -80,7 +85,7 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window, $location) {
 	 */
 	$scope.redirectToWrite = function() {
 		$location.path('/board/write');
-	}
+	};
 
 	/**
 	 * @function redirectToRead general_read.html로 이동하는 함수
@@ -92,15 +97,7 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $window, $location) {
 	 */
 	$scope.redirectToRead = function(index) {
 		$location.path('/board/read/' + index);
-	}
-	
-//		$scope.redirectToWrite = function() {
-//		$window.location.href = '#!/photo/write';
-//	}
-//
-//	$scope.redirectToRead = function(index) {
-//		$window.location.href = '#!/photo/read/' + index;
-//	}
+	};
 
 	findBoardList();
 

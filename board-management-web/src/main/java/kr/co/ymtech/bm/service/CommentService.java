@@ -71,14 +71,15 @@ public class CommentService implements ICommentService {
 		List<CommentSearchDTO> findComments = new ArrayList<>(); // 댓글 리스트
 
 		for (CommentVO vo : commentList) {
-			CommentSearchDTO dto = new CommentSearchDTO(); // vo -> dto 변환
+			// vo -> dto 변환 : START
+			CommentSearchDTO dto = new CommentSearchDTO(); 
 			dto.setIndex(vo.getIndex());
 			dto.setBoardIndex(vo.getBoardIndex());
 			dto.setText(vo.getText());
 			dto.setParentIndex(vo.getParentIndex());
 			dto.setUserId(vo.getUserId());
 			dto.setCreateDate(new Date(vo.getCreateDate()));
-
+			// vo -> dto 변환 : END
 			if (vo.getParentIndex() != null) { // 대댓글이라면, 해당 댓글 ID에 대한 객체를 찾은 후, childs 변수에 넣어줌
 				for (CommentSearchDTO searchDto : findComments) {
 					if (searchDto.getIndex().equals(vo.getParentIndex())) {

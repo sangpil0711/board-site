@@ -23,7 +23,7 @@ public interface IBoardRepository {
 	 * @author 황상필
 	 * @since 2023. 10. 05.
 	 */
-	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword);
+	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category);
 	
 	/**
 	 * @Method findAll 화면에 표시되는 게시글 수 조회
@@ -34,7 +34,7 @@ public interface IBoardRepository {
 	 * @author 황상필
 	 * @since 2023. 10. 05.
 	 */
-	public Integer findCount(String searchType, String keyword);
+	public Integer findCount(String searchType, String keyword, Integer category);
 
 	/**
 	 * 게시물 정보를 저장
@@ -75,5 +75,19 @@ public interface IBoardRepository {
 	 * @since  2023.09.18
 	 */
 	public BoardVO searchByIndex(Integer index);
+
+	/**
+	 * @Method findAll DB에 저장되어 있는 게시물 수를 조회하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#findCount(java.lang.String, java.lang.String)
+	 *
+	 * @param stkdearchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
+	 * 
+	 * @return PageVO 클래스에 있는 객체를 하나만 포함하는 리스트를 생성 후 반환
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 05.
+	 */
 
 }

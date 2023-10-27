@@ -1,28 +1,33 @@
-	<div id="container" ng-controller="BoardUpdate">
+<div id="container" ng-controller="PhotoWrite">
+	<!-- 시작: 게시물 추가 화면 박스 -->
+    <div class="general_write">사진게시판 글쓰기</div>
 
-		<div class="general_write">일반게시판 글쓰기</div>
+    <div class="title_write">
+        <p>제목</p>
+        <input id="title" type="text" ng-model="photoBoard.title" required>
+    </div>
 
-		<div class="title_write">
-			<p>제목</p>
-			<input id="title" type="text" name="title" ng-model="board.title" required>
-		</div>
-		 <form>
-			<div class="content_write">
-				<textarea name="text" ng-model="board.text" required></textarea>
-			</div>
-			<div>
-				<button type="button" class="file_btn">파일선택<br>(최대 100MB)</button>
-			</div>
+    <div class="content_write">
+        <textarea id="contents" ng-model="photoBoard.text" required></textarea>
+    </div>
 
-			<div class="file_name">
-				 <p>IPP 인턴 프로젝트 설계서.pptx<br>
-					IPP 프로젝트 일정.txt</p>
-			</div>
+    <div>
+        <button class="reset_btn" ng-click="resetFile()">이미지선택<br>초기화</button>
+    </div>
 
-			<div class="write_decision">
-				<input type="button" ng-click="update(board.index)" value="수정">
-				<button type="button" ng-click="redirectToRead(board.index)">취소</button>
-			</div>
-		</form>
-	</div>
-</body>
+    <div>
+        <input type="file" id="fileInput" name="files" style="display: none;" ngf-select="onFileSelect($files)"
+            accept=".hwp, .hwpx, .pdf, .txt, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .zip" multiple>
+        <button class="file_btn" ng-click="selectFile()">이미지선택<br>(최대 100MB)</button>
+    </div>
+
+    <div class="file_name">
+        <div ng-repeat="fileName in fileNames" class="file-item">{{fileName}}</div>
+    </div>
+
+    <div class="write_decision">
+        <input type="button" ng-click="insertPhoto()" value="작성완료">
+        <button ng-click="redirectToPhotoBoard()">취소</button>
+    </div>
+    <!-- 끝: 게시물 추가 화면 박스 -->
+</div>

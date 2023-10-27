@@ -1,12 +1,6 @@
 package kr.co.ymtech.bm.repository.vo;
 
-/**
- * 게시물 정보를 저장하는 클래스
- * 
- * @author 박상현
- * @since  2023.09.18
- */
-public class BoardVO {
+public class PhotoBoardVO {
 
 	/** index : 게시글 번호 */
 	private Integer index;
@@ -30,9 +24,9 @@ public class BoardVO {
 	 *                   하지만 매개변수가 있는 생성자를 정의할경우 기본 생성자는 자동으로 생성되지 않으므로 사용해야한다. 	  
 	 *                   
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
-	public BoardVO() {                       
+	public PhotoBoardVO() {
 		super();
 	}
 
@@ -47,9 +41,9 @@ public class BoardVO {
 	 * @param createDate : 게시글 생성 날짜
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
-	public BoardVO(Integer index, String title, String text, String userId, Integer category, Long createDate) {
+	public PhotoBoardVO(Integer index, String title, String text, String userId, Integer category, Long createDate) {
 		this.index = index;
 		this.title = title;
 		this.text = text;
@@ -64,7 +58,7 @@ public class BoardVO {
 	 * @return : 게시물 index 반환
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public Integer getIndex() {
 		return index;
@@ -73,12 +67,12 @@ public class BoardVO {
 	/**
 	 * Method : 게시물 index 설정하는 메소드
 	 * 
-	 * @param : index는 설정할 index 값을 가지고 있다.
+	 * @param index: 설정할 index 값
 	 * 
 	 * @return : 게시물 index 값 설정
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public void setIndex(Integer index) {
 		this.index = index;
@@ -90,7 +84,7 @@ public class BoardVO {
 	 * @return : 게시물 title 반환
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public String getTitle() {
 		return title;
@@ -99,12 +93,12 @@ public class BoardVO {
 	/**
 	 * Method : 게시물 title 설정하는 메소드
 	 * 
-	 * @param : title는 설정할 title 값을 가지고 있다.
+	 * @param title: 설정할 title 값
 	 * 
 	 * @return : 게시물 title 값 설정
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -116,7 +110,7 @@ public class BoardVO {
 	 * @return : 게시물 text 반환
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public String getText() {
 		return text;
@@ -125,12 +119,12 @@ public class BoardVO {
 	/**
 	 * Method : 게시물 text 설정하는 메소드
 	 * 
-	 * @param : text는 설정할 text 값을 가지고 있다.
+	 * @param text: 설정할 text 값
 	 * 
 	 * @return : 게시물 text 값 설정
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public void setText(String text) {
 		this.text = text;
@@ -142,7 +136,7 @@ public class BoardVO {
 	 * @return : 게시물 userId 반환
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public String getUserId() {
 		return userId;
@@ -151,12 +145,12 @@ public class BoardVO {
 	/**
 	 * Method : 게시물 userId 설정하는 메소드
 	 * 
-	 * @param : userId는 설정할 userId 값을 가지고 있다.
+	 * @param userId: 설정할 userId 값
 	 * 
 	 * @return : 게시물 userId 값 설정
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
@@ -168,7 +162,7 @@ public class BoardVO {
 	 * @return : 게시물 category 반환
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public Integer getCategory() {
 		return category;
@@ -177,12 +171,12 @@ public class BoardVO {
 	/**
 	 * Method : 게시물 category 설정하는 메소드
 	 * 
-	 * @param : category는 설정할 category 값을 가지고 있다.
+	 * @param category: 설정할 category 값
 	 * 
 	 * @return : 게시물 category 값 설정
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public void setCategory(Integer category) {
 		this.category = category;
@@ -194,7 +188,7 @@ public class BoardVO {
 	 * @return : 게시물 createDate 반환
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public Long getCreateDate() {
 		return createDate;
@@ -203,12 +197,12 @@ public class BoardVO {
 	/**
 	 * Method : 게시물 createDate 설정하는 메소드
 	 * 
-	 * @param : createDate는 설정할 createDate 값을 가지고 있다.
+	 * @param createDate: 설정할 createDate 값
 	 * 
 	 * @return : 게시물 createDate 값 설정
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
@@ -222,12 +216,12 @@ public class BoardVO {
 	 * @return : 문자열을 반환
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.18
+	 * @since  2023.10.24
 	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("BoardVO [index=");
+		builder.append("PhotoBoardVO [index=");
 		builder.append(index);
 		builder.append(", title=");
 		builder.append(title);

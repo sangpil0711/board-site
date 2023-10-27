@@ -8,7 +8,7 @@
 			ng-options="type.value as type.name for type in types"></select>
 		<input type="text" class="search" ng-model="keyword" ng-keydown="$event.keyCode === 13 && search()"
 			placeholder="검색어 입력">
-		<button type="button" class="search_btn" ng-click="search()">검색</buttton>
+		<button type="button" class="search_btn" ng-click="search()">검색</button>
 	</div>
 
 	<div>
@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in boardlist">
+                <tr ng-if="boardlist.length > 0" ng-repeat="item in boardlist">
                     <td>{{item.index}}</td>
                     <td><a ng-click="redirectToRead(item.index)">{{item.title}}</a></td>
                     <td>{{item.userId}}</td>
@@ -36,21 +36,16 @@
                         {{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}
                     </td>
                 </tr>
-                <tr ng-if="item.childs && item.childs.length > 0" ng-repeat="child in item.childs">
-                    <td></td>
-                    <td style="padding-left: 20px;">{{child.text}}</td>
-                    <td>{{child.userId}}</td>
-                    <td>
-                        {{child.createDate | date:'yyyy-MM-dd'}}<br>{{child.createDate | date:'HH:mm:ss'}}
-                    </td>
-                </tr>
+                <tr ng-if="boardlist.length === 0">
+               <td style="width: 1060px; height: 250px">조회된 데이터가 없습니다.</td>
+            </tr>
             </tbody>
         </table>
     </div>
 
     <div>
         <ul uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" max-size="maxSize"
-            ng-change="changePage()" items-per-page="itemsPerPage" class="pagination-lg" previous-text="&lsaquo;"
+            ng-change="updatePage()" items-per-page="itemsPerPage" class="pagination-lg" previous-text="&lsaquo;"
             next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
         </ul>
     </div>

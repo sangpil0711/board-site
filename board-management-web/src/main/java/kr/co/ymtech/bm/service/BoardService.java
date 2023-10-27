@@ -52,11 +52,11 @@ public class BoardService implements IBoardService {
 	 * @since 2023. 10. 05.
 	 */
 	@Override
-    public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword) {
+    public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category) {
 		
-		List<BoardVO> boardList = boardRepository.findPage(pageNumber, itemSize, searchType, keyword);
+		List<BoardVO> boardList = boardRepository.findPage(pageNumber, itemSize, searchType, keyword, category);
 
-	    Integer boardCount = boardRepository.findCount(searchType, keyword);
+	    Integer boardCount = boardRepository.findCount(searchType, keyword, category);
 
         BoardPageDTO boardPage = new BoardPageDTO();
         boardPage.setBoardList(boardList);

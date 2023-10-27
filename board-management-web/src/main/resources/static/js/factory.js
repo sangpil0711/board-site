@@ -137,4 +137,46 @@ app.factory('CommentFactory', function($resource) {
 	});
 });
 
+app.factory('PhotoBoardFactory', function($resource) {
+	return $resource('/photos/:index', null, {
+
+		readPhotoBoards: {
+			method: 'GET',
+			isArray: true,
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+		
+		readPhotoBoard: {
+			method: 'GET',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+
+		createPhotoBoard: {
+			method: 'POST',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+			
+		updatePhotoBoard: {
+			method: 'PATCH',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+
+		deletePhotoBoard: {
+			method: 'DELETE',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+
+	})
+})
+
 

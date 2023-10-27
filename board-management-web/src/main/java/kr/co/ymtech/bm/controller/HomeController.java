@@ -66,7 +66,7 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	@RequestMapping(value = "main", method = RequestMethod.GET)
 	public ModelAndView mainpage() {
 
 		ModelAndView model = new ModelAndView();
@@ -84,7 +84,7 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@RequestMapping(value = "/board", method = RequestMethod.GET)
+	@RequestMapping(value = "board", method = RequestMethod.GET)
 	public ModelAndView boardpage() {
 
 		ModelAndView model = new ModelAndView();
@@ -103,7 +103,7 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@RequestMapping(value = "/board/write", method = RequestMethod.GET)
+	@RequestMapping(value = "board/write", method = RequestMethod.GET)
 	public ModelAndView writepage() {
 
 		ModelAndView model = new ModelAndView();
@@ -123,7 +123,7 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@RequestMapping(value = "/board/update/{index}", method = RequestMethod.GET)
+	@RequestMapping(value = "board/update/{index}", method = RequestMethod.GET)
 	public ModelAndView updatepage(@PathVariable Integer index) {
 
 		ModelAndView model = new ModelAndView();
@@ -154,7 +154,7 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@PostMapping(value = "/board/write")
+	@PostMapping(value = "board/write")
 	public ModelAndView writeBoard(BoardDTO board, List<MultipartFile> files, List<String> fileNames) {
 
 		ModelAndView model = new ModelAndView();
@@ -178,7 +178,7 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@DeleteMapping("/board/delete/{index}")
+	@DeleteMapping("board/delete/{index}")
 	public ModelAndView removeBoard(@PathVariable Integer index) {
 
 		ModelAndView model = new ModelAndView();
@@ -201,7 +201,7 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@PatchMapping(value = "/board/update/{index}")
+	@PatchMapping(value = "board/update/{index}")
 	public ModelAndView updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
 
 		ModelAndView model = new ModelAndView();
@@ -223,7 +223,7 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@GetMapping(value = "/board/{index}")
+	@GetMapping(value = "board/{index}")
 	public ModelAndView readpage(@PathVariable Integer index) {
 
 		ModelAndView model = new ModelAndView();

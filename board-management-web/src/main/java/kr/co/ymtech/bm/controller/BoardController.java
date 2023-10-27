@@ -59,9 +59,9 @@ public class BoardController {
 	@GetMapping(value = "/boards")
 	@ResponseBody
 	public ResponseEntity<BoardPageDTO> findBoardPage(@RequestParam Integer pageNumber, @RequestParam Integer itemSize,
-			@RequestParam String searchType, @RequestParam String keyword) {
+			@RequestParam String searchType, @RequestParam String keyword, @RequestParam Integer category ) {
 
-		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, itemSize, searchType, keyword);
+		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, itemSize, searchType, keyword, category);
 
 		return new ResponseEntity<BoardPageDTO>(boardlist, HttpStatus.OK);
 	}

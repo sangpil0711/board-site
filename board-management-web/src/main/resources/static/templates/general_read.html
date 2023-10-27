@@ -36,7 +36,7 @@
 
     <div class="comment_box">
         <table class="comment">
-            <thead>
+            <thead ng-show = "commentlist.length > 0">
                 <tr>
                     <th colspan="2">작성자</th>
                     <th>댓글내용</th> 
@@ -49,7 +49,7 @@
                     <td ng-if="comment.parentIndex != null"></td>
                     <td colspan="{{comment.parentIndex != null ? 1 : 2}}">{{ comment.userId }}</td>
                     <td>
-                        <div ng-if="!comment.update">{{ comment.text }}</div>
+                        <div ng-if="!comment.update"><pre ng-class ="pre1">{{ comment.text }}</pre></div>
                         <div ng-if="comment.update">
                             <input type="text" class="update_write_box" ng-model="comment.updatedText" />
                             <input type="button" class="update_btn" value="저장" ng-click="saveComment(comment)" />
@@ -66,7 +66,7 @@
                 <tr ng-if="comment.childCommentBox">
                     <td></td>
                     <td colspan="2">
-                        <input type="text" class="child_comment_write" placeholder="답글 내용을 입력해주세요." ng-model="newChildComment" />
+                        <textarea class="child_comment_write" placeholder="답글 내용을 입력해주세요." ng-model="newChildComment"></textarea>
                     </td>
                      <td></td>
                      <td>
