@@ -1,69 +1,80 @@
 package kr.co.ymtech.bm.service;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.util.List;
-import java.util.UUID;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.ymtech.bm.repository.IFileRepository;
-import kr.co.ymtech.bm.repository.vo.BoardVO;
-import kr.co.ymtech.bm.repository.vo.FileVO;
 
+/**
+ * FileService 클래스
+ * 
+ * @author 황상필
+ * @since 2023. 10. 23.
+ */
 @Service
 public class FileService implements IFileService {
 
+	/**
+	 * FileService-FileRepository 연결
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 23.
+	 */
 	private final IFileRepository fileRepository;
+	private final static String SAVE_PATH = "C:/boardFile";
 
 	@Autowired
 	private FileService(IFileRepository IfileRepository) {
 		this.fileRepository = IfileRepository;
 	}
 
+	/**
+	 * @Method downloadFile 게시글에 업로드된 파일을 다운로드 하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IFileService#downloadFile(javax.servlet.http.HttpServletResponse, java.lang.String)
+	 *
+	 * @param response http 응답
+	 * @param fileName 업로드된 파일 이름
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 25.
+	 */
 	@Override
-	public String uploadFile(List<MultipartFile> files, List<String> fileNames) {
-		try {
-			String savePath = "C:/boardFile";
-			
-			System.out.println(files);
+	public void downloadFile(HttpServletResponse response, String fileName) {
+		String filePath = SAVE_PATH + "/" + fileName;
 
-			for (int i = 0; i < fileNames.size(); i++) {
-				MultipartFile file = files.get(i);
-				String fileName = fileNames.get(i);
-				String filePath = savePath + fileNames.get(i);
-
-				try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
-					IOUtils.copy(input, output);
-				}
-
-				List<BoardVO> lastBoard = fileRepository.lastBoard();
-				BoardVO savedBoard = lastBoard.get(0);
-
-				FileVO boardFile = new FileVO();
-				boardFile.setFileId(UUID.randomUUID().toString());
-				boardFile.setBoardIndex(savedBoard.getIndex());
-				boardFile.setFilePath(filePath);
-				boardFile.setFileName(fileName);
-
-				fileRepository.saveFile(boardFile);	
-			}
-
-			return "파일 업로드 완료";
-		} 
-		catch (IOException e) {
+		try (FileInputStream input = new FileInputStream(filePath); OutputStream output = response.getOutputStream()) {
+			fileName = URLEncoder.encode(fileName, "UTF-8");
+			fileName = fileName.replaceAll("\\+", "%20");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+			IOUtils.copy(input, output);
+		} catch (Exception e) {
 			e.printStackTrace();
-			return "파일 업로드 중 오류가 발생했습니다.";
 		}
 	}
+	
+	/**
+	 * @Method resetFiles 게시글에 업로드된 파일을 초기화 시키는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IFileService#resetFiles(java.lang.Integer)
+	 *
+	 * @param index 해당 게시글 번호
+	 * 
+	 * @return Repository에서 함수를 실행하여 해당 게시글에 업로드된 파일 삭제
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 25.
+	 */
+	@Override
+	public Integer resetFiles(Integer index) {
+		return fileRepository.resetFiles(index);
+	}
 
-//	@Override
-//	public Integer downloadFile() {
-//		
-//	}
 }

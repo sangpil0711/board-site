@@ -20,6 +20,22 @@ public class BoardDTO {
 	private Integer category;
 	/** createDate : 게시글 작성일 */
 	private Long createDate;
+	/** files : 게시글 첨부파일 */
+//	private List<MultipartFile> files;
+	
+//	/**
+//	 * @return the files
+//	 */
+//	public List<MultipartFile> getFiles() {
+//		return files;
+//	}
+//
+//	/**
+//	 * @param files the files to set
+//	 */
+//	public void setFiles(List<MultipartFile> files) {
+//		this.files = files;
+//	}
 
 	/**
 	 * Method : 게시물 index 반환하는 메소드
@@ -186,7 +202,7 @@ public class BoardDTO {
 	 * @since  2023.09.18
 	 */
 	@Override
-	public String toString() {	
+	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("BoardDTO [index=");
 		builder.append(index);
@@ -200,6 +216,8 @@ public class BoardDTO {
 		builder.append(category);
 		builder.append(", createDate=");
 		builder.append(createDate);
+//		builder.append(", files=");
+//		builder.append(files);
 		builder.append("]");
 		return builder.toString();
 	}

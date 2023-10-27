@@ -8,8 +8,8 @@ app.controller("BoardMain", function($scope, $location, $route) {
 	 */
 	$scope.redirectToMain = function() {
 		$location.path('/');
-	}
-
+	};
+	
 	/**
 	 * @function redirectToGeneralBoard general_board.html로 이동 후 새로고침하는 함수
 	 * 
@@ -26,5 +26,4 @@ app.controller("BoardMain", function($scope, $location, $route) {
 		$route.reload();
 	};
 	
-
-})
+});

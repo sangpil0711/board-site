@@ -1,6 +1,6 @@
 app.controller("BoardRead", function($scope, $location, BoardFactory, $routeParams, CommentFactory) {
 
-	let index = $routeParams.index;
+	let index = $routeParams.index; 	// 라우팅으로 받아오는 게시글 번호
 
 	/**
 	 * @function getDataByIndex 게시판 번호에 맞는 데이터를 불러오는 함수
@@ -12,7 +12,8 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, $routePara
 		BoardFactory.readBoard({ index: index }, function(response) {
 			$scope.board = response;
 		})
-	}
+	};
+
 	getDataByIndex();
 
 	/**
@@ -65,25 +66,24 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, $routePara
         function(response) {
             $scope.commentlist = response;
 
-            let commentNewlist = [];
+				$scope.commentlist.forEach(function(comment) {
+					commentNewlist.push(comment);
+					comment.childCommentBox = false;
+					if (comment.childs !== null) {
+						comment.childs.forEach(function(childComment) {
+							commentNewlist.push(childComment);
+						})
+					}
+				})
 
-            $scope.commentlist.forEach(function(comment) {
-                commentNewlist.push(comment);
-                comment.childCommentBox = false;
-                if (comment.childs !== null) {
-                    comment.childs.forEach(function(childComment) {
-                        commentNewlist.push(childComment);
-                    });
-                }
-            });
+				$scope.commentlist = commentNewlist;
+			},
+			function(res) {
+				console.error("error: ", res);
+			})
+	};
 
-            $scope.commentlist = commentNewlist;
-        },
-        function(res) {
-            console.error("error: ", res);
-        });
-    }
-    findComment();
+	findComment();
 
 	/**
 	 * @function insertComment 댓글,답글을 입력하는 함수
@@ -179,17 +179,22 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, $routePara
         comment.updatedText = comment.text;
     };
 
-    /**
-     * Method: 해당 게시글에 댓글을 삭제하는 함수
-     * author: 박상현
-     * since: 2023.10.13
-     */
-    $scope.deleteComment = function(commentIndex) {
-        let confirmDelete = confirm("댓글을 삭제하시겠습니까?");
-        if (confirmDelete) {
-            CommentFactory.deleteComment({ index: commentIndex, boardIndex: index }, function() {
-                findComment();
-            });
-        }
-    };
+	$scope.cancelUpdate = function(comment) {
+		comment.update = false;
+	};
+
+	/**
+	 * @function deleteComment 해당 게시글에 댓글을 삭제하는 함수
+	 * 
+	 * @author 박상현
+	 * @since 2023. 10. 13.
+	 */
+	$scope.deleteComment = function(commentIndex) {
+		let confirmDelete = confirm("댓글을 삭제하시겠습니까?");
+		if (confirmDelete) {
+			CommentFactory.deleteComment({ index: commentIndex, boardIndex: index }, function() {
+				findComment();
+			})
+		}
+	};
 });

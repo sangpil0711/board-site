@@ -21,9 +21,10 @@ public class BoardManagementWebApplication {
 	}
 	
 	@Bean
-    public MultipartResolver multipartResolver() {
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        return multipartResolver;
-    }
+	public MultipartResolver mulitpartResolver() {
+	    CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+	    commonsMultipartResolver.setMaxUploadSize(100 * 1024 * 1024);
+	    return commonsMultipartResolver;
+	}
 
 }

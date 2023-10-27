@@ -1,49 +1,109 @@
-app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routeParams) {
+app.controller("BoardUpdate", function($scope, BoardFactory, FileFactory, $location, $routeParams, $route) {
 
-   let index = $routeParams.index;
+	let index = $routeParams.index; 	// 라우팅으로 받아오는 게시글 번호
+	let totalSize = 0;		// 업로드되는 파일의 총 크기
 
-   $scope.board = {
-      title: null,
-      text: null
-   };
+	$scope.board = { 	// 수정될 제목과 내용
+		title: null,
+		text: null
+	};
 
-   /**
-    * @function getDataByIndex 게시판 번호에 맞는 데이터를 불러오는 함수
-    * 
-    * @param index 해당 게시판 번호
-    * 
-    * @author 황상필
-    * @since 2023. 09. 18.
-    */
-   let getDataByIndex = function() {
-      BoardFactory.readBoard({ index: index }, function(response) {
-         $scope.board = response;
-      })
-   }
+	$scope.fileNames = [];		// 업로드되는 파일 이름
+	$scope.selectedFiles = [];		// 업로드되는 파일 데이터
+	
+	/**
+	 * @function selectFile 파일탐색기가 실행되어서 파일을 선택할 수 있는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 23.
+	 */
+	$scope.selectFile = function() {
+		document.getElementById("fileInput").click();
+	};
 
-   getDataByIndex();
+	/**
+	 * @function reset 해당 게시물에 업로드된 파일들을 초기화 시키는 함수
+	 * 
+	 * @param index 해당 게시글 번호
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 23.
+	 */
+	$scope.reset = function(index) {
+		FileFactory.resetFile({ index: index }, function() {
+			$route.reload();
+		})
+	};
 
-   /**
-    * @function update 게시판 번호에 맞는 데이터를 수정하는 함수
-    * 
-    * @param index 해당 게시판 번호
-    * 
-    * @author 황상필
-    * @since 2023. 09. 18.
-    */
-   $scope.update = function(index) {
-      BoardFactory.updateBoard({ index: index }, $scope.board, function() {
-         $location.path('/board/read/' + index);
-      })
-   }
+	/**
+	 * @function onFileSelect 선택된 파일을 변수에 할당하고 크기를 제한하는 함수
+	 * 
+	 * @param $files 선택된 파일
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 23.
+	 */
+	$scope.onFileSelect = function($files) {
 
-   /**
-    * @function redirectToRead general_read.html로 이동하는 함수
-    * 
-    * @author 황상필
-    * @since 2023. 09. 18.
-    */
-   $scope.redirectToRead = function(index) {
-      $location.path('/board/read/' + index);
-   }
-})
+		let exceedSizeFile = null;
+
+		for (var i = 0; i < $files.length; i++) {
+			if ($scope.selectedFiles.some(selectedFile => selectedFile.name === $files[i].name)) {
+				alert("파일 '" + $files[i].name + "'이(가) 이미 선택되었습니다.");
+			} else if (totalSize + $files[i].size > 100 * 1024 * 1024) {
+				exceedSizeFile = $files[i];
+				break;
+			} else {
+				$scope.selectedFiles.push($files[i]);
+				$scope.fileNames.push($files[i].name);
+				totalSize += $files[i].size;
+			}
+		}
+
+		if (exceedSizeFile) {
+			alert("선택한 파일의 용량이 100MB를 초과합니다.");
+		}
+
+	};
+
+	/**
+	 * @function getDataByIndex 게시판 번호에 맞는 데이터를 불러오는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 09. 18.
+	 */
+	let getDataByIndex = function() {
+		BoardFactory.readBoard({ index: index }, function(response) {
+			$scope.board = response;
+		})
+	};
+
+	getDataByIndex();
+
+	/**
+	 * @function update 게시판 번호에 맞는 데이터를 수정하는 함수
+	 * 
+	 * @param index 해당 게시판 번호
+	 * 
+	 * @author 황상필
+	 * @since 2023. 09. 18.
+	 */
+	$scope.update = function(index) {
+		BoardFactory.updateBoard({ index: index }, $scope.board, function() {
+			$location.path('/board/read/' + index);
+		})
+	};
+
+	/**
+	 * @function redirectToRead general_read.html로 이동하는 함수
+	 * 
+	 * @param index 해당 게시글 번호
+	 * 
+	 * @author 황상필
+	 * @since 2023. 09. 18.
+	 */
+	$scope.redirectToRead = function(index) {
+		$location.path('/board/read/' + index);
+	};
+
+});

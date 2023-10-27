@@ -10,7 +10,8 @@
         <select class="type_select" ng-model="searchType" ng-change="changeSearchType(searchType)"
             ng-options="type.value as type.name for type in types"></select>
         <input type="text" class="search" ng-model="keyword" ng-keydown="$event.keyCode === 13 && search()" placeholder="검색어 입력">
-        <button type="button" class="search_btn" ng-click="search()">검색</button>
+        <button class="search_btn" ng-click="search()">검색</button>
+        <button class=search_reset ng-click="searchReset()">검색 초기화</button>
     </div>
 
     <div>

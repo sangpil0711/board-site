@@ -1,18 +1,16 @@
 package kr.co.ymtech.bm.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
@@ -20,7 +18,6 @@ import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.service.BoardService;
 import kr.co.ymtech.bm.service.FileService;
 import kr.co.ymtech.bm.service.IBoardService;
-import kr.co.ymtech.bm.service.IFileService;
 
 @Controller
 public class HomeController {
@@ -33,11 +30,9 @@ public class HomeController {
 	 */
 	@Autowired
 	private final IBoardService boardService;
-	private final IFileService fileService;
 
 	public HomeController(BoardService boardService, FileService fileService) {
 		this.boardService = boardService;
-		this.fileService = fileService;
 	}
 
 	/**
@@ -154,16 +149,14 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@PostMapping(value = "board/write")
-	public ModelAndView writeBoard(BoardDTO board, List<MultipartFile> files, List<String> fileNames) {
+	@PostMapping(value = "/board/write")
+	public ModelAndView writeBoard(@ModelAttribute BoardDTO board) {
 
 		ModelAndView model = new ModelAndView();
 
 		model.setViewName("redirect:/board");
 
 		boardService.saveBoard(board);
-		
-		fileService.uploadFile(files, fileNames);
 
 		return model;
 	}
