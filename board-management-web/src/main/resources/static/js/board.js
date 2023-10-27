@@ -18,8 +18,8 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $location, $route) {
 	];
 
 
-//		$scope.boardlist = [];
-//		$scope.totalItems = [];
+		$scope.boardlist = [];
+		$scope.totalItems = [];
 		const CATEGORY = 0;
 	/**
 	 * @function findPage 요청에 따른 게시판 목록과 게시판 총 게시글 수를 반환하는 함수

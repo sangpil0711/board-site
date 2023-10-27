@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import kr.co.ymtech.bm.repository.vo.BoardVO;
 import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 
 /**

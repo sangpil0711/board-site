@@ -3,14 +3,13 @@ package kr.co.ymtech.bm.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.repository.IPhotoBoardRepository;
-import kr.co.ymtech.bm.repository.vo.BoardVO;
 import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 
 @Service

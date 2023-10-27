@@ -89,6 +89,7 @@ public class BoardService implements IBoardService {
 	    BoardVO vo = new BoardVO(); 
 	    vo.setTitle(board.getTitle());
 	    vo.setText(board.getText());
+	    vo.setCategory(board.getCategory());
 
 	    if (board.getCreateDate() == null) {
 	        vo.setCreateDate(new Date().getTime());
