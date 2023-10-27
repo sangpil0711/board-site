@@ -10,6 +10,17 @@ public class FileVO {
 	private String filePath;
 	private String fileName;
 	
+	public FileVO() {                       
+		super();
+	}
+	
+	public FileVO(String fileId, Integer boardIndex, String filePath, String fileName) {
+		this.fileId = fileId;
+		this.boardIndex = boardIndex;
+		this.filePath = filePath;
+		this.fileName = fileName;
+	}
+	
 	/**
 	 * @Method getFileId fileId를 반환하는 메소드
 	 *

@@ -43,6 +43,12 @@ app.config(function($routeProvider) {
 		});
 });
 
+/**
+ * @Method : 게시글을 저장, 조회, 수정, 삭제하는 함수
+ * 
+ * @author 황상필
+ * @since 2023. 09. 11.
+ */
 app.factory('BoardFactory', function($resource) {
 	return $resource('/boards/:index', null, {
 
@@ -59,7 +65,7 @@ app.factory('BoardFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-			
+
 		updateBoard: {
 			method: 'PATCH',
 			headers: {
@@ -75,36 +81,33 @@ app.factory('BoardFactory', function($resource) {
 		},
 
 	})
-})
+});
 
+/**
+ * @Method : 해당 게시글에 저장된 파일을 초기화 시키는 함수
+ * 
+ * @author 황상필
+ * @since 2023. 10. 25.
+ */
 app.factory('FileFactory', function($resource) {
-	return $resource('/files/:fileName', null, {
-
-		downloadFile: {
-			method: 'GET'
+	return $resource('/files/:index', null, {
+		
+		resetFile: {
+			method: 'DELETE'
 		},
-
-		uploadFile: {
-			method: 'POST',
-			transformRequest: angular.identity,
-			headers: {
-                "Content-Type": undefined
-            },
-		},
-
+		
 	})
-})
+});
 
-
-	/**
-	 * Method : 해당 게시글에 댓글을 추가,수정,삭제,조회 하는 함수
-	 * 
-	 * @author 박상현
-	 * @since 2023.10.11
-	 */
+/**
+ * @Method : 해당 게시글에 댓글을 추가,수정,삭제,조회 하는 함수
+ * 
+ * @author 박상현
+ * @since 2023. 10. 11.
+ */
 app.factory('CommentFactory', function($resource) {
 	return $resource('/boards/:boardIndex/comments/:index', null, {
- 
+
 		getComment: {
 			method: 'GET',
 			isArray: true,
@@ -126,7 +129,7 @@ app.factory('CommentFactory', function($resource) {
 				"Content-Type": 'application/json',
 			},
 		},
-		
+
 		deleteComment: {
 			method: 'DELETE',
 			headers: {

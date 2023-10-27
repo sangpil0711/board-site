@@ -2,26 +2,53 @@
 
 	<div class="general_write">일반게시판 글쓰기</div>
 
+
+	<!-- 시작: 제목 수정 박스 -->
 	<div class="title_write">
 		<p>제목</p>
 		<input id="title" type="text" name="title" ng-model="board.title" required>
 	</div>
+	<!-- 끝: 제목 수정 박스 -->
 	
+	
+	<!-- 시작: 내용 수정 박스 -->
 	<div class="content_write">
 		<textarea name="text" ng-model="board.text" required></textarea>
 	</div>
+	<!-- 끝: 내용 수정 박스 -->
 	
+	
+	<!-- 시작: 파일선택 초기화 버튼 -->
 	<div>
-		<button type="button" class="file_btn">파일선택<br>(최대 100MB)</button>
+		<button class="reset_btn" ng-click="reset(board.index)">파일선택<br>초기화</button>
 	</div>
+	<!-- 끝: 파일선택 초기화 버튼 -->
+	
+	
+	<!-- 시작: 파일선택 버튼 -->
+	<div>
+		<input type="file" id="fileInput" name="files" style="display: none;" file-model="files" ngf-select="onFileSelect($files)"
+			accept=".hwp, .hwpx, .pdf, .txt, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .zip" multiple>
+		<button class="file_btn" ng-click="selectFile()">파일선택<br>(최대 100MB)</button>
+	</div>
+	<!-- 끝: 파일선택 버튼 -->
 
+
+	<!-- 시작: 파일이름 표시 박스 -->
 	<div class="file_name">
-		<p>IPP 인턴 프로젝트 설계서.pptx<br>
-			IPP 프로젝트 일정.txt</p>
+		<div ng-if="board.file.length > 0" ng-repeat="item in board.file">{{item.fileName}}</div>
+		<div ng-if="board.file.length > 0" ng-repeat="fileName in fileNames">{{fileName}}</div>
+		<div ng-if="board.file.length === 0" ng-repeat="fileName in fileNames">{{fileName}}</div>
 	</div>
+	<!-- 끝: 파일이름 표시 박스 -->
 
+
+	<!-- 시작: 게시글 수정 및 취소 버튼 -->
 	<div class="write_decision">
 		<input type="button" ng-click="update(board.index)" value="수정">
 		<button type="button" ng-click="redirectToRead(board.index)">취소</button>
 	</div>
+	<!-- 끝: 게시글 수정 및 취소 버튼 -->
+	
+	
 </div>

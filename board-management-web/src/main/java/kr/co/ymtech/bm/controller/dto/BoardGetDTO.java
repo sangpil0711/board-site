@@ -1,6 +1,9 @@
 package kr.co.ymtech.bm.controller.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import kr.co.ymtech.bm.repository.vo.FileVO;
 
 /**
  * 게시물 정보를 저장하는 클래스
@@ -23,6 +26,32 @@ public class BoardGetDTO {
 	private Integer category;
 	/** createDate : 게시글 작성일 */
 	private Date createDate;
+	/** file : 등록된 게시글 첨부파일 */
+	private List<FileVO> file;
+//	/** files : 등록할 게시글 첨부파일 */
+//	private List<MultipartFile> files;
+//	
+//	/**
+//	 * @return the files
+//	 */
+//	public List<MultipartFile> getFiles() {
+//		return files;
+//	}
+//
+//	/**
+//	 * @param files the files to set
+//	 */
+//	public void setFiles(List<MultipartFile> files) {
+//		this.files = files;
+//	}
+	
+	public List<FileVO> getFile() {
+		return file;
+	}
+	
+	public void setFile(List<FileVO> file) {
+		this.file = file;
+	}
 
 	/**
 	 * Method : 게시물 index 반환하는 메소드
@@ -191,7 +220,7 @@ public class BoardGetDTO {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("BoardDTO [index=");
+		builder.append("BoardGetDTO [index=");
 		builder.append(index);
 		builder.append(", title=");
 		builder.append(title);
@@ -203,8 +232,12 @@ public class BoardGetDTO {
 		builder.append(category);
 		builder.append(", createDate=");
 		builder.append(createDate);
+		builder.append(", file=");
+		builder.append(file);
+//		builder.append(", files=");
+//		builder.append(files);
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 }

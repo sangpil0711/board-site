@@ -6,22 +6,25 @@
 	<title>웹프로젝트</title>
 	<link rel="stylesheet" type="text/css" th:href="@{static/css/bootstrap.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{static/css/main.css}" />
-	<script type="text/javascript" th:src="@{static/js/angular.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angular-resource.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angular-route.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/ui-bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{static/js/angularjs/angular.min.js}"></script>
+	<script type="text/javascript" th:src="@{static/js/angularjs/angular-resource.min.js}"></script>
+	<script type="text/javascript" th:src="@{static/js/angularjs/angular-route.min.js}"></script>
+	<script type="text/javascript" th:src="@{static/js/angularjs/ui-bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{static/js/angularjs/ng-file-upload.min.js}"></script>
+	<script type="text/javascript" th:src="@{static/js/angularjs/ng-file-upload-shim.min.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/factory.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/main.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/board.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/read.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/update.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/write.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/ng-file-upload.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/ng-file-upload-shim.min.js}"></script>
 </head>
 
 <body ng-app="myApp">
 	<div id="container" ng-controller="BoardMain">
+		
+		
+		<!-- 시작: 상단 메뉴 -->
 		<div class="head">
 			<button type="button" class="ipp_btn" ng-click="redirectToMain()">IPP <span class="span">게시판</span></button>
 			<ul class="menu">
@@ -32,8 +35,14 @@
 				<li><button type="button" class="btn" onclick="location.href='file.html' ">파일탐색기</button></li>
 			</ul>
 		</div>
-
+		<!-- 끝: 상단 메뉴 -->
+	
+	
+		<!-- 시작: 라우팅 화면 -->
 		<div ng-view></div>
+		<!-- 끝: 라우팅 화면 -->
+		
+		
 	</div>
 </body>
 

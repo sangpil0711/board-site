@@ -1,7 +1,6 @@
 package kr.co.ymtech.bm.config;
 
 import java.sql.Connection;
-import java.sql.Statement;
 
 import javax.sql.DataSource;
 
