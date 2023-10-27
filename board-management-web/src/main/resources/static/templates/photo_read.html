@@ -1,33 +1,42 @@
-<div id="container" ng-controller="BoardRead">
-    <strong>일반게시판</strong>
+<div id="container" ng-controller="PhotoRead">
+    <strong>사진게시판</strong>
+    
+    <!-- 시작: 수정 삭제 목록 박스 -->
     <div class="read_btn">
-        <button type="button" ng-click="redirectToUpdate(board.index)">수정</button>
-        <button type="button" ng-click="remove(board.index)">삭제</button>
-        <button type="button" ng-click="redirectToBoard()">목록</button>
+        <button type="button" ng-click="redirectToPhotoUpdate(photoBoard.index)">수정</button>
+        <button type="button" ng-click="removePhoto(photoBoard.index)">삭제</button>
+        <button type="button" ng-click="redirectToPhotoBoard()">목록</button>
     </div>
+    <!-- 끝: 수정 삭제 목록 버튼박스 -->
+    
+    <!-- 시작: 게시물 상세조회 화면 박스 -->
     <div class="board_wrap">
         <div class="board_view">
-            <div class="title">{{board.title}}</div>
+            <div class="title">{{photoBoard.title}}</div>
             <div class="info">
                 <dl>
-                    <dt>작성자</dt>
-                    <dd>{{board.userId}}</dd>
+                    <dt>작성자: {{photoBoard.userId}}</dt>
+                    <dd></dd>
                 </dl>
                 <dl>
-                    <dt>작성일</dt>
-                    <dd>{{board.createDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;{{board.createDate | date:'HH:mm:ss'}}</dd>
+                    <dt>작성일: {{photoBoard.createDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;{{photoBoard.createDate | date:'HH:mm:ss'}}</dt>
+                    <dd></dd>
                 </dl>
             </div>
-            <pre class="content">{{board.text}}</pre>
+            <pre class="content"></pre>
         </div>
-    </div> 
-
-    <div class="comment_write">
-    <h4> 댓글 ({{commentlist.length}}) </h4>
-    <div class="comment_container">
-        <div class="textarea_container">
-            <textarea class="comment_write_box" placeholder="댓글 내용을 입력해주세요." ng-model="newComment"></textarea>
-        </div>
-        <input type="button" class="comment_write_btn" value="등록" ng-click="insertComment(null)" />
     </div>
+	<!-- 끝: 게시물 상세조회 화면 박스 -->
+	
+	<!-- 시작: 댓글 박스 -->
+    <div class="comment_write">
+        <h4>댓글</h4>
+        <div class="comment_container">
+            <div class="textarea_container">
+                <textarea class="comment_write_box" placeholder="댓글 내용을 입력해주세요." ng-model="newComment"></textarea>
+            </div>
+            <input type="button" class="comment_write_btn" value="등록" ng-click="insertComment(null)" />
+        </div>
+    </div>
+    <!-- 끝: 댓글 박스 -->
 </div>

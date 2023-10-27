@@ -23,7 +23,7 @@ public interface IBoardService {
 	 * @author 황상필
 	 * @since 2023. 10. 05.
 	 */
-	public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword);
+	public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category);
 
 	/**
 	 * @Method saveBoard 게시물 정보를 저장하는 메소드

@@ -24,7 +24,7 @@ public interface IBoardRepository {
 	 * @author 황상필
 	 * @since 2023. 10. 05.
 	 */
-	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword);
+	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category);
 	
 	/**
 	 * @Method findAll 화면에 표시되는 게시글 수 조회
@@ -35,7 +35,7 @@ public interface IBoardRepository {
 	 * @author 황상필
 	 * @since 2023. 10. 05.
 	 */
-	public Integer findCount(String searchType, String keyword);
+	public Integer findCount(String searchType, String keyword, Integer category);
 
 	/**
 	 * @Method saveBoard 게시물 정보를 저장

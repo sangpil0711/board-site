@@ -1,0 +1,28 @@
+<div id="container" ng-controller="PhotoUpdate">
+	<!-- 시작: 게시물 수정 화면 박스 -->
+    <div class="general_write">사진게시판 글쓰기</div>
+
+    <div class="title_write">
+        <p>제목</p>
+        <input id="title" type="text" name="title" ng-model="photoBoard.title" required>
+    </div>
+
+    <div class="content_write">
+        <textarea name="text" ng-model="photoBoard.text" required></textarea>
+    </div>
+
+    <div>
+        <button type="button" class="file_btn">파일선택<br>(최대 100MB)</button>
+    </div>
+
+    <div class="file_name">
+        <p>IPP 인턴 프로젝트 설계서.pptx
+		<br>IPP 프로젝트 일정.txt</p>
+    </div>
+
+    <div class="write_decision">
+        <input type="button" ng-click="updatePhoto(photoBoard.index)" value="수정">
+        <button type="button" ng-click="redirectToPhotoRead(photoBoard.index)">취소</button>
+    </div>
+    <!-- 끝: 게시물 수정 화면 박스 -->
+</div>

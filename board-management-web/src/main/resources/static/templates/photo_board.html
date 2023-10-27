@@ -1,8 +1,11 @@
-<div id="container" ng-controller="BoardCtrl">
+<div id="container" ng-controller="PhotoCtrl">
+    <!-- 시작: 글쓰기 박스 -->
     <div>
-        <button type="button" class="write_btn" ng-click="redirectToWrite()">글쓰기</button>
+        <button type="button" class="write_btn" ng-click="redirectToPhotoWrite()">글쓰기</button>
     </div>
+    <!-- 끝: 글쓰기 박스 -->
 
+	<!-- 시작: 페이지네이션 박스 -->
     <div>
         <select class="type_select" ng-model="searchType" ng-change="changeSearchType(searchType)"
             ng-options="type.value as type.name for type in types"></select>
@@ -16,80 +19,31 @@
         <select class="board_select" ng-model="itemsPerPage" ng-change="setItemsPerPage()"
             ng-options="option.value as option.name for option in options"></select>
     </div>
+	<!-- 끝: 페이지네이션 박스 -->
 
-   <div class ="photo_box">
-		<ul class ="photo">
-			 <li>
-                <img src="/static/image/No_img.png" class="img" ng-click ="">
+	<!-- 시작: 사진 게시물 박스 -->
+    <div class="photo_box">
+        <ul class="photo" ng-repeat="item in photoBoardlist">
+            <li>
+                <button class="img-button" ng-click="redirectToPhotoRead(item.index)">
+                    <img ng-src="{{item.src}}">
+                </button>
             </li>
             <li>
-                <p>제목: ㅇㅇㅇ</p>
-                <p>작성자: ㅇㅇㅇ</p>
-                <p>작성일: 0000.0000.0000</p>
+                <p>제목: {{item.title}}</p>
+                <p>작성자: {{item.userId}}</p>
+                <p>작성일: {{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}</p>
             </li>
         </ul>
-        
-        <ul class ="photo">
-			 <li>
-                <img src="/static/image/No_img.png" class="img">
-            </li>
-            <li>
-                <p>제목: ㅇㅇㅇ</p>
-                <p>작성자: ㅇㅇㅇ</p>
-                <p>작성일: 0000.0000.0000</p>
-            </li>
-        </ul>
-        
-        <ul class ="photo">
-			 <li>
-                <img src="/static/image/No_img.png" class="img">
-            </li>
-            <li>
-                <p>제목: ㅇㅇㅇ</p>
-                <p>작성자: ㅇㅇㅇ</p>
-                <p>작성일: 0000.0000.0000</p>
-            </li>
-        </ul>
-          <ul class ="photo">
-			 <li>
-                <img src="/static/image/No_img.png" class="img">
-            </li>
-            <li>
-                <p>제목: ㅇㅇㅇ</p>
-                <p>작성자: ㅇㅇㅇ</p>
-                <p>작성일: 0000.0000.0000</p>
-            </li>
-        </ul>
-          <ul class ="photo">
-			 <li>
-                <img src="/static/image/No_img.png" class="img">
-            </li>
-            <li>
-                <p>제목: ㅇㅇㅇ</p>
-                <p>작성자: ㅇㅇㅇ</p>
-                <p>작성일: 0000.0000.0000</p>
-            </li>
-        </ul>
-        
-         <ul class ="photo">
-			 <li>
-                <img src="/static/image/No_img.png" class="img">
-            </li>
-            <li>
-                <p>제목: ㅇㅇㅇ</p>
-                <p>작성자: ㅇㅇㅇ</p>
-                <p>작성일: 0000.0000.0000</p>
-            </li>
-        </ul>
-        
-       
-         
-   </div>
-
+    </div>
+	<!-- 끝: 사진 게시물 박스 -->
+	
+	<!-- 시작: 페이지네이션 박스 -->
     <div>
         <ul uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" max-size="maxSize"
             ng-change="changePage()" items-per-page="itemsPerPage" class="pagination-lg" previous-text="&lsaquo;"
             next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
         </ul>
     </div>
+	<!-- 끝: 페이지네이션 박스 -->
 </div>

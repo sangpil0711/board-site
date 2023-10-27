@@ -36,8 +36,6 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	/**
 	 * @function redirectToUpdate general_update.html로 이동하는 함수
 	 * 
-	 * @param index 해당 게시판 번호
-	 * 
 	 * @author 황상필
 	 * @since 2023. 09. 15.
 	 */
@@ -51,25 +49,22 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	 * @author 황상필
 	 * @since 2023. 09. 15.
 	 */
-	$scope.redirectToBoard = function() {
-		$location.path('/board');
-	};
-
+    $scope.redirectToBoard = function() {
+        $location.path('/board');
+    }
 
 	/**
-	 * @function findComment 해당 게시글과 관련된 댓글 목록을 가져오는 함수
+	 * @function findComment 댓글과 답글을 조회하는 함수
 	 * 
 	 * @author 박상현
-	 * @since 2023. 10. 11.
+	 * @since 2023. 10. 19.
 	 */
-	let findComment = function() {
-		CommentFactory.getComment({
-			boardIndex: index
-		},
-			function(response) {
-				$scope.commentlist = response;
-
-				let commentNewlist = [];
+    let findComment = function() {
+        CommentFactory.getComment({
+            boardIndex: index
+        },
+        function(response) {
+            $scope.commentlist = response;
 
 				$scope.commentlist.forEach(function(comment) {
 					commentNewlist.push(comment);
@@ -91,51 +86,98 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	findComment();
 
 	/**
-	 * @function insertComment 해당 게시글에 댓글,답글을 등록하는 함수
+	 * @function insertComment 댓글,답글을 입력하는 함수
+	 * 
+	 * @param parentIndex 부모댓글
+	 * @param newChildComment 답글
 	 * 
 	 * @author 박상현
-	 * @since 2023. 10. 12.
-	 */
-	$scope.insertComment = function(parentIndex, newChildComment) {
-		let newComment = {
-			index: null,
-			boardIndex: index,
-			text: parentIndex === null ? $scope.newComment : newChildComment,
-			parentIndex: parentIndex,
-			userId: null,
-			createDate: null
-		};
+	 * @since 2023. 10. 19.
+	 */	
+    $scope.insertComment = function(parentIndex, newChildComment) {
+        let newComment = {
+            index: null,
+            boardIndex: index,
+            text: parentIndex === null ? $scope.newComment : newChildComment,
+            parentIndex: parentIndex,
+            userId: null,
+            createDate: null
+        }
 
-		$scope.newComment;
-		CommentFactory.insertComment({ boardIndex: index }, newComment, function() {
-			findComment();
-			$scope.newComment = "";
-		})
-	};
+        $scope.newComment;
+        CommentFactory.insertComment({ boardIndex: index }, newComment, function() {
+            findComment();
+            $scope.newComment = "";
+            
 
-	$scope.insertChildComment = function(comment) {
-		comment.childCommentBox = true;
-	};
-
-	$scope.cancelChildComment = function(comment) {
-		comment.childCommentBox = false;
-	};
+        });
+    };
 
 	/**
-	 * @function updateComment 해당 게시글에 댓글을 수정 하는 함수
+	 * @function insertChildComment 답글 달기 버튼을 누르면 답글 입력 텍스트가 뜨게하는 함수
+	 * 
+	 * @param comment 해당 댓글
 	 * 
 	 * @author 박상현
-	 * @since 2023.10.18
+	 * @since 2023. 10. 19.
 	 */
-	$scope.updateComment = function(comment) {
-		comment.update = true;
-		comment.updatedText = comment.text;
-	};
+    $scope.insertChildComment = function(comment) {
+        comment.childCommentBox = true;
+    };
 
-	$scope.saveComment = function(comment) {
-		comment.text = comment.updatedText;
-		comment.update = false;
-	};
+	/**
+	 * @function cancelChildComment 취소 버튼을 눌렀을 시 답글 입력 텍스트를 사라지게 하는 함수
+	 * 
+	 * @param comment 해당 댓글
+	 * 
+	 * @author 박상현
+	 * @since 2023. 10. 19.
+	 */
+    $scope.cancelChildComment = function(comment) {
+        comment.childCommentBox = false;
+    }
+
+	/**
+	 * @function updateComment 댓글을 수정하는 함수
+	 * 
+	 * @param comment 해당 댓글
+	 * 
+	 * @author 박상현
+	 * @since 2023. 10. 19.
+	 */
+    $scope.updateComment = function (comment) {
+        comment.update = true;
+        comment.updatedText = comment.text; 
+    };
+
+	/**
+	 * @function saveComment 댓글 내용을 수정하면 저장기능을 하는 함수
+	 * 
+	 * @param comment 해당 댓글
+	 * 
+	 * @author 박상현
+	 * @since 2023. 10. 19.
+	 */
+    $scope.saveComment = function (comment) {
+        comment.text = comment.updatedText; 
+        comment.update = false;
+        CommentFactory.updateComment({ index: index ,boardIndex: index }, comment, function() {
+           
+        });
+     };
+     
+     /**
+	 * @function cancelUpdate 댓글내용을 수정하는 도중 취소기능을 가지는 함수
+	 * 
+	 * @param comment 해당 댓글
+	 * 
+	 * @author 박상현
+	 * @since 2023. 10. 19.
+	 */
+    $scope.cancelUpdate = function (comment) {
+        comment.update = false; 
+        comment.updatedText = comment.text;
+    };
 
 	$scope.cancelUpdate = function(comment) {
 		comment.update = false;

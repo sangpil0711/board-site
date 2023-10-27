@@ -17,6 +17,10 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $location, $route) {
 		{ name: '작성자', value: 'user_id' }
 	];
 
+
+//		$scope.boardlist = [];
+//		$scope.totalItems = [];
+		const CATEGORY = 0;
 	/**
 	 * @function findPage 요청에 따른 게시판 목록과 게시판 총 게시글 수를 반환하는 함수
 	 * 
@@ -25,6 +29,7 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $location, $route) {
 	 */
 	let findBoardList = function() {
 		BoardFactory.readBoard({
+			category : CATEGORY,
 			pageNumber: $scope.currentPage,
 			itemSize: $scope.itemsPerPage,
 			searchType: $scope.searchType,

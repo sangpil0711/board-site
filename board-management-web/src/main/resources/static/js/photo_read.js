@@ -1,3 +1,54 @@
-/**
- * 
- */
+app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoardFactory) {
+	
+    let index = $routeParams.index;
+
+	/**
+	 * @function searchByPhotoIndex 게시판 번호에 맞는 데이터를 불러오는 함수
+	 * 
+	 * @author 박상현
+	 * @since 2023. 10. 26.
+	 */
+    let searchByPhotoIndex = function() {
+        PhotoBoardFactory.readPhotoBoard({ index: index }, function(response) {
+            $scope.photoBoard = response;
+        });
+    }
+    searchByPhotoIndex();
+
+	/**
+	 * @function redirectToPhotoUpdate photo_update.html로 이동하는 함수
+	 * 
+	 * @author 박상현
+	 * @since 2023. 10. 26.
+	 */
+    $scope.redirectToPhotoUpdate = function(index) {
+        $location.path('/photo/update/' + index);
+    }
+
+	/**
+	 * @function redirectToPhotoBoard photo_board.html로 이동하는 함수
+	 * 
+	 * @author 박상현
+	 * @since 2023. 10. 26.
+	 */
+    $scope.redirectToPhotoBoard = function() {
+        $location.path('/photo');
+    }
+
+	/**
+	 * @function remove 게시판 번호에 맞는 데이터를 삭제하는 함수
+	 * 
+	 * @param index 해당 게시판 번호
+	 * 
+	 * @author 박상현
+	 * @since 2023. 10. 26.
+	 */
+    $scope.removePhoto = function(index) {
+        let confirmDelete = confirm("게시물을 삭제하시겠습니까?");
+        if (confirmDelete) {
+            PhotoBoardFactory.deletePhotoBoard({ index: index }, function() {
+                $location.path('/photo');
+            });
+        }
+    }
+});

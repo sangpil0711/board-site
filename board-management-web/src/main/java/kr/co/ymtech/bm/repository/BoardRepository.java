@@ -46,37 +46,34 @@ public class BoardRepository implements IBoardRepository {
 	 * @since 2023. 10. 05.
 	 */
 	@Override
-	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword) {
+	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category) {
+	    Integer offset = (pageNumber - 1) * itemSize;
+	    String sql = "SELECT * FROM board WHERE category = ?"; // 기본 쿼리
 
-		Integer offset = (pageNumber - 1) * itemSize;
+	    // 검색 조건을 추가
+	    if ("title".equals(searchType)) {
+	        sql += " AND title LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+	    } else if ("content".equals(searchType)) {
+	        sql += " AND content LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+	    } else if ("user_id".equals(searchType)) {
+	        sql += " AND user_id LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+	    }
 
-		String sql = "SELECT * FROM board ";
+	    RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
+	        @Override
+	        public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+	            BoardVO member = new BoardVO(
+	                    rs.getInt("index"),
+	                    rs.getString("title"),
+	                    rs.getString("content"),
+	                    rs.getString("user_id"),
+	                    rs.getInt("category"),
+	                    rs.getLong("create_date"));
+	            return member;
+	        }
+	    };
 
-		if ("title".equals(searchType)) {
-		    sql += "WHERE title LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
-		} else if ("content".equals(searchType)) {
-		    sql += "WHERE content LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
-		} else if ("user_id".equals(searchType)) {
-		    sql += "WHERE user_id LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
-		}
-
-		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
-
-			@Override
-			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException { // ResultSet에 결과값을 담아 BoardVO에 담음
-				BoardVO member = new BoardVO(
-						rs.getInt("index"), 
-						rs.getString("title"), 
-						rs.getString("content"),
-						rs.getString("user_id"), 
-						rs.getInt("category"), 
-						rs.getLong("create_date"));
-
-				return member;
-			}
-		};
-		
-		return jdbcTemplate.query(sql, mapper, "%" + keyword + "%", offset, itemSize);
+	    return jdbcTemplate.query(sql, mapper, category, "%" + keyword + "%", offset, itemSize);
 	}
 
 	/**
@@ -93,7 +90,7 @@ public class BoardRepository implements IBoardRepository {
 	 * @since 2023. 10. 05.
 	 */
 	@Override
-	public Integer findCount(String searchType, String keyword) {
+	public Integer findCount(String searchType, String keyword, Integer category) {
 		
 	    String sql = "SELECT COUNT(*) FROM board";
 	    

@@ -11,7 +11,7 @@ app.controller("BoardMain", function($scope, $location, $route) {
 	};
 	
 	/**
-	 * @function redirectToBoard general_board.html로 이동 후 새로고침하는 함수
+	 * @function redirectToGeneralBoard general_board.html로 이동 후 새로고침하는 함수
 	 * 
 	 * @author 황상필
 	 * @since 2023. 09. 01.
