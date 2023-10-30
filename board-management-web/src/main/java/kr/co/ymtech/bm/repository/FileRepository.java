@@ -29,7 +29,7 @@ public class FileRepository implements IFileRepository {
 	 * @since 2023. 10. 25.
 	 */
 	@Override
-	public Integer resetFiles(Integer index) {
+	public Integer deleteFiles(Integer index) {
 		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ?", index);
 	}
 

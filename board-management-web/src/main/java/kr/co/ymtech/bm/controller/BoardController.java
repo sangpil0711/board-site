@@ -77,11 +77,8 @@ public class BoardController {
 	 * @since 2023. 10. 26.
 	 */
 	@PostMapping(path = "/boards")
-	public ResponseEntity<Integer> saveBoard(@RequestBody BoardDTO board) {
-
-		Integer boardlistSave = boardService.saveBoard(board);
-
-		return new ResponseEntity<Integer>(boardlistSave, HttpStatus.OK);
+	public void saveBoard(BoardDTO board) {
+		boardService.saveBoard(board);
 	}
 
 	/**

@@ -1,4 +1,4 @@
-app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFactory, $routeParams) {
+app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFactory, FileFactory, $routeParams) {
 
 	let index = $routeParams.index; 	// 라우팅으로 받아오는 게시글 번호
 
@@ -65,7 +65,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
         },
         function(response) {
             $scope.commentlist = response;
-
+				let commentNewlist = [];
 				$scope.commentlist.forEach(function(comment) {
 					commentNewlist.push(comment);
 					comment.childCommentBox = false;
@@ -109,7 +109,6 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
             findComment();
             $scope.newComment = "";
             
-
         });
     };
 
@@ -197,4 +196,5 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 			})
 		}
 	};
+	
 });

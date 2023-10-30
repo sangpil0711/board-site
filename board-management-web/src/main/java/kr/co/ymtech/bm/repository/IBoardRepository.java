@@ -45,7 +45,7 @@ public interface IBoardRepository {
 	 * @author 박상현
 	 * @since 2023. 09. 18.
 	 */
-	public Integer saveBoard(BoardVO board);
+	public void saveBoard(BoardVO board, List<FileVO> file);
 
 	/**
 	 * @Method updateBoard 게시물 내용(text)을 수정
@@ -96,7 +96,7 @@ public interface IBoardRepository {
 	 * @author 황상필
 	 * @since 2023. 10. 11.
 	 */
-	public Integer saveFile(FileVO file);
+//	public Integer saveFile(FileVO file);
 	
 	/**
 	 * @Method lastBoard 마지막에 저장된 게시물의 번호를 조회하는 메소드
@@ -104,6 +104,6 @@ public interface IBoardRepository {
 	 * @author 황상필
 	 * @since 2023. 10. 12.
 	 */
-	public List<BoardVO> lastBoard();
+	public BoardVO lastBoard();
 
 }

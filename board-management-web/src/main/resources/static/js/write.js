@@ -5,7 +5,7 @@
  * 작성일 : 2023.09.15
  * 작성자 : 황상필
  */
-app.controller("BoardWrite", function($scope, $location, BoardFactory) {
+app.controller("BoardWrite", function($scope, $location, BoardFactory, Upload) {
 
 	let totalSize = 0;		// 업로드되는 파일 크기의 합
 
@@ -69,14 +69,31 @@ app.controller("BoardWrite", function($scope, $location, BoardFactory) {
 	/**
 	 * @function insert 게시글을 등록하는 함수
 	 * 
+	 * 
 	 * @author 황상필
 	 * @since 2023. 10. 26.
 	 */
 	$scope.insert = function() {
-		$scope.board.category = 0;
-		BoardFactory.createBoard({}, $scope.board, function() {
-			$scope.redirectToBoard();
-		});
+
+		Upload.upload({
+			url: '/boards',
+			method: 'POST',
+			params: {},
+			data: {
+				index: $scope.board.index,
+				title: $scope.board.title,
+				text: $scope.board.text,
+				userId: $scope.board.userId,
+				category: 0,
+				createDate: $scope.board.createDate,
+				files: $scope.selectedFiles,
+			},
+		}).success(function() {
+				$scope.redirectToBoard();
+		}).error(function() {
+			alert('파일 업로드 실패');
+		})
+
 	};
 
 	/**

@@ -13,7 +13,7 @@ public interface IFileService {
 	 * @author 황상필
 	 * @since 2023. 10. 25.
 	 */
-	public void downloadFile(HttpServletResponse response, String fileName);
+	public void downloadFile(HttpServletResponse response, String fileName, String fileId);
 	
 	/**
 	 * @Method resetFiles 게시글에 업로드된 파일을 초기화 시키는 메소드
@@ -23,6 +23,6 @@ public interface IFileService {
 	 * @author 황상필
 	 * @since 2023. 10. 25.
 	 */
-	public Integer resetFiles(Integer index);
+	public Integer deleteFiles(Integer index);
 	
 }

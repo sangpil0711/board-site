@@ -33,7 +33,7 @@ public interface IBoardService {
 	 * @author 황상필
 	 * @since 2023. 10. 05.
 	 */
-	public Integer saveBoard(BoardDTO board);
+	public void saveBoard(BoardDTO board);
 
 	/**
 	 * @Method updateBoard 게시물 내용을 수정하는 메소드

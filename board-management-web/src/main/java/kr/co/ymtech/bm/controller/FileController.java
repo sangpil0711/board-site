@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.ymtech.bm.service.FileService;
@@ -46,9 +47,9 @@ public class FileController {
 	 * @author 황상필
 	 * @since 2023. 10. 25.
 	 */
-	@GetMapping("/files/{fileName}")
-	public void downloadFile(HttpServletResponse response, @PathVariable String fileName) {
-		fileService.downloadFile(response, fileName);
+	@GetMapping("/files/{fileId}")
+	public void downloadFile(HttpServletResponse response, @RequestParam String fileName, @PathVariable String fileId) {
+		fileService.downloadFile(response, fileName, fileId);
 	}
 	
 	/**
@@ -65,7 +66,7 @@ public class FileController {
 	@DeleteMapping("/files/{index}")
 	public ResponseEntity<Integer> resetFiles(@PathVariable Integer index) {
 
-		Integer filelistDelete = fileService.resetFiles(index);
+		Integer filelistDelete = fileService.deleteFiles(index);
 
 		return new ResponseEntity<Integer>(filelistDelete, HttpStatus.OK);
 	}

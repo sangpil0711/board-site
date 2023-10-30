@@ -15,16 +15,10 @@ public class BoardManagementWebApplication {
 		SpringApplication.run(BoardManagementWebApplication.class, args);
 	}
 
-	@Bean
-	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-		return new HiddenHttpMethodFilter();
-	}
-	
-	@Bean
-	public MultipartResolver mulitpartResolver() {
-	    CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
-	    commonsMultipartResolver.setMaxUploadSize(100 * 1024 * 1024);
-	    return commonsMultipartResolver;
-	}
+//	@Bean
+//	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+//		return new HiddenHttpMethodFilter();
+//	}
+
 
 }

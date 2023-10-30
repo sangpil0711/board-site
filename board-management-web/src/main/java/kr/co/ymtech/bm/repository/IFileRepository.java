@@ -10,6 +10,6 @@ public interface IFileRepository {
 	 * @author 황상필
 	 * @since 2023. 10. 25.
 	 */
-	public Integer resetFiles(Integer index);
+	public Integer deleteFiles(Integer index);
 	
 }

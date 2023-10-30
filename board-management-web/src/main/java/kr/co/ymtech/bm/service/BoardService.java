@@ -1,17 +1,24 @@
 package kr.co.ymtech.bm.service;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.repository.ICommentRepository;
-import kr.co.ymtech.bm.repository.IFileRepository;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
 import kr.co.ymtech.bm.repository.vo.FileVO;
 
@@ -32,26 +39,24 @@ public class BoardService implements IBoardService {
 	 */
 	private final IBoardRepository boardRepository;
 	private final ICommentRepository commentRepository;
-	private final IFileRepository fileRepository;
-//	private final static String SAVE_PATH = "C:/boardFile";
-
+	private final static String SAVE_PATH = "C:/boardFile";
 
 	@Autowired
-	private BoardService(IBoardRepository IboardRepository, ICommentRepository IcommentRepository, IFileRepository IfileRepository) {
+	private BoardService(IBoardRepository IboardRepository, ICommentRepository IcommentRepository) {
 		this.boardRepository = IboardRepository;
 		this.commentRepository = IcommentRepository;
-		this.fileRepository = IfileRepository;
 	}
 
 	/**
 	 * @Method findBoardPage 조건에 따른 게시글 정보를 DB에서 받아오는 메소드
 	 *
-	 * @see kr.co.ymtech.bm.service.IBoardService#findBoardPage(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String)
+	 * @see kr.co.ymtech.bm.service.IBoardService#findBoardPage(java.lang.Integer,
+	 *      java.lang.Integer, java.lang.String, java.lang.String)
 	 *
 	 * @param pageNumber 게시판 페이지 번호
-	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param itemSize   게시판 페이지 당 게시글 수
 	 * @param searchType 게시판 검색 유형
-	 * @param keyword 게시판 검색어
+	 * @param keyword    게시판 검색어
 	 * 
 	 * @return findPage 메소드와 findAll 메소드를 boardPageDTO 변수에 담아 반환
 	 *
@@ -59,23 +64,25 @@ public class BoardService implements IBoardService {
 	 * @since 2023. 10. 05.
 	 */
 	@Override
-    public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category) {
-		
+	public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword,
+			Integer category) {
+
 		List<BoardVO> boardList = boardRepository.findPage(pageNumber, itemSize, searchType, keyword, category);
 
-	    Integer boardCount = boardRepository.findCount(searchType, keyword, category);
+		Integer boardCount = boardRepository.findCount(searchType, keyword, category);
 
-        BoardPageDTO boardPage = new BoardPageDTO();
-        boardPage.setBoardList(boardList);
-        boardPage.setTotalCount(boardCount);
+		BoardPageDTO boardPage = new BoardPageDTO();
+		boardPage.setBoardList(boardList);
+		boardPage.setTotalCount(boardCount);
 
-        return boardPage;
-    }
+		return boardPage;
+	}
 
 	/**
 	 * @Method saveBoard 게시물과 파일 정보를 저장하는 메소드
 	 *
-	 * @see kr.co.ymtech.bm.service.IBoardService#saveBoard(kr.co.ymtech.bm.controller.dto.BoardDTO, java.util.List, java.util.List)
+	 * @see kr.co.ymtech.bm.service.IBoardService#saveBoard(kr.co.ymtech.bm.controller.dto.BoardDTO,
+	 *      java.util.List, java.util.List)
 	 *
 	 * @param board 클라이언트가 저장하려고 하는 게시물과 파일 정보
 	 * 
@@ -85,19 +92,53 @@ public class BoardService implements IBoardService {
 	 * @since 2023. 10. 26.
 	 */
 	@Override
-	public Integer saveBoard(BoardDTO board) {
-	    BoardVO vo = new BoardVO(); 
-	    vo.setTitle(board.getTitle());
-	    vo.setText(board.getText());
-	    vo.setCategory(board.getCategory());
+	public void saveBoard(BoardDTO board) {
 
-	    if (board.getCreateDate() == null) {
-	        vo.setCreateDate(new Date().getTime());
-	    } else {
-	        vo.setCreateDate(board.getCreateDate());
-	    }
+		BoardVO lastBoard = boardRepository.lastBoard();
+		List<FileVO> boardFiles = new ArrayList<FileVO>();
 
-	    return boardRepository.saveBoard(vo);
+		BoardVO vo = new BoardVO();
+		vo.setIndex(lastBoard.getIndex() + 1);
+		vo.setTitle(board.getTitle());
+		vo.setText(board.getText());
+		vo.setCategory(board.getCategory());
+
+		if (board.getCreateDate() == null) {
+			vo.setCreateDate(new Date().getTime());
+		} else {
+			vo.setCreateDate(board.getCreateDate());
+		}
+		try {
+
+			if (board.getFiles() != null) {
+				for (int i = 0; i < board.getFiles().size(); i++) {
+					MultipartFile files = board.getFiles().get(i);
+					String originalFileName = files.getOriginalFilename();
+					String uniqueID = UUID.randomUUID().toString();
+					String fileName = uniqueID + "_" + originalFileName;
+					String filePath = SAVE_PATH + "/" + fileName;
+					
+					FileVO boardFile = new FileVO();
+					boardFile.setFileId(uniqueID);
+					boardFile.setBoardIndex(lastBoard.getIndex() + 1);
+					boardFile.setFilePath(filePath);
+					boardFile.setFileName(originalFileName);
+
+					boardFiles.add(boardFile);
+
+					try (InputStream input = files.getInputStream();
+							OutputStream output = new FileOutputStream(filePath)) {
+						IOUtils.copy(input, output);
+					}			
+
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		boardRepository.saveBoard(vo, boardFiles);
+
 	}
 
 	/**
@@ -120,7 +161,7 @@ public class BoardService implements IBoardService {
 		vo.setIndex(board.getIndex());
 		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
-		
+
 		return boardRepository.updateBoard(vo);
 	}
 
@@ -136,10 +177,8 @@ public class BoardService implements IBoardService {
 	 */
 	@Override
 	public Integer deleteBoard(Integer index) {
-		
+
 		commentRepository.deleteAllComment(index);
-		
-		fileRepository.resetFiles(index);
 
 		return boardRepository.deleteBoard(index);
 	}
@@ -156,9 +195,9 @@ public class BoardService implements IBoardService {
 	 */
 	@Override
 	public BoardGetDTO searchByIndex(Integer index) {
-		
+
 		List<FileVO> fv = boardRepository.files(index);
-		
+
 		BoardVO vo = boardRepository.searchByIndex(index);
 
 		BoardGetDTO dto = new BoardGetDTO(); // vo -> dto 변환
@@ -171,5 +210,5 @@ public class BoardService implements IBoardService {
 		dto.setFile(fv);
 		return dto;
 	}
-	
+
 }

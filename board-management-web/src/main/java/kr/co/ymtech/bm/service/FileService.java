@@ -47,13 +47,17 @@ public class FileService implements IFileService {
 	 * @since 2023. 10. 25.
 	 */
 	@Override
-	public void downloadFile(HttpServletResponse response, String fileName) {
-		String filePath = SAVE_PATH + "/" + fileName;
+	public void downloadFile(HttpServletResponse response, String fileName, String fileId) {
+		
+		System.out.println(fileId);
+		System.out.println(fileName);
+		
+		String filePath = SAVE_PATH + "/" + fileId + "_" + fileName;
 
 		try (FileInputStream input = new FileInputStream(filePath); OutputStream output = response.getOutputStream()) {
-			fileName = URLEncoder.encode(fileName, "UTF-8");
-			fileName = fileName.replaceAll("\\+", "%20");
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+			String fileName1 = URLEncoder.encode(fileName, "UTF-8");
+			fileName1 = fileName1.replaceAll("\\+", "%20");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName1 + "\"");
 			IOUtils.copy(input, output);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,8 +77,8 @@ public class FileService implements IFileService {
 	 * @since 2023. 10. 25.
 	 */
 	@Override
-	public Integer resetFiles(Integer index) {
-		return fileRepository.resetFiles(index);
+	public Integer deleteFiles(Integer index) {
+		return fileRepository.deleteFiles(index);
 	}
 
 }

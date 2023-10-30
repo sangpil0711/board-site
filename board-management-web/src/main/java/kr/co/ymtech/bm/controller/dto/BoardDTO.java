@@ -1,5 +1,9 @@
 package kr.co.ymtech.bm.controller.dto;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * 게시물 정보를 저장하는 클래스
  * 
@@ -21,21 +25,21 @@ public class BoardDTO {
 	/** createDate : 게시글 작성일 */
 	private Long createDate;
 	/** files : 게시글 첨부파일 */
-//	private List<MultipartFile> files;
+	private List<MultipartFile> files;
 	
-//	/**
-//	 * @return the files
-//	 */
-//	public List<MultipartFile> getFiles() {
-//		return files;
-//	}
-//
-//	/**
-//	 * @param files the files to set
-//	 */
-//	public void setFiles(List<MultipartFile> files) {
-//		this.files = files;
-//	}
+	/**
+	 * @return the files
+	 */
+	public List<MultipartFile> getFiles() {
+		return files;
+	}
+
+	/**
+	 * @param files the files to set
+	 */
+	public void setFiles(List<MultipartFile> files) {
+		this.files = files;
+	}
 
 	/**
 	 * Method : 게시물 index 반환하는 메소드
@@ -216,8 +220,8 @@ public class BoardDTO {
 		builder.append(category);
 		builder.append(", createDate=");
 		builder.append(createDate);
-//		builder.append(", files=");
-//		builder.append(files);
+		builder.append(", files=");
+		builder.append(files);
 		builder.append("]");
 		return builder.toString();
 	}
