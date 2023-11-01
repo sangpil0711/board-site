@@ -64,9 +64,9 @@ public class FileController {
 	 * @since 2023. 10. 25.
 	 */
 	@DeleteMapping("/files/{index}")
-	public ResponseEntity<Integer> resetFiles(@PathVariable Integer index) {
+	public ResponseEntity<Integer> resetFiles(@PathVariable Integer index, String fileName, String fileId) {
 
-		Integer filelistDelete = fileService.deleteFiles(index);
+		Integer filelistDelete = fileService.deleteFiles(index, fileName, fileId);
 
 		return new ResponseEntity<Integer>(filelistDelete, HttpStatus.OK);
 	}

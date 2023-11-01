@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
+import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
 import kr.co.ymtech.bm.service.BoardService;
 import kr.co.ymtech.bm.service.IBoardService;
 
@@ -59,7 +59,7 @@ public class BoardController {
 	@GetMapping(value = "/boards")
 	@ResponseBody
 	public ResponseEntity<BoardPageDTO> findBoardPage(@RequestParam Integer pageNumber, @RequestParam Integer itemSize,
-			@RequestParam String searchType, @RequestParam String keyword, @RequestParam Integer category ) {
+			@RequestParam String searchType, @RequestParam String keyword, @RequestParam Integer category) {
 
 		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, itemSize, searchType, keyword, category);
 
@@ -91,12 +91,10 @@ public class BoardController {
 	 * @author 박상현
 	 * @since 2023. 09. 18.
 	 */
-	@PatchMapping("/boards/{index}")
-	public ResponseEntity<Integer> updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
-
-		Integer boardlistUpdate = boardService.updateBoard(board);
-
-		return new ResponseEntity<Integer>(boardlistUpdate, HttpStatus.OK);
+	@PatchMapping(path = "/boards/{index}")
+	public void updateBoard(@PathVariable Integer index, BoardUpdateDTO board) {
+		System.out.println(board);
+		boardService.updateBoard(board);
 	}
 
 	/**

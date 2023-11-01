@@ -3,6 +3,7 @@ package kr.co.ymtech.bm.service;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
+import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
 
 /**
  * 일반게시판 IboardService 인터페이스
@@ -43,7 +44,7 @@ public interface IBoardService {
 	 * @author 박상현
 	 * @since 2023. 09. 18.
 	 */
-	public Integer updateBoard(BoardGetDTO board);
+	public void updateBoard(BoardUpdateDTO board);
 
 	/**
 	 * @Method deleteBoard 게시물을 삭제하는 메소드

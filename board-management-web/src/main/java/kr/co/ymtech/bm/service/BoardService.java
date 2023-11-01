@@ -1,5 +1,6 @@
 package kr.co.ymtech.bm.service;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
+import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.repository.ICommentRepository;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
@@ -115,21 +117,21 @@ public class BoardService implements IBoardService {
 					MultipartFile files = board.getFiles().get(i);
 					String originalFileName = files.getOriginalFilename();
 					String uniqueID = UUID.randomUUID().toString();
-					String fileName = uniqueID + "_" + originalFileName;
-					String filePath = SAVE_PATH + "/" + fileName;
-					
+					String filePath = SAVE_PATH + "/" + uniqueID;
+
 					FileVO boardFile = new FileVO();
 					boardFile.setFileId(uniqueID);
 					boardFile.setBoardIndex(lastBoard.getIndex() + 1);
 					boardFile.setFilePath(filePath);
 					boardFile.setFileName(originalFileName);
+					boardFile.setFileSize(files.getSize());
 
 					boardFiles.add(boardFile);
 
 					try (InputStream input = files.getInputStream();
 							OutputStream output = new FileOutputStream(filePath)) {
 						IOUtils.copy(input, output);
-					}			
+					}
 
 				}
 			}
@@ -155,14 +157,67 @@ public class BoardService implements IBoardService {
 	 * @since 2023. 10. 24.
 	 */
 	@Override
-	public Integer updateBoard(BoardGetDTO board) {
+	public void updateBoard(BoardUpdateDTO board) {
+
+		List<FileVO> boardFiles = new ArrayList<FileVO>();
 
 		BoardVO vo = new BoardVO(); // dto -> vo 변환
 		vo.setIndex(board.getIndex());
 		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
 
-		return boardRepository.updateBoard(vo);
+		try {
+			if (board.getAddFiles() != null) {
+				for (int i = 0; i < board.getAddFiles().size(); i++) {
+					MultipartFile file = board.getAddFiles().get(i);
+					String originalFileName = file.getOriginalFilename();
+					String uniqueID = UUID.randomUUID().toString();
+					String filePath = SAVE_PATH + "/" + uniqueID;
+
+					FileVO boardFile = new FileVO();
+					boardFile.setFileId(uniqueID);
+					boardFile.setBoardIndex(board.getIndex());
+					boardFile.setFilePath(filePath);
+					boardFile.setFileName(originalFileName);
+					boardFile.setFileSize(file.getSize());
+
+					boardFiles.add(boardFile);
+
+					try (InputStream input = file.getInputStream();
+							OutputStream output = new FileOutputStream(filePath)) {
+						IOUtils.copy(input, output);
+					}
+				}
+			}
+			
+			if (board.getDeleteFiles() != null) {
+			    File dir = new File(SAVE_PATH);
+			    File files[] = dir.listFiles();
+
+			    List<String> deleteFileNames = board.getDeleteFiles();
+			    
+			    for (String deleteFileName : deleteFileNames) {
+			        for (File file : files) {
+			            if (file.getName().equals(deleteFileName)) {
+			                if (file.exists()) {
+			                    if (file.delete()) {
+			                        System.out.println("파일 삭제 성공" );
+			                    } else {
+			                        System.out.println("파일 삭제 실패");
+			                    }
+			                } else {
+			                    System.out.println("파일이 없음");
+			                }
+			            }
+			        }
+			        boardRepository.deleteFile(board.getIndex(), deleteFileName);
+			    }
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		boardRepository.updateBoard(vo, boardFiles);
 	}
 
 	/**
@@ -177,6 +232,26 @@ public class BoardService implements IBoardService {
 	 */
 	@Override
 	public Integer deleteBoard(Integer index) {
+
+		List<FileVO> files = boardRepository.files(index);
+
+		for (FileVO file : files) {
+			String fileLocation = file.getFilePath();
+
+			File deleteFile = new File(fileLocation);
+
+			if (deleteFile.exists()) {
+				if (deleteFile.delete()) {
+
+				} else {
+					System.out.println("파일 삭제에 실패했습니다.");
+				}
+			} else {
+				System.out.println("파일이 존재하지 않습니다.");
+			}
+		}
+
+		boardRepository.deleteFiles(index);
 
 		commentRepository.deleteAllComment(index);
 
@@ -206,7 +281,7 @@ public class BoardService implements IBoardService {
 		dto.setText(vo.getText());
 		dto.setUserId(vo.getUserId());
 		dto.setCategory(vo.getCategory());
-		dto.setCreateDate(new Date(vo.getCreateDate()));
+		dto.setCreateDate(new Long(vo.getCreateDate()));
 		dto.setFile(fv);
 		return dto;
 	}

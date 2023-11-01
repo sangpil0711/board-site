@@ -114,15 +114,9 @@ public class BoardRepository implements IBoardRepository {
 	 * 
 	 * @return 게시물 정보를 DB에 저장하는 update 함수 실행
 	 *
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 10. 30.
 	 */
-//	@Override
-//	public Integer saveBoard(BoardVO board) {
-//		  return jdbcTemplate.update("insert into board(title, content, category, create_Date) values(?, ?, ?, ?)", board.getTitle(),
-//				board.getText(), board.getCategory(), board.getCreateDate());
-//	}
-
 	@Transactional
 	@Override
 	public void saveBoard(BoardVO board, List<FileVO> file) {
@@ -134,8 +128,8 @@ public class BoardRepository implements IBoardRepository {
 				Integer.class);
 
 		for (FileVO files : file) {
-	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename) VALUES(?, ?, ?, ?)",
-	                files.getFileId(), boardIndex, files.getFilePath(), files.getFileName());
+	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
+	                files.getFileId(), boardIndex, files.getFilePath(), files.getFileName(), files.getFileSize());
 	    }
 	}
 
@@ -149,13 +143,19 @@ public class BoardRepository implements IBoardRepository {
 	 * 
 	 * @return DB에 있는 게시물 정보를 수정하는 update 함수 실행
 	 *
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 10. 31.
 	 */
+	@Transactional
 	@Override
-	public Integer updateBoard(BoardVO board) {
-		return jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ? ", board.getTitle(),
+	public void updateBoard(BoardVO board, List<FileVO> file) {
+		jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ? ", board.getTitle(),
 				board.getText(), board.getIndex());
+		
+		for (FileVO files : file) {
+	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
+	                files.getFileId(), board.getIndex(), files.getFilePath(), files.getFileName(), files.getFileSize());
+	    }
 	}
 
 	/**
@@ -228,7 +228,8 @@ public class BoardRepository implements IBoardRepository {
 			public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 
 				FileVO member = new FileVO(rs.getString("uuid"), rs.getInt("board_index"),
-						rs.getString("file_location"), rs.getString("original_filename"));
+						rs.getString("file_location"), rs.getString("original_filename"),
+						rs.getLong("file_size"));
 
 				return member;
 			}
@@ -280,6 +281,28 @@ public class BoardRepository implements IBoardRepository {
 			}
 		};
 		return jdbcTemplate.queryForObject("SELECT * FROM board ORDER BY index DESC OFFSET 0 LIMIT 1", mapper);
+	}
+	
+	/**
+	 * @Method resetFiles 게시물에 업로드된 파일을 초기화 시키는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IFileRepository#resetFiles(java.lang.Integer)
+	 *
+	 * @param index 해당 게시글 번호
+	 * 
+	 * @return DB에 있는 정보를 삭제하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 25.
+	 */
+	@Override
+	public Integer deleteFiles(Integer index) {
+		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ?", index);
+	}
+	
+	@Override
+	public Integer deleteFile(Integer index, String fileId) {
+		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ? AND uuid = ?", index, fileId);
 	}
 
 }

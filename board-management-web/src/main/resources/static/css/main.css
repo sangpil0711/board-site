@@ -478,6 +478,7 @@ h3 {
 	width: 700px;
 	height: 300px;
 	font-size: 15px;
+	resize: none;
 }
 
 .file_btn {
@@ -485,7 +486,7 @@ h3 {
 	border: 1px solid black;
 	color: white;
 	position: absolute;
-	top: 690px;
+	top: 650px;
 	left: 610px;
 	height: 100px;
 	width: 120px;
@@ -498,8 +499,22 @@ h3 {
 	padding: 5px 10px;
 	position: absolute;
 	left: 740px;
-	top: 690px;
+	top: 650px;
 	overflow: overlay;
+}
+
+.file_name div {
+	margin-bottom: 5px;
+}
+
+.file_name button {
+	width: 40px;
+    height: 19px;
+    background-color: white;
+    border: 1px solid gray;
+    color: red;
+    margin-left: 15px;
+    font-size: 12px;
 }
 
 .write_decision input {
@@ -510,7 +525,7 @@ h3 {
 	color: white;
 	position: absolute;
 	left: 1140px;
-	top: 820px;
+	top: 780px;
 }
 
 .write_decision button {
@@ -520,7 +535,7 @@ h3 {
 	background-color: white;
 	position: absolute;
 	left: 1240px;
-	top: 820px;
+	top: 780px;
 }
 
 strong {
@@ -623,16 +638,6 @@ pre {
 	border: none;
 }
 
-.reset_btn {
-	background-color: white;
-	border: 1px solid grey;
-	padding: 5px;
-	width: 100px;
-	position: absolute;
-	right: 610px;
-	top: 630px;
-}
-
 .child_write_box {
 	width: 200px;
 }
@@ -650,6 +655,10 @@ pre {
 .textarea_container {
 	flex: 1;
 	margin-right: 10px;
+}
+
+.textarea_container textarea {
+	resize: none;
 }
 
 .comment_write_btn {

@@ -9,16 +9,18 @@ public class FileVO {
 	private Integer boardIndex;
 	private String filePath;
 	private String fileName;
+	private Long fileSize;
 	
 	public FileVO() {                       
 		super();
 	}
 	
-	public FileVO(String fileId, Integer boardIndex, String filePath, String fileName) {
+	public FileVO(String fileId, Integer boardIndex, String filePath, String fileName, Long fileSize) {
 		this.fileId = fileId;
 		this.boardIndex = boardIndex;
 		this.filePath = filePath;
 		this.fileName = fileName;
+		this.fileSize = fileSize;
 	}
 	
 	/**
@@ -117,6 +119,24 @@ public class FileVO {
 		this.fileName = fileName;
 	}
 	
+	public Long getFileSize() {
+		return fileSize;
+	}
+	
+	public void setFileSize(Long fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	/**
+	 * @Method toString
+	 *
+	 * @see java.lang.Object#toString()
+	 *
+	 * @return
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 31.
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -128,9 +148,10 @@ public class FileVO {
 		builder.append(filePath);
 		builder.append(", fileName=");
 		builder.append(fileName);
+		builder.append(", fileSize=");
+		builder.append(fileSize);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 }

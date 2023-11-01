@@ -23,6 +23,6 @@ public interface IFileService {
 	 * @author 황상필
 	 * @since 2023. 10. 25.
 	 */
-	public Integer deleteFiles(Integer index);
+	public Integer deleteFiles(Integer index, String fileName, String fileId);
 	
 }

@@ -1,4 +1,4 @@
-app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFactory, FileFactory, $routeParams) {
+app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFactory, $routeParams) {
 
 	let index = $routeParams.index; 	// 라우팅으로 받아오는 게시글 번호
 
@@ -24,7 +24,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	 * @author 황상필
 	 * @since 2023. 09. 15.
 	 */
-	$scope.remove = function(index) {
+	$scope.remove = function() {
 		let confirmDelete = confirm("게시물을 삭제하시겠습니까?");
 		if (confirmDelete) {
 			BoardFactory.deleteBoard({ index: index }, function() {
@@ -39,7 +39,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	 * @author 황상필
 	 * @since 2023. 09. 15.
 	 */
-	$scope.redirectToUpdate = function(index) {
+	$scope.redirectToUpdate = function() {
 		$location.path('/board/update/' + index);
 	};
 

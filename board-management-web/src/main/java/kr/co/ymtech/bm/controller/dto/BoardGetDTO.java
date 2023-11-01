@@ -1,6 +1,5 @@
 package kr.co.ymtech.bm.controller.dto;
 
-import java.util.Date;
 import java.util.List;
 
 import kr.co.ymtech.bm.repository.vo.FileVO;
@@ -25,25 +24,9 @@ public class BoardGetDTO {
 	/** category : 게시글 카테고리 */
 	private Integer category;
 	/** createDate : 게시글 작성일 */
-	private Date createDate;
+	private Long createDate;
 	/** file : 등록된 게시글 첨부파일 */
 	private List<FileVO> file;
-//	/** files : 등록할 게시글 첨부파일 */
-//	private List<MultipartFile> files;
-//	
-//	/**
-//	 * @return the files
-//	 */
-//	public List<MultipartFile> getFiles() {
-//		return files;
-//	}
-//
-//	/**
-//	 * @param files the files to set
-//	 */
-//	public void setFiles(List<MultipartFile> files) {
-//		this.files = files;
-//	}
 	
 	public List<FileVO> getFile() {
 		return file;
@@ -191,7 +174,7 @@ public class BoardGetDTO {
 	 * @author 박상현
 	 * @since  2023.09.18
 	 */
-	public Date getCreateDate() {
+	public Long getCreateDate() {
 		return createDate;
 	}
 
@@ -205,7 +188,7 @@ public class BoardGetDTO {
 	 * @author 박상현
 	 * @since  2023.09.18
 	 */
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
 	}
 
@@ -234,8 +217,6 @@ public class BoardGetDTO {
 		builder.append(createDate);
 		builder.append(", file=");
 		builder.append(file);
-//		builder.append(", files=");
-//		builder.append(files);
 		builder.append("]");
 		return builder.toString();
 	}

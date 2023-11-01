@@ -42,17 +42,15 @@ public class FileService implements IFileService {
 	 *
 	 * @param response http 응답
 	 * @param fileName 업로드된 파일 이름
+	 * @param fileId 업로드된 파일 uuid
 	 *
 	 * @author 황상필
-	 * @since 2023. 10. 25.
+	 * @since 2023. 10. 30.
 	 */
 	@Override
 	public void downloadFile(HttpServletResponse response, String fileName, String fileId) {
 		
-		System.out.println(fileId);
-		System.out.println(fileName);
-		
-		String filePath = SAVE_PATH + "/" + fileId + "_" + fileName;
+		String filePath = SAVE_PATH + "/" + fileId;
 
 		try (FileInputStream input = new FileInputStream(filePath); OutputStream output = response.getOutputStream()) {
 			String fileName1 = URLEncoder.encode(fileName, "UTF-8");
@@ -77,7 +75,10 @@ public class FileService implements IFileService {
 	 * @since 2023. 10. 25.
 	 */
 	@Override
-	public Integer deleteFiles(Integer index) {
+	public Integer deleteFiles(Integer index, String fileName, String fileId) {
+		
+		
+		
 		return fileRepository.deleteFiles(index);
 	}
 

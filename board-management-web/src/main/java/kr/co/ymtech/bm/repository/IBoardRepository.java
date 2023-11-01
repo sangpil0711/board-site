@@ -55,7 +55,7 @@ public interface IBoardRepository {
 	 * @author 박상현
 	 * @since 2023. 09. 18.
 	 */
-	public Integer updateBoard(BoardVO board);
+	public void updateBoard(BoardVO board, List<FileVO> file);
 
 	/**
 	 * @Method deleteBoard 게시물 정보를 삭제
@@ -89,21 +89,23 @@ public interface IBoardRepository {
 	public List<FileVO> files(Integer index);
 	
 	/**
-	 * @Method saveFile 파일 정보를 저장하는 메소드
-	 *
-	 * @param file DB에 보낼 파일 데이터
-	 *
-	 * @author 황상필
-	 * @since 2023. 10. 11.
-	 */
-//	public Integer saveFile(FileVO file);
-	
-	/**
 	 * @Method lastBoard 마지막에 저장된 게시물의 번호를 조회하는 메소드
 	 *
 	 * @author 황상필
 	 * @since 2023. 10. 12.
 	 */
 	public BoardVO lastBoard();
+	
+	/**
+	 * @Method resetFiles 게시물에 업로드된 파일을 초기화 시키는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 25.
+	 */
+	public Integer deleteFiles(Integer index);
+	
+	public Integer deleteFile(Integer index, String fileId);
 
 }

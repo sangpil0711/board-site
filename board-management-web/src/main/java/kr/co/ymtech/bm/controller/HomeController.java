@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
-import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
+import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
 import kr.co.ymtech.bm.service.BoardService;
 import kr.co.ymtech.bm.service.FileService;
 import kr.co.ymtech.bm.service.IBoardService;
@@ -195,7 +194,7 @@ public class HomeController {
 	 * @since 2023. 09. 18.
 	 */
 	@PatchMapping(value = "board/update/{index}")
-	public ModelAndView updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
+	public ModelAndView updateBoard(@PathVariable Integer index, @ModelAttribute BoardUpdateDTO board) {
 
 		ModelAndView model = new ModelAndView();
 
