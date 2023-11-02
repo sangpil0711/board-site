@@ -1,16 +1,12 @@
-/**
- * $scope, $window 객체와 BoardFactory 서비스를 사용하는 controller 생성
- * general_write.html에 필요한 메서드 작성
- * 
- * 작성일 : 2023.09.15
- * 작성자 : 황상필
- */
 app.controller("BoardWrite", function($scope, $location, Upload) {
 
-	let totalSize = 0;		// 업로드되는 파일 크기의 합
+	// 업로드되는 파일 크기의 합
+	let totalSize = 0;
 
-	$scope.fileNames = [];		// 업로드되는 파일 이름
-	$scope.selectedFiles = [];		// 업로드되는 파일 데이터
+	// 업로드되는 파일 이름
+	$scope.fileNames = [];
+	// 업로드되는 파일 데이터
+	$scope.selectedFiles = [];		
 
 	/**
 	 * @function selectFile 파일탐색기가 실행되어서 파일을 선택할 수 있는 함수
@@ -37,13 +33,17 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 		$files.forEach(function(file) {
 			if (totalSize + file.size > 100 * 1024 * 1024) {
 				exceedSizeFile = true;
-			} else {
+			} 
+			
+			// 선택된 파일의 크기가 100MB를 초과하지 않으면 각 변수에 파일 데이터 할당 
+			else {
 				$scope.selectedFiles.push(file);
 				$scope.fileNames.push(file.name);
 				totalSize += file.size;
 			}
 		})
 
+		// 선택된 파일의 크기가 100MB를 초과하면 알림창 표시
 		if (exceedSizeFile) {
 			alert("선택한 파일의 용량이 100MB를 초과합니다.");
 		}
@@ -62,7 +62,7 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 			url: '/boards',
 			method: 'POST',
 			params: {},
-			data: {
+			data: { 	// 요청된 경로의 Controller로 전달할 데이터
 				index: $scope.board.index,
 				title: $scope.board.title,
 				text: $scope.board.text,
@@ -89,13 +89,12 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 	};
 
 	$scope.excludeFile = function(index) {
-
-		totalSize -= $scope.selectedFiles[index].size;
-		$scope.fileNames.splice(index, 1);
-		$scope.selectedFiles.splice(index, 1);
-
-		console.log($scope.selectedFiles);
-
+		let confirmDelete = confirm("파일을 삭제하시겠습니까?");
+		if (confirmDelete) {
+			totalSize -= $scope.selectedFiles[index].size;
+			$scope.fileNames.splice(index, 1);
+			$scope.selectedFiles.splice(index, 1);
+		}
 	}
 
 });

@@ -51,7 +51,9 @@ public class BoardRepository implements IBoardRepository {
 	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword,
 			Integer category) {
 		Integer offset = (pageNumber - 1) * itemSize;
-		String sql = "SELECT * FROM board WHERE category = ?"; // 기본 쿼리
+		
+		// 기본 쿼리
+		String sql = "SELECT * FROM board WHERE category = ?"; 
 
 		// 검색 조건을 추가
 		if ("title".equals(searchType)) {
@@ -91,8 +93,10 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer findCount(String searchType, String keyword, Integer category) {
 
+		// 기본 쿼리
 		String sql = "SELECT COUNT(*) FROM board WHERE category = ?";
 
+		// 검색 조건을 추가
 		if ("title".equals(searchType)) {
 			sql += " AND title LIKE ?";
 		} else if ("content".equals(searchType)) {
@@ -121,12 +125,15 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public void saveBoard(BoardVO board, List<FileVO> file) {
 
+		// 게시글 정보를 DB에 저장
 		jdbcTemplate.update("INSERT INTO board(title, content, category, create_Date) VALUES(?, ?, ?, ?)",
 				board.getTitle(), board.getText(), board.getCategory(), board.getCreateDate());
 
+		// 저장한 게시글 번호
 		Integer boardIndex = jdbcTemplate.queryForObject("SELECT index FROM board ORDER BY index DESC OFFSET 0 LIMIT 1",
 				Integer.class);
 
+		// 게시글에 업로드된 파일을 DB에 저장
 		for (FileVO files : file) {
 	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
 	                files.getFileId(), boardIndex, files.getFilePath(), files.getFileName(), files.getFileSize());
@@ -149,9 +156,12 @@ public class BoardRepository implements IBoardRepository {
 	@Transactional
 	@Override
 	public void updateBoard(BoardVO board, List<FileVO> file) {
+		
+		// 수정된 게시글 정보를 DB에 저장
 		jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ? ", board.getTitle(),
 				board.getText(), board.getIndex());
 		
+		// 게시글에 추가된 파일을 DB에 저장
 		for (FileVO files : file) {
 	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
 	                files.getFileId(), board.getIndex(), files.getFilePath(), files.getFileName(), files.getFileSize());
@@ -194,6 +204,7 @@ public class BoardRepository implements IBoardRepository {
 
 		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
 
+			// ResultSet에 결과값을 담아 BoardVO에 담음
 			@Override
 			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
@@ -224,6 +235,7 @@ public class BoardRepository implements IBoardRepository {
 
 		RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
 
+			// ResultSet에 결과값을 담아 FileVO에 담음
 			@Override
 			public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 
@@ -240,24 +252,6 @@ public class BoardRepository implements IBoardRepository {
 	}
 
 	/**
-	 * @Method saveFile 파일 정보를 저장하는 메소드
-	 *
-	 * @see kr.co.ymtech.bm.repository.IFileRepository#saveFile(kr.co.ymtech.bm.repository.vo.FileVO)
-	 *
-	 * @param file DB에 보낼 파일 데이터
-	 * 
-	 * @return file DB 테이블에 파일 데이터를 저장
-	 *
-	 * @author 황상필
-	 * @since 2023. 10. 11.
-	 */
-//	@Override
-//	public Integer saveFile(FileVO file) {
-//	    return jdbcTemplate.update("insert into file(uuid, board_index, file_location, original_filename) values(?, ?, ?, ?)",
-//	            file.getFileId(), file.getBoardIndex(), file.getFilePath(), file.getFileName());
-//	}
-
-	/**
 	 * @Method lastBoard 마지막에 저장된 게시물의 번호를 조회하는 메소드
 	 *
 	 * @see kr.co.ymtech.bm.repository.IBoardRepository#lastBoard()
@@ -272,8 +266,9 @@ public class BoardRepository implements IBoardRepository {
 
 		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
 
+			// ResultSet에 결과값을 담아 BoardVO에 담음
 			@Override
-			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException { // ResultSet에 결과값을 담아 BoardVO에 담음
+			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException { 
 				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
 						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"));
 
@@ -284,7 +279,7 @@ public class BoardRepository implements IBoardRepository {
 	}
 	
 	/**
-	 * @Method resetFiles 게시물에 업로드된 파일을 초기화 시키는 메소드
+	 * @Method deleteFiles 해당 게시물에 업로드된 파일을 전부 삭제하는 메소드
 	 *
 	 * @see kr.co.ymtech.bm.repository.IFileRepository#resetFiles(java.lang.Integer)
 	 *
@@ -300,6 +295,19 @@ public class BoardRepository implements IBoardRepository {
 		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ?", index);
 	}
 	
+	/**
+	 * @Method deleteFile 해당 게시물에 업로드된 파일을 개별 삭제하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#deleteFile(java.lang.Integer, java.lang.String)
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param fileId 업로드된 파일의 UUID
+	 * 
+	 * @return DB에 있는 정보를 삭제하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 10. 31.
+	 */
 	@Override
 	public Integer deleteFile(Integer index, String fileId) {
 		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ? AND uuid = ?", index, fileId);

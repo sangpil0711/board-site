@@ -70,13 +70,11 @@ public class BoardController {
 	 * @Method saveBoard 게시물 정보를 저장하는 메소드
 	 *
 	 * @param board 클라이언트가 저장하려고 하는 게시물 정보
-	 * 
-	 * @return 게시물을 DB에 저장하고 성공하면 1, 실패하면 0을 boardlistSave 변수에 담아 반환
 	 *
 	 * @author 황상필
 	 * @since 2023. 10. 26.
 	 */
-	@PostMapping(path = "/boards")
+	@PostMapping(value = "/boards")
 	public void saveBoard(BoardDTO board) {
 		boardService.saveBoard(board);
 	}
@@ -84,16 +82,14 @@ public class BoardController {
 	/**
 	 * @Method updateBoard 게시물 내용을 수정하는 메소드
 	 * 
-	 * @param index 수정할 게시물 번호를 담고 있고 board는 클라이언트가 요청한 게시물 내용
+	 * @param index 수정할 게시물 번호
+	 * @param board 수정된 게시물 정보
 	 * 
-	 * @return 업데이트 한 게시물 내용을 boardlistUpdate 변수에 담고 ResponseEntity 를 사용하여 응답
-	 * 
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 11. 01.
 	 */
-	@PatchMapping(path = "/boards/{index}")
+	@PatchMapping(value = "/boards/{index}")
 	public void updateBoard(@PathVariable Integer index, BoardUpdateDTO board) {
-		System.out.println(board);
 		boardService.updateBoard(board);
 	}
 
@@ -112,7 +108,7 @@ public class BoardController {
 
 		Integer boardlistDelete = boardService.deleteBoard(index);
 
-		return new ResponseEntity<Integer>(boardlistDelete, HttpStatus.OK);
+		return new ResponseEntity<Integer>(boardlistDelete, HttpStatus.BAD_GATEWAY);
 	}
 
 	/**

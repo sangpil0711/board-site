@@ -1,26 +1,36 @@
 app.controller("BoardCtrl", function($scope, BoardFactory, $location, $route) {
 
-	$scope.currentPage = 1;		// 게시판 현재 페이지
-	$scope.itemsPerPage = 5;	 // 페이지당 게시글 수
-	$scope.maxSize = 5; 	// 화면에 표시되는 최대 페이지 수
-	$scope.options = [	 // 선택할 수 있는 페이지당 게시글 수 
+	// 게시판 현재 페이지
+	$scope.currentPage = 1;
+	// 페이지당 게시글 수	
+	$scope.itemsPerPage = 5;
+	// 화면에 표시되는 최대 페이지 수
+	$scope.maxSize = 5;
+	// 선택할 수 있는 페이지당 게시글 수 
+	$scope.options = [
 		{ name: '5개씩 보기', value: 5 },
 		{ name: '10개씩 보기', value: 10 },
 		{ name: '15개씩 보기', value: 15 },
 		{ name: '20개씩 보기', value: 20 }
 	];
-	$scope.searchType = 'title';	 // 검색 유형 기본 값
-	$scope.keyword = '';	 // 검색어 기본 값
-	$scope.types = [	 // 선택할 수 있는 검색 유형
+	// 검색 유형 기본 값
+	$scope.searchType = 'title';
+	// 검색어 기본 값
+	$scope.keyword = '';
+	// 선택할 수 있는 검색 유형
+	$scope.types = [
 		{ name: '제목', value: 'title' },
 		{ name: '내용', value: 'content' },
 		{ name: '작성자', value: 'user_id' }
 	];
 
-
-		$scope.boardlist = [];
-		$scope.totalItems = [];
-		const CATEGORY = 0;
+	// 게시판 리스트 초기화
+	$scope.boardlist = [];
+	// 게시판 게시글 수 초기화
+	$scope.totalItems = [];
+	// 게시판 카테고리
+	const CATEGORY = 0;
+	
 	/**
 	 * @function findPage 요청에 따른 게시판 목록과 게시판 총 게시글 수를 반환하는 함수
 	 * 
@@ -29,7 +39,7 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $location, $route) {
 	 */
 	let findBoardList = function() {
 		BoardFactory.readBoard({
-			category : CATEGORY,
+			category: CATEGORY,
 			pageNumber: $scope.currentPage,
 			itemSize: $scope.itemsPerPage,
 			searchType: $scope.searchType,
@@ -38,6 +48,10 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $location, $route) {
 			function(response) {
 				$scope.boardlist = response.boardList;
 				$scope.totalItems = response.totalCount;
+			},
+			function(error) {
+				alert("게시판 불러오기 실패");
+				console.error("게시판 불러오기 실패", error);
 			})
 	};
 
@@ -84,7 +98,7 @@ app.controller("BoardCtrl", function($scope, BoardFactory, $location, $route) {
 	 * @since 2023. 09. 01.
 	 */
 	$scope.redirectToWrite = function() {
-		$location.path('/board/write');
+		$location.path('/board/write')
 	};
 
 	/**

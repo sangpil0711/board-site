@@ -20,9 +20,10 @@ public interface IBoardService {
 	 * @param itemSize 게시판 페이지 당 게시글 수
 	 * @param searchType 게시판 검색 유형
 	 * @param keyword 게시판 검색어
+	 * @param category 게시판 카테고리
 	 *
 	 * @author 황상필
-	 * @since 2023. 10. 05.
+	 * @since 2023. 10. 30.
 	 */
 	public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category);
 
@@ -32,7 +33,7 @@ public interface IBoardService {
 	 * @param board 클라이언트가 저장하려고 하는 게시물 정보
 	 *
 	 * @author 황상필
-	 * @since 2023. 10. 05.
+	 * @since 2023. 10. 26.
 	 */
 	public void saveBoard(BoardDTO board);
 
@@ -41,8 +42,8 @@ public interface IBoardService {
 	 * 
 	 * @param board 클라이언트가 수정할 부분의 게시물 내용을 담고 있다.
 	 * 
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 11. 01.
 	 */
 	public void updateBoard(BoardUpdateDTO board);
 
@@ -51,8 +52,8 @@ public interface IBoardService {
 	 * 
 	 * @param index 게시물의 번호를 담고 있고 게시물 번호를 보고 삭제
 	 * 
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 10. 26.
 	 */
 	public Integer deleteBoard(Integer index);
 
@@ -61,8 +62,8 @@ public interface IBoardService {
 	 * 
 	 * @param index 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
 	 * 
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 10. 26.
 	 */
 	public BoardGetDTO searchByIndex(Integer index);
 

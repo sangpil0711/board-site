@@ -239,7 +239,7 @@ h3 {
 }
 
 .comment_box {
-	position: absolute;
+	position: relative;
 	top: 850px;
 	margin-bottom: 50px;
 }
@@ -509,12 +509,12 @@ h3 {
 
 .file_name button {
 	width: 40px;
-    height: 19px;
-    background-color: white;
-    border: 1px solid gray;
-    color: red;
-    margin-left: 15px;
-    font-size: 12px;
+	height: 19px;
+	background-color: white;
+	border: 1px solid gray;
+	color: red;
+	margin-left: 15px;
+	font-size: 12px;
 }
 
 .write_decision input {
@@ -643,7 +643,7 @@ pre {
 }
 
 .comment_write {
-	position: absolute;
+	position: relative;
 	left: 450px;
 }
 
@@ -666,6 +666,8 @@ pre {
 	width: 54px;
 	margin-left: -7px;
 	align-self: flex-start;
+	position: absolute;
+	left: 960px;
 }
 
 .comment_write_box {
@@ -674,11 +676,10 @@ pre {
 }
 
 .comment_box {
-	position: absolute;
+	position: relative;
 	left: 450px;
 	width: 1000px;
-	margin-top: 50px;
-
+	top: 10px;
 }
 
 .save_btn {

@@ -9,7 +9,7 @@ import kr.co.ymtech.bm.repository.vo.FileVO;
  * 일반게시판 IBoardRepository 인터페이스
  * 
  * @author 박상현
- * @since  2023.09.18
+ * @since 2023. 09. 18.
  */
 public interface IBoardRepository {
 	
@@ -20,9 +20,10 @@ public interface IBoardRepository {
 	 * @param itemSize 게시판 페이지 당 게시글 수
 	 * @param searchType 게시판 검색 유형
 	 * @param keyword 게시판 검색어
+	 * @param category 게시판 카테고리
 	 * 
 	 * @author 황상필
-	 * @since 2023. 10. 05.
+	 * @since 2023. 10. 30.
 	 */
 	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category);
 	
@@ -31,9 +32,10 @@ public interface IBoardRepository {
 	 *
 	 * @param searchType 게시판 검색 유형
 	 * @param keyword 게시판 검색어
+	 * @param category 게시판 카테고리
 	 *
 	 * @author 황상필
-	 * @since 2023. 10. 05.
+	 * @since 2023. 10. 30.
 	 */
 	public Integer findCount(String searchType, String keyword, Integer category);
 
@@ -41,9 +43,10 @@ public interface IBoardRepository {
 	 * @Method saveBoard 게시물 정보를 저장
 	 * 
 	 * @param board 클라이언트가 저장하려고 하는 게시물 정보
+	 * @param file 업로드된 첨부파일
 	 * 
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 10. 30.
 	 */
 	public void saveBoard(BoardVO board, List<FileVO> file);
 
@@ -51,9 +54,10 @@ public interface IBoardRepository {
 	 * @Method updateBoard 게시물 내용(text)을 수정
 	 * 
 	 * @param board 클라이언트가 수정할 부분의 게시물 내용
+	 * @param file 변경관 첨부파일
 	 * 
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 11. 01.
 	 */
 	public void updateBoard(BoardVO board, List<FileVO> file);
 
@@ -97,7 +101,7 @@ public interface IBoardRepository {
 	public BoardVO lastBoard();
 	
 	/**
-	 * @Method resetFiles 게시물에 업로드된 파일을 초기화 시키는 메소드
+	 * @Method deleteFiles 게시물에 업로드된 파일을 전부 삭제하는 메소드
 	 *
 	 * @param index 해당 게시글 번호
 	 * 
@@ -106,6 +110,15 @@ public interface IBoardRepository {
 	 */
 	public Integer deleteFiles(Integer index);
 	
+	/**
+	 * @Method deleteFile 게시물에 업로드된 파일을 개별로 삭제하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param fileId 파일 uuid
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 31.
+	 */
 	public Integer deleteFile(Integer index, String fileId);
 
 }

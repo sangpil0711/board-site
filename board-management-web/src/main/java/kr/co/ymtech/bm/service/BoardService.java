@@ -59,11 +59,12 @@ public class BoardService implements IBoardService {
 	 * @param itemSize   게시판 페이지 당 게시글 수
 	 * @param searchType 게시판 검색 유형
 	 * @param keyword    게시판 검색어
+	 * @param category   게시판 카테고리
 	 * 
 	 * @return findPage 메소드와 findAll 메소드를 boardPageDTO 변수에 담아 반환
 	 *
 	 * @author 황상필
-	 * @since 2023. 10. 05.
+	 * @since 2023. 10. 30.
 	 */
 	@Override
 	public BoardPageDTO findBoardPage(Integer pageNumber, Integer itemSize, String searchType, String keyword,
@@ -99,44 +100,45 @@ public class BoardService implements IBoardService {
 		BoardVO lastBoard = boardRepository.lastBoard();
 		List<FileVO> boardFiles = new ArrayList<FileVO>();
 
+		// dto -> vo 변환
 		BoardVO vo = new BoardVO();
 		vo.setIndex(lastBoard.getIndex() + 1);
 		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
 		vo.setCategory(board.getCategory());
+		vo.setCreateDate(new Date().getTime());
 
-		if (board.getCreateDate() == null) {
-			vo.setCreateDate(new Date().getTime());
-		} else {
-			vo.setCreateDate(board.getCreateDate());
-		}
 		try {
-
+			
+			// 게시글 작성 시 업로드 되는 파일이 있으면 동작
 			if (board.getFiles() != null) {
 				for (int i = 0; i < board.getFiles().size(); i++) {
 					MultipartFile files = board.getFiles().get(i);
 					String originalFileName = files.getOriginalFilename();
 					String uniqueID = UUID.randomUUID().toString();
-					String filePath = SAVE_PATH + "/" + uniqueID;
+					String filePath = SAVE_PATH + "/" + uniqueID + "_" + originalFileName;
 
 					FileVO boardFile = new FileVO();
 					boardFile.setFileId(uniqueID);
 					boardFile.setBoardIndex(lastBoard.getIndex() + 1);
-					boardFile.setFilePath(filePath);
+					boardFile.setFilePath(SAVE_PATH);
 					boardFile.setFileName(originalFileName);
 					boardFile.setFileSize(files.getSize());
 
 					boardFiles.add(boardFile);
 
+					// 업로드 되는 파일을 지정된 경로의 폴더에 저장
 					try (InputStream input = files.getInputStream();
 							OutputStream output = new FileOutputStream(filePath)) {
 						IOUtils.copy(input, output);
+					} catch (IOException e) {
+						System.out.println("파일 저장 실패");
 					}
 
 				}
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("파일 업로드 실패");
 		}
 
 		boardRepository.saveBoard(vo, boardFiles);
@@ -149,72 +151,81 @@ public class BoardService implements IBoardService {
 	 *
 	 * @see kr.co.ymtech.bm.service.IBoardService#updateBoard(kr.co.ymtech.bm.controller.dto.BoardGetDTO)
 	 *
-	 * @param board 클라이언트가 요청한 게시물 내용을 포함
+	 * @param board 수정한 게시물 내용을 포함
 	 * 
 	 * @return 업데이트 한 게시물 내용을 update 변수에 담아 반환
 	 *
 	 * @author 황상필
-	 * @since 2023. 10. 24.
+	 * @since 2023. 11. 01.
 	 */
 	@Override
 	public void updateBoard(BoardUpdateDTO board) {
 
 		List<FileVO> boardFiles = new ArrayList<FileVO>();
 
-		BoardVO vo = new BoardVO(); // dto -> vo 변환
+		// dto -> vo 변환
+		BoardVO vo = new BoardVO();
 		vo.setIndex(board.getIndex());
 		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
 
 		try {
+			// 게시글 수정 시 추가된 파일이 있으면 동작
 			if (board.getAddFiles() != null) {
+				// 추가된 파일의 크기에 따라 반복하여 파일을 저장
 				for (int i = 0; i < board.getAddFiles().size(); i++) {
 					MultipartFile file = board.getAddFiles().get(i);
 					String originalFileName = file.getOriginalFilename();
 					String uniqueID = UUID.randomUUID().toString();
-					String filePath = SAVE_PATH + "/" + uniqueID;
+					String filePath = SAVE_PATH + "/" + uniqueID + "_" + originalFileName;
 
 					FileVO boardFile = new FileVO();
 					boardFile.setFileId(uniqueID);
 					boardFile.setBoardIndex(board.getIndex());
-					boardFile.setFilePath(filePath);
+					boardFile.setFilePath(SAVE_PATH);
 					boardFile.setFileName(originalFileName);
 					boardFile.setFileSize(file.getSize());
 
 					boardFiles.add(boardFile);
 
+					// 추가된 파일을 지정된 경로의 폴더에 저장
 					try (InputStream input = file.getInputStream();
 							OutputStream output = new FileOutputStream(filePath)) {
 						IOUtils.copy(input, output);
+					} catch (IOException e) {
+						System.out.println("파일 저장 실패");
 					}
 				}
 			}
-			
-			if (board.getDeleteFiles() != null) {
-			    File dir = new File(SAVE_PATH);
-			    File files[] = dir.listFiles();
 
-			    List<String> deleteFileNames = board.getDeleteFiles();
-			    
-			    for (String deleteFileName : deleteFileNames) {
-			        for (File file : files) {
-			            if (file.getName().equals(deleteFileName)) {
-			                if (file.exists()) {
-			                    if (file.delete()) {
-			                        System.out.println("파일 삭제 성공" );
-			                    } else {
-			                        System.out.println("파일 삭제 실패");
-			                    }
-			                } else {
-			                    System.out.println("파일이 없음");
-			                }
-			            }
-			        }
-			        boardRepository.deleteFile(board.getIndex(), deleteFileName);
-			    }
+			// 게시글 수정 시 삭제된 파일이 있으면 동작
+			if (board.getDeleteFiles() != null) {
+				
+				// SAVE_PATH에 있는 파일 리스트를 전부 가져옴
+				File dir = new File(SAVE_PATH);
+				File files[] = dir.listFiles();
+
+				List<String> deleteFileNames = board.getDeleteFiles();
+
+				// 가져온 파일리스트에서 삭제된 파일의 uuid가 포함되어 있으면 지정된 경로의 폴더에서 삭제
+				for (String deleteFileName : deleteFileNames) {
+					for (File file : files) {
+						if (file.getName().contains(deleteFileName)) {
+							if (file.exists()) {
+								if (file.delete()) {
+								} else {
+									System.out.println("파일 삭제 실패");
+								}
+							} else {
+								System.out.println("파일이 존재하지 않음");
+							}
+						}
+					}
+					boardRepository.deleteFile(board.getIndex(), deleteFileName);
+				}
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("파일 수정 실패");
 		}
 
 		boardRepository.updateBoard(vo, boardFiles);
@@ -235,10 +246,10 @@ public class BoardService implements IBoardService {
 
 		List<FileVO> files = boardRepository.files(index);
 
+		// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
 		for (FileVO file : files) {
-			String fileLocation = file.getFilePath();
 
-			File deleteFile = new File(fileLocation);
+			File deleteFile = new File(file.getFilePath());
 
 			if (deleteFile.exists()) {
 				if (deleteFile.delete()) {
@@ -265,8 +276,8 @@ public class BoardService implements IBoardService {
 	 * 
 	 * @return 해당 번호의 게시물 정보를 res 변수에 담고 반환
 	 * 
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 10. 26.
 	 */
 	@Override
 	public BoardGetDTO searchByIndex(Integer index) {
@@ -275,7 +286,8 @@ public class BoardService implements IBoardService {
 
 		BoardVO vo = boardRepository.searchByIndex(index);
 
-		BoardGetDTO dto = new BoardGetDTO(); // vo -> dto 변환
+		// vo -> dto 변환
+		BoardGetDTO dto = new BoardGetDTO(); 
 		dto.setIndex(vo.getIndex());
 		dto.setTitle(vo.getTitle());
 		dto.setText(vo.getText());
