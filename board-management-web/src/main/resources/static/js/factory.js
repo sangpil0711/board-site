@@ -140,12 +140,17 @@ app.factory('CommentFactory', function($resource) {
 	});
 });
 
+/**
+ * @Method : 사진 게시물에 게시물을 추가,수정,삭제,조회 하는 함수
+ * 
+ * @author 박상현
+ * @since 2023. 10. 24.
+ */
 app.factory('PhotoBoardFactory', function($resource) {
 	return $resource('/photos/:index', null, {
 
 		readPhotoBoards: {
 			method: 'GET',
-			isArray: true,
 			headers: {
 				"Content-Type": 'application/json'
 			},

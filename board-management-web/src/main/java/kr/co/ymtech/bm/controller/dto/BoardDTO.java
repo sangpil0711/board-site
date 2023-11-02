@@ -22,7 +22,7 @@ public class BoardDTO {
 	private Long createDate;
 	/** files : 게시글 첨부파일 */
 //	private List<MultipartFile> files;
-	
+//	
 //	/**
 //	 * @return the files
 //	 */

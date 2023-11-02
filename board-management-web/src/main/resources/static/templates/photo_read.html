@@ -23,7 +23,7 @@
                     <dd></dd>
                 </dl>
             </div>
-            <pre class="content"></pre>
+            <pre class="content">{{photoBoard.text}}</pre>
         </div>
     </div>
 	<!-- 끝: 게시물 상세조회 화면 박스 -->
@@ -31,11 +31,9 @@
 	<!-- 시작: 댓글 박스 -->
     <div class="comment_write">
         <h4>댓글</h4>
-        <div class="comment_container">
             <div class="textarea_container">
                 <textarea class="comment_write_box" placeholder="댓글 내용을 입력해주세요." ng-model="newComment"></textarea>
-            </div>
-            <input type="button" class="comment_write_btn" value="등록" ng-click="insertComment(null)" />
+	            <input type="button" class="comment_write_btn" value="등록" ng-click="insertComment(null)" />
         </div>
     </div>
     <!-- 끝: 댓글 박스 -->

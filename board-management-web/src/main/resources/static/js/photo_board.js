@@ -1,24 +1,23 @@
-app.controller("PhotoCtrl", function($scope, PhotoBoardFactory, $location) {
+app.controller("PhotoCtrl", function($scope, PhotoBoardFactory, $location, $route) {
 	
-//    $scope.currentPage = 1;
-//    $scope.itemsPerPage = 5;
-//    $scope.maxSize = 5;
-//    $scope.options = [
-//        { name: '5개씩 보기', value: 5 },
-//        { name: '10개씩 보기', value: 10 },
-//        { name: '15개씩 보기', value: 15 },
-//        { name: '20개씩 보기', value: 20 }
-//    ];
-//    $scope.searchType = 'title';
-//    $scope.keyword = '';
-//    $scope.types = [
-//        { name: '제목', value: 'title' },
-//        { name: '내용', value: 'content' },
-//        { name: '작성자', value: 'user_id' }
-//    ];
+    $scope.currentPage = 1;  // 게시판 현재 페이지
+    $scope.itemsPerPage = 6; // 페이지당 게시글 수
+    $scope.maxSize = 12; // 화면에 표시되는 최대 게시글 수
+    $scope.options = [   // 선택할수 있는 페이지당 게시글 수
+        { name: '6개씩 보기', value: 6 },
+        { name: '12개씩 보기', value: 12 },
+        { name: '18개씩 보기', value: 18 },
+        { name: '24개씩 보기', value: 24 }
+    ];
+    $scope.searchType = 'title';   // 검색 유형 기본 값
+    $scope.keyword = '';   // 검색어 기본 값 
+    $scope.types = [       // 선택 가능 한 검색 유형 
+        { name: '제목', value: 'title' },
+        { name: '내용', value: 'content' },
+        { name: '작성자', value: 'user_id' }
+    ];
     
     const CATEGORY = 1; //category 를 1로 설정
-    $scope.photoBoardlist = []; //초기화
     
     	/**
 	 * @function findPhotoBoardList 요청에 따른 게시판 목록과 게시판 총 게시글 수를 반환하는 함수
@@ -27,28 +26,69 @@ app.controller("PhotoCtrl", function($scope, PhotoBoardFactory, $location) {
 	 * @since 2023. 10. 26.
 	 */
     let findPhotoBoardList = function() {
-        PhotoBoardFactory.readPhotoBoards({category: CATEGORY}, function(response) {
-			//$scope.photoBoardlist.push(response);
-            $scope.photoBoardlist = response;
+        PhotoBoardFactory.readPhotoBoards({
+			category: CATEGORY,
+			pageNumber: $scope.currentPage,
+			itemSize: $scope.itemsPerPage,
+			searchType: $scope.searchType,
+			keyword: $scope.keyword
+			},
+			
+			 function(response) {
+    		$scope.photoBoardlist = [];  
+            for (let i = 0; i < response.photoBoardList.length/6; i++) {
+				let list = response.photoBoardList.slice(0+(i*6),6+(i*6))
+                $scope.photoBoardlist.push(list);
+            }
+            $scope.totalItems = response.totalCount;
         });
     }
 
-//    $scope.search = function() {
-//        if ($scope.keyword !== '') {
-//            findPhotoBoardList();
-//        } else {
-//            alert("검색어를 입력해주세요.");
-//        }
-//    }
-//
-//    $scope.changeSearchType = function(selectType) {
-//        $scope.searchType = selectType;
-//    }
-//
-//
-//    $scope.updatePage = function() {
-//        findBoardList();
-//    }
+	/**
+	 * @function search 검색어 입력에 따른 함수
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 01.
+	 */
+    $scope.search = function() {
+        if ($scope.keyword !== '') {
+            findPhotoBoardList();
+        } else {
+            alert("검색어를 입력해주세요.");
+        }
+    }
+
+	/**
+	 * @function changeSearchType 검색 유형 변경 함수
+	 * 
+	 * @param selectType 선택된 게시판 검색 유형
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 01.
+	 */
+    $scope.changeSearchType = function(selectType) {
+        $scope.searchType = selectType;
+    }
+
+	/**
+	 * @function updatePage 페이지 번호 변경 함수
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 01.
+	 */
+    $scope.updatePage = function() {
+        findPhotoBoardList();
+    }
+    
+    	/**
+	 * @function searchReset general_board.html로 새로고침하는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 20.
+	 */
+	$scope.searchReset = function() {
+		$route.reload();
+	};
 
 	/**
 	 * @function redirectToPhotoWrite photo_write.html로 이동하는 함수

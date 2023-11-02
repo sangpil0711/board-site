@@ -22,8 +22,6 @@
 	<script type="text/javascript" th:src="@{static/js/photo_read.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/photo_update.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/photo_write.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/ng-file-upload.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/ng-file-upload-shim.min.js}"></script>
 </head>
 
 <body ng-app="myApp">
@@ -37,7 +35,7 @@
 				<li><button type="button" class="btn" ng-click="redirectToGeneralBoard()">일반게시판</button></li>
 				<li><button type="button" class="btn" ng-click="redirectToPhotoBoard()">사진게시판</button>
 				</li>
-				<li><button type="button" class="btn" ng-click="location.href='dash.html' ">대시보드</button></li>
+				<li><button type="button" class="btn" ng-click="location.href='dash.html' ">통계</button></li>
 				<li><button type="button" class="btn" ng-click="location.href='file.html' ">파일탐색기</button></li>
 			</ul>
 		</div>

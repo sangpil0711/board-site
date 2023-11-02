@@ -92,17 +92,17 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer findCount(String searchType, String keyword, Integer category) {
 		
-	    String sql = "SELECT COUNT(*) FROM board";
+	    String sql = "SELECT COUNT(*) FROM board WHERE category = ?";
 	    
 	    if ("title".equals(searchType)) {
-	        sql += " WHERE title LIKE ?";
+	        sql += " AND title LIKE ?";
 	    } else if ("content".equals(searchType)) {
-	        sql += " WHERE content LIKE ?";
+	        sql += " AND content LIKE ?";
 	    } else if ("user_id".equals(searchType)) {
-	        sql += " WHERE user_id LIKE ?";
+	        sql += " AND user_id LIKE ?";
 	    }
 	    
-	    return jdbcTemplate.queryForObject(sql, Integer.class, "%" + keyword + "%");
+	    return jdbcTemplate.queryForObject(sql, Integer.class, category, "%" + keyword + "%");
 	}
 
 	/**
@@ -120,8 +120,8 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Override
 	public Integer saveBoard(BoardVO board) {
-		  return jdbcTemplate.update("insert into board(title, content, create_Date) values(?, ?, ?)", board.getTitle(),
-				board.getText(), board.getCreateDate());
+		  return jdbcTemplate.update("insert into board(title, content, category, create_Date) values(?, ?, ?, ?)", board.getTitle(),
+				board.getText(), board.getCategory(), board.getCreateDate());
 	}
 
 	/**

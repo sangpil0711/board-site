@@ -12,7 +12,7 @@ import kr.co.ymtech.bm.repository.vo.BoardVO;
  */
 public class BoardPageDTO {
 	
-    private List<BoardVO> list;
+    private List<BoardVO> boardList;
     private Integer totalCount;
 
     /**
@@ -24,7 +24,7 @@ public class BoardPageDTO {
      * @since 2023. 10. 05.
      */
     public List<BoardVO> getBoardList() {
-        return list;
+        return boardList;
     }
 
     /**
@@ -37,7 +37,7 @@ public class BoardPageDTO {
      * @since 2023. 10. 05.
      */
     public void setBoardList(List<BoardVO> boardList) {
-        this.list = boardList;
+        this.boardList = boardList;
     }
 
     /**
@@ -69,8 +69,8 @@ public class BoardPageDTO {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("BoardPageDTO [list=");
-		builder.append(list);
+		builder.append("BoardPageDTO [boardList=");
+		builder.append(boardList);
 		builder.append(", totalCount=");
 		builder.append(totalCount);
 		builder.append("]");

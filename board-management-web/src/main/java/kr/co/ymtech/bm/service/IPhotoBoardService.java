@@ -1,9 +1,9 @@
 package kr.co.ymtech.bm.service;
 
-import java.util.List;
 
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
+import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
 
 /**
  * 사진게시판 IPhotoBoardService 인터페이스
@@ -21,7 +21,7 @@ public interface IPhotoBoardService {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	List<PhotoBoardGetDTO> findPhotoBoard(Integer category);
+	public PhotoBoardPageDTO findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category);
 
 	/**
 	 * Method : 사진게시물을 저장하는 메소드 

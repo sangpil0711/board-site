@@ -66,6 +66,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, $routePara
         function(response) {
             $scope.commentlist = response;
 
+				let commentNewlist = [];
 				$scope.commentlist.forEach(function(comment) {
 					commentNewlist.push(comment);
 					comment.childCommentBox = false;
@@ -80,7 +81,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, $routePara
 			},
 			function(res) {
 				console.error("error: ", res);
-			})
+			});
 	};
 
 	findComment();
@@ -148,6 +149,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, $routePara
     $scope.updateComment = function (comment) {
         comment.update = true;
         comment.updatedText = comment.text; 
+        
     };
 
 	/**
@@ -179,9 +181,6 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, $routePara
         comment.updatedText = comment.text;
     };
 
-	$scope.cancelUpdate = function(comment) {
-		comment.update = false;
-	};
 
 	/**
 	 * @function deleteComment 해당 게시글에 댓글을 삭제하는 함수

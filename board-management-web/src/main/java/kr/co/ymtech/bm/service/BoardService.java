@@ -2,10 +2,8 @@ package kr.co.ymtech.bm.service;
 
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
@@ -33,7 +31,7 @@ public class BoardService implements IBoardService {
 	private final IBoardRepository boardRepository;
 	private final ICommentRepository commentRepository;
 	private final IFileRepository fileRepository;
-//	private final static String SAVE_PATH = "C:/boardFile";
+	private final static String SAVE_PATH = "C:/boardFile";
 
 
 	@Autowired
@@ -89,6 +87,7 @@ public class BoardService implements IBoardService {
 	    BoardVO vo = new BoardVO(); 
 	    vo.setTitle(board.getTitle());
 	    vo.setText(board.getText());
+	    vo.setCategory(board.getCategory());
 
 	    if (board.getCreateDate() == null) {
 	        vo.setCreateDate(new Date().getTime());

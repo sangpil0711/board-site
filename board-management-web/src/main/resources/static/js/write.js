@@ -73,7 +73,7 @@ app.controller("BoardWrite", function($scope, $location, BoardFactory) {
 	 * @since 2023. 10. 26.
 	 */
 	$scope.insert = function() {
-
+		$scope.board.category = 0;
 		BoardFactory.createBoard({}, $scope.board, function() {
 			$scope.redirectToBoard();
 		});
