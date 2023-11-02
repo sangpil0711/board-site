@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
-import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
+import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
 import kr.co.ymtech.bm.service.BoardService;
 import kr.co.ymtech.bm.service.FileService;
 import kr.co.ymtech.bm.service.IBoardService;
@@ -129,25 +128,14 @@ public class HomeController {
 	}
 
 	/**
-	 * Method : "/board/write" 경로로 'POST' 요청이 들어오면 return 값을 반환하는 메소드
-	 * 
-	 * @param board : 작성할 게시글의 객체
-	 * 
-	 * @return : "/board" 경로로 요청하여 "general_board.html" 반환
-	 * 
-	 *         작성일 : 2023.09.18 작성자 : 황상필
-	 */
-	/**
 	 * @Method writeBoard "/board/write" 경로로 'POST' 요청이 들어오면 return 값을 반환하는 메소드
 	 *
 	 * @param board 클라이언트가 저장하려고 하는 게시물 정보
-	 * @param filePaths 업로드 된 파일 위치
-	 * @param fileNames 업로드 된 파일 이름
 	 * 
 	 * @return "/board" 경로로 요청하여 "general_board.html" 반환
 	 *
 	 * @author 황상필
-	 * @since 2023. 09. 18.
+	 * @since 2023. 10. 30.
 	 */
 	@PostMapping(value = "/board/write")
 	public ModelAndView writeBoard(@ModelAttribute BoardDTO board) {
@@ -192,10 +180,10 @@ public class HomeController {
 	 * @return "/board/{index}" 경로로 요청하여 "general_read.html" 반환
 	 *
 	 * @author 황상필
-	 * @since 2023. 09. 18.
+	 * @since 2023. 11. 01.
 	 */
 	@PatchMapping(value = "board/update/{index}")
-	public ModelAndView updateBoard(@PathVariable Integer index, @RequestBody BoardGetDTO board) {
+	public ModelAndView updateBoard(@PathVariable Integer index, @ModelAttribute BoardUpdateDTO board) {
 
 		ModelAndView model = new ModelAndView();
 

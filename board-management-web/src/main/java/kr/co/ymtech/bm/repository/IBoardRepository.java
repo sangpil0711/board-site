@@ -9,7 +9,7 @@ import kr.co.ymtech.bm.repository.vo.FileVO;
  * 일반게시판 IBoardRepository 인터페이스
  * 
  * @author 박상현
- * @since  2023.09.18
+ * @since 2023. 09. 18.
  */
 public interface IBoardRepository {
 	
@@ -20,9 +20,10 @@ public interface IBoardRepository {
 	 * @param itemSize 게시판 페이지 당 게시글 수
 	 * @param searchType 게시판 검색 유형
 	 * @param keyword 게시판 검색어
+	 * @param category 게시판 카테고리
 	 * 
 	 * @author 황상필
-	 * @since 2023. 10. 05.
+	 * @since 2023. 10. 30.
 	 */
 	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category);
 	
@@ -31,9 +32,10 @@ public interface IBoardRepository {
 	 *
 	 * @param searchType 게시판 검색 유형
 	 * @param keyword 게시판 검색어
+	 * @param category 게시판 카테고리
 	 *
 	 * @author 황상필
-	 * @since 2023. 10. 05.
+	 * @since 2023. 10. 30.
 	 */
 	public Integer findCount(String searchType, String keyword, Integer category);
 
@@ -41,21 +43,23 @@ public interface IBoardRepository {
 	 * @Method saveBoard 게시물 정보를 저장
 	 * 
 	 * @param board 클라이언트가 저장하려고 하는 게시물 정보
+	 * @param file 업로드된 첨부파일
 	 * 
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 10. 30.
 	 */
-	public Integer saveBoard(BoardVO board);
+	public void saveBoard(BoardVO board, List<FileVO> file);
 
 	/**
 	 * @Method updateBoard 게시물 내용(text)을 수정
 	 * 
 	 * @param board 클라이언트가 수정할 부분의 게시물 내용
+	 * @param file 변경관 첨부파일
 	 * 
-	 * @author 박상현
-	 * @since 2023. 09. 18.
+	 * @author 황상필
+	 * @since 2023. 11. 01.
 	 */
-	public Integer updateBoard(BoardVO board);
+	public void updateBoard(BoardVO board, List<FileVO> file);
 
 	/**
 	 * @Method deleteBoard 게시물 정보를 삭제
@@ -89,35 +93,32 @@ public interface IBoardRepository {
 	public List<FileVO> files(Integer index);
 	
 	/**
-	 * @Method saveFile 파일 정보를 저장하는 메소드
-	 *
-	 * @param file DB에 보낼 파일 데이터
-	 *
-	 * @author 황상필
-	 * @since 2023. 10. 11.
-	 */
-	public Integer saveFile(FileVO file);
-	
-	/**
 	 * @Method lastBoard 마지막에 저장된 게시물의 번호를 조회하는 메소드
 	 *
 	 * @author 황상필
 	 * @since 2023. 10. 12.
 	 */
-	public List<BoardVO> lastBoard();
-
+	public BoardVO lastBoard();
+	
 	/**
-	 * @Method findAll DB에 저장되어 있는 게시물 수를 조회하는 메소드
+	 * @Method deleteFiles 게시물에 업로드된 파일을 전부 삭제하는 메소드
 	 *
-	 * @see kr.co.ymtech.bm.repository.IBoardRepository#findCount(java.lang.String, java.lang.String)
-	 *
-	 * @param stkdearchType 게시판 검색 유형
-	 * @param keyword 게시판 검색어
+	 * @param index 해당 게시글 번호
 	 * 
-	 * @return PageVO 클래스에 있는 객체를 하나만 포함하는 리스트를 생성 후 반환
-	 *
 	 * @author 황상필
-	 * @since 2023. 10. 05.
+	 * @since 2023. 10. 25.
 	 */
+	public Integer deleteFiles(Integer index);
+	
+	/**
+	 * @Method deleteFile 게시물에 업로드된 파일을 개별로 삭제하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param fileId 파일 uuid
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 31.
+	 */
+	public Integer deleteFile(Integer index, String fileId);
 
 }

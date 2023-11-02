@@ -6,23 +6,16 @@
 	<!-- 시작: 제목 작성 박스 -->
 	<div class="title_write">
 		<p>제목</p>
-		<input id="title" type="text" ng-model="board.title" required>
+		<input type="text" ng-model="board.title" required>
 	</div>
 	<!-- 끝: 제목 작성 박스 -->
 
 
 	<!-- 시작: 내용 작성 박스 -->
 	<div class="content_write">
-		<textarea id="contents" ng-model="board.text" required></textarea>
+		<textarea ng-model="board.text" required></textarea>
 	</div>
 	<!-- 끝: 내용 작성 박스 -->
-
-
-		<!-- 시작: 파일선택 초기화 버튼 -->
-	<div>
-		<button class="reset_btn" ng-click="resetFile()">파일선택<br>초기화</button>
-	</div>
-	<!-- 끝: 파일선택 초기화 버튼 -->
 
 
 	<!-- 시작: 파일선택 버튼 -->
@@ -31,14 +24,13 @@
 			ngf-select="onFileSelect($files)"
 			accept=".hwp, .hwpx, .pdf, .txt, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .zip" multiple>
 		<button class="file_btn" ng-click="selectFile()">파일선택<br>(최대 100MB)</button>
-		
 	</div>
 	<!-- 끝: 파일선택 버튼 -->
 
 
 	<!-- 시작: 파일이름 표시 박스 -->
 	<div class="file_name">
-		<div ng-repeat="fileName in fileNames">{{fileName}}</div>
+		<div ng-repeat="fileName in fileNames track by $index">{{fileName}} <button ng-click="excludeFile($index)">삭제</button> </div>
 	</div>
 	<!-- 끝: 파일이름 표시 박스 -->
 

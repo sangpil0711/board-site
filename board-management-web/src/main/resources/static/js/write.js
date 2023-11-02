@@ -1,16 +1,12 @@
-/**
- * $scope, $window 객체와 BoardFactory 서비스를 사용하는 controller 생성
- * general_write.html에 필요한 메서드 작성
- * 
- * 작성일 : 2023.09.15
- * 작성자 : 황상필
- */
-app.controller("BoardWrite", function($scope, $location, BoardFactory) {
+app.controller("BoardWrite", function($scope, $location, Upload) {
 
-	let totalSize = 0;		// 업로드되는 파일 크기의 합
+	// 업로드되는 파일 크기의 합
+	let totalSize = 0;
 
-	$scope.fileNames = [];		// 업로드되는 파일 이름
-	$scope.selectedFiles = [];		// 업로드되는 파일 데이터
+	// 업로드되는 파일 이름
+	$scope.fileNames = [];
+	// 업로드되는 파일 데이터
+	$scope.selectedFiles = [];		
 
 	/**
 	 * @function selectFile 파일탐색기가 실행되어서 파일을 선택할 수 있는 함수
@@ -32,52 +28,54 @@ app.controller("BoardWrite", function($scope, $location, BoardFactory) {
 	 */
 	$scope.onFileSelect = function($files) {
 
-      let exceedSizeFile = null;
+		let exceedSizeFile = false;
 
-      for (var i = 0; i < $files.length; i++) {
-         if ($scope.selectedFiles.some(selectedFile => selectedFile.name === $files[i].name)) {
-            alert("파일 '" + $files[i].name + "'이(가) 이미 선택되었습니다.");
-         } else if (totalSize + $files[i].size > 100 * 1024 * 1024) {
-            exceedSizeFile = $files[i];
-            break;
-         } else {
-            $scope.selectedFiles.push($files[i]);
-            $scope.fileNames.push($files[i].name);
-            totalSize += $files[i].size;
-         }
-      }
+		$files.forEach(function(file) {
+			if (totalSize + file.size > 100 * 1024 * 1024) {
+				exceedSizeFile = true;
+			} 
+			
+			// 선택된 파일의 크기가 100MB를 초과하지 않으면 각 변수에 파일 데이터 할당 
+			else {
+				$scope.selectedFiles.push(file);
+				$scope.fileNames.push(file.name);
+				totalSize += file.size;
+			}
+		})
 
-      if (exceedSizeFile) {
-         alert("선택한 파일의 용량이 100MB를 초과합니다.");
-      }
+		// 선택된 파일의 크기가 100MB를 초과하면 알림창 표시
+		if (exceedSizeFile) {
+			alert("선택한 파일의 용량이 100MB를 초과합니다.");
+		}
 
-
-	};
-
-	/**
-	 * @function resetFile 선택된 파일과 크기를 초기화 시키는 함수
-	 * 
-	 * @author 황상필
-	 * @since 2023. 10. 23.
-	 */
-	$scope.resetFile = function() {
-		$scope.selectedFiles = [];
-		$scope.fileNames = [];
-		totalSize = 0;
 	};
 
 	/**
 	 * @function insert 게시글을 등록하는 함수
 	 * 
+	 * 
 	 * @author 황상필
 	 * @since 2023. 10. 26.
 	 */
 	$scope.insert = function() {
-		$scope.board.category = 0;
-		BoardFactory.createBoard({}, $scope.board, function() {
+		Upload.upload({
+			url: '/boards',
+			method: 'POST',
+			params: {},
+			data: { 	// 요청된 경로의 Controller로 전달할 데이터
+				index: $scope.board.index,
+				title: $scope.board.title,
+				text: $scope.board.text,
+				userId: $scope.board.userId,
+				category: 0,
+				createDate: $scope.board.createDate,
+				files: $scope.selectedFiles,
+			},
+		}).success(function() {
 			$scope.redirectToBoard();
-		});
-		
+		}).error(function() {
+			alert('파일 업로드 실패');
+		})
 	};
 
 	/**
@@ -89,5 +87,22 @@ app.controller("BoardWrite", function($scope, $location, BoardFactory) {
 	$scope.redirectToBoard = function() {
 		$location.path('/board');
 	};
+
+    /**
+	 * @function excludeFile 해당 파일을 리스트에서 삭제하는 함수
+	 * 
+	 * @param index 해당 파일 index
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 31.
+	 */
+	$scope.excludeFile = function(index) {
+		let confirmDelete = confirm("파일을 삭제하시겠습니까?");
+		if (confirmDelete) {
+			totalSize -= $scope.selectedFiles[index].size;
+			$scope.fileNames.splice(index, 1);
+			$scope.selectedFiles.splice(index, 1);
+		}
+	}
 
 });

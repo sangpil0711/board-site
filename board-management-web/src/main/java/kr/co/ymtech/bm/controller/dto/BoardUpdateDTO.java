@@ -2,17 +2,16 @@ package kr.co.ymtech.bm.controller.dto;
 
 import java.util.List;
 
-import kr.co.ymtech.bm.repository.vo.FileVO;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 게시물 정보를 저장하는 클래스
+ * 게시물 정보를 수정하는 클래스
  * 
  * @author 황상필
- * @since 2023. 10. 31.
+ * @since 2023. 11. 01.
  */
-public class BoardGetDTO {
+public class BoardUpdateDTO {
 
-	// API 작성하는법
 	/** index : 게시글 번호 */
 	private Integer index;
 	/** title : 게시글 제목 */
@@ -25,69 +24,79 @@ public class BoardGetDTO {
 	private Integer category;
 	/** createDate : 게시글 작성일 */
 	private Long createDate;
-	/** file : 등록된 게시글 첨부파일 */
-	private List<FileVO> file;
-	
-	public List<FileVO> getFile() {
-		return file;
-	}
-	
-	public void setFile(List<FileVO> file) {
-		this.file = file;
-	}
+	/** addFiles : 추가된 첨부파일 */
+	private List<MultipartFile> addFiles;
+	/**	deleteFiles : 삭제된 첨부파일 */
+	private List<String> deleteFiles;
 
 	public Integer getIndex() {
 		return index;
-	}
-
-	public void setIndex(Integer index) {
-		this.index = index;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getText() {
 		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
 	}
 
 	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
 	public Integer getCategory() {
 		return category;
-	}
-
-	public void setCategory(Integer category) {
-		this.category = category;
 	}
 
 	public Long getCreateDate() {
 		return createDate;
 	}
 
+	public List<MultipartFile> getAddFiles() {
+		return addFiles;
+	}
+
+	public List<String> getDeleteFiles() {
+		return deleteFiles;
+	}
+
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
+
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
+	}
+
+	public void setAddFiles(List<MultipartFile> addFiles) {
+		this.addFiles = addFiles;
+	}
+
+	public void setDeleteFiles(List<String> deleteFiles) {
+		this.deleteFiles = deleteFiles;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("BoardGetDTO [index=");
+		builder.append("BoardUpdateDTO [index=");
 		builder.append(index);
 		builder.append(", title=");
 		builder.append(title);
@@ -99,10 +108,12 @@ public class BoardGetDTO {
 		builder.append(category);
 		builder.append(", createDate=");
 		builder.append(createDate);
-		builder.append(", file=");
-		builder.append(file);
+		builder.append(", addFiles=");
+		builder.append(addFiles);
+		builder.append(", deleteFiles=");
+		builder.append(deleteFiles);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

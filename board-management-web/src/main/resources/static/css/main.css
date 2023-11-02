@@ -33,8 +33,6 @@ ul li {
 	padding: 0 0 0 80px;
 }
 
-
-
 .ipp_btn {
 	border: none;
 	padding: 15px 30px;
@@ -417,28 +415,6 @@ h3 {
 	width: 212px;
 }
 
-
-.board td:first-child,
-.board th:first-child {
-	width: 106px;
-}
-
-.board td:nth-child(2),
-.board th:nth-child(2) {
-	width: 583px;
-}
-
-.board td:nth-child(3),
-.board th:nth-child(3) {
-	width: 159px;
-}
-
-.board td:nth-child(4),
-.board th:nth-child(4) {
-	width: 212px;
-}
-
-
 .board tbody td {
 	border: 1px solid grey;
 	border-width: 1px 0;
@@ -574,6 +550,7 @@ strong {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 150px;
+	margin-bottom: 50px;
 }
 
 .board_view {
@@ -583,8 +560,14 @@ strong {
 }
 
 .board_view a {
-	margin-left: 20px;
 	font-size: 15px;
+	margin-left: 20px;
+}
+
+.board_view p {
+	font-weight: 600;
+	margin-left: 10px;
+	margin-top: 20px;
 }
 
 .board_view .title {
@@ -602,38 +585,6 @@ strong {
 .board_view .info dl {
 	display: inline-block;
 	padding: 0 20px;
-}
-
-.board_view .info dt {
-	position: relative;
-	bottom: 8px;
-}
-
-.board_view .info dl:first-child {
-	padding-left: 0;
-	width: 15%;
-}
-
-.board_view .info dl:nth-child(2) {
-	width: 40%;
-}
-
-.board_view .info dl:first-child dd {
-	position: relative;
-	bottom: 8px;
-}
-
-.board_view .info dl:nth-child(2) dd {
-	position: relative;
-	bottom: 8px;
-}
-
-.board_view .info dl:nth-child(3) dd {
-	overflow: overlay;
-	max-height: 50px;
-	width: 300px;
-	position: absolute;
-	top: 374px;
 }
 
 .board_view .info p {
@@ -702,6 +653,10 @@ pre {
 }
 
 
+.textarea_container textarea {
+	resize: none;
+}
+
 .comment_write_btn {
 	position: relative;
 	height: 95px;
@@ -720,8 +675,7 @@ pre {
 	position: absolute;
 	left: 335px;
 	width: 1000px;
-	margin-top: 50px;
-
+	top: 10px;
 }
 
 .save_btn {
@@ -748,7 +702,6 @@ pre {
 	text-align: center;
 	font-size: 11px;
 }
-
 
 .delete_btn {
 	margin-left: 0px;

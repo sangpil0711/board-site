@@ -92,7 +92,7 @@ app.factory('BoardFactory', function($resource) {
 app.factory('FileFactory', function($resource) {
 	return $resource('/files/:index', null, {
 		
-		resetFile: {
+		deleteFile: {
 			method: 'DELETE'
 		},
 		
