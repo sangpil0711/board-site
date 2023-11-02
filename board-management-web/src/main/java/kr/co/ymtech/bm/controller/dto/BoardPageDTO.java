@@ -18,11 +18,11 @@ public class BoardPageDTO {
     private Integer totalCount;
 
     public List<BoardVO> getBoardList() {
-        return list;
+        return boardList;
     }
 
     public void setBoardList(List<BoardVO> boardList) {
-        this.list = boardList;
+        this.boardList = boardList;
     }
 
     public Integer getTotalCount() {
@@ -36,8 +36,8 @@ public class BoardPageDTO {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("BoardPageDTO [list=");
-		builder.append(list);
+		builder.append("BoardPageDTO [boardList=");
+		builder.append(boardList);
 		builder.append(", totalCount=");
 		builder.append(totalCount);
 		builder.append("]");

@@ -18,8 +18,13 @@ app.controller("PhotoWrite", function($scope, $location, PhotoBoardFactory) {
 	 */
     $scope.insertPhoto = function() {
         $scope.photoBoard.category = 1;
-        PhotoBoardFactory.createPhotoBoard($scope.photoBoard, function() {
+        PhotoBoardFactory.createPhotoBoard($scope.photoBoard, 
+        function() {
             $scope.redirectToPhotoBoard();
-        });
-    }
+        },
+		function(error){
+			alert("게시물 추가 실패!");
+			console.error("게시물 추가 실패 ",error);
+		})
+    };
 });

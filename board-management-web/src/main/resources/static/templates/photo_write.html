@@ -29,5 +29,8 @@ s<div id="container" ng-controller="PhotoWrite">
         <input type="button" ng-click="insertPhoto()" value="작성완료">
         <button ng-click="redirectToPhotoBoard()">취소</button>
     </div>
+    
+    <div class="error-message" ng-if="errorMessage">{{errorMessage}}</div>
+    
     <!-- 끝: 게시물 추가 화면 박스 -->
 </div>

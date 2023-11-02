@@ -95,7 +95,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 			},
 			function(res) {
 				console.error("error: ", res);
-			})
+			});
 	};
 
 	findComment();
@@ -193,9 +193,6 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 		comment.updatedText = comment.text;
 	};
 
-	$scope.cancelUpdate = function(comment) {
-		comment.update = false;
-	};
 
 	/**
 	 * @function deleteComment 해당 게시글에 댓글을 삭제하는 함수

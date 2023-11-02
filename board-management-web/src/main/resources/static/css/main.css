@@ -245,14 +245,34 @@ h3 {
 }
 
 .photo_box {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	width: 80%;
-	/* 가로 공간의 80%만 차지하도록 설정 */
-	margin: 0 auto;
-	/* 중앙 정렬을 위해 margin을 auto로 설정 */
-}
+	justify-content: flex-start;
+	width: 70%;
+	margin: -10px auto;
+  }
+  
+  
+  .photo_box .img-button {
+	max-width: 100%;
+	text-align: center;
+	margin: 19px;
+	width: 160px;
+  }
+  
+  
+  
+  .photo_box .img-button img {
+	width: 100%; 
+	height: auto;
+  }
+  
+  .photo_box .img-button p {
+	margin: 2px;
+  }
+  
+  .photo_span {
+	  float: left;
+	  font-size: 12px;
+  }
 
 .photo {
 	width: calc(20% - 10px);
@@ -283,6 +303,18 @@ h3 {
 	text-align: left;
 	width: 100%;
 }
+.photo_p{
+	text-align: center;
+	font-size: 12px;
+}
+.photo_p_date{
+	text-align: center;
+	font-size: 11px;
+}
+
+
+
+
 
 
 .comment td {
@@ -647,21 +679,18 @@ pre {
 	left: 450px;
 }
 
-.comment_container {
+.comment_  {
 	display: flex;
 	align-items: center;
 }
 
-.textarea_container {
-	flex: 1;
-	margin-right: 10px;
-}
 
 .textarea_container textarea {
 	resize: none;
 }
 
 .comment_write_btn {
+	position: relative;
 	height: 95px;
 	width: 54px;
 	margin-left: -7px;

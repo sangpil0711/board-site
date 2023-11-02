@@ -30,37 +30,69 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	private JdbcTemplate jdbcTemplate;
 
 	/**
-	 * Method : 카테고리 번호를 이용하여 사진게시판 게시물들의 정보를 가져오는 메소드
+	 * @Method findPhotoBoard 게시물에 저장되어 있는 정보를 조회 및 검색하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IPhotoBoardRepository#findPhotoBoard(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String)
+	 *
+	 * @param pageNumber 게시판 페이지 번호
+	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
+	 * @param category : 일반게시판,사진게시판 구분 카테고리 (일반게시판 0, 사진게시판 1)
 	 * 
-	 * @param category : 게시물 카테고리 번호
-	 * 
-	 * @return : 사진 게시물 정보를 조회하는 query 함수 실행
-	 * 
+	 * @return DB에 있는 정보를 조회 및 검색하는 query 함수 실행
+	 *
 	 * @author 박상현
-	 * @since  2023.10.24
+	 * @since 2023. 10. 31.
 	 */
 	@Override
-	public List<PhotoBoardVO> findPhotoBoard(Integer category) {
+	public List<PhotoBoardVO> findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category) {
+	    Integer offset = (pageNumber - 1) * itemSize;
+	    String sql = "SELECT * FROM board WHERE category = ?"; // 기본 쿼리
 
-		RowMapper<PhotoBoardVO> mapper = new RowMapper<PhotoBoardVO>() {
+	    // 검색 조건을 추가
+	    if ("title".equals(searchType)) {
+	        sql += " AND title LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+	    } else if ("content".equals(searchType)) {
+	        sql += " AND content LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+	    } else if ("user_id".equals(searchType)) {
+	        sql += " AND user_id LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+	    }
 
-			@Override
-			public PhotoBoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				PhotoBoardVO member = new PhotoBoardVO(
-						rs.getInt("index"), 
-						rs.getString("title"),
-						rs.getString("content"), 
-						rs.getString("user_id"), 
-						rs.getInt("category"),
-						rs.getLong("create_date")
-						);
+	    RowMapper<PhotoBoardVO> mapper = new RowMapper<PhotoBoardVO>() {
+	        @Override
+	        public PhotoBoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+	        	PhotoBoardVO member = new PhotoBoardVO(
+	                    rs.getInt("index"),
+	                    rs.getString("title"),
+	                    rs.getString("content"),
+	                    rs.getString("user_id"),
+	                    rs.getInt("category"),
+	                    rs.getLong("create_date"));
+	            return member;
+	        }
+	    };
 
-				return member;
-			}
-		};
-
-		return jdbcTemplate.query("select * from board where category = ?", mapper, category);
+	    return jdbcTemplate.query(sql, mapper, category, "%" + keyword + "%", offset, itemSize);
 	}
+	
+	@Override
+	public Integer findCount(String searchType, String keyword, Integer category) {
+		
+	    String sql = "SELECT COUNT(*) FROM board WHERE category = ?";
+	    
+	    if ("title".equals(searchType)) {
+	        sql += " AND title LIKE ?";
+	    } else if ("content".equals(searchType)) {
+	        sql += " AND content LIKE ?";
+	    } else if ("user_id".equals(searchType)) {
+	        sql += " AND user_id LIKE ?";
+	    }
+	    
+	    return jdbcTemplate.queryForObject(sql, Integer.class, category, "%" + keyword + "%");
+	}
+	
+	
 
 	/**
 	 * Method : 게시물 정보를 저장하는 메소드

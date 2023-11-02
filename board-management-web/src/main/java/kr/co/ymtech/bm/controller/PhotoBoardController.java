@@ -1,6 +1,5 @@
 package kr.co.ymtech.bm.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
+import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
 import kr.co.ymtech.bm.service.IPhotoBoardService;
 import kr.co.ymtech.bm.service.PhotoBoardService;
 
@@ -42,21 +42,28 @@ public class PhotoBoardController {
 	}
 
 	/**
-	 * Method : 사진게시물을 조회하는 메소드 
 	 * 
-	 * @param category : 게시물 카테고리 번호
+	 * @Method findPhotoBoard 게시물에 저장되어 있는 정보를 조회 및 검색하는 메소드
+	 *
+	 * @param pageNumber : 사진게시판 페이지 번호
+	 * @param itemSize   : 사진게시판 페이지 당 게시글 개수
+	 * @param searchType : 사진게시판 검색에 필요한 검색 유형
+	 * @param keyword    : 사진게시판 검색에 필요한 검색어
+	 * @param category   : 일반게시판,사진게시판 구분 카테고리 (일반게시판 0, 사진게시판 1)
 	 * 
-	 * @return : 조회한 게시물 내용을 photoBoardList 변수에 담고 ResponseEntity 를 사용하여 응답한다.
+	 * @return 저장되어 있는 정보를 모두 변수 photoBoardList에 담고 ResponseEntity 를 사용하여 응답한다. Http
+	 *         상태코드는 HttpStatus.ok 로 성공상태 200을 나타내준다.
 	 * 
-	 * @author 박상현
-	 * @since  2023.10.24
+	 * @author 황상필
+	 * @since 2023. 10. 05.
 	 */
 	@GetMapping("/photos")
-	public ResponseEntity<List<PhotoBoardGetDTO>> findPhotoBoard(@RequestParam Integer category) {
+	public ResponseEntity<PhotoBoardPageDTO> findPhotoBoard(@RequestParam Integer pageNumber, @RequestParam Integer itemSize,
+			@RequestParam String searchType, @RequestParam String keyword, @RequestParam Integer category) {
 
-		List<PhotoBoardGetDTO> photoBoardList = photoBoardService.findPhotoBoard(category);
+		PhotoBoardPageDTO photoBoardList = photoBoardService.findPhotoBoard(pageNumber, itemSize, searchType, keyword, category);
 
-		return new ResponseEntity<List<PhotoBoardGetDTO>>(photoBoardList, HttpStatus.OK);
+		return new ResponseEntity<PhotoBoardPageDTO>(photoBoardList, HttpStatus.OK);
 	}
 
 	/**

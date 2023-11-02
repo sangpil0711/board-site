@@ -20,7 +20,8 @@ public interface IPhotoBoardRepository {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	List<PhotoBoardVO> findPhotoBoard(Integer category);
+	List<PhotoBoardVO> findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword,
+			Integer category);
 
 	/**
 	 * Method : 사진게시물을 저장하는 메소드 
@@ -61,5 +62,10 @@ public interface IPhotoBoardRepository {
 	 * @since  2023.10.25
 	 */
 	PhotoBoardVO searchByPhotoIndex(Integer index);
+	
+
+	Integer findCount(String searchType, String keyword, Integer category);
+
+
 
 }

@@ -1,7 +1,8 @@
 app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoardFactory) {
 	
-    let index = $routeParams.index;
+    let index = $routeParams.index;   //라우팅으로 받아오는 게시글 번호
 
+	$scope.photoBoard = [];
 	/**
 	 * @function searchByPhotoIndex 게시판 번호에 맞는 데이터를 불러오는 함수
 	 * 
@@ -21,7 +22,7 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @author 박상현
 	 * @since 2023. 10. 26.
 	 */
-    $scope.redirectToPhotoUpdate = function(index) {
+    $scope.redirectToPhotoUpdate = function() {
         $location.path('/photo/update/' + index);
     }
 
@@ -43,12 +44,20 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @author 박상현
 	 * @since 2023. 10. 26.
 	 */
-    $scope.removePhoto = function(index) {
+    $scope.removePhoto = function() {
         let confirmDelete = confirm("게시물을 삭제하시겠습니까?");
         if (confirmDelete) {
             PhotoBoardFactory.deletePhotoBoard({ index: index }, function() {
                 $location.path('/photo');
-            });
-        }
+            },
+            function(error){
+				alert("게시물 추가 실패!");
+				console.error("게시물 추가 실패",error);
+				
+			}
+            );
+        }else{
+			alert("삭제 실패!");
+		}
     }
 });
