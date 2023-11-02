@@ -1,4 +1,5 @@
 app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routeParams, Upload) {
+	
 	// 라우팅으로 받아오는 게시글 번호
 	let index = $routeParams.index; 	
 	// 업로드되는 파일의 총 크기

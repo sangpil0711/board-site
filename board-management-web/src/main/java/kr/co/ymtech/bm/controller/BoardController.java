@@ -108,7 +108,7 @@ public class BoardController {
 
 		Integer boardlistDelete = boardService.deleteBoard(index);
 
-		return new ResponseEntity<Integer>(boardlistDelete, HttpStatus.BAD_GATEWAY);
+		return new ResponseEntity<Integer>(boardlistDelete, HttpStatus.OK);
 	}
 
 	/**

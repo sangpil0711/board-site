@@ -88,6 +88,14 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 		$location.path('/board');
 	};
 
+    /**
+	 * @function excludeFile 해당 파일을 리스트에서 삭제하는 함수
+	 * 
+	 * @param index 해당 파일 index
+	 * 
+	 * @author 황상필
+	 * @since 2023. 10. 31.
+	 */
 	$scope.excludeFile = function(index) {
 		let confirmDelete = confirm("파일을 삭제하시겠습니까?");
 		if (confirmDelete) {
