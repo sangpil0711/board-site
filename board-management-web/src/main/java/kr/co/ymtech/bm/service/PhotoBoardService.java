@@ -15,14 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
-import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardUpdateDTO;
+import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.repository.IPhotoBoardRepository;
-import kr.co.ymtech.bm.repository.vo.BoardVO;
 import kr.co.ymtech.bm.repository.vo.FileVO;
 import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 
@@ -331,7 +329,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 		dto.setText(vo.getText());
 		dto.setUserId(vo.getUserId());
 		dto.setCategory(vo.getCategory());
-		dto.setCreateDate(new Date(vo.getCreateDate()));
+		dto.setCreateDate(new Long(vo.getCreateDate()));
 		dto.setLikeCount(vo.getLikeCount());
 		dto.setFile(fv);
 		return dto;

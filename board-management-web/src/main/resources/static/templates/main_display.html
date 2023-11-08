@@ -7,11 +7,11 @@
 		<ul class="best" ng-repeat="item in board">
 			<li>
 				<button type="button" class="best_btn1" ng-if="item.category == 0"
-					ng-click="redirectToReadBoard(item.index)">{{item.title}}</button>
+					ng-click="redirectToReadGeneralBoard(item.index)">{{item.title}}</button>
 				<img ng-src="{{thumbnail(item.file[0])}}" ng-if="item.category == 1" alt="이미지"
-					ng-click="redirectToReadBoard(item.index)">
+					ng-click="redirectToReadPhotoBoard(item.index)">
 				<button type="button" class="best_btn2" ng-if="item.category == 1"
-					ng-click="redirectToReadBoard(item.index)">{{item.title}}</button>
+					ng-click="redirectToReadPhotoBoard(item.index)">{{item.title}}</button>
 				<span class="like_count">({{item.likeCount}})</span>
 			</li>
 		</ul>

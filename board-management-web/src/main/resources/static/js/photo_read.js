@@ -1,8 +1,8 @@
 app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoardFactory, CommentFactory, BoardFactory) {
-	
-	
-	 //라우팅으로 받아오는 게시글 번호
-    let index = $routeParams.index;   
+
+
+	//라우팅으로 받아오는 게시글 번호
+	let index = $routeParams.index;
 
 	$scope.photoBoard = [];
 	/**
@@ -11,21 +11,21 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @author 박상현
 	 * @since 2023. 10. 26.
 	 */
-    let searchByPhotoIndex = function() {
-        PhotoBoardFactory.readPhotoBoard({ index: index }, function(response) {
-            $scope.photoBoard = response;
-            $scope.photoBoard.imagePaths = [];
-            
-             for(let i = 0;i<response.file.length;i++){
-             $scope.photoBoard.imagePaths.push("/files/" + response.file[i].fileId + "?fileName=" + response.file[i].fileName);
-             }
+	let searchByPhotoIndex = function() {
+		PhotoBoardFactory.readPhotoBoard({ index: index }, function(response) {
+			$scope.photoBoard = response;
+			$scope.photoBoard.imagePaths = [];
+
+			for (let i = 0; i < response.file.length; i++) {
+				$scope.photoBoard.imagePaths.push("/files/" + response.file[i].fileId + "?fileName=" + response.file[i].fileName);
+			}
 		},
-        	function(error) {
+			function(error) {
 				alert("게시물 데이터 불러오기 실패");
 				console.error("게시물 데이터 불러오기 실패", error);
 			})
-    };
-    searchByPhotoIndex();
+	};
+	searchByPhotoIndex();
 
 	/**
 	 * @function redirectToPhotoUpdate photo_update.html로 이동하는 함수
@@ -33,9 +33,9 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @author 박상현
 	 * @since 2023. 10. 26.
 	 */
-    $scope.redirectToPhotoUpdate = function() {
-        $location.path('/photo/update/' + index);
-    }
+	$scope.redirectToPhotoUpdate = function() {
+		$location.path('/photo/update/' + index);
+	}
 
 	/**
 	 * @function redirectToPhotoBoard photo_board.html로 이동하는 함수
@@ -43,9 +43,9 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @author 박상현
 	 * @since 2023. 10. 26.
 	 */
-    $scope.redirectToPhotoBoard = function() {
-        $location.path('/photo');
-    }
+	$scope.redirectToPhotoBoard = function() {
+		$location.path('/photo');
+	}
 
 	/**
 	 * @function remove 게시판 번호에 맞는 데이터를 삭제하는 함수
@@ -55,24 +55,24 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @author 박상현
 	 * @since 2023. 10. 26.
 	 */
-    $scope.removePhoto = function() {
-        let confirmDelete = confirm("게시물을 삭제하시겠습니까?");
-        if (confirmDelete) {
-            PhotoBoardFactory.deletePhotoBoard({ index: index }, function() {
-                $location.path('/photo');
-            },
-            function(error){
-				alert("게시물 추가 실패!");
-				console.error("게시물 추가 실패",error);
-				
-			}
-            );
-        }else{
+	$scope.removePhoto = function() {
+		let confirmDelete = confirm("게시물을 삭제하시겠습니까?");
+		if (confirmDelete) {
+			PhotoBoardFactory.deletePhotoBoard({ index: index }, function() {
+				$location.path('/photo');
+			},
+				function(error) {
+					alert("게시물 추가 실패!");
+					console.error("게시물 추가 실패", error);
+
+				}
+			);
+		} else {
 			alert("삭제 실패!");
 		}
-    }
-    
-    /**
+	}
+
+	/**
 	 * @function findComment 댓글과 답글을 조회하는 함수
 	 * 
 	 * @author 황상필
@@ -85,7 +85,7 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 			function(response) {
 				$scope.commentlist = response;
 				let commentNewlist = [];
-				
+
 				// 배열을 순회하면서 댓글과 대댓글을 리스트에 추가
 				$scope.commentlist.forEach(function(comment) {
 					commentNewlist.push(comment);
@@ -218,7 +218,7 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 			})
 		}
 	};
-	
+
 	/**
 	 * @function likeAdd 추천 수가 1씩 증가하는 함수
 	 * 
@@ -228,8 +228,8 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	$scope.likeAdd = function() {
 		$scope.photoBoard.likeCount++
 		BoardFactory.boardLike({ index: index, likeCount: $scope.photoBoard.likeCount }, function() {
-			
+
 		})
 	};
-	
+
 });

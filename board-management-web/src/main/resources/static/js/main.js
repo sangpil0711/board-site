@@ -24,8 +24,12 @@ app.controller("BoardMain", function($scope, $location, MainFactory) {
 	 * @author 황상필
 	 * @since 2023. 11. 06.
 	 */
-	$scope.redirectToReadBoard = function(index) {
+	$scope.redirectToReadGeneralBoard = function(index) {
 		$location.path('/board/read/' + index);
+	};
+	
+	$scope.redirectToReadPhotoBoard = function(index) {
+		$location.path('/photo/read/' + index);
 	};
 
 });
