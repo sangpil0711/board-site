@@ -1,5 +1,7 @@
 package kr.co.ymtech.bm.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -103,7 +105,7 @@ public class BoardController {
 	 * @author 박상현
 	 * @since 2023. 09. 18.
 	 */
-	@DeleteMapping("/boards/{index}")
+	@DeleteMapping(value = "/boards/{index}")
 	public ResponseEntity<Integer> deleteBoard(@PathVariable Integer index) {
 
 		Integer boardlistDelete = boardService.deleteBoard(index);
@@ -116,17 +118,52 @@ public class BoardController {
 	 * 
 	 * @param index 게시물 번호를 담고 있고 해당 번호의 게시물 정보를 조회
 	 * 
-	 * @return 해당 번호의 게시물 정보를 boardlistIndex 변수에 담고 ResponseEntity 를 사용하여 응답한다.
+	 * @return 해당 번호의 게시물 정보를 boardlistIndex 변수에 담고 ResponseEntity 를 사용하여 응답
 	 * 
 	 * @author 박상현
 	 * @since 2023. 09. 18.
 	 */
-	@GetMapping("/boards/{index}")
+	@GetMapping(value = "/boards/{index}")
 	public ResponseEntity<BoardGetDTO> searchByIndex(@PathVariable Integer index) {
-
+		
 		BoardGetDTO boardlistIndex = boardService.searchByIndex(index);
 
 		return new ResponseEntity<BoardGetDTO>(boardlistIndex, HttpStatus.OK);
+	}
+	
+	/**
+	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param likeCount 해당 게시글 추천 수
+	 * 
+	 * @return 게시글의 번호와 추천 수를 boardLikeCount 변수에 담고 ResponseEntity 를 사용하여 응답
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 03.
+	 */
+	@PatchMapping(value = "/boards/{index}/{likeCount}")
+	public ResponseEntity<Integer> boardLikeCount(@PathVariable Integer index, @PathVariable Integer likeCount) {
+		
+		Integer boardLikeCount = boardService.boardLikeCount(index, likeCount);
+
+		return new ResponseEntity<Integer>(boardLikeCount, HttpStatus.OK);
+	}
+	
+	/**
+	 * @Method bestBoard 추천 수가 많은 게시글을 반환하는 메소드
+	 *
+	 * @return 게시글의 정보를 bestBoard 변수에 담고 ResponseEntity 를 사용하여 응답
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 06.
+	 */
+	@GetMapping(value = "/boards/best")
+	public ResponseEntity<List<BoardGetDTO>> bestBoard() {
+		
+		List<BoardGetDTO> bestBoard = boardService.bestBoard();
+		
+		return new ResponseEntity<List<BoardGetDTO>>(bestBoard, HttpStatus.OK);
 	}
 
 }

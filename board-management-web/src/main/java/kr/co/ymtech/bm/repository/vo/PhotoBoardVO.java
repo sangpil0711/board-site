@@ -14,6 +14,9 @@ public class PhotoBoardVO {
 	private Integer category;
 	/** createDate : 게시글 작성일 */
 	private Long createDate;
+	/** likeCount : 게시글 추천 수 */
+	private Integer likeCount;
+	
 
 	/**
 	 * @Method 기본 생성자
@@ -43,13 +46,14 @@ public class PhotoBoardVO {
 	 * @author 박상현
 	 * @since 2023. 10. 24.
 	 */
-	public PhotoBoardVO(Integer index, String title, String text, String userId, Integer category, Long createDate) {
+	public PhotoBoardVO(Integer index, String title, String text, String userId, Integer category, Long createDate, Integer likeCount) {
 		this.index = index;
 		this.title = title;
 		this.text = text;
 		this.userId = userId;
 		this.category = category;
 		this.createDate = createDate;
+		this.likeCount = likeCount;
 	}
 
 	public Integer getIndex() {
@@ -99,6 +103,14 @@ public class PhotoBoardVO {
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
 	}
+	
+	public Integer getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(Integer likeCount) {
+		this.likeCount = likeCount;
+	}
 
 	@Override
 	public String toString() {
@@ -115,6 +127,8 @@ public class PhotoBoardVO {
 		builder.append(category);
 		builder.append(", createDate=");
 		builder.append(createDate);
+		builder.append(", likeCount=");
+		builder.append(likeCount);
 		builder.append("]");
 		return builder.toString();
 	}

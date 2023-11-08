@@ -82,7 +82,6 @@ public interface IBoardRepository {
 	public BoardVO searchByIndex(Integer index);
 	
 	/**
-	 * 
 	 * @Method files 게시물 번호에 해당되는 파일 정보를 조회
 	 *
 	 * @param index 해당 게시물 번호
@@ -120,5 +119,40 @@ public interface IBoardRepository {
 	 * @since 2023. 10. 31.
 	 */
 	public Integer deleteFile(Integer index, String fileId);
+	
+	/**
+	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param likeCount 해당 게시글 추천 수
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 03.
+	 */
+	public Integer boardLikeCount(Integer index, Integer likeCount);
+	
+	/**
+	 * @Method bestBoard 추천 수가 많은 게시글을 반환하는 메소드
+	 *
+	 * @return 추천 수가 많은 게시글 5개를 반환하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 06.
+	 */
+	public List<BoardVO> bestBoard();
+	
+	/**
+	 * @Method bestBoardFile 추천 수가 많은 게시글에 업로드된 파일 정보를 받아오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#bestBoardFile(java.lang.Integer)
+	 *
+	 * @param index 추천 수가 많은 게시글 번호
+	 * 
+	 * @return 추천 수가 많은 게시글 5개의 파일 정보를 반환하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 08.
+	 */
+	public List<FileVO> bestBoardFile(Integer index);
 
 }

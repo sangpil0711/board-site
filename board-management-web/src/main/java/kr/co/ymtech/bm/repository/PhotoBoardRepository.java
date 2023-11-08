@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.ymtech.bm.repository.vo.BoardVO;
 import kr.co.ymtech.bm.repository.vo.FileVO;
 import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 
@@ -71,7 +70,8 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	                    rs.getString("content"),
 	                    rs.getString("user_id"),
 	                    rs.getInt("category"),
-	                    rs.getLong("create_date"));
+	                    rs.getLong("create_date"),
+	        			rs.getInt("like_count"));
 	            return member;
 	        }
 	    };
@@ -201,7 +201,8 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 						rs.getString("content"), 
 						rs.getString("user_id"), 
 						rs.getInt("category"),
-						rs.getLong("create_date"));
+						rs.getLong("create_date"),
+						rs.getInt("like_count"));
 
 				return member;
 			}
@@ -240,7 +241,7 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 			@Override
 			public PhotoBoardVO mapRow(ResultSet rs, int rowNum) throws SQLException { 
 				PhotoBoardVO member = new PhotoBoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
-						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"));
+						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"), rs.getInt("like_count"));
 
 				return member;
 			}

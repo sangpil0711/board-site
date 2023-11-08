@@ -1,6 +1,5 @@
 package kr.co.ymtech.bm.controller.dto;
 
-import java.util.Date;
 import java.util.List;
 
 import kr.co.ymtech.bm.repository.vo.FileVO;
@@ -25,17 +24,11 @@ public class PhotoBoardGetDTO {
 	private Integer category;
 	/** createDate : 게시글 작성일 */
 	private Long createDate;
-	/** file : 등록된 게시글 첨부파일 */
+	/** likeCount : 게시글 추천 수 */
+	private Integer likeCount;
+	/** file : 게시글 파일 정보 */
 	private List<FileVO> file;
-	
-	public List<FileVO> getFile() {
-		return file;
-	}
-	
-	public void setFile(List<FileVO> file) {
-		this.file = file;
-	}
-	
+
 	public Integer getIndex() {
 		return index;
 	}
@@ -83,6 +76,22 @@ public class PhotoBoardGetDTO {
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
 	}
+	
+	public Integer getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(Integer likeCount) {
+		this.likeCount = likeCount;
+	}
+	
+	public List<FileVO> getFile() {
+		return file;
+	}
+
+	public void setFile(List<FileVO> file) {
+		this.file = file;
+	}
 
 	@Override
 	public String toString() {
@@ -99,6 +108,8 @@ public class PhotoBoardGetDTO {
 		builder.append(category);
 		builder.append(", createDate=");
 		builder.append(createDate);
+		builder.append(", likeCount=");
+		builder.append(likeCount);
 		builder.append(", file=");
 		builder.append(file);
 		builder.append("]");

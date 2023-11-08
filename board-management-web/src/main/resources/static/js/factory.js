@@ -43,6 +43,20 @@ app.config(function($routeProvider) {
 		});
 });
 
+app.factory('MainFactory', function($resource) {
+	return $resource('/boards/best', null, {
+		
+		bestBoard: {
+			method: 'GET',
+			isArray: true,
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		}
+		
+	})
+})
+
 /**
  * @Method : 게시글을 저장, 조회, 수정, 삭제하는 함수
  * 
@@ -50,24 +64,10 @@ app.config(function($routeProvider) {
  * @since 2023. 09. 11.
  */
 app.factory('BoardFactory', function($resource) {
-	return $resource('/boards/:index', null, {
+	return $resource('/boards/:index/:likeCount', { index: '@index', likeCount: '@likeCount' }, {
 
 		readBoard: {
 			method: 'GET',
-			headers: {
-				"Content-Type": 'application/json'
-			},
-		},
-
-		createBoard: {
-			method: 'POST',
-			headers: {
-				"Content-Type": 'application/json'
-			},
-		},
-
-		updateBoard: {
-			method: 'PATCH',
 			headers: {
 				"Content-Type": 'application/json'
 			},
@@ -79,23 +79,14 @@ app.factory('BoardFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-
-	})
-});
-
-/**
- * @Method : 해당 게시글에 저장된 파일을 초기화 시키는 함수
- * 
- * @author 황상필
- * @since 2023. 10. 25.
- */
-app.factory('FileFactory', function($resource) {
-	return $resource('/files/:index', null, {
 		
-		deleteFile: {
-			method: 'DELETE'
+		boardLike: {
+			method: 'PATCH',
+			headers: {
+				"Content-Type": 'application/json'
+			},
 		},
-		
+
 	})
 });
 
@@ -147,7 +138,7 @@ app.factory('CommentFactory', function($resource) {
  * @since 2023. 10. 24.
  */
 app.factory('PhotoBoardFactory', function($resource) {
-	return $resource('/photos/:index', null, {
+	return $resource('/photos/:index/:likeCount', { index: '@index', likeCount: '@likeCount' }, {
 
 		readPhotoBoards: {
 			method: 'GET',

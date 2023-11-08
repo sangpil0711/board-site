@@ -1,6 +1,6 @@
 <div id="container" ng-controller="BoardRead">
-	
-	
+
+
 	<!-- 시작: 게시글 종류 및 수정, 삭제, 목록 버튼 -->
 	<strong>일반게시판</strong>
 	<div class="read_btn">
@@ -9,8 +9,8 @@
 		<button type="button" ng-click="redirectToBoard()">목록</button>
 	</div>
 	<!-- 끝: 게시글 종류 및 수정, 삭제, 목록 버튼 -->
-	
-	
+
+
 	<!-- 시작: 게시글 상세조회 화면 데이터 표시 -->
 	<div class="board_wrap">
 		<div class="board_view">
@@ -25,9 +25,13 @@
 					<dd>{{board.createDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;{{board.createDate | date:'HH:mm:ss'}}</dd>
 				</dl>
 			</div>
-			<pre class="content">{{board.text}}</pre>
+			<div class="pre-container">
+				<pre class="content">{{board.text}}</pre>
+				<button class="like_btn" ng-click="likeAdd()">추천 수: {{board.likeCount}}</button>
+			</div>
 			<p>첨부파일</p>
-			<a ng-href="/files/{{item.fileId}}?fileName={{item.fileName}}" ng-repeat="item in board.file" download>{{item.fileName}}</a>
+			<a ng-href="/files/{{item.fileId}}?fileName={{item.fileName}}" ng-repeat="item in board.file"
+				download>{{item.fileName}}</a>
 		</div>
 	</div>
 	<!-- 끝: 게시글 상세조회 화면 데이터 표시 -->
@@ -39,8 +43,8 @@
 		<div class="comment_container">
 			<div class="textarea_container">
 				<textarea class="comment_write_box" placeholder="댓글 내용을 입력해주세요." ng-model="newComment"></textarea>
+				<input type="button" class="comment_write_btn" value="등록" ng-click="insertComment(null)" />
 			</div>
-			<input type="button" class="comment_write_btn" value="등록" ng-click="insertComment(null)" />
 		</div>
 	</div>
 	<!-- 끝: 댓글 등록 박스 -->
@@ -61,8 +65,8 @@
 				<tr ng-class="{'child_comment': comment.parentIndex != null}">
 					<td ng-if="comment.parentIndex != null"></td>
 					<td colspan="{{comment.parentIndex != null ? 1 : 2}}">{{ comment.userId }}</td>
-					
-					
+
+
 					<!-- 시작: 댓글 수정 -->
 					<td>
 						<div ng-if="!comment.update">{{ comment.text }}</div>
@@ -76,8 +80,8 @@
 
 
 					<td>{{ comment.createDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-					
-					
+
+
 					<!-- 시작: 댓글 수정, 삭제, 답글 버튼 -->
 					<td>
 						<input type="button" class="update_btn" value="수정" ng-click="updateComment(comment)" />
@@ -86,11 +90,11 @@
 							ng-if="comment.parentIndex == null && !comment.childCommentBox" />
 					</td>
 					<!-- 끝: 댓글 수정, 삭제, 답글 버튼 -->
-					
-					
+
+
 				</tr>
-				
-				
+
+
 				<!-- 시작: 대댓글 등록 -->
 				<tr ng-if="comment.childCommentBox">
 					<td></td>
@@ -107,12 +111,12 @@
 					</td>
 				</tr>
 				<!-- 끝: 대댓글 등록 -->
-				
-				
+
+
 			</tbody>
 		</table>
 	</div>
 	<!-- 끝: 등록된 댓글 표시 -->
-	
-	
+
+
 </div>

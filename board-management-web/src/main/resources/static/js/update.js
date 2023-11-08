@@ -1,16 +1,16 @@
 app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routeParams, Upload) {
-	
+
 	// 라우팅으로 받아오는 게시글 번호
-	let index = $routeParams.index; 	
+	let index = $routeParams.index;
 	// 업로드되는 파일의 총 크기
-	let totalSize = 0;		
+	let totalSize = 0;
 	// 삭제된 파일 리스트
-	let deleteFiles = []; 	
+	let deleteFiles = [];
 	// 추가된 파일 리스트
-	let addFiles = []; 		
+	let addFiles = [];
 
 	// 수정할 게시글
-	$scope.board = { 	
+	$scope.board = {
 		title: "",
 		text: ""
 	};
@@ -58,6 +58,20 @@ app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routePa
 	};
 
 	/**
+	 * @function uuidv4 파일의 uuid를 생성하는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 11. 06.
+	 */
+	let uuidv4 = function() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = (Math.random() * 16) | 0,
+				v = c == 'x' ? r : (r & 0x3) | 0x8;
+			return v.toString(16);
+		});
+	}
+
+	/**
 	 * @function onFileSelect 선택된 파일을 변수에 할당하고 크기를 제한하는 함수
 	 * 
 	 * @param $files 선택된 파일
@@ -73,16 +87,17 @@ app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routePa
 			if (totalSize + file.size > 100 * 1024 * 1024) {
 				exceedSizeFile = true;
 			}
-			
+
 			// 선택된 파일의 크기가 100MB를 초과하지 않으면 각 변수에 파일 데이터 할당 
 			else {
+				file.fileId = uuidv4();
 				$scope.selectedFiles.push(file);
 				$scope.fileNames.push(file.name);
 				totalSize += file.size;
 				addFiles.push(file);
 			}
 		})
-		
+
 		// 선택된 파일의 크기가 100MB를 초과하면 알림창 표시
 		if (exceedSizeFile) {
 			alert("선택한 파일의 용량이 100MB를 초과합니다.");
@@ -106,28 +121,28 @@ app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routePa
 	 * @param index 삭제할 파일 index
 	 * 
 	 * @author 황상필
-	 * @since 2023. 11. 01.
+	 * @since 2023. 11. 06.
 	 */
 	$scope.excludeFile = function(index) {
 		let confirmDelete = confirm("파일을 삭제하시겠습니까?");
-		
+
 		// 파일을 삭제하는 동작
 		if (confirmDelete) {
 			totalSize -= $scope.selectedFiles[index].size;
 			$scope.fileNames.splice(index, 1);
-			
-			// 삭제된 파일 id
+
+			// 삭제된 파일 UUID
 			let deleteFileId = $scope.selectedFiles[index].fileId;
 			$scope.selectedFiles.splice(index, 1);
-			
+
 			// 추가된 파일의 파일 UUID가 deleteFileId와 일치할 때의 index
 			let addFilesIndex = addFiles.findIndex(file => file.fileId === deleteFileId);
-			
+
 			// 추가된 파일의 파일 UUID가 deleteFileId와 일치하면 addFiles 배열에서 삭제 
 			if (addFiles.some(file => file.fileId === deleteFileId)) {
 				addFiles.splice(addFilesIndex, 1);
 			}
-			
+
 			// 추가된 파일의 파일 UUID가 deleteFileId와 일치하지 않으면 deleteFiles 배열에 추가
 			else {
 				deleteFiles.push(deleteFileId);

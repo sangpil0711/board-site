@@ -97,19 +97,17 @@ public class BoardService implements IBoardService {
 	@Override
 	public void saveBoard(BoardDTO board) {
 
-		BoardVO lastBoard = boardRepository.lastBoard();
 		List<FileVO> boardFiles = new ArrayList<FileVO>();
 
 		// dto -> vo 변환
 		BoardVO vo = new BoardVO();
-		vo.setIndex(lastBoard.getIndex() + 1);
 		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
 		vo.setCategory(board.getCategory());
 		vo.setCreateDate(new Date().getTime());
 
 		try {
-			
+
 			// 게시글 작성 시 업로드 되는 파일이 있으면 동작
 			if (board.getFiles() != null) {
 				for (int i = 0; i < board.getFiles().size(); i++) {
@@ -120,7 +118,6 @@ public class BoardService implements IBoardService {
 
 					FileVO boardFile = new FileVO();
 					boardFile.setFileId(uniqueID);
-					boardFile.setBoardIndex(lastBoard.getIndex() + 1);
 					boardFile.setFilePath(SAVE_PATH);
 					boardFile.setFileName(originalFileName);
 					boardFile.setFileSize(files.getSize());
@@ -181,7 +178,6 @@ public class BoardService implements IBoardService {
 
 					FileVO boardFile = new FileVO();
 					boardFile.setFileId(uniqueID);
-					boardFile.setBoardIndex(board.getIndex());
 					boardFile.setFilePath(SAVE_PATH);
 					boardFile.setFileName(originalFileName);
 					boardFile.setFileSize(file.getSize());
@@ -200,14 +196,14 @@ public class BoardService implements IBoardService {
 
 			// 게시글 수정 시 삭제된 파일이 있으면 동작
 			if (board.getDeleteFiles() != null) {
-				
+
 				// SAVE_PATH에 있는 파일 리스트를 전부 가져옴
 				File dir = new File(SAVE_PATH);
 				File files[] = dir.listFiles();
 
 				List<String> deleteFileNames = board.getDeleteFiles();
 
-				// 가져온 파일리스트에서 삭제된 파일의 uuid가 포함되어 있으면 지정된 경로의 폴더에서 삭제
+				// 가져온 파일리스트에서 삭제된 파일의 UUID가 포함되어 있으면 지정된 경로의 폴더에서 삭제
 				for (String deleteFileName : deleteFileNames) {
 					for (File file : files) {
 						if (file.getName().contains(deleteFileName)) {
@@ -289,15 +285,66 @@ public class BoardService implements IBoardService {
 		BoardVO vo = boardRepository.searchByIndex(index);
 
 		// vo -> dto 변환
-		BoardGetDTO dto = new BoardGetDTO(); 
+		BoardGetDTO dto = new BoardGetDTO();
 		dto.setIndex(vo.getIndex());
 		dto.setTitle(vo.getTitle());
 		dto.setText(vo.getText());
 		dto.setUserId(vo.getUserId());
 		dto.setCategory(vo.getCategory());
 		dto.setCreateDate(new Long(vo.getCreateDate()));
+		dto.setLikeCount(vo.getLikeCount());
 		dto.setFile(fv);
 		return dto;
+	}
+
+	/**
+	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#boardLikeCount(java.lang.Integer,
+	 *      java.lang.Integer)
+	 *
+	 * @param index     해당 게시글 번호
+	 * @param likeCount 해당 게시글 추천 수
+	 * 
+	 * @return boardRepository의 boardLikeCount메소드 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 03.
+	 */
+	@Override
+	public Integer boardLikeCount(Integer index, Integer likeCount) {
+		return boardRepository.boardLikeCount(index, likeCount);
+	}
+
+	/**
+	 * @Method bestBoard 추천 수가 많은 게시글을 반환하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#bestBoard()
+	 *
+	 * @return 게시글의 정보를 담은 dtoList 변수 반환
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 06.
+	 */
+	@Override
+	public List<BoardGetDTO> bestBoard() {
+	    List<BoardVO> voList = boardRepository.bestBoard();
+	    List<BoardGetDTO> dtoList = new ArrayList<>();
+
+	    for (BoardVO vo : voList) {
+	    	BoardGetDTO dto = new BoardGetDTO();
+	        List<FileVO> files = boardRepository.bestBoardFile(vo.getIndex());
+	        dto.setIndex(vo.getIndex());
+	        dto.setTitle(vo.getTitle());
+	        dto.setText(vo.getText());
+	        dto.setUserId(vo.getUserId());
+	        dto.setCategory(vo.getCategory());
+	        dto.setLikeCount(vo.getLikeCount());
+	        dto.setFile(files);
+
+	        dtoList.add(dto);
+	    }
+	    return dtoList;
 	}
 
 }

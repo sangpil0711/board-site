@@ -2,7 +2,6 @@ package kr.co.ymtech.bm.repository;
 
 import java.util.List;
 
-import kr.co.ymtech.bm.repository.vo.BoardVO;
 import kr.co.ymtech.bm.repository.vo.FileVO;
 import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 
@@ -67,9 +66,6 @@ public interface IPhotoBoardRepository {
 	 */
 	public PhotoBoardVO searchByPhotoIndex(Integer index);
 	
-
-	
-
 	
 	public List<FileVO> files(Integer index);
 	

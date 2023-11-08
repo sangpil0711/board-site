@@ -20,6 +20,8 @@ public class BoardVO {
 	private Integer category;
 	/** createDate : 게시글 작성일 */
 	private Long createDate;
+	/** likeCount : 게시글 추천 수 */
+	private Integer likeCount;
 
 	/**
 	 * @Method 기본 생성자
@@ -49,13 +51,14 @@ public class BoardVO {
 	 * @author 박상현
 	 * @since  2023.09.18
 	 */
-	public BoardVO(Integer index, String title, String text, String userId, Integer category, Long createDate) {
+	public BoardVO(Integer index, String title, String text, String userId, Integer category, Long createDate, Integer likeCount) {
 		this.index = index;
 		this.title = title;
 		this.text = text;
 		this.userId = userId;
 		this.category = category;
 		this.createDate = createDate;
+		this.likeCount = likeCount;
 	}
 
 	public Integer getIndex() {
@@ -105,6 +108,14 @@ public class BoardVO {
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
 	}
+	
+	public Integer getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(Integer likeCount) {
+		this.likeCount = likeCount;
+	}
 
 	@Override
 	public String toString() {
@@ -121,6 +132,8 @@ public class BoardVO {
 		builder.append(category);
 		builder.append(", createDate=");
 		builder.append(createDate);
+		builder.append(", likeCount=");
+		builder.append(likeCount);
 		builder.append("]");
 		return builder.toString();
 	}
