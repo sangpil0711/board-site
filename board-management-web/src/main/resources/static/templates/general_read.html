@@ -1,118 +1,118 @@
 <div id="container" ng-controller="BoardRead">
-   
-   
-   <!-- 시작: 게시글 종류 및 수정, 삭제, 목록 버튼 -->
-   <strong>일반게시판</strong>
-   <div class="read_btn">
-      <button type="button" ng-click="redirectToUpdate()">수정</button>
-      <button type="button" ng-click="remove()">삭제</button>
-      <button type="button" ng-click="redirectToBoard()">목록</button>
-   </div>
-   <!-- 끝: 게시글 종류 및 수정, 삭제, 목록 버튼 -->
-   
-   
-   <!-- 시작: 게시글 상세조회 화면 데이터 표시 -->
-   <div class="board_wrap">
-      <div class="board_view">
-         <div class="title">{{board.title}}</div>
-         <div class="info">
-            <dl>
-               <dt>작성자</dt>
-               <dd>{{board.userId}}</dd>
-            </dl>
-            <dl>
-               <dt>작성일</dt>
-               <dd>{{board.createDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;{{board.createDate | date:'HH:mm:ss'}}</dd>
-            </dl>
-         </div>
-         <pre class="content">{{board.text}}</pre>
-         <p>첨부파일</p>
-         <a ng-href="/files/{{item.fileId}}?fileName={{item.fileName}}" ng-repeat="item in board.file" download>{{item.fileName}}</a>
-      </div>
-   </div>
-   <!-- 끝: 게시글 상세조회 화면 데이터 표시 -->
+	
+	
+	<!-- 시작: 게시글 종류 및 수정, 삭제, 목록 버튼 -->
+	<strong>일반게시판</strong>
+	<div class="read_btn">
+		<button type="button" ng-click="redirectToUpdate()">수정</button>
+		<button type="button" ng-click="remove()">삭제</button>
+		<button type="button" ng-click="redirectToBoard()">목록</button>
+	</div>
+	<!-- 끝: 게시글 종류 및 수정, 삭제, 목록 버튼 -->
+	
+	
+	<!-- 시작: 게시글 상세조회 화면 데이터 표시 -->
+	<div class="board_wrap">
+		<div class="board_view">
+			<div class="title">{{board.title}}</div>
+			<div class="info">
+				<dl>
+					<dt>작성자</dt>
+					<dd>{{board.userId}}</dd>
+				</dl>
+				<dl>
+					<dt>작성일</dt>
+					<dd>{{board.createDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;{{board.createDate | date:'HH:mm:ss'}}</dd>
+				</dl>
+			</div>
+			<pre class="content">{{board.text}}</pre>
+			<p>첨부파일</p>
+			<a ng-href="/files/{{item.fileId}}?fileName={{item.fileName}}" ng-repeat="item in board.file" download>{{item.fileName}}</a>
+		</div>
+	</div>
+	<!-- 끝: 게시글 상세조회 화면 데이터 표시 -->
 
 
-   <!-- 시작: 댓글 등록 박스 -->
-   <div class="comment_write">
-      <h4> 댓글 ({{commentlist.length}}) </h4>
-      <div class="comment_container">
-         <div class="textarea_container">
-            <textarea class="comment_write_box" placeholder="댓글 내용을 입력해주세요." ng-model="newComment"></textarea>
-         </div>
-         <input type="button" class="comment_write_btn" value="등록" ng-click="insertComment(null)" />
-      </div>
-   </div>
-   <!-- 끝: 댓글 등록 박스 -->
+	<!-- 시작: 댓글 등록 박스 -->
+	<div class="comment_write">
+		<h4> 댓글 ({{commentlist.length}}) </h4>
+		<div class="comment_container">
+			<div class="textarea_container">
+				<textarea class="comment_write_box" placeholder="댓글 내용을 입력해주세요." ng-model="newComment"></textarea>
+			</div>
+			<input type="button" class="comment_write_btn" value="등록" ng-click="insertComment(null)" />
+		</div>
+	</div>
+	<!-- 끝: 댓글 등록 박스 -->
 
 
-   <!-- 시작: 등록된 댓글 표시 -->
-   <div class="comment_box">
-      <table class="comment">
-         <thead ng-if="commentlist.length > 0">
-            <tr>
-               <th colspan="2">작성자</th>
-               <th>댓글내용</th>
-               <th>작성일</th>
-               <th>비고</th>
-            </tr>
-         </thead>
-         <tbody ng-repeat="comment in commentlist">
-            <tr ng-class="{'child_comment': comment.parentIndex != null}">
-               <td ng-if="comment.parentIndex != null"></td>
-               <td colspan="{{comment.parentIndex != null ? 1 : 2}}">{{ comment.userId }}</td>
-               
-               
-               <!-- 시작: 댓글 수정 -->
-               <td>
-                  <div ng-if="!comment.update">{{ comment.text }}</div>
-                  <div ng-if="comment.update">
-                     <input type="text" class="update_write_box" ng-model="comment.updatedText" />
-                     <input type="button" class="update_btn" value="저장" ng-click="saveComment(comment)" />
-                     <input type="button" class="update_btn" value="취소" ng-click="cancelUpdate(comment)" />
-                  </div>
-               </td>
-               <!-- 끝: 댓글 수정 -->
+	<!-- 시작: 등록된 댓글 표시 -->
+	<div class="comment_box">
+		<table class="comment">
+			<thead ng-if="commentlist.length > 0">
+				<tr>
+					<th colspan="2">작성자</th>
+					<th>댓글내용</th>
+					<th>작성일</th>
+					<th>비고</th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="comment in commentlist">
+				<tr ng-class="{'child_comment': comment.parentIndex != null}">
+					<td ng-if="comment.parentIndex != null"></td>
+					<td colspan="{{comment.parentIndex != null ? 1 : 2}}">{{ comment.userId }}</td>
+					
+					
+					<!-- 시작: 댓글 수정 -->
+					<td>
+						<div ng-if="!comment.update">{{ comment.text }}</div>
+						<div ng-if="comment.update">
+							<input type="text" class="update_write_box" ng-model="comment.updatedText" />
+							<input type="button" class="update_btn" value="저장" ng-click="saveComment(comment)" />
+							<input type="button" class="update_btn" value="취소" ng-click="cancelUpdate(comment)" />
+						</div>
+					</td>
+					<!-- 끝: 댓글 수정 -->
 
 
-               <td>{{ comment.createDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-               
-               
-               <!-- 시작: 댓글 수정, 삭제, 답글 버튼 -->
-               <td>
-                  <input type="button" class="update_btn" value="수정" ng-click="updateComment(comment)" />
-                  <input type="button" class="delete_btn" value="삭제" ng-click="deleteComment(comment.index)" />
-                  <input type="button" class="child_comment_btn" value="답글" ng-click="insertChildComment(comment)"
-                     ng-if="comment.parentIndex == null && !comment.childCommentBox" />
-               </td>
-               <!-- 끝: 댓글 수정, 삭제, 답글 버튼 -->
-               
-               
-            </tr>
-            
-            
-            <!-- 시작: 대댓글 등록 -->
-            <tr ng-if="comment.childCommentBox">
-               <td></td>
-               <td colspan="2">
-                  <input type="text" class="child_comment_write" placeholder="답글 내용을 입력해주세요."
-                     ng-model="newChildComment" />
-               </td>
-               <td></td>
-               <td>
-                  <input type="button" class="child_save_btn" value="등록"
-                     ng-click="insertComment(comment.index, newChildComment)" />
-                  <input type="button" class="child_delete_btn" value="취소"
-                     ng-click="cancelChildComment(comment)" />
-               </td>
-            </tr>
-            <!-- 끝: 대댓글 등록 -->
-            
-            
-         </tbody>
-      </table>
-   </div>
-   <!-- 끝: 등록된 댓글 표시 -->
-   
-   
+					<td>{{ comment.createDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+					
+					
+					<!-- 시작: 댓글 수정, 삭제, 답글 버튼 -->
+					<td>
+						<input type="button" class="update_btn" value="수정" ng-click="updateComment(comment)" />
+						<input type="button" class="delete_btn" value="삭제" ng-click="deleteComment(comment.index)" />
+						<input type="button" class="child_comment_btn" value="답글" ng-click="insertChildComment(comment)"
+							ng-if="comment.parentIndex == null && !comment.childCommentBox" />
+					</td>
+					<!-- 끝: 댓글 수정, 삭제, 답글 버튼 -->
+					
+					
+				</tr>
+				
+				
+				<!-- 시작: 대댓글 등록 -->
+				<tr ng-if="comment.childCommentBox">
+					<td></td>
+					<td colspan="2">
+						<input type="text" class="child_comment_write" placeholder="답글 내용을 입력해주세요."
+							ng-model="newChildComment" />
+					</td>
+					<td></td>
+					<td>
+						<input type="button" class="child_save_btn" value="등록"
+							ng-click="insertComment(comment.index, newChildComment)" />
+						<input type="button" class="child_delete_btn" value="취소"
+							ng-click="cancelChildComment(comment)" />
+					</td>
+				</tr>
+				<!-- 끝: 대댓글 등록 -->
+				
+				
+			</tbody>
+		</table>
+	</div>
+	<!-- 끝: 등록된 댓글 표시 -->
+	
+	
 </div>

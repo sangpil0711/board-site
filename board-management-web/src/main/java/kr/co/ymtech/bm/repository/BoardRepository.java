@@ -216,6 +216,7 @@ public class BoardRepository implements IBoardRepository {
 
 		return jdbcTemplate.queryForObject("SELECT * FROM board WHERE index = ?", mapper, index);
 	}
+	
 	/**
 	 * 
 	 * @Method files 게시물 번호에 해당되는 파일 정보를 조회

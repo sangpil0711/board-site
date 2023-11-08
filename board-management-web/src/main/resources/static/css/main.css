@@ -63,8 +63,8 @@ button:hover {
 
 .menu .btn:focus,
 .menu .btn:active {
-   outline: none;
-   box-shadow: none;
+	outline: none;
+	box-shadow: none;
 }
 
 h3 {

@@ -1,4 +1,4 @@
-app.controller("BoardRead", function($scope, $location, BoardFactory, $routeParams, CommentFactory) {
+app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFactory, $routeParams) {
 
 	// 해당 게시글 번호
 	let index = $routeParams.index;
