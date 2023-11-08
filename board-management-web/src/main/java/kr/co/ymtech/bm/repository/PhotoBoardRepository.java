@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.ymtech.bm.repository.vo.BoardVO;
+import kr.co.ymtech.bm.repository.vo.FileVO;
 import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 
 /**
@@ -105,11 +108,30 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
+	@Transactional
 	@Override
-	public Integer savePhotoBoard(PhotoBoardVO photo) {
-		return jdbcTemplate.update("insert into board(title, content, category, create_Date) values(?, ?, ?, ?)",
+	public void savePhotoBoard(PhotoBoardVO photo, List<FileVO> file) {
+
+		// 게시글 정보를 DB에 저장
+		jdbcTemplate.update("INSERT INTO board(title, content, category, create_Date) VALUES(?, ?, ?, ?)",
 				photo.getTitle(), photo.getText(), photo.getCategory(), photo.getCreateDate());
+
+		// 저장한 게시글 번호
+		Integer boardIndex = jdbcTemplate.queryForObject("SELECT index FROM board ORDER BY index DESC OFFSET 0 LIMIT 1",
+				Integer.class);
+
+		// 게시글에 업로드된 파일을 DB에 저장
+		for (FileVO files : file) {
+	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
+	                files.getFileId(), boardIndex, files.getFilePath(), files.getFileName(), files.getFileSize());
+	    }
 	}
+	
+//	@Override
+//	public Integer savePhotoBoard(PhotoBoardVO photo) {
+//		return jdbcTemplate.update("insert into board(title, content, category, create_Date) values(?, ?, ?, ?)",
+//				photo.getTitle(), photo.getText(), photo.getCategory(), photo.getCreateDate());
+//	}
 
 	/**
 	 * Method : 게시물 정보를 수정하는 메소드
@@ -121,11 +143,26 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
+	@Transactional
 	@Override
-	public Integer updatePhotoBoard(PhotoBoardVO photo) {
-		return jdbcTemplate.update("update board set title = ?, content = ? where index = ? ", photo.getTitle(),
+	public void updatePhotoBoard(PhotoBoardVO photo, List<FileVO> file) {
+		
+		// 수정된 게시글 정보를 DB에 저장
+		jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ? ", photo.getTitle(),
 				photo.getText(), photo.getIndex());
+		
+		// 게시글에 추가된 파일을 DB에 저장
+		for (FileVO files : file) {
+	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
+	                files.getFileId(), photo.getIndex(), files.getFilePath(), files.getFileName(), files.getFileSize());
+	    }
 	}
+	
+//	@Override
+//	public Integer updatePhotoBoard(PhotoBoardVO photo) {
+//		return jdbcTemplate.update("update board set title = ?, content = ? where index = ? ", photo.getTitle(),
+//				photo.getText(), photo.getIndex());
+//	}
 	
 	/**
 	 * Method : 게시물 정보를 삭제하는 메소드
@@ -174,5 +211,77 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 
 		return jdbcTemplate.queryForObject("select * from board where index = ?", mapper, index);
 	}
+	
+	@Override
+	public List<FileVO> files(Integer index) {
 
+		RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
+
+			// ResultSet에 결과값을 담아 FileVO에 담음
+			@Override
+			public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+				FileVO member = new FileVO(rs.getString("uuid"), rs.getInt("board_index"),
+						rs.getString("file_location"), rs.getString("original_filename"),
+						rs.getLong("file_size"));
+
+				return member;
+			}
+		};
+
+		return jdbcTemplate.query("SELECT * FROM file WHERE board_index = ?", mapper, index);
+
+	}
+	
+	@Override
+	public PhotoBoardVO lastPhotoBoard() {
+
+		RowMapper<PhotoBoardVO> mapper = new RowMapper<PhotoBoardVO>() {
+
+			// ResultSet에 결과값을 담아 BoardVO에 담음
+			@Override
+			public PhotoBoardVO mapRow(ResultSet rs, int rowNum) throws SQLException { 
+				PhotoBoardVO member = new PhotoBoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
+						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"));
+
+				return member;
+			}
+		};
+		return jdbcTemplate.queryForObject("SELECT * FROM board ORDER BY index DESC OFFSET 0 LIMIT 1", mapper);
+	}
+
+	
+	@Override
+	public Integer deleteFiles(Integer index) {
+		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ?", index);
+	}
+	
+	
+	@Override
+	public Integer deleteFile(Integer index, String fileId) {
+		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ? AND uuid = ?", index, fileId);
+	}
+	
+//	@Override
+//	   public List<FileVO> bestBoardFile(Integer index) {
+//
+//	      RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
+//
+//	         // ResultSet에 결과값을 담아 FileVO에 담음
+//	         @Override
+//	         public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+//
+//	            FileVO member = new FileVO(rs.getString("uuid"), rs.getInt("board_index"),
+//	                  rs.getString("file_location"), rs.getString("original_filename"), rs.getLong("file_size"));
+//
+//	            return member;
+//	         }
+//	      };
+//	      return jdbcTemplate.query(
+//	            "SELECT * FROM file INNER JOIN (SELECT * FROM board ORDER BY like_count DESC OFFSET 0 LIMIT 5) AS best_board ON file.board_index = best_board.index WHERE board_index = ?",
+//	            mapper, index);
+//	   }
+//	
+	
+	
 }

@@ -134,10 +134,9 @@ public class BoardRepository implements IBoardRepository {
 
 		// 게시글에 업로드된 파일을 DB에 저장
 		for (FileVO files : file) {
-			jdbcTemplate.update(
-					"INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
-					files.getFileId(), boardIndex, files.getFilePath(), files.getFileName(), files.getFileSize());
-		}
+	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
+	                files.getFileId(), boardIndex, files.getFilePath(), files.getFileName(), files.getFileSize());
+	    }
 	}
 
 	/**
@@ -217,7 +216,7 @@ public class BoardRepository implements IBoardRepository {
 
 		return jdbcTemplate.queryForObject("SELECT * FROM board WHERE index = ?", mapper, index);
 	}
-
+	
 	/**
 	 * 
 	 * @Method files 게시물 번호에 해당되는 파일 정보를 조회

@@ -1,5 +1,9 @@
 package kr.co.ymtech.bm.controller.dto;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * 사진게시물 정보를 저장하는 클래스
  * 
@@ -20,6 +24,16 @@ public class PhotoBoardDTO {
 	private Integer category;
 	/** createDate : 게시글 작성일 */
 	private Long createDate;
+	/** files : 게시글 첨부파일 */
+	private List<MultipartFile> files;
+	
+	public List<MultipartFile> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<MultipartFile> files) {
+		this.files = files;
+	}
 
 	public Integer getIndex() {
 		return index;

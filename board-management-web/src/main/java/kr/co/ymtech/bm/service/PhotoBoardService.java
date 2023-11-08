@@ -1,16 +1,29 @@
 package kr.co.ymtech.bm.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
+import kr.co.ymtech.bm.controller.dto.PhotoBoardUpdateDTO;
 import kr.co.ymtech.bm.repository.IPhotoBoardRepository;
+import kr.co.ymtech.bm.repository.vo.BoardVO;
+import kr.co.ymtech.bm.repository.vo.FileVO;
 import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 
 /**
@@ -30,6 +43,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 */
 	private final IPhotoBoardRepository photoBoardRepository;
 	private final IBoardRepository boardRepository;
+	private final static String SAVE_PATH = "C:/boardFile";
 
 	@Autowired
 	public PhotoBoardService(IPhotoBoardRepository IphotoBoardRepository, IBoardRepository IboardRepository) {
@@ -56,12 +70,12 @@ public class PhotoBoardService implements IPhotoBoardService {
 	@Override
     public PhotoBoardPageDTO findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category) {
 		
-		List<PhotoBoardVO> boardList = photoBoardRepository.findPhotoBoard(pageNumber, itemSize, searchType, keyword, category);
+		List<PhotoBoardVO> photoBoardList = photoBoardRepository.findPhotoBoard(pageNumber, itemSize, searchType, keyword, category);
 
 	    Integer boardCount = photoBoardRepository.findCount(searchType, keyword, category);
 
 	    PhotoBoardPageDTO photoBoardPage = new PhotoBoardPageDTO();
-        photoBoardPage.setPhotoBoardList(boardList);
+        photoBoardPage.setPhotoBoardList(photoBoardList);
         photoBoardPage.setTotalCount(boardCount);
 
         return photoBoardPage;
@@ -80,22 +94,74 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 * @since 2023. 10. 24.
 	 */
 	@Override
-	public Integer savePhotoBoard(PhotoBoardDTO photo) {
+	public void savePhotoBoard(PhotoBoardDTO photo) {
+
+		PhotoBoardVO lastPhotoBoard = photoBoardRepository.lastPhotoBoard();
+		List<FileVO> boardFiles = new ArrayList<FileVO>();
+
+		// dto -> vo 변환
 		PhotoBoardVO vo = new PhotoBoardVO();
+		vo.setIndex(lastPhotoBoard.getIndex() + 1);
 		vo.setTitle(photo.getTitle());
 		vo.setText(photo.getText());
 		vo.setCategory(photo.getCategory());
+		vo.setCreateDate(new Date().getTime());
 
-		if (photo.getCreateDate() == null) {
-			vo.setCreateDate(new Date().getTime());
-		} else {
-			vo.setCreateDate(photo.getCreateDate());
+		try {
+			
+			// 게시글 작성 시 업로드 되는 파일이 있으면 동작
+			if (photo.getFiles() != null) {
+				for (int i = 0; i < photo.getFiles().size(); i++) {
+					MultipartFile files = photo.getFiles().get(i);
+					String originalFileName = files.getOriginalFilename();
+					String uniqueID = UUID.randomUUID().toString();
+					String filePath = SAVE_PATH + "/" + uniqueID + "_" + originalFileName;
+
+					FileVO boardFile = new FileVO();
+					boardFile.setFileId(uniqueID);
+					boardFile.setBoardIndex(lastPhotoBoard.getIndex() + 1);
+					boardFile.setFilePath(SAVE_PATH);
+					boardFile.setFileName(originalFileName);
+					boardFile.setFileSize(files.getSize());
+
+					boardFiles.add(boardFile);
+
+					// 업로드 되는 파일을 지정된 경로의 폴더에 저장
+					try (InputStream input = files.getInputStream();
+							OutputStream output = new FileOutputStream(filePath)) {
+						IOUtils.copy(input, output);
+					} catch (IOException e) {
+						System.out.println("파일 업로드 실패");
+					}
+
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("파일 저장 실패");
 		}
 
-		Integer save = photoBoardRepository.savePhotoBoard(vo);
+		photoBoardRepository.savePhotoBoard(vo, boardFiles);
 
-		return save;
 	}
+	
+	
+//	@Override
+//	public Integer savePhotoBoard(PhotoBoardDTO photo) {
+//		PhotoBoardVO vo = new PhotoBoardVO();
+//		vo.setTitle(photo.getTitle());
+//		vo.setText(photo.getText());
+//		vo.setCategory(photo.getCategory());
+//
+//		if (photo.getCreateDate() == null) {
+//			vo.setCreateDate(new Date().getTime());
+//		} else {
+//			vo.setCreateDate(photo.getCreateDate());
+//		}
+//
+//		Integer save = photoBoardRepository.savePhotoBoard(vo);
+//
+//		return save;
+//	}
 
 	/**
 	 * 
@@ -111,17 +177,95 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 * @since 2023. 10. 24.
 	 */
 	@Override
-	public Integer updatePhotoBoard(PhotoBoardGetDTO photo) {
+	public void updatePhotoBoard(PhotoBoardUpdateDTO photo) {
 
-		PhotoBoardVO vo = new PhotoBoardVO(); // dto -> vo 변환
+		List<FileVO> photoBoardFiles = new ArrayList<FileVO>();
+
+		// dto -> vo 변환
+		PhotoBoardVO vo = new PhotoBoardVO();
 		vo.setIndex(photo.getIndex());
 		vo.setTitle(photo.getTitle());
 		vo.setText(photo.getText());
 
-		Integer update = photoBoardRepository.updatePhotoBoard(vo);
+		try {
+			// 게시글 수정 시 추가된 파일이 있으면 동작
+			if (photo.getAddFiles() != null) {
+				// 추가된 파일의 크기에 따라 반복하여 파일을 저장
+				for (int i = 0; i < photo.getAddFiles().size(); i++) {
+					MultipartFile file = photo.getAddFiles().get(i);
+					String originalFileName = file.getOriginalFilename();
+					String uniqueID = UUID.randomUUID().toString();
+					String filePath = SAVE_PATH + "/" + uniqueID + "_" + originalFileName;
 
-		return update;
+					FileVO boardFile = new FileVO();
+					boardFile.setFileId(uniqueID);
+					boardFile.setBoardIndex(photo.getIndex());
+					boardFile.setFilePath(SAVE_PATH);
+					boardFile.setFileName(originalFileName);
+					boardFile.setFileSize(file.getSize());
+
+					photoBoardFiles.add(boardFile);
+
+					// 추가된 파일을 지정된 경로의 폴더에 저장
+					try (InputStream input = file.getInputStream();
+							OutputStream output = new FileOutputStream(filePath)) {
+						IOUtils.copy(input, output);
+					} catch (IOException e) {
+						System.out.println("파일 저장 실패");
+					}
+				}
+			}
+
+			// 게시글 수정 시 삭제된 파일이 있으면 동작
+			if (photo.getDeleteFiles() != null) {
+				
+				// SAVE_PATH에 있는 파일 리스트를 전부 가져옴
+				File dir = new File(SAVE_PATH);
+				File files[] = dir.listFiles();
+
+				List<String> deleteFileNames = photo.getDeleteFiles();
+
+				// 가져온 파일리스트에서 삭제된 파일의 uuid가 포함되어 있으면 지정된 경로의 폴더에서 삭제
+				for (String deleteFileName : deleteFileNames) {
+					for (File file : files) {
+						if (file.getName().contains(deleteFileName)) {
+							if (file.exists()) {
+								if (file.delete()) {
+								} else {
+									System.out.println("파일 삭제 실패");
+								}
+							} else {
+								System.out.println("파일이 존재하지 않음");
+							}
+						}
+					}
+					photoBoardRepository.deleteFile(photo.getIndex(), deleteFileName);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("파일 수정 실패");
+		}
+
+		photoBoardRepository.updatePhotoBoard(vo, photoBoardFiles);
 	}
+	
+	
+	
+	
+	
+	
+//	@Override
+//	public Integer updatePhotoBoard(PhotoBoardGetDTO photo) {
+//
+//		PhotoBoardVO vo = new PhotoBoardVO(); // dto -> vo 변환
+//		vo.setIndex(photo.getIndex());
+//		vo.setTitle(photo.getTitle());
+//		vo.setText(photo.getText());
+//
+//		Integer update = photoBoardRepository.updatePhotoBoard(vo);
+//
+//		return update;
+//	}
 
 	/**
 	 * Method : 사진게시물을 삭제하는 메소드 
@@ -135,6 +279,29 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 */
 	@Override
 	public Integer deletePhotoBoard(Integer index) {
+		
+		
+		List<FileVO> files = photoBoardRepository.files(index);
+
+		// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
+		for (FileVO file : files) {
+			
+			String filePath = SAVE_PATH + "/" + file.getFileId() + "_" + file.getFileName();
+
+			File deleteFile = new File(filePath);
+
+			if (deleteFile.exists()) {
+				if (deleteFile.delete()) {
+
+				} else {
+					System.out.println("파일 삭제에 실패했습니다.");
+				}
+			} else {
+				System.out.println("파일이 존재하지 않습니다.");
+			}
+		}
+
+		photoBoardRepository.deleteFiles(index);
 
 //		commentRepository.deleteAllComment(index);
 
@@ -153,6 +320,9 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 */
 	@Override
 	public PhotoBoardGetDTO searchByPhotoIndex(Integer index) {
+		
+		List<FileVO> fv = photoBoardRepository.files(index);
+		
 		PhotoBoardVO vo = photoBoardRepository.searchByPhotoIndex(index);
 
 		PhotoBoardGetDTO dto = new PhotoBoardGetDTO(); // vo -> dto 변환
@@ -163,6 +333,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 		dto.setCategory(vo.getCategory());
 		dto.setCreateDate(new Date(vo.getCreateDate()));
 		dto.setLikeCount(vo.getLikeCount());
+		dto.setFile(fv);
 		return dto;
 	}
 	

@@ -1,9 +1,11 @@
 package kr.co.ymtech.bm.service;
 
 
+import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
+import kr.co.ymtech.bm.controller.dto.PhotoBoardUpdateDTO;
 
 /**
  * 사진게시판 IPhotoBoardService 인터페이스
@@ -31,7 +33,7 @@ public interface IPhotoBoardService {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	public Integer savePhotoBoard(PhotoBoardDTO photo);
+	public void savePhotoBoard(PhotoBoardDTO photo);
 
 	/**
 	 * Method : 사진게시물을 수정하는 메소드 
@@ -41,7 +43,7 @@ public interface IPhotoBoardService {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	public Integer updatePhotoBoard(PhotoBoardGetDTO photo);
+	public void updatePhotoBoard(PhotoBoardUpdateDTO photo);
 
 	/**
 	 * Method : 사진게시물을 삭제하는 메소드 

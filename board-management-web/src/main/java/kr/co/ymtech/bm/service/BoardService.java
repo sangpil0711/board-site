@@ -129,13 +129,13 @@ public class BoardService implements IBoardService {
 							OutputStream output = new FileOutputStream(filePath)) {
 						IOUtils.copy(input, output);
 					} catch (IOException e) {
-						System.out.println("파일 저장 실패");
+						System.out.println("파일 업로드 실패");
 					}
 
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("파일 업로드 실패");
+			System.out.println("파일 저장 실패");
 		}
 
 		boardRepository.saveBoard(vo, boardFiles);
@@ -244,8 +244,8 @@ public class BoardService implements IBoardService {
 
 		// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
 		for (FileVO file : files) {
-
-			String filePath = SAVE_PATH + "/" + file.getFileId() + "_" + file.getFileName();
+			
+			 String filePath = SAVE_PATH + "/" + file.getFileId() + "_" + file.getFileName();
 
 			File deleteFile = new File(filePath);
 

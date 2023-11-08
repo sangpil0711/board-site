@@ -33,15 +33,15 @@ public class BoardPageDTO {
         this.totalCount = totalCount;
     }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("BoardPageDTO [boardList=");
-		builder.append(boardList);
-		builder.append(", totalCount=");
-		builder.append(totalCount);
-		builder.append("]");
-		return builder.toString();
-	}
+   @Override
+   public String toString() {
+      StringBuilder builder = new StringBuilder();
+      builder.append("BoardPageDTO [boardList=");
+      builder.append(boardList);
+      builder.append(", totalCount=");
+      builder.append(totalCount);
+      builder.append("]");
+      return builder.toString();
+   }
     
 }

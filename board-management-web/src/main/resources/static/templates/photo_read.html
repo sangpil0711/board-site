@@ -29,6 +29,12 @@
 				<pre class="content">{{photoBoard.text}}</pre>
 				<button class="like_btn" ng-click="likeAdd()">추천 수: {{photoBoard.likeCount}}</button>
 			</div>
+             <div class="image-container" ng-repeat="imagePath in photoBoard.imagePaths">
+            <img ng-src="{{imagePath}}" alt="이미지" style="display: block; margin: 0 auto; width: 300px; height: 300px;">
+        </div>
+            <pre class="content">{{photoBoard.text}}</pre>
+            <p>첨부파일</p>
+        	<a ng-href="/files/{{item.fileId}}?fileName={{item.fileName}}" ng-repeat="item in photoBoard.file" download>{{item.fileName}}</a>
         </div>
     </div>
 	<!-- 끝: 게시물 상세조회 화면 박스 -->

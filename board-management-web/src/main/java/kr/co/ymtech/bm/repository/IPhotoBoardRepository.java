@@ -2,6 +2,8 @@ package kr.co.ymtech.bm.repository;
 
 import java.util.List;
 
+import kr.co.ymtech.bm.repository.vo.BoardVO;
+import kr.co.ymtech.bm.repository.vo.FileVO;
 import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 
 /**
@@ -23,6 +25,8 @@ public interface IPhotoBoardRepository {
 	public List<PhotoBoardVO> findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword,
 			Integer category);
 
+	
+	public Integer findCount(String searchType, String keyword, Integer category);
 	/**
 	 * Method : 사진게시물을 저장하는 메소드 
 	 * 
@@ -31,7 +35,7 @@ public interface IPhotoBoardRepository {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	public Integer savePhotoBoard(PhotoBoardVO photo);
+	public void savePhotoBoard(PhotoBoardVO photo,  List<FileVO> file);
 
 	/**
 	 * Method : 사진게시물을 수정하는 메소드 
@@ -41,7 +45,7 @@ public interface IPhotoBoardRepository {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	public Integer updatePhotoBoard(PhotoBoardVO photo);
+	public void updatePhotoBoard(PhotoBoardVO photo,  List<FileVO> file);
 
 	/**
 	 * Method : 사진게시물을 삭제하는 메소드 
@@ -63,9 +67,17 @@ public interface IPhotoBoardRepository {
 	 */
 	public PhotoBoardVO searchByPhotoIndex(Integer index);
 	
+	
+	public List<FileVO> files(Integer index);
+	
 
-	public Integer findCount(String searchType, String keyword, Integer category);
+	public PhotoBoardVO lastPhotoBoard();
 
+	
+	public Integer deleteFiles(Integer index);
+	
+
+	public Integer deleteFile(Integer index, String fileId);
 
 
 }

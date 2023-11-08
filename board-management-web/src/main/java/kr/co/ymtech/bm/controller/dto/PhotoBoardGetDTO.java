@@ -1,6 +1,9 @@
 package kr.co.ymtech.bm.controller.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import kr.co.ymtech.bm.repository.vo.FileVO;
 
 /**
  * 사진게시물 정보를 저장하는 클래스
@@ -65,11 +68,11 @@ public class PhotoBoardGetDTO {
 		this.category = category;
 	}
 
-	public Date getCreateDate() {
+	public Long getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
 	}
 	

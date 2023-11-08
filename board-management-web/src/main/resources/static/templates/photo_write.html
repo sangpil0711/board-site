@@ -1,32 +1,31 @@
-s<div id="container" ng-controller="PhotoWrite">
+<div id="container" ng-controller="PhotoWrite">
 	<!-- 시작: 게시물 추가 화면 박스 -->
     <div class="general_write">사진게시판 글쓰기</div>
 
     <div class="title_write">
         <p>제목</p>
-        <input id="title" type="text" ng-model="photoBoard.title" required>
+        <input type="text" ng-model="photoBoard.title" required>
     </div>
 
     <div class="content_write">
-        <textarea id="contents" ng-model="photoBoard.text" required></textarea>
+        <textarea ng-model="photoBoard.text" required></textarea>
     </div>
 
     <div>
-        <input type="file" id="fileInput" name="files" style="display: none;" ngf-select="onFileSelect($files)"
-            accept=".hwp, .hwpx, .pdf, .txt, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .zip" multiple>
-        <button class="file_btn" ng-click="selectFile()">이미지선택<br>(최대 100MB)</button>
-    </div>
+		<input type="file" id="fileInput" style="display: none;"
+			ngf-select="onFileSelect($files)"
+			accept="image/* " multiple>
+		<button class="file_btn" ng-click="selectFile()">이미지선택<br>(최대 100MB)</button>
+	</div>
 
     <div class="file_name">
-        <div ng-repeat="fileName in fileNames" class="file-item">{{fileName}}</div>
+        <div ng-repeat="fileName in fileNames track by $index">{{fileName}} <button ng-click="excludeFile($index)">삭제</button> </div>
     </div>
 
     <div class="write_decision">
         <input type="button" ng-click="insertPhoto()" value="작성완료">
         <button ng-click="redirectToPhotoBoard()">취소</button>
     </div>
-    
-    <div class="error-message" ng-if="errorMessage">{{errorMessage}}</div>
     
     <!-- 끝: 게시물 추가 화면 박스 -->
 </div>

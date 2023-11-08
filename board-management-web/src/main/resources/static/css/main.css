@@ -8,20 +8,20 @@ body {
 }
 
 ul {
-	list-style-type: none;
+   list-style-type: none;
 }
 
 ul li {
-	margin: 25px 15px;
+   margin: 25px 15px;
 }
 
 .span {
-	color: black;
+   color: black;
 }
 
 .head {
-	display: inline-block;
-	margin-top: 30px;
+   display: inline-block;
+   margin-top: 30px;
 }
 
 .menu {
@@ -35,33 +35,33 @@ ul li {
 }
 
 .menu li {
-	padding: 0 0 0 80px;
+   padding: 0 0 0 80px;
 }
 
 .ipp_btn {
-	border: none;
-	padding: 15px 30px;
-	font-size: 30px;
-	background-color: white;
-	color: rgb(79, 114, 228);
-	font-weight: 600;
-	margin-top: 10px;
-	position: absolute;
-	left: 200px;
+   border: none;
+   padding: 15px 30px;
+   font-size: 30px;
+   background-color: white;
+   color: rgb(79, 114, 228);
+   font-weight: 600;
+   margin-top: 10px;
+   position: absolute;
+   left: 200px;
 }
 
 .btn {
-	border: none;
-	padding: 15px 30px;
-	border-radius: 15px;
-	font-size: 25px;
-	background-color: white;
-	color: black;
-	font-weight: 600;
+   border: none;
+   padding: 15px 30px;
+   border-radius: 15px;
+   font-size: 25px;
+   background-color: white;
+   color: black;
+   font-weight: 600;
 }
 
 button:hover {
-	cursor: pointer;
+   cursor: pointer;
 }
 
 .menu .btn:focus,
@@ -71,9 +71,9 @@ button:hover {
 }
 
 h3 {
-	border-bottom: 2px solid black;
-	color: black;
-	font-weight: 600;
+   border-bottom: 2px solid black;
+   color: black;
+   font-weight: 600;
 }
 
 .board_best {
@@ -138,21 +138,21 @@ h3 {
 }
 
 .user_update {
-	float: right;
-	margin-right: 280px;
-	margin-bottom: 50px;
+   float: right;
+   margin-right: 280px;
+   margin-bottom: 50px;
 }
 
 .username {
-	border-left-width: 0;
-	border-right-width: 0;
-	border-top-width: 0;
-	border-bottom-width: 1;
-	width: 100px;
-	margin-top: 20px;
-	position: absolute;
-	top: 50px;
-	right: 270px;
+   border-left-width: 0;
+   border-right-width: 0;
+   border-top-width: 0;
+   border-bottom-width: 1;
+   width: 100px;
+   margin-top: 20px;
+   position: absolute;
+   top: 50px;
+   right: 270px;
 }
 
 .write_btn {
@@ -353,13 +353,13 @@ h3 {
 }
 
 .comment {
-	border-collapse: separate;
-	width: 1015px;
-	text-align: center;
-	margin-top: 0px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 50px;
+   border-collapse: separate;
+   width: 1015px;
+   text-align: center;
+   margin-top: 0px;
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 50px;
 }
 
 .comment thead tr th {
@@ -447,7 +447,7 @@ h3 {
 
 .comment .child_comment td:nth-child(5),
 .comment .child_comment th:nth-child(5) {
-	width: 140px;
+   width: 140px;
 }
 
 .board thead tr th {
@@ -464,22 +464,22 @@ h3 {
 
 .board td:first-child,
 .board th:first-child {
-	width: 106px;
+   width: 106px;
 }
 
 .board td:nth-child(2),
 .board th:nth-child(2) {
-	width: 583px;
+   width: 583px;
 }
 
 .board td:nth-child(3),
 .board th:nth-child(3) {
-	width: 159px;
+   width: 159px;
 }
 
 .board td:nth-child(4),
 .board th:nth-child(4) {
-	width: 212px;
+   width: 212px;
 }
 
 .board tbody td {
@@ -493,27 +493,27 @@ h3 {
 }
 
 .board tbody td a {
-	text-decoration: none;
-	color: black;
+   text-decoration: none;
+   color: black;
 }
 
 .board tbody td a:hover {
-	text-decoration: underline;
-	cursor: pointer;
+   text-decoration: underline;
+   cursor: pointer;
 }
 
 .general_write {
-	border: 2px solid grey;
-	color: grey;
-	padding: 5px 0;
-	text-align: center;
-	width: 700px;
-	font-size: 25px;
-	font-weight: 600;
-	margin-top: 50px;
-	margin-bottom: 30px;
-	margin-left: auto;
-	margin-right: auto;
+   border: 2px solid grey;
+   color: grey;
+   padding: 5px 0;
+   text-align: center;
+   width: 700px;
+   font-size: 25px;
+   font-weight: 600;
+   margin-top: 50px;
+   margin-bottom: 30px;
+   margin-left: auto;
+   margin-right: auto;
 }
 
 .title_write p:first-child {
@@ -523,9 +523,9 @@ h3 {
 }
 
 .title_write p:nth-child(2) {
-	position: absolute;
-	left: 700px;
-	font-size: 25px;
+   position: absolute;
+   left: 700px;
+   font-size: 25px;
 }
 
 
@@ -622,20 +622,20 @@ strong {
 }
 
 .board_view {
-	width: 100%;
-	border-top: 2px solid black;
-	font-size: 20px;
+   width: 100%;
+   border-top: 2px solid black;
+   font-size: 20px;
 }
 
 .board_view a {
-	font-size: 15px;
-	margin-left: 20px;
+   font-size: 15px;
+   margin-left: 20px;
 }
 
 .board_view p {
-	font-weight: 600;
-	margin-left: 10px;
-	margin-top: 20px;
+   font-weight: 600;
+   margin-left: 10px;
+   margin-top: 20px;
 }
 
 .board_view .title {
