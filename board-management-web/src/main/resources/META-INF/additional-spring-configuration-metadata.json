@@ -8,5 +8,10 @@
     "name": "spring.logging.level.org.springframework.node-value",
     "type": "java.lang.String",
     "description": "A description for 'spring.logging.level.org.springframework.node-value'"
+  },
+  {
+    "name": "spring.file.Path.image-path",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.file.Path.image-path'"
   }
 ]}

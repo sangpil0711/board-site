@@ -1,23 +1,31 @@
 app.controller("PhotoCtrl", function($scope, PhotoBoardFactory, $location, $route) {
 	
-    $scope.currentPage = 1;  // 게시판 현재 페이지
-    $scope.itemsPerPage = 6; // 페이지당 게시글 수
-    $scope.maxSize = 12; // 화면에 표시되는 최대 게시글 수
-    $scope.options = [   // 선택할수 있는 페이지당 게시글 수
+	// 게시판 현재 페이지
+    $scope.currentPage = 1;  
+    // 페이지당 게시글 수
+    $scope.itemsPerPage = 6; 
+    // 화면에 표시되는 최대 게시글 수
+    $scope.maxSize = 12; 
+    // 선택할수 있는 페이지당 게시글 수
+    $scope.options = [   
         { name: '6개씩 보기', value: 6 },
         { name: '12개씩 보기', value: 12 },
         { name: '18개씩 보기', value: 18 },
         { name: '24개씩 보기', value: 24 }
     ];
-    $scope.searchType = 'title';   // 검색 유형 기본 값
-    $scope.keyword = '';   // 검색어 기본 값 
-    $scope.types = [       // 선택 가능 한 검색 유형 
+    // 검색 유형 기본 값
+    $scope.searchType = 'title';   
+    // 검색어 기본 값 
+    $scope.keyword = '';   
+     // 선택 가능 한 검색 유형 
+    $scope.types = [       
         { name: '제목', value: 'title' },
         { name: '내용', value: 'content' },
         { name: '작성자', value: 'user_id' }
     ];
     
-    const CATEGORY = 1; //category 를 1로 설정
+    //category 를 1로 설정
+    const CATEGORY = 1; 
     
     	/**
 	 * @function findPhotoBoardList 요청에 따른 게시판 목록과 게시판 총 게시글 수를 반환하는 함수
@@ -41,8 +49,22 @@ app.controller("PhotoCtrl", function($scope, PhotoBoardFactory, $location, $rout
                 $scope.photoBoardlist.push(list);
             }
             $scope.totalItems = response.totalCount;
+        },
+        function(error) {
+				alert("게시판 불러오기 실패");
+				console.error("게시판 불러오기 실패", error);
         });
-    }
+    };
+    
+    
+    		// 이미지 가져오는 함수
+		$scope.getImagePath = function(item) {
+    		return `${imageConfig.getImagePath()}/${item.imageFileName}`;
+}
+
+    
+    
+    
 
 	/**
 	 * @function search 검색어 입력에 따른 함수

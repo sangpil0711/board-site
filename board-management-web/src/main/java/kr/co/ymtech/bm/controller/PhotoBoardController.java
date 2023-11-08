@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.ymtech.bm.controller.dto.BoardDTO;
+import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
+import kr.co.ymtech.bm.controller.dto.PhotoBoardUpdateDTO;
 import kr.co.ymtech.bm.service.IPhotoBoardService;
 import kr.co.ymtech.bm.service.PhotoBoardService;
 
@@ -76,13 +79,19 @@ public class PhotoBoardController {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	@PostMapping("/photos")
-	public ResponseEntity<Integer> savePhotoBoard(@RequestBody PhotoBoardDTO photo) {
-
-		Integer photoBoardlistSave = photoBoardService.savePhotoBoard(photo);
-
-		return new ResponseEntity<Integer>(photoBoardlistSave, HttpStatus.OK);
+	@PostMapping(value = "/photos")
+	public void savePhotoBoard(PhotoBoardDTO photo) {
+		photoBoardService.savePhotoBoard(photo);
 	}
+	
+	
+//	@PostMapping("/photos")
+//	public ResponseEntity<Integer> savePhotoBoard(@RequestBody PhotoBoardDTO photo) {
+//
+//		Integer photoBoardlistSave = photoBoardService.savePhotoBoard(photo);
+//
+//		return new ResponseEntity<Integer>(photoBoardlistSave, HttpStatus.OK);
+//	}
 
 	/**
 	 * Method : 사진게시물을 수정하는 메소드 
@@ -95,13 +104,20 @@ public class PhotoBoardController {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	@PatchMapping("/photos/{index}")
-	public ResponseEntity<Integer> updatePhotoBoard(@PathVariable Integer index, @RequestBody PhotoBoardGetDTO photo) {
-
-		Integer photoBoardlistUpdate = photoBoardService.updatePhotoBoard(photo);
-
-		return new ResponseEntity<Integer>(photoBoardlistUpdate, HttpStatus.OK);
+	@PatchMapping(value = "/photos/{index}")
+	public void updatePhotoBoard(@PathVariable Integer index, PhotoBoardUpdateDTO photo) {
+		photoBoardService.updatePhotoBoard(photo);
 	}
+	
+	
+	
+//	@PatchMapping("/photos/{index}")
+//	public ResponseEntity<Integer> updatePhotoBoard(@PathVariable Integer index, @RequestBody PhotoBoardGetDTO photo) {
+//
+//		Integer photoBoardlistUpdate = photoBoardService.updatePhotoBoard(photo);
+//
+//		return new ResponseEntity<Integer>(photoBoardlistUpdate, HttpStatus.OK);
+//	}
 
 	/**
 	 * Method : 사진게시물을 삭제하는 메소드 

@@ -2,7 +2,6 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 
 	// 업로드되는 파일 크기의 합
 	let totalSize = 0;
-
 	// 업로드되는 파일 이름
 	$scope.fileNames = [];
 	// 업로드되는 파일 데이터
@@ -47,7 +46,6 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 		if (exceedSizeFile) {
 			alert("선택한 파일의 용량이 100MB를 초과합니다.");
 		}
-
 	};
 
 	/**
@@ -104,5 +102,4 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 			$scope.selectedFiles.splice(index, 1);
 		}
 	}
-
 });

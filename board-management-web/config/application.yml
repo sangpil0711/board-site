@@ -23,7 +23,6 @@ spring:
       enabled: true
     restart:
       enabled: true
-
   datasource:
     url: jdbc:postgresql://localhost:5432/testdb
     username: postgres
@@ -32,3 +31,7 @@ spring:
   sql:
     init:
       platform: postgres
+      
+file:
+  path:
+    imagePath: C:\boardFile

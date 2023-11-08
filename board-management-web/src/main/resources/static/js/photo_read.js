@@ -1,6 +1,8 @@
 app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoardFactory) {
 	
-    let index = $routeParams.index;   //라우팅으로 받아오는 게시글 번호
+	
+	 //라우팅으로 받아오는 게시글 번호
+    let index = $routeParams.index;   
 
 	$scope.photoBoard = [];
 	/**
@@ -12,8 +14,17 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
     let searchByPhotoIndex = function() {
         PhotoBoardFactory.readPhotoBoard({ index: index }, function(response) {
             $scope.photoBoard = response;
-        });
-    }
+            $scope.photoBoard.imagePaths = [];
+            
+             for(let i = 0;i<response.file.length;i++){
+             $scope.photoBoard.imagePaths.push("/files/" + response.file[i].fileId + "?fileName=" + response.file[i].fileName);
+             }
+		},
+        	function(error) {
+				alert("게시물 데이터 불러오기 실패");
+				console.error("게시물 데이터 불러오기 실패", error);
+			})
+    };
     searchByPhotoIndex();
 
 	/**

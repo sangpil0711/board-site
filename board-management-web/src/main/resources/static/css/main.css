@@ -1,62 +1,64 @@
+
 #container {
-	overflow-x: hidden;
+   overflow-x: hidden;
+   width: 1920px;
 }
 
 ul {
-	list-style-type: none;
+   list-style-type: none;
 }
 
 ul li {
-	margin: 25px 15px;
+   margin: 25px 15px;
 }
 
 .span {
-	color: black;
+   color: black;
 }
 
 .head {
-	display: inline-block;
-	margin-top: 30px;
+   display: inline-block;
+   margin-top: 30px;
 }
 
 .menu {
-	border-bottom: 1px solid rgb(216, 213, 213);
-	width: 2000px;
-	height: 100px;
-	text-align: center;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+   border-bottom: 1px solid rgb(216, 213, 213);
+   width: 1920px;
+   height: 100px;
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
 .menu li {
-	padding: 0 0 0 80px;
+   padding: 0 0 0 80px;
 }
 
 .ipp_btn {
-	border: none;
-	padding: 15px 30px;
-	font-size: 30px;
-	background-color: white;
-	color: rgb(79, 114, 228);
-	font-weight: 600;
-	margin-top: 10px;
-	position: absolute;
-	left: 200px;
+   border: none;
+   padding: 15px 30px;
+   font-size: 30px;
+   background-color: white;
+   color: rgb(79, 114, 228);
+   font-weight: 600;
+   margin-top: 10px;
+   position: absolute;
+   left: 200px;
 }
 
 .btn {
-	border: none;
-	padding: 15px 30px;
-	border-radius: 15px;
-	font-size: 25px;
-	background-color: white;
-	color: black;
-	font-weight: 600;
+   border: none;
+   padding: 15px 30px;
+   border-radius: 15px;
+   font-size: 25px;
+   background-color: white;
+   color: black;
+   font-weight: 600;
 }
 
 button:hover {
-	cursor: pointer;
+   cursor: pointer;
 }
 
 .menu .btn:focus,
@@ -66,64 +68,64 @@ button:hover {
 }
 
 h3 {
-	border-bottom: 2px solid black;
-	color: black;
-	font-weight: 600;
+   border-bottom: 2px solid black;
+   color: black;
+   font-weight: 600;
 }
 
 .board_best {
-	display: inline-block;
-	margin-left: 300px;
+   display: inline-block;
+   margin-left: 300px;
 }
 
 .best {
-	display: flex;
-	flex-direction: column;
+   display: flex;
+   flex-direction: column;
 }
 
 .reply {
-	display: inline-block;
-	margin-top: 150px;
+   display: inline-block;
+   margin-top: 150px;
 }
 
 .reply li {
-	font-size: 20px;
+   font-size: 20px;
 }
 
 .reply_number {
-	display: flex;
-	flex-direction: column;
-	line-height: 40px;
+   display: flex;
+   flex-direction: column;
+   line-height: 40px;
 }
 
 .best_btn {
-	padding: 15px;
-	margin-bottom: -16px;
-	font-size: 15px;
-	background-color: white;
-	color: black;
-	border: 2px solid grey;
-	font-weight: 500;
-	width: 800px;
-	text-align: left;
+   padding: 15px;
+   margin-bottom: -16px;
+   font-size: 15px;
+   background-color: white;
+   color: black;
+   border: 2px solid grey;
+   font-weight: 500;
+   width: 800px;
+   text-align: left;
 }
 
 .user_update {
-	float: right;
-	margin-right: 280px;
-	margin-bottom: 50px;
+   float: right;
+   margin-right: 280px;
+   margin-bottom: 50px;
 }
 
 .username {
-	border-left-width: 0;
-	border-right-width: 0;
-	border-top-width: 0;
-	border-bottom-width: 1;
-	width: 100px;
-	margin-top: 20px;
-	position: absolute;
-	top: 50px;
-	right: 270px;
+   border-left-width: 0;
+   border-right-width: 0;
+   border-top-width: 0;
+   border-bottom-width: 1;
+   width: 100px;
+   margin-top: 20px;
+   position: absolute;
+   top: 50px;
+   right: 270px;
 }
 
 .write_btn {
@@ -135,7 +137,7 @@ h3 {
    font-weight: 300;
    position: relative;
    top: 50px;
-   left: 323px;
+   left: 430px;
 }
 
 .type_select {
@@ -148,22 +150,9 @@ h3 {
    appearance: none;
    position: relative;
    top: 15px;
-   left: 480px;
+   left: 530px;
 }
 
-.search_reset{
-	   border: 1px solid grey;
-   padding: 5px 10px;
-   font-size: 15px;
-   background-color: white;
-   color: black;
-   font-weight: 300;
-   font-size: 15px;
-   position: relative;
-   top: 15px;
-   left: 505px;
-	
-}
 .search_btn {
    border: 1px solid grey;
    padding: 5px 10px;
@@ -174,7 +163,7 @@ h3 {
    font-size: 15px;
    position: relative;
    top: 15px;
-   left: 500px;
+   left: 570px;
 }
 
 .search {
@@ -185,16 +174,26 @@ h3 {
    outline: none;
    position: relative;
    top: 15px;
-   left: 490px;
+   left: 550px;
    height: 30px;
    width: 300px;
+}
+
+.search_reset {
+   border: 1px solid grey;
+   font-size: 13px;
+   background-color: white;
+   position: relative;
+   top: 15px;
+   left: 570px;
+   height: 33px;
 }
 
 .board_all {
    font-size: 17px;
    position: relative;
    top: -15px;
-   left: 1180px;
+   left: 1220px;
 }
 
 .board_select {
@@ -210,65 +209,111 @@ h3 {
    background-color: white;
    position: relative;
    top: -55px;
-   left: 1262px;
+   left: 1330px;
 }
 
 .board_box {
-   position: relative; 
-}
-
-
-
-.comment_box{
-	position: absolute;
-	top: 850px;
-	margin-bottom: 50px;
+   position: relative;
+   right: 20px;
 }
 
 .board {
-   border-collapse: separate;
-   width: 900px;
+   border-collapse: collapse;
+   width: 1060px;
    text-align: center;
    margin-top: 0px;
    margin-left: auto;
    margin-right: auto;
 }
+
+.board tbody {
+   display: inline-block;
+   width: 1060px;
+   max-height: 251px;
+   overflow: overlay;
+}
+
+.board tbody tr {
+   height: 50px;
+   background-color: white;
+   color: black;
+   font-size: 17px;
+   width: 1060px;
+}
+
+.comment_box {
+   position: relative;
+   top: 850px;
+   margin-bottom: 50px;
+}
+
 .photo_box {
-  justify-content: flex-start;
-  width: 70%;
-  margin: -10px auto;
+   justify-content: flex-start;
+   width: 70%;
+   margin: -10px auto;
+   margin-left: 350px;
+  }
+  
+  
+  .photo_box .img-button {
+   max-width: 100%;
+   text-align: center;
+   margin: 19px;
+   width: 160px;
+  }
+  
+  
+  
+  .photo_box .img-button img {
+   width: 100%; 
+   height: auto;
+  }
+  
+  .photo_box .img-button p {
+   margin: 2px;
+  }
+  
+  .photo_span {
+     float: left;
+     font-size: 12px;
+  }
+
+.photo {
+   width: calc(20% - 10px);
+   /* 한 줄에 5개의 게시물을 표시하기 위해 (80% / 5) - 간격 값으로 설정 */
+   margin: 5px;
+   /* 게시물 간격을 설정 */
+   padding: 10px;
+   box-sizing: border-box;
+   text-align: center;
+}
+
+.img {
+   max-width: 100%;
+   /* 이미지 크기를 이미지 박스에 맞게 조절 */
+   max-height: auto;
+   /* 이미지 높이를 조절하지 않고 가로 비율 유지 */
+}
+
+.photo li {
+   margin: 10px 0;
+   text-align: center;
 }
 
 
-.photo_box .img-button {
-  max-width: 100%;
-  text-align: center;
-  margin: 19px;
-  width: 160px;
-}
-
-
-
-.photo_box .img-button img {
-  width: 100%; 
-  height: auto;
-}
-
-.photo_box .img-button p {
-  margin: 2px;
-}
-
-.photo_span {
-    float: left;
-    font-size: 12px;
+.photo p {
+   margin: 5px;
+   font-size: 12px;
+   text-align: left;
+   width: 100%;
 }
 .photo_p{
-	text-align: center;
-	font-size: 12px;
+   text-align: center;
+   font-size: 12px;
 }
 .photo_p_date{
-	text-align: center;
-	font-size: 11px;
+   text-align: center;
+   font-size: 11px;
 }
 
 
@@ -277,26 +322,29 @@ h3 {
 
 
 .comment td {
-    padding: 5px; 
+   padding: 5px;
 }
-.comment{
-	border-collapse: separate;
-    width: 1015px;
-    text-align: center;
-    margin-top: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50px;
+
+.comment {
+   border-collapse: separate;
+   width: 1015px;
+   text-align: center;
+   margin-top: 0px;
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 50px;
 }
-.comment thead tr th{
+
+.comment thead tr th {
    background-color: #fff;
    border: 1px solid black;
-   border-width: 0 0 2px ;
+   border-width: 0 0 2px;
    color: black;
    font-size: 16px;
    text-align: center;
-   
+
 }
+
 .comment td:first-child,
 .comment th:first-child {
    width: 0px;
@@ -309,38 +357,42 @@ h3 {
 
 .comment td:nth-child(3),
 .comment th:nth-child(3) {
-   width: 142px;
+   width: 140px;
 }
 
 .comment td:nth-child(4),
 .comment th:nth-child(4) {
    width: 169px;
 }
+
 .comment td:nth-child(5),
 .comment th:nth-child(5) {
    width: 85px;
 }
 
-.comment th{
-	border: 1px;
+.comment th {
+   border: 1px;
 }
+
 .child_comment {
-     padding: 1px;
-     width: 400px;
-    margin-bottom: 50px; 
-    margin-left: 80px;
-    background-color: white;
-} 
+   padding: 1px;
+   width: 400px;
+   margin-bottom: 50px;
+   margin-left: 80px;
+   background-color: ghostwhite;
+}
+
 .child_comment_write {
-     width: 552px;
-    margin-bottom: 0px; 
-    margin-left: 135px;
-} 
+   width: 552px;
+   margin-bottom: 0px;
+   margin-left: 135px;
+}
 
 .child_comment td {
-    height: 25px; 
-    font-size: 12px; 
+   height: 25px;
+   font-size: 12px;
 }
+
 .comment .child_comment td:first-child,
 .comment .child_comment th:first-child {
    width: 25px;
@@ -350,9 +402,10 @@ h3 {
 .comment .child_comment th:nth-child(2) {
    width: 150px;
 }
+
 .comment .child_comment td:nth-child(2)::before {
-    content: '\2192';
-    padding-right: 10px;
+   content: '\2192';
+   padding-right: 10px;
 }
 
 .comment .child_comment td:nth-child(3),
@@ -364,10 +417,12 @@ h3 {
 .comment .child_comment th:nth-child(4) {
    width: 140px;
 }
+
 .comment .child_comment td:nth-child(5),
 .comment .child_comment th:nth-child(5) {
    width: 140px;
 }
+
 .board thead tr th {
    display: inline-block;
    position: sticky;
@@ -380,87 +435,72 @@ h3 {
    text-align: center;
 }
 
-.board tbody {
-   display: inline-block;
-   width: 1060px;
-   max-height: 250px;
-   overflow: overlay;
-}
-
-.board tbody tr {
-   height: 50px;
-   background-color: white;
-   color: black;
-   font-size: 17px;
-   width: 1060px;
-}
-
 .board td:first-child,
 .board th:first-child {
-	width: 106px;
+   width: 106px;
 }
 
 .board td:nth-child(2),
 .board th:nth-child(2) {
-	width: 583px;
+   width: 583px;
 }
 
 .board td:nth-child(3),
 .board th:nth-child(3) {
-	width: 159px;
+   width: 159px;
 }
 
 .board td:nth-child(4),
 .board th:nth-child(4) {
-	width: 212px;
+   width: 212px;
 }
 
 .board tbody td {
-	border: 1px solid grey;
-	border-width: 1px 0;
-	border-top: none;
+   border: 1px solid grey;
+   border-width: 1px 0;
+   border-top: none;
 }
 
 .board tbody td a {
-	text-decoration: none;
-	color: black;
+   text-decoration: none;
+   color: black;
 }
 
 .board tbody td a:hover {
-	text-decoration: underline;
-	cursor: pointer;
+   text-decoration: underline;
+   cursor: pointer;
 }
 
 .general_write {
-	border: 2px solid grey;
-	color: grey;
-	padding: 5px 0;
-	text-align: center;
-	width: 700px;
-	font-size: 25px;
-	font-weight: 600;
-	margin-top: 50px;
-	margin-bottom: 30px;
-	margin-left: auto;
-	margin-right: auto;
+   border: 2px solid grey;
+   color: grey;
+   padding: 5px 0;
+   text-align: center;
+   width: 700px;
+   font-size: 25px;
+   font-weight: 600;
+   margin-top: 50px;
+   margin-bottom: 30px;
+   margin-left: auto;
+   margin-right: auto;
 }
 
 .title_write p:first-child {
    position: absolute;
-   left: 510px;
+   left: 610px;
    font-size: 25px;
 }
 
 .title_write p:nth-child(2) {
-	position: absolute;
-	left: 700px;
-	font-size: 25px;
+   position: absolute;
+   left: 700px;
+   font-size: 25px;
 }
 
 
 .title_write input {
    position: absolute;
-   left: 575px;
+   left: 680px;
    width: 630px;
    height: 35px;
    font-size: 20px;
@@ -469,11 +509,12 @@ h3 {
 .content_write textarea {
    padding: 15px;
    position: absolute;
-   left: 506px;
+   left: 610px;
    margin-top: 50px;
    width: 700px;
    height: 300px;
    font-size: 15px;
+   resize: none;
 }
 
 .file_btn {
@@ -481,8 +522,8 @@ h3 {
    border: 1px solid black;
    color: white;
    position: absolute;
-   top: 690px;
-   left: 510px;
+   top: 650px;
+   left: 610px;
    height: 100px;
    width: 120px;
 }
@@ -493,29 +534,24 @@ h3 {
    height: 100px;
    padding: 5px 10px;
    position: absolute;
-   left: 638px;
-   top: 690px;
+   left: 740px;
+   top: 650px;
+   overflow: overlay;
 }
 
-.reset_btn {
-   background-color: white;
-   border: 1px solid grey;
-   padding: 5px;
-   width: 100px;
-   position: absolute;
-   right: 500px;
-   top: 630px;
-}
-.upload_btn {
-   background-color: white;
-   border: 1px solid grey;
-   padding: 5px;
-   width: 100px;
-   position: absolute;
-   right: 507px;
-   top: 630px;
+.file_name div {
+   margin-bottom: 5px;
 }
 
+.file_name button {
+   width: 40px;
+   height: 19px;
+   background-color: white;
+   border: 1px solid gray;
+   color: red;
+   margin-left: 15px;
+   font-size: 12px;
+}
 
 .write_decision input {
    width: 70px;
@@ -524,8 +560,8 @@ h3 {
    border: 1px solid black;
    color: white;
    position: absolute;
-   left: 1050px;
-   top: 805px;
+   left: 1140px;
+   top: 780px;
 }
 
 .write_decision button {
@@ -534,212 +570,48 @@ h3 {
    border: 1px solid black;
    background-color: white;
    position: absolute;
-   left: 1138px;
-   top: 805px;
+   left: 1240px;
+   top: 780px;
 }
 
 strong {
-	position: absolute;
-	top: 220px;
-	left: 360px;
-	font-size: 25px;
+   position: relative;
+   top: 120px;
+   left: 470px;
+   font-size: 25px;
 }
 
 .board_wrap {
-	width: 1000px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 150px;
-	margin-bottom: 50px;
+   position: relative;
+   width: 1000px;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 150px;
+   margin-bottom: 50px;
 }
 
 .board_view {
-	width: 100%;
-	border-top: 2px solid black;
-	font-size: 20px;
+   width: 100%;
+   border-top: 2px solid black;
+   font-size: 20px;
 }
 
 .board_view a {
-	font-size: 15px;
-	margin-left: 20px;
+   font-size: 15px;
+   margin-left: 20px;
 }
 
 .board_view p {
-	font-weight: 600;
-	margin-left: 10px;
-	margin-top: 20px;
+   font-weight: 600;
+   margin-left: 10px;
+   margin-top: 20px;
 }
 
 .board_view .title {
-	padding: 20px 15px;
-	border-bottom: 1px dashed #ddd;
-	font-size: 20px;
-	font-weight: 600;
-}
-
-.board_view .info {
-	padding: 15px;
-	border-bottom: 1px solid #999;
-}
-
-.board_view .info dl {
-	display: inline-block;
-	padding: 0 20px;
-}
-
-.board_view .info p {
-	margin-left: 50px;
-}
-
-.board_view .info dl dt,
-.board_view .info dl dd {
-	display: inline-block;
-	font-size: 17px;
-}
-
-.board_view .info dl dd {
-	margin-left: 10px;
-	color: #777;
-}
-
-.board_view .content {
-	padding: 20px;
-	border-bottom: 1px solid black;
-	line-height: 160%;
-	font-size: 15px;
-	min-height: 300px;
-}
-
-.read_btn {
-   position: absolute;
-   right: 350px;
-   margin-top: 85px;
-}
-
-.read_btn button {
-	display: inline-block;
-	min-width: 70px;
-	margin-left: 30px;
-	padding: 5px;
-	font-size: 15px;
-}
-
-.read_btn button:first-child {
-	background-color: rgb(173, 173, 173);
-	color: white;
-}
-
-.read_btn button:nth-child(2) {
-	background-color: white;
-}
-
-pre {
-   background-color: white;
-   border: none;
-}
-
-.child_write_box{
-    width: 200px;
-}
-
-.comment_write {
-	position: relative;
-	left: 335px;
-}
-
-.comment_  {
-	display: flex;
-	align-items: center;
-}
-
-
-.textarea_container textarea {
-	resize: none;
-}
-
-.comment_write_btn {
-	position: relative;
-	height: 95px;
-	width: 54px;
-	bottom: 43px;
-	
-	
-}
-
-.comment_write_box {
-	width: 960px;
-	height: 95px;
-}
-
-.comment_box {
-	position: absolute;
-	left: 335px;
-	width: 1000px;
-	top: 10px;
-}
-
-.save_btn {
-	margin-left: 10px;
-	height: 35px;
-	width: 50px;
-}
-
-.child_save_btn {
-	margin-top: 0px;
-	height: 24px;
-	width: 32px;
-	padding: 2px 1px;
-	text-align: center;
-	font-size: 11px;
-	right: 20px;
-}
-
-.child_delete_btn {
-	margin-top: 0px;
-	height: 24px;
-	width: 32px;
-	padding: 2px 1px;
-	text-align: center;
-	font-size: 11px;
-}
-
-.delete_btn {
-	margin-left: 0px;
-	margin-top: 0px;
-	height: 24px;
-	width: 32px;
-	padding: 2px 1px;
-	text-align: center;
-	font-size: 11px;
-}
-
-.update_btn {
-	margin-left: 0px;
-	margin-top: 0px;
-	height: 24px;
-	width: 32px;
-	padding: 2px 1px;
-	text-align: center;
-	font-size: 11px;
-}
-
-.child_comment_btn {
-	margin-left: 0px;
-	margin-top: 0px;
-	height: 24px;
-	width: 32px;
-	padding: 2px 1px;
-	text-align: center;
-	font-size: 11px;
-}
-
-.child_comment_btn.hidden {
-	display: none;
-}
-
-.update_write_box{
-	 width: 400px;
-    margin-left: 52px;
+   padding: 20px 15px;
+   border-bottom: 1px dashed #ddd;
+   font-size: 20px;
+   font-weight: 600;
 }
 
 .board_view .info {
@@ -750,38 +622,6 @@ pre {
 .board_view .info dl {
    display: inline-block;
    padding: 0 20px;
-}
-
-.board_view .info dt {
-   position: relative;
-   bottom: 8px;
-}
-
-.board_view .info dl:first-child {
-   padding-left: 0;
-   width: 15%;
-}
-
-.board_view .info dl:nth-child(2) {
-   width: 40%;
-}
-
-.board_view .info dl:first-child dd {
-   position: relative;
-   bottom: 8px;
-}
-
-.board_view .info dl:nth-child(2) dd {
-   position: relative;
-   bottom: 8px;
-}
-
-.board_view .info dl:nth-child(3) dd {
-   overflow: overlay;
-   max-height: 50px;
-   width: 300px;
-   position: absolute;
-   top: 374px;
 }
 
 .board_view .info p {
@@ -799,31 +639,145 @@ pre {
    color: #777;
 }
 
+.board_view .content {
+   padding: 20px;
+   border-bottom: 1px solid black;
+   line-height: 160%;
+   font-size: 15px;
+   min-height: 300px;
+}
+
+.read_btn {
+   position: relative;
+   float: right;
+   margin-top: 120px;
+   margin-right: 470px;
+}
+
+.read_btn button {
+   display: inline-block;
+   min-width: 70px;
+   margin-left: 30px;
+   padding: 5px;
+   font-size: 15px;
+}
+
+.read_btn button:first-child {
+   background-color: rgb(173, 173, 173);
+   color: white;
+}
+
+.read_btn button:nth-child(2) {
+   background-color: white;
+}
+
+pre {
+   background-color: white;
+   border: none;
+}
+
+.child_write_box {
+   width: 200px;
+}
+
+.comment_write {
+   width: 950px;
+   position: relative;
+   left: 460px;
+}
+
+.comment_  {
+   display: flex;
+   align-items: center;
+}
 
 
+.textarea_container textarea {
+   resize: none;
+}
 
+.comment_write_btn {
+   height: 95px;
+   width: 50px;
+   margin-left: -7px;
+   align-self: flex-start;
+   position: absolute;
+   left: 960px;
+   bottom: 5px;
+}
 
+.comment_write_box {
+   width: 950px;
+   height: 95px;
+}
 
+.comment_box {
+   position: relative;
+   left: 450px;
+   width: 1000px;
+   top: 10px;
+}
 
+.save_btn {
+   margin-left: 10px;
+   height: 35px;
+   width: 50px;
+}
 
+.child_save_btn {
+   margin-top: 0px;
+   height: 24px;
+   width: 32px;
+   padding: 2px 1px;
+   text-align: center;
+   font-size: 11px;
+   right: 20px;
+}
 
+.child_delete_btn {
+   margin-top: 0px;
+   height: 24px;
+   width: 32px;
+   padding: 2px 1px;
+   text-align: center;
+   font-size: 11px;
+}
 
+.delete_btn {
+   margin-left: 0px;
+   margin-top: 0px;
+   height: 24px;
+   width: 32px;
+   padding: 2px 1px;
+   text-align: center;
+   font-size: 11px;
+}
 
+.update_btn {
+   margin-left: 0px;
+   margin-top: 0px;
+   height: 24px;
+   width: 32px;
+   padding: 2px 1px;
+   text-align: center;
+   font-size: 11px;
+}
 
+.child_comment_btn {
+   margin-left: 0px;
+   margin-top: 0px;
+   height: 24px;
+   width: 32px;
+   padding: 2px 1px;
+   text-align: center;
+   font-size: 11px;
+}
 
+.child_comment_btn.hidden {
+   display: none;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.update_write_box {
+   width: 400px;
+   margin-left: 52px;
+}

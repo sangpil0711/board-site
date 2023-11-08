@@ -11,9 +11,9 @@ import kr.co.ymtech.bm.repository.vo.BoardVO;
  * @since 2023. 10. 05.
  */
 public class BoardPageDTO {
-	
-	/** list : 게시글 정보 */
-    private List<BoardVO> list;
+   
+   /** list : 게시글 정보 */
+    private List<BoardVO> boardList;
     /** totalCount : 총 게시글 수 */
     private Integer totalCount;
 
@@ -33,15 +33,15 @@ public class BoardPageDTO {
         this.totalCount = totalCount;
     }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("BoardPageDTO [boardList=");
-		builder.append(boardList);
-		builder.append(", totalCount=");
-		builder.append(totalCount);
-		builder.append("]");
-		return builder.toString();
-	}
+   @Override
+   public String toString() {
+      StringBuilder builder = new StringBuilder();
+      builder.append("BoardPageDTO [boardList=");
+      builder.append(boardList);
+      builder.append(", totalCount=");
+      builder.append(totalCount);
+      builder.append("]");
+      return builder.toString();
+   }
     
 }

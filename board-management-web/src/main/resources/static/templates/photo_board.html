@@ -13,17 +13,7 @@
         <button class="search_btn" ng-click="search()">검색</button>
         <button class=search_reset ng-click="searchReset()">검색 초기화</button>
     </div>
-
-    <!-- 검색어 입력 박스 시작 -->
-    <input type="text" class="search" ng-model="keyword" ng-keydown="$event.keyCode === 13 && search()"
-        placeholder="검색어 입력">
-    <!-- 검색어 입력 박스 끝 -->
-
-    <!-- 검색 버튼 및 검색 초기화 버튼 시작 -->
-    <button class="search_btn" ng-click="search()">검색</button>
-    <button class="search_reset" ng-click="searchReset()">검색 초기화</button>
-    <!-- 검색 버튼 및 검색 초기화 버튼 끝 -->
-
+    
     <!-- 게시글 총 개수 및 페이지당 게시글 수 선택 박스 시작 -->
     <div>
         <p class="board_all">전체 {{totalItems}}개</p>
@@ -38,7 +28,7 @@
             <tr ng-repeat="list in photoBoardlist">
                 <td ng-repeat="item in list">
                     <button class="img-button" ng-click="redirectToPhotoRead(item.index)">
-                        <img ng-src='/static/image/No_img.png' alt="이미지" style="width: 135px; height: 135px;">
+                        <img ng-src="{{imageConfig.getImagePath()}}/{{item.imageFileName}}" alt="이미지" style="width: 135px; height: 135px;">
                         <p class="photo_p"><span class="photo_span">제목:</span> {{item.title}}</p>
                         <p class="photo_p"><span class="photo_span">작성자:</span> {{item.userId}}</p>
                         <p class="photo_p_date"><span class="photo_span">작성일:</span> {{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}</p>
