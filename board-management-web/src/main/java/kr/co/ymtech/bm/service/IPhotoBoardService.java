@@ -31,7 +31,7 @@ public interface IPhotoBoardService {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	Integer savePhotoBoard(PhotoBoardDTO photo);
+	public Integer savePhotoBoard(PhotoBoardDTO photo);
 
 	/**
 	 * Method : 사진게시물을 수정하는 메소드 
@@ -41,7 +41,7 @@ public interface IPhotoBoardService {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	Integer updatePhotoBoard(PhotoBoardGetDTO photo);
+	public Integer updatePhotoBoard(PhotoBoardGetDTO photo);
 
 	/**
 	 * Method : 사진게시물을 삭제하는 메소드 
@@ -51,7 +51,7 @@ public interface IPhotoBoardService {
 	 * @author 박상현
 	 * @since  2023.10.25
 	 */
-	Integer deletePhotoBoard(Integer index);
+	public Integer deletePhotoBoard(Integer index);
 
 	/**
 	 * Method : 사진게시물을 1개를 조회하는 메소드 
@@ -61,6 +61,17 @@ public interface IPhotoBoardService {
 	 * @author 박상현
 	 * @since  2023.10.25
 	 */
-	PhotoBoardGetDTO searchByPhotoIndex(Integer index);
+	public PhotoBoardGetDTO searchByPhotoIndex(Integer index);
+	
+	/**
+	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param likeCount 해당 게시글 추천 수
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 03.
+	 */
+	public Integer boardLikeCount(Integer index, Integer likeCount);
 
 }

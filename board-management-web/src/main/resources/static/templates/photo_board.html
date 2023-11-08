@@ -35,7 +35,7 @@
                 <td ng-repeat="item in list">
                     <button class="img-button" ng-click="redirectToPhotoRead(item.index)">
                         <img ng-src='/static/image/No_img.png' alt="이미지" style="width: 135px; height: 135px;">
-                        <p class="photo_p"><span class="photo_span">제목:</span> {{item.title}}</p>
+                        <p class="photo_p_title"><span class="photo_span">제목:</span> &nbsp;&nbsp;&nbsp; {{item.title}}</p>
                         <p class="photo_p"><span class="photo_span">작성자:</span> {{item.userId}}</p>
                         <p class="photo_p_date"><span class="photo_span">작성일:</span> {{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}</p>
                     </button>

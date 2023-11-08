@@ -4,10 +4,12 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	let index = $routeParams.index;
 
 	// 조회한 게시글
-	$scope.board = { 	
+	$scope.board = {
 		title: "",
 		text: ""
 	};
+	
+	$scope.likeCount = 0;
 
 	/**
 	 * @function getDataByIndex 게시판 번호에 맞는 데이터를 불러오는 함수
@@ -35,7 +37,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	 */
 	$scope.remove = function() {
 		let confirmDelete = confirm("게시물을 삭제하시겠습니까?");
-		
+
 		// 게시물 삭제 시 알림창을 띄우고 확인을 누르면 게시물 삭제
 		if (confirmDelete) {
 			BoardFactory.deleteBoard({ index: index }, function() {
@@ -81,6 +83,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 			function(response) {
 				$scope.commentlist = response;
 				let commentNewlist = [];
+				// 배열을 순회하면서 댓글과 대댓글을 리스트에 추가
 				$scope.commentlist.forEach(function(comment) {
 					commentNewlist.push(comment);
 					comment.childCommentBox = false;
@@ -93,8 +96,8 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 
 				$scope.commentlist = commentNewlist;
 			},
-			function(res) {
-				console.error("error: ", res);
+			function(error) {
+				console.error("댓글 정보 불러오기 실패", error);
 			});
 	};
 
@@ -110,6 +113,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	 * @since 2023. 10. 19.
 	 */
 	$scope.insertComment = function(parentIndex, newChildComment) {
+		// 게시글에 생성되는 댓글 데이터
 		let newComment = {
 			index: null,
 			boardIndex: index,
@@ -119,11 +123,12 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 			createDate: null
 		}
 
-		$scope.newComment;
 		CommentFactory.insertComment({ boardIndex: index }, newComment, function() {
 			findComment();
 			$scope.newComment = "";
 
+		}, function(error) {
+			console.error("댓글 등록 실패", error);
 		});
 	};
 
@@ -177,6 +182,8 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 		comment.update = false;
 		CommentFactory.updateComment({ index: index, boardIndex: index }, comment, function() {
 
+		}, function(error) {
+			console.error("댓글 수정 실패", error);
 		});
 	};
 
@@ -207,6 +214,19 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 				findComment();
 			})
 		}
+	};
+	
+	/**
+	 * @function likeAdd 추천 수가 1씩 증가하는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 11. 03.
+	 */
+	$scope.likeAdd = function() {
+		$scope.board.likeCount++
+		BoardFactory.boardLike({ index: index, likeCount: $scope.board.likeCount }, function() {
+			
+		})
 	};
 
 });

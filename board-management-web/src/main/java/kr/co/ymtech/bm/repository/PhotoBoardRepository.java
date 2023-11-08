@@ -68,7 +68,8 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	                    rs.getString("content"),
 	                    rs.getString("user_id"),
 	                    rs.getInt("category"),
-	                    rs.getLong("create_date"));
+	                    rs.getLong("create_date"),
+	        			rs.getInt("like_count"));
 	            return member;
 	        }
 	    };
@@ -164,7 +165,8 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 						rs.getString("content"), 
 						rs.getString("user_id"), 
 						rs.getInt("category"),
-						rs.getLong("create_date"));
+						rs.getLong("create_date"),
+						rs.getInt("like_count"));
 
 				return member;
 			}

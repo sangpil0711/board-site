@@ -15,7 +15,7 @@ import kr.co.ymtech.bm.repository.vo.CommentVO;
  * 일반게시판 CommentRepository 클래스
  * 
  * @author 박상현
- * @since  2023.09.20
+ * @since 2023. 09. 20.
  */
 @Repository
 public class CommentRepository implements ICommentRepository {
@@ -24,43 +24,41 @@ public class CommentRepository implements ICommentRepository {
 	 * jdbc사용 DB 연결
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.20
+	 * @since 2023. 09. 20.
 	 */
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	/**
-	 * Method : 댓글 정보를 저장하는 메소드
+	 * @Method 댓글 정보를 저장하는 메소드
 	 * 
-	 * @param : comment는 사용자가 저장하려고 하는 댓글 정보를 담고 있다.
+	 * @param comment는 사용자가 저장하려고 하는 댓글 정보
 	 * 
-	 * @return : 댓글 정보를 DB에 저장하는 update 함수 실행
+	 * @return 댓글 정보를 DB에 저장하는 update 함수 실행
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.20
+	 * @since 2023. 09. 20.
 	 */
 	@Override
 	public Integer insertComment(CommentVO comment) {
 
-		return jdbcTemplate.update("insert into \"comment\"(board_index,\"content\", parent_index, create_date) values(?, ?, ?, ?)", 
-//				comment.getIndex(), 
+		return jdbcTemplate.update("insert into \"comment\"(board_index,\"content\", parent_index, create_date) values(?, ?, ?, ?)",  
 				comment.getBoardIndex(),
 				comment.getText(),
 				comment.getParentIndex(),
-//				comment.getUserId(), 
 				comment.getCreateDate()
 				);
 	}
 	
 	/**
-	 * Method : 게시물 번호를 이용하여 댓글 정보들을 조회하는 메소드
+	 * @Method 게시물 번호를 이용하여 댓글 정보들을 조회하는 메소드
 	 * 
-	 * @param : boardIndex는 사용자가 저장하려고 하는 댓글 정보를 담고 있다.
+	 * @param boardIndex 사용자가 저장하려고 하는 댓글 정보
 	 * 
-	 * @return : DB에 있는 댓글정보를 조회하는 query 함수 실행
+	 * @return DB에 있는 댓글정보를 조회하는 query 함수 실행
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.20
+	 * @since 2023. 09. 20.
 	 */
 	@Override
 	public List<CommentVO> findComments(Integer boardIndex) {
@@ -84,14 +82,14 @@ public class CommentRepository implements ICommentRepository {
 	}
 	
 	/**
-	 * Method : 댓글 내용(text)을 수정 하는 메소드
+	 * @Method 댓글 내용(text)을 수정 하는 메소드
 	 * 
-	 * @param : comment는 사용자가 요청한 게시물 내용을 담고 있다.
+	 * @param comment는 사용자가 요청한 게시물 내용
 	 * 
-	 * @return : DB에 있는 댓글 정보를 수정하는 update 함수 실행
+	 * @return DB에 있는 댓글 정보를 수정하는 update 함수 실행
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.20
+	 * @since 2023. 09. 20.
 	 */
 	@Override
 	public Integer updateComment(CommentVO comment) {
@@ -100,14 +98,14 @@ public class CommentRepository implements ICommentRepository {
 	}
 	
 	/**
-	 * Method : 댓글 1개를 삭제하는 메소드
+	 * @Method 댓글 1개를 삭제하는 메소드
 	 * 
-	 * @param : index는 댓글의 번호를 담고 있고 댓글의 번호를 보고 삭제
+	 * @param index 댓글의 번호를 담고 있고 댓글의 번호를 보고 삭제
 	 * 
-	 * @return : DB에 있는 해당 index 번호의 댓글 정보를 삭제하는 update 함수 실행
+	 * @return DB에 있는 해당 index 번호의 댓글 정보를 삭제하는 update 함수 실행
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.27
+	 * @since 2023. 09. 27.
 	 */
 	@Override
 	public Integer deleteComment(Integer index) {
@@ -125,14 +123,14 @@ public class CommentRepository implements ICommentRepository {
 	
 	
 	/**
-	 * Method : 해당 게시글 번호의 댓글 전체를 삭제하는 메소드
+	 * @Method 해당 게시글 번호의 댓글 전체를 삭제하는 메소드
 	 * 
-	 * @param boardIndex : boardIndex는 게시글 번호를 담고 있고 게시글 번호를 보고 댓글 전체 삭제
+	 * @param boardIndex 게시글 번호를 담고 있고 게시글 번호를 보고 댓글 전체 삭제
 	 * 
-	 * @return : DB에 있는 해당 boardIndex 번호의 댓글 전체를 삭제하는 update 함수 실행
+	 * @return DB에 있는 해당 boardIndex 번호의 댓글 전체를 삭제하는 update 함수 실행
 	 * 
 	 * @author 박상현
-	 * @since  2023.09.27
+	 * @since 2023. 09. 27.
 	 */
 	@Override
 	public Integer deleteAllComment(Integer boardIndex) {

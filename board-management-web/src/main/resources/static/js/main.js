@@ -1,29 +1,31 @@
-app.controller("BoardMain", function($scope, $location, $route) {
+app.controller("BoardMain", function($scope, $location, MainFactory) {
 
 	/**
-	 * @function redirectToMain main_display.html로 이동하는 함수
+	 * @function bestBoard 추천 수가 많은 게시글을 가져오는 함수
 	 * 
 	 * @author 황상필
-	 * @since 2023. 09. 01.
+	 * @since 2023. 11. 06.
 	 */
-	$scope.redirectToMain = function() {
-		$location.path('/');
-	};
-	
+	MainFactory.bestBoard(function(response) {
+		$scope.board = response;
+	});
+
+	$scope.thumbnail = function(file) {
+		if (file !== undefined && file.fileSize > 0) {
+			return '/files/' + file.fileId + '?fileName=' + file.fileName;
+		} else {
+			return '/static/image/No_img.png';
+		}
+	}
+
 	/**
-	 * @function redirectToGeneralBoard general_board.html로 이동 후 새로고침하는 함수
+	 * @function redirectToReadBoard general_read.html로 이동하는 함수
 	 * 
 	 * @author 황상필
-	 * @since 2023. 09. 01.
+	 * @since 2023. 11. 06.
 	 */
-	$scope.redirectToGeneralBoard = function() {
-		$location.path('/board');
-		$route.reload();
+	$scope.redirectToReadBoard = function(index) {
+		$location.path('/board/read/' + index);
 	};
-	
-	$scope.redirectToPhotoBoard = function() {
-		$location.path('/photo');
-		$route.reload();
-	};
-	
+
 });

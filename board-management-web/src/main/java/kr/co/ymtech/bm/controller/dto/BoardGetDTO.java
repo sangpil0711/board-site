@@ -25,6 +25,8 @@ public class BoardGetDTO {
 	private Integer category;
 	/** createDate : 게시글 작성일 */
 	private Long createDate;
+	/** likeCount : 게시글 좋아요 수 */
+	private Integer likeCount;
 	/** file : 등록된 게시글 첨부파일 */
 	private List<FileVO> file;
 	
@@ -34,6 +36,14 @@ public class BoardGetDTO {
 	
 	public void setFile(List<FileVO> file) {
 		this.file = file;
+	}
+	
+	public Integer getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(Integer likeCount) {
+		this.likeCount = likeCount;
 	}
 
 	public Integer getIndex() {
@@ -99,6 +109,8 @@ public class BoardGetDTO {
 		builder.append(category);
 		builder.append(", createDate=");
 		builder.append(createDate);
+		builder.append(", likeCount=");
+		builder.append(likeCount);
 		builder.append(", file=");
 		builder.append(file);
 		builder.append("]");

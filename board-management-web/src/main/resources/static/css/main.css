@@ -1,5 +1,10 @@
-#container {
+body {
 	overflow-x: hidden;
+}
+
+#container {
+	overflow: hidden;
+	width: 1920px;
 }
 
 ul {
@@ -21,7 +26,7 @@ ul li {
 
 .menu {
 	border-bottom: 1px solid rgb(216, 213, 213);
-	width: 2000px;
+	width: 1920px;
 	height: 100px;
 	text-align: center;
 	display: flex;
@@ -73,39 +78,63 @@ h3 {
 
 .board_best {
 	display: inline-block;
-	margin-left: 300px;
+	margin-left: 250px;
+	margin-top: 50px;
 }
 
 .best {
 	display: flex;
 	flex-direction: column;
-}
-
-.reply {
-	display: inline-block;
-	margin-top: 150px;
-}
-
-.reply li {
-	font-size: 20px;
-}
-
-.reply_number {
-	display: flex;
-	flex-direction: column;
-	line-height: 40px;
-}
-
-.best_btn {
-	padding: 15px;
 	margin-bottom: -16px;
-	font-size: 15px;
+}
+
+.best_btn1 {
+	padding: 15px;
+	font-size: 18px;
 	background-color: white;
 	color: black;
 	border: 2px solid grey;
 	font-weight: 500;
 	width: 800px;
+	height: 60px;
+	min-width: 800px;
 	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.best_btn2 {
+	padding: 15px;
+	margin-left: -4px;
+	font-size: 18px;
+	background-color: white;
+	color: black;
+	border: 2px solid grey;
+	border-left: none;
+	font-weight: 500;
+	width: 700px;
+	height: 60px;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.best img {
+	width: 100px; 
+	height: 60px;
+	margin-bottom: 3px;
+	border: 2px solid grey;
+}
+
+.best img:hover{
+	cursor: pointer;
+}
+
+.like_count {
+	font-size: 20px;
+	margin-left: 40px;
 }
 
 .user_update {
@@ -248,31 +277,31 @@ h3 {
 	justify-content: flex-start;
 	width: 70%;
 	margin: -10px auto;
-  }
-  
-  
-  .photo_box .img-button {
+}
+
+.photo_box .img-button {
 	max-width: 100%;
 	text-align: center;
 	margin: 19px;
 	width: 160px;
-  }
-  
-  
-  
-  .photo_box .img-button img {
-	width: 100%; 
+}
+
+.photo_box .img-button img {
+	width: 100%;
 	height: auto;
-  }
-  
-  .photo_box .img-button p {
+}
+
+.photo_box .img-button p {
 	margin: 2px;
-  }
-  
-  .photo_span {
-	  float: left;
-	  font-size: 12px;
-  }
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.photo_span {
+	float: left;
+	font-size: 12px;
+}
 
 .photo {
 	width: calc(20% - 10px);
@@ -303,19 +332,21 @@ h3 {
 	text-align: left;
 	width: 100%;
 }
-.photo_p{
+
+.photo_p_title {
 	text-align: center;
 	font-size: 12px;
 }
-.photo_p_date{
+
+.photo_p {
+	text-align: center;
+	font-size: 12px;
+}
+
+.photo_p_date {
 	text-align: center;
 	font-size: 11px;
 }
-
-
-
-
-
 
 .comment td {
 	padding: 5px;
@@ -455,6 +486,10 @@ h3 {
 	border: 1px solid grey;
 	border-width: 1px 0;
 	border-top: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 583px;
 }
 
 .board tbody td a {
@@ -571,13 +606,14 @@ h3 {
 }
 
 strong {
-	position: absolute;
-	top: 220px;
-	left: 460px;
+	position: relative;
+	top: 120px;
+	left: 470px;
 	font-size: 25px;
 }
 
 .board_wrap {
+	position: relative;
 	width: 1000px;
 	margin-left: auto;
 	margin-right: auto;
@@ -634,18 +670,39 @@ strong {
 	color: #777;
 }
 
+.board_view .pre-container {
+	position: relative;
+}
+
 .board_view .content {
 	padding: 20px;
 	border-bottom: 1px solid black;
 	line-height: 160%;
 	font-size: 15px;
 	min-height: 300px;
+	text-align: left;
+	padding: 20px 10px;
+	padding-bottom: 150px;
+	position: relative;
+}
+
+.board_view .like_btn {
+	font-size: 15px;
+	min-width: 100px;
+	background-color: white;
+	border-color: grey;
+	position: absolute;
+	bottom: 50px;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 30px;
 }
 
 .read_btn {
-	position: absolute;
-	right: 470px;
-	margin-top: 85px;
+	position: relative;
+	float: right;
+	margin-top: 120px;
+	margin-right: 470px;
 }
 
 .read_btn button {
@@ -675,11 +732,12 @@ pre {
 }
 
 .comment_write {
+	width: 1000px;
 	position: relative;
-	left: 450px;
+	left: 460px;
 }
 
-.comment_  {
+.comment_ {
 	display: flex;
 	align-items: center;
 }
@@ -690,9 +748,8 @@ pre {
 }
 
 .comment_write_btn {
-	position: relative;
 	height: 95px;
-	width: 54px;
+	width: 50px;
 	margin-left: -7px;
 	align-self: flex-start;
 	position: absolute;
@@ -700,7 +757,7 @@ pre {
 }
 
 .comment_write_box {
-	width: 960px;
+	width: 950px;
 	height: 95px;
 }
 

@@ -12,10 +12,6 @@ s<div id="container" ng-controller="PhotoWrite">
     </div>
 
     <div>
-        <button class="reset_btn" ng-click="resetFile()">이미지선택<br>초기화</button>
-    </div>
-
-    <div>
         <input type="file" id="fileInput" name="files" style="display: none;" ngf-select="onFileSelect($files)"
             accept=".hwp, .hwpx, .pdf, .txt, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .zip" multiple>
         <button class="file_btn" ng-click="selectFile()">이미지선택<br>(최대 100MB)</button>

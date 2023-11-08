@@ -22,6 +22,8 @@ public class PhotoBoardGetDTO {
 	private Integer category;
 	/** createDate : 게시글 작성일 */
 	private Date createDate;
+	/** likeCount : 게시글 추천 수 */
+	private Integer likeCount;
 
 	public Integer getIndex() {
 		return index;
@@ -70,6 +72,14 @@ public class PhotoBoardGetDTO {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	
+	public Integer getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(Integer likeCount) {
+		this.likeCount = likeCount;
+	}
 
 	@Override
 	public String toString() {
@@ -86,6 +96,8 @@ public class PhotoBoardGetDTO {
 		builder.append(category);
 		builder.append(", createDate=");
 		builder.append(createDate);
+		builder.append(", likeCount=");
+		builder.append(likeCount);
 		builder.append("]");
 		return builder.toString();
 	}

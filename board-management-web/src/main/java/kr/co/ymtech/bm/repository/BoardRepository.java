@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.ymtech.bm.repository.vo.BoardVO;
 import kr.co.ymtech.bm.repository.vo.FileVO;
@@ -51,9 +50,9 @@ public class BoardRepository implements IBoardRepository {
 	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword,
 			Integer category) {
 		Integer offset = (pageNumber - 1) * itemSize;
-		
+
 		// 기본 쿼리
-		String sql = "SELECT * FROM board WHERE category = ?"; 
+		String sql = "SELECT * FROM board WHERE category = ?";
 
 		// 검색 조건을 추가
 		if ("title".equals(searchType)) {
@@ -68,7 +67,8 @@ public class BoardRepository implements IBoardRepository {
 			@Override
 			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
-						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"));
+						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"),
+						rs.getInt("like_count"));
 				return member;
 			}
 		};
@@ -121,7 +121,6 @@ public class BoardRepository implements IBoardRepository {
 	 * @author 황상필
 	 * @since 2023. 10. 30.
 	 */
-	@Transactional
 	@Override
 	public void saveBoard(BoardVO board, List<FileVO> file) {
 
@@ -135,9 +134,10 @@ public class BoardRepository implements IBoardRepository {
 
 		// 게시글에 업로드된 파일을 DB에 저장
 		for (FileVO files : file) {
-	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
-	                files.getFileId(), boardIndex, files.getFilePath(), files.getFileName(), files.getFileSize());
-	    }
+			jdbcTemplate.update(
+					"INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
+					files.getFileId(), boardIndex, files.getFilePath(), files.getFileName(), files.getFileSize());
+		}
 	}
 
 	/**
@@ -153,19 +153,19 @@ public class BoardRepository implements IBoardRepository {
 	 * @author 황상필
 	 * @since 2023. 10. 31.
 	 */
-	@Transactional
 	@Override
 	public void updateBoard(BoardVO board, List<FileVO> file) {
-		
+
 		// 수정된 게시글 정보를 DB에 저장
 		jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ? ", board.getTitle(),
 				board.getText(), board.getIndex());
-		
+
 		// 게시글에 추가된 파일을 DB에 저장
 		for (FileVO files : file) {
-	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
-	                files.getFileId(), board.getIndex(), files.getFilePath(), files.getFileName(), files.getFileSize());
-	    }
+			jdbcTemplate.update(
+					"INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
+					files.getFileId(), board.getIndex(), files.getFilePath(), files.getFileName(), files.getFileSize());
+		}
 	}
 
 	/**
@@ -208,7 +208,8 @@ public class BoardRepository implements IBoardRepository {
 			@Override
 			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
-						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"));
+						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"),
+						rs.getInt("like_count"));
 
 				return member;
 			}
@@ -216,7 +217,7 @@ public class BoardRepository implements IBoardRepository {
 
 		return jdbcTemplate.queryForObject("SELECT * FROM board WHERE index = ?", mapper, index);
 	}
-	
+
 	/**
 	 * 
 	 * @Method files 게시물 번호에 해당되는 파일 정보를 조회
@@ -240,8 +241,7 @@ public class BoardRepository implements IBoardRepository {
 			public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 
 				FileVO member = new FileVO(rs.getString("uuid"), rs.getInt("board_index"),
-						rs.getString("file_location"), rs.getString("original_filename"),
-						rs.getLong("file_size"));
+						rs.getString("file_location"), rs.getString("original_filename"), rs.getLong("file_size"));
 
 				return member;
 			}
@@ -268,16 +268,17 @@ public class BoardRepository implements IBoardRepository {
 
 			// ResultSet에 결과값을 담아 BoardVO에 담음
 			@Override
-			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException { 
+			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
-						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"));
+						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"),
+						rs.getInt("like_count"));
 
 				return member;
 			}
 		};
 		return jdbcTemplate.queryForObject("SELECT * FROM board ORDER BY index DESC OFFSET 0 LIMIT 1", mapper);
 	}
-	
+
 	/**
 	 * @Method deleteFiles 해당 게시물에 업로드된 파일을 전부 삭제하는 메소드
 	 *
@@ -294,13 +295,14 @@ public class BoardRepository implements IBoardRepository {
 	public Integer deleteFiles(Integer index) {
 		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ?", index);
 	}
-	
+
 	/**
 	 * @Method deleteFile 해당 게시물에 업로드된 파일을 개별 삭제하는 메소드
 	 *
-	 * @see kr.co.ymtech.bm.repository.IBoardRepository#deleteFile(java.lang.Integer, java.lang.String)
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#deleteFile(java.lang.Integer,
+	 *      java.lang.String)
 	 *
-	 * @param index 해당 게시글 번호
+	 * @param index  해당 게시글 번호
 	 * @param fileId 업로드된 파일의 UUID
 	 * 
 	 * @return DB에 있는 정보를 삭제하는 query 함수 실행
@@ -311,6 +313,85 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public Integer deleteFile(Integer index, String fileId) {
 		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ? AND uuid = ?", index, fileId);
+	}
+
+	/**
+	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#boardLikeCount(java.lang.Integer,
+	 *      java.lang.Integer)
+	 *
+	 * @param index     해당 게시글 번호
+	 * @param likeCount 해당 게시글 추천 수
+	 * 
+	 * @return 해당 게시글의 추천 수를 수정하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 03.
+	 */
+	@Override
+	public Integer boardLikeCount(Integer index, Integer likeCount) {
+		return jdbcTemplate.update("UPDATE board SET like_count = ? WHERE index = ? ", likeCount, index);
+	}
+
+	/**
+	 * @Method bestBoard 추천 수가 많은 게시글을 반환하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#bestBoard()
+	 *
+	 * @return 추천 수가 많은 게시글 5개를 반환하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 06.
+	 */
+	@Override
+	public List<BoardVO> bestBoard() {
+
+		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
+
+			// ResultSet에 결과값을 담아 BoardVO에 담음
+			@Override
+			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
+						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"),
+						rs.getInt("like_count"));
+
+				return member;
+			}
+		};
+		return jdbcTemplate.query("SELECT * FROM board ORDER BY like_count DESC OFFSET 0 LIMIT 5", mapper);
+	}
+	
+	/**
+	 * @Method bestBoardFile 추천 수가 많은 게시글에 업로드된 파일 정보를 받아오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#bestBoardFile(java.lang.Integer)
+	 *
+	 * @param index 추천 수가 많은 게시글 번호
+	 * 
+	 * @return 추천 수가 많은 게시글 5개의 파일 정보를 반환하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 08.
+	 */
+	@Override
+	public List<FileVO> bestBoardFile(Integer index) {
+
+		RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
+
+			// ResultSet에 결과값을 담아 FileVO에 담음
+			@Override
+			public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+				FileVO member = new FileVO(rs.getString("uuid"), rs.getInt("board_index"),
+						rs.getString("file_location"), rs.getString("original_filename"), rs.getLong("file_size"));
+
+				return member;
+			}
+		};
+		return jdbcTemplate.query(
+				"SELECT * FROM file INNER JOIN (SELECT * FROM board ORDER BY like_count DESC OFFSET 0 LIMIT 5) AS best_board ON file.board_index = best_board.index WHERE board_index = ?",
+				mapper, index);
 	}
 
 }

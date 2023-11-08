@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
+import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.repository.IPhotoBoardRepository;
 import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 
@@ -20,6 +21,7 @@ import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
  */
 @Service
 public class PhotoBoardService implements IPhotoBoardService {
+	
 	/**
 	 * PhotoBoardService-PhotoBoardRepository 연결
 	 * 
@@ -27,10 +29,12 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 * @since 2023. 10. 24.
 	 */
 	private final IPhotoBoardRepository photoBoardRepository;
+	private final IBoardRepository boardRepository;
 
 	@Autowired
-	public PhotoBoardService(IPhotoBoardRepository IphotoBoardRepository) {
+	public PhotoBoardService(IPhotoBoardRepository IphotoBoardRepository, IBoardRepository IboardRepository) {
 		this.photoBoardRepository = IphotoBoardRepository;
+		this.boardRepository = IboardRepository;
 	}
 
 	/**
@@ -158,7 +162,26 @@ public class PhotoBoardService implements IPhotoBoardService {
 		dto.setUserId(vo.getUserId());
 		dto.setCategory(vo.getCategory());
 		dto.setCreateDate(new Date(vo.getCreateDate()));
+		dto.setLikeCount(vo.getLikeCount());
 		return dto;
+	}
+	
+	/**
+	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#boardLikeCount(java.lang.Integer, java.lang.Integer)
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param likeCount 해당 게시글 추천 수
+	 * 
+	 * @return boardRepository의 boardLikeCount메소드 실행
+	 *
+	 * @author 황상필
+	 * @since 2023. 11. 03.
+	 */
+	@Override
+	public Integer boardLikeCount(Integer index, Integer likeCount) {
+		return boardRepository.boardLikeCount(index, likeCount);
 	}
 
 }
