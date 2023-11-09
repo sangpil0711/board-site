@@ -4,6 +4,12 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * 게시물 정보를 수정하는 클래스
+ * 
+ * @author 박상현
+ * @since 2023. 11. 06.
+ */
 public class PhotoBoardUpdateDTO {
 	
 		/** index : 게시글 번호 */

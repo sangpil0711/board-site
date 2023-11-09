@@ -11,8 +11,9 @@ import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
  * @since 2023. 10. 31
  */
 public class PhotoBoardPageDTO {
-
+	/** photoBoardList : 게시글 정보 */
 	private List<PhotoBoardVO> photoBoardList;
+	/** totalCount : 총 게시글 수 */
     private Integer totalCount;
     
     /**
@@ -27,52 +28,18 @@ public class PhotoBoardPageDTO {
         return photoBoardList;
     }
 
-    /**
-     * @Method setPhotoBoardList : PhotoBoardVO를 설정하는 메소드
-     *
-     * @param photoBoardList 설정할 PhotoBoardVO
-     *
-     * @author 박상현
-     * @since 2023. 10. 31
-     */
     public void setPhotoBoardList(List<PhotoBoardVO> photoBoardList) {
         this.photoBoardList = photoBoardList;
     }
     
-    /**
-     * 
-     * @Method getTotalCount : 전체게시물 수를 반환하는 메소드
-     *
-     * @return 전체 게시물 수를 반환
-     *
-     * @author 박상현
-     * @since 2023. 10. 31
-     */
     public Integer getTotalCount() {
         return totalCount;
     }
     
-    /**
-     * 
-     * @Method setTotalCount : 전체게시물 수를 반환하는 메소드
-     *
-     * @param totalCount : 전체 게시물 수를 설정
-     *
-     * @author 박상현
-     * @since 2023. 10. 31
-     */
     public void setTotalCount(Integer totalCount) {
         this.totalCount = totalCount;
     }
-    
-	/**
-	 * Method : 객체(게시글 항목)를 문자열로 변환하는 메서드
-	 * 
-	 * @return : 문자열을 반환
-	 * 
-	 * @author 박상현
-	 * @since  2023.10. 31
-	 */
+   
     @Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

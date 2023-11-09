@@ -1,5 +1,7 @@
 package kr.co.ymtech.bm.repository.vo;
 
+import java.util.List;
+
 public class PhotoBoardVO {
 
 	/** index : 게시글 번호 */
@@ -16,6 +18,8 @@ public class PhotoBoardVO {
 	private Long createDate;
 	/** likeCount : 게시글 추천 수 */
 	private Integer likeCount;
+	/** file : 게시글 첨부파일 */
+	private List<FileVO> file;
 	
 
 	/**
@@ -42,6 +46,7 @@ public class PhotoBoardVO {
 	 * @param userId 게시글 작성자의 사용자 ID
 	 * @param category 게시글 카테고리
 	 * @param createDate 게시글 생성 날짜
+	 * @param likeCount 게시글 추천 수 
 	 * 
 	 * @author 박상현
 	 * @since 2023. 10. 24.
@@ -111,6 +116,13 @@ public class PhotoBoardVO {
 	public void setLikeCount(Integer likeCount) {
 		this.likeCount = likeCount;
 	}
+	public List<FileVO> getFile() {
+		return file;
+	}
+	
+	public void setFile(List<FileVO> file) {
+		this.file = file;
+	}
 
 	@Override
 	public String toString() {
@@ -129,8 +141,14 @@ public class PhotoBoardVO {
 		builder.append(createDate);
 		builder.append(", likeCount=");
 		builder.append(likeCount);
+		builder.append(", file=");
+		builder.append(file);
 		builder.append("]");
 		return builder.toString();
 	}
+
+
+	
+
 
 }

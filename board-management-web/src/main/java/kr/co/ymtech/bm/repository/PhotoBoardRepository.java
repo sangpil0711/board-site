@@ -45,7 +45,7 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	 * @return DB에 있는 정보를 조회 및 검색하는 query 함수 실행
 	 *
 	 * @author 박상현
-	 * @since 2023. 10. 31.
+	 * @since 2023. 11. 02.
 	 */
 	@Override
 	public List<PhotoBoardVO> findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category) {
@@ -79,6 +79,21 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	    return jdbcTemplate.query(sql, mapper, category, "%" + keyword + "%", offset, itemSize);
 	}
 	
+	/**
+	 * @Method findCount DB에 저장되어 있는 게시물 수를 조회하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IPhotoBoardRepository#findCount(java.lang.String,
+	 *      java.lang.String)
+	 *
+	 * @param searchType    게시판 검색 유형
+	 * @param keyword       게시판 검색어
+	 * @param category      게시물 카테고리
+	 * 
+	 * @return  카테고리와 검색유형, 검색어에 맞는 것을 찾아 반환
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 02.
+	 */
 	@Override
 	public Integer findCount(String searchType, String keyword, Integer category) {
 		
@@ -211,6 +226,19 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 		return jdbcTemplate.queryForObject("select * from board where index = ?", mapper, index);
 	}
 	
+	/**
+	 * 
+	 * @Method files 게시물 번호에 해당되는 파일 정보를 조회
+	 *
+	 * @see kr.co.ymtech.bm.repository.IPhotoBoardRepository#files(java.lang.Integer)
+	 *
+	 * @param index 해당 게시물 번호
+	 * 
+	 * @return 해당 번호의 파일 정보를 조회하는 query 함수 실행
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 06.
+	 */
 	@Override
 	public List<FileVO> files(Integer index) {
 
@@ -232,6 +260,16 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 
 	}
 	
+	/**
+	 * @Method lastBoard 마지막에 저장된 게시물의 번호를 조회하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IPhotoBoardRepository#lastBoard()
+	 *
+	 * @return 마지막에 저장된 게시물 정보에서 index 값을 반환
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 06.
+	 */
 	@Override
 	public PhotoBoardVO lastPhotoBoard() {
 
@@ -249,38 +287,89 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 		return jdbcTemplate.queryForObject("SELECT * FROM board ORDER BY index DESC OFFSET 0 LIMIT 1", mapper);
 	}
 
-	
+	/**
+	 * @Method deleteFiles 해당 게시물에 업로드된 파일을 전부 삭제하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IFileRepository#resetFiles(java.lang.Integer)
+	 *
+	 * @param index 해당 게시글 번호
+	 * 
+	 * @return DB에 있는 정보를 삭제하는 query 함수 실행
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 06.
+	 */
 	@Override
 	public Integer deleteFiles(Integer index) {
 		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ?", index);
 	}
 	
-	
+	/**
+	 * @Method deleteFile 해당 게시물에 업로드된 파일을 개별 삭제하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IPhotoBoardRepository#deleteFile(java.lang.Integer,
+	 *      java.lang.String)
+	 *
+	 * @param index  해당 게시글 번호
+	 * @param fileId 업로드된 파일의 UUID
+	 * 
+	 * @return DB에 있는 정보를 삭제하는 query 함수 실행
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 06.
+	 */
 	@Override
 	public Integer deleteFile(Integer index, String fileId) {
 		return jdbcTemplate.update("DELETE FROM file WHERE board_index = ? AND uuid = ?", index, fileId);
 	}
 	
-//	@Override
-//	   public List<FileVO> bestBoardFile(Integer index) {
-//
-//	      RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
-//
-//	         // ResultSet에 결과값을 담아 FileVO에 담음
-//	         @Override
-//	         public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-//
-//	            FileVO member = new FileVO(rs.getString("uuid"), rs.getInt("board_index"),
-//	                  rs.getString("file_location"), rs.getString("original_filename"), rs.getLong("file_size"));
-//
-//	            return member;
-//	         }
-//	      };
-//	      return jdbcTemplate.query(
-//	            "SELECT * FROM file INNER JOIN (SELECT * FROM board ORDER BY like_count DESC OFFSET 0 LIMIT 5) AS best_board ON file.board_index = best_board.index WHERE board_index = ?",
-//	            mapper, index);
-//	   }
-//	
+	/**
+	 * @Method photoBoardFile 사진 게시판 화면에 파일 정보를 가져오는 메소드
+	 * 
+	 * @see kr.co.ymtech.bm.repository.IPhotoBoardRepository#photoBoardFile(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer)
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param pageNumber 게시판 페이지 번호
+	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
+	 * @param category 게시판 카테고리
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 6.
+	 */
+	@Override
+	   public List<FileVO> photoBoardFile(Integer index, Integer pageNumber, Integer itemSize, String searchType,
+	         String keyword, Integer category) {
+	      Integer offset = (pageNumber - 1) * itemSize;
+	      String sql = "SELECT * FROM board WHERE category = ?"; // 기본 쿼리
+
+	      // 검색 조건을 추가
+	      if ("title".equals(searchType)) {
+	         sql += " AND title LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+	      } else if ("content".equals(searchType)) {
+	         sql += " AND content LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+	      } else if ("user_id".equals(searchType)) {
+	         sql += " AND user_id LIKE ? ORDER BY index DESC OFFSET ? LIMIT ?";
+	      }
+
+	      RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
+
+	         // ResultSet에 결과값을 담아 FileVO에 담음
+	         @Override
+	         public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+	            FileVO member = new FileVO(rs.getString("uuid"), rs.getInt("board_index"),
+	                  rs.getString("file_location"), rs.getString("original_filename"), rs.getLong("file_size"));
+
+	            return member;
+	         }
+	      };
+	      return jdbcTemplate.query(
+	            "SELECT * FROM file INNER JOIN (" + sql
+	                  + ") AS photo_board ON file.board_index = photo_board.index WHERE board_index = ?",
+	            mapper, category, "%" + keyword + "%", offset, itemSize, index);
+	   }
 	
 	
 }

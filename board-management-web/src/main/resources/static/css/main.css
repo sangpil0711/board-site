@@ -1,6 +1,5 @@
-
 #container {
-   overflow-x: hidden;
+   overflow: hidden;
    width: 1920px;
 }
 
@@ -9,7 +8,7 @@ ul {
 }
 
 ul li {
-   margin: 25px 15px;
+   margin: 0px 15px;
 }
 
 .span {
@@ -63,52 +62,92 @@ button:hover {
 
 .menu .btn:focus,
 .menu .btn:active {
-	outline: none;
-	box-shadow: none;
+   outline: none;
+   box-shadow: none;
 }
 
 h3 {
-   border-bottom: 2px solid black;
-   color: black;
+   border-bottom: 2px solid rgb(79, 114, 228);
+   color: rgb(79, 114, 228);
    font-weight: 600;
 }
 
 .board_best {
    display: inline-block;
-   margin-left: 300px;
+   margin-left: 500px;
+   margin-top: 50px;
 }
 
 .best {
    display: flex;
-   flex-direction: column;
+   margin-bottom: 10px;
+   margin-left: -54px;
+   
 }
 
-.reply {
-   display: inline-block;
-   margin-top: 150px;
-}
-
-.reply li {
-   font-size: 20px;
-}
-
-.reply_number {
-   display: flex;
-   flex-direction: column;
-   line-height: 40px;
-}
-
-.best_btn {
+.best_btn1 {
    padding: 15px;
-   margin-bottom: -16px;
-   font-size: 15px;
+   font-size: 18px;
    background-color: white;
    color: black;
-   border: 2px solid grey;
+   border: 1px solid grey;
    font-weight: 500;
    width: 800px;
+   height: 60px;
+   min-width: 800px;
    text-align: left;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+   font-weight: 600;
+   border-right: none;
+   border-left: none;
 }
+
+.best_btn2 {
+   padding: 15px;
+   margin-left: -4px;
+   font-size: 18px;
+   background-color: white;
+   color: black;
+   border: 1px solid grey;
+   border-left: none;
+   font-weight: 600;
+   width: 700px;
+   height: 60px;
+   text-align: left;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+   border-right: none;
+   border-left: none;
+}
+
+.best img {
+   width: 100px; 
+   height: 60px;
+   margin-bottom: 4px;
+   border: 1px solid grey;
+   border-left: none;
+   border-right: none;
+}
+
+.best img:hover{
+   cursor: pointer;
+}
+
+.like_count {
+   font-size: 15px;
+   margin-left: 40px;
+   font-weight: 100;
+   color: rgb(79, 114, 228);
+}
+.user_Id{
+	float: right;
+    font-weight: 100;
+    font-size: 15px;
+}
+
 
 .user_update {
    float: right;
@@ -185,8 +224,8 @@ h3 {
    background-color: white;
    position: relative;
    top: 15px;
-   left: 570px;
-   height: 33px;
+   left: 600px;
+   height: 30px;
 }
 
 .board_all {
@@ -201,8 +240,6 @@ h3 {
    padding: 7px;
    padding-left: 10px;
    border: 1px solid black;
-   background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
-   background-size: 30px;
    appearance: none;
    font-size: 15px;
    color: black;
@@ -214,7 +251,6 @@ h3 {
 
 .board_box {
    position: relative;
-   right: 20px;
 }
 
 .board {
@@ -251,32 +287,32 @@ h3 {
    justify-content: flex-start;
    width: 70%;
    margin: -10px auto;
-   margin-left: 350px;
-  }
-  
-  
-  .photo_box .img-button {
+   margin-right: 190px;
+}
+
+.photo_box .img-button {
    max-width: 100%;
    text-align: center;
    margin: 19px;
    width: 160px;
-  }
-  
-  
-  
-  .photo_box .img-button img {
-   width: 100%; 
+}
+
+.photo_box .img-button img {
+   width: 100%;
    height: auto;
-  }
-  
-  .photo_box .img-button p {
+}
+
+.photo_box .img-button p {
    margin: 2px;
-  }
-  
-  .photo_span {
-     float: left;
-     font-size: 12px;
-  }
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.photo_span {
+   float: left;
+   font-size: 12px;
+}
 
 .photo {
    width: calc(20% - 10px);
@@ -307,19 +343,21 @@ h3 {
    text-align: left;
    width: 100%;
 }
-.photo_p{
+
+.photo_p_title {
    text-align: center;
    font-size: 12px;
 }
-.photo_p_date{
+
+.photo_p {
+   text-align: center;
+   font-size: 12px;
+}
+
+.photo_p_date {
    text-align: center;
    font-size: 11px;
 }
-
-
-
-
-
 
 .comment td {
    padding: 5px;
@@ -459,6 +497,10 @@ h3 {
    border: 1px solid grey;
    border-width: 1px 0;
    border-top: none;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   max-width: 583px;
 }
 
 .board tbody td a {
@@ -639,12 +681,32 @@ strong {
    color: #777;
 }
 
+.board_view .pre-container {
+   position: relative;
+}
+
 .board_view .content {
    padding: 20px;
    border-bottom: 1px solid black;
    line-height: 160%;
    font-size: 15px;
    min-height: 300px;
+   text-align: left;
+   padding: 20px 10px;
+   padding-bottom: 150px;
+   position: relative;
+}
+
+.board_view .like_btn {
+   font-size: 15px;
+   min-width: 100px;
+   background-color: white;
+   border-color: grey;
+   position: absolute;
+   bottom: 50px;
+   left: 50%;
+   transform: translateX(-50%);
+   margin-top: 30px;
 }
 
 .read_btn {
@@ -681,12 +743,12 @@ pre {
 }
 
 .comment_write {
-   width: 950px;
+   width: 1000px;
    position: relative;
    left: 460px;
 }
 
-.comment_  {
+.comment_ {
    display: flex;
    align-items: center;
 }
@@ -703,7 +765,6 @@ pre {
    align-self: flex-start;
    position: absolute;
    left: 960px;
-   bottom: 5px;
 }
 
 .comment_write_box {

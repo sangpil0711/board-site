@@ -27,7 +27,8 @@
 			</div>
 			<div class="pre-container">
 				<pre class="content">{{board.text}}</pre>
-				<button class="like_btn" ng-click="likeAdd()">추천 수: {{board.likeCount}}</button>
+				<button class="like_btn" ng-click="likeAdd()">추천 수:
+					 {{board.likeCount}}</button>
 			</div>
 			<p>첨부파일</p>
 			<a ng-href="/files/{{item.fileId}}?fileName={{item.fileName}}" ng-repeat="item in board.file"

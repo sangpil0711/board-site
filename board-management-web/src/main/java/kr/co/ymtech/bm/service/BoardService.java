@@ -339,6 +339,7 @@ public class BoardService implements IBoardService {
 	        dto.setText(vo.getText());
 	        dto.setUserId(vo.getUserId());
 	        dto.setCategory(vo.getCategory());
+	        dto.setCreateDate(vo.getCreateDate());
 	        dto.setLikeCount(vo.getLikeCount());
 	        dto.setFile(files);
 

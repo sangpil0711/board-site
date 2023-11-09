@@ -28,7 +28,7 @@ public interface IBoardRepository {
 	public List<BoardVO> findPage(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category);
 	
 	/**
-	 * @Method findAll 화면에 표시되는 게시글 수 조회
+	 * @Method findCount 화면에 표시되는 게시글 수 조회
 	 *
 	 * @param searchType 게시판 검색 유형
 	 * @param keyword 게시판 검색어
