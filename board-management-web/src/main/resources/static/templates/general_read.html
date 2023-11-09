@@ -27,11 +27,16 @@
 			</div>
 			<div class="pre-container">
 				<pre class="content">{{board.text}}</pre>
-				<button class="like_btn" ng-click="likeAdd()">추천 수: {{board.likeCount}}</button>
+				<img src="/static/image/like.jpg" alt="추천" ng-click="likeAdd()" class="like_btn">
+				<div class="like">
+					<p>{{board.likeCount}}</p>
+				</div>
 			</div>
-			<p>첨부파일</p>
-			<a ng-href="/files/{{item.fileId}}?fileName={{item.fileName}}" ng-repeat="item in board.file"
-				download>{{item.fileName}}</a>
+			<div class="board_file">
+				<p>첨부파일</p>
+				<a ng-href="/files/{{item.fileId}}?fileName={{item.fileName}}" ng-repeat="item in board.file"
+					download>{{item.fileName}}</a>
+			</div>
 		</div>
 	</div>
 	<!-- 끝: 게시글 상세조회 화면 데이터 표시 -->

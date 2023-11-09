@@ -8,7 +8,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 		title: "",
 		text: ""
 	};
-	
+	// 게시글 추천 수
 	$scope.likeCount = 0;
 
 	/**

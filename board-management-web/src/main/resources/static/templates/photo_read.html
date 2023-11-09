@@ -1,57 +1,62 @@
 <div id="container" ng-controller="PhotoRead">
-    <strong>사진게시판</strong>
-    
-    
-    <!-- 시작: 수정 삭제 목록 박스 -->
-    <div class="read_btn">
-        <button type="button" ng-click="redirectToPhotoUpdate(photoBoard.index)">수정</button>
-        <button type="button" ng-click="removePhoto(photoBoard.index)">삭제</button>
-        <button type="button" ng-click="redirectToPhotoBoard()">목록</button>
-    </div>
-    <!-- 끝: 수정 삭제 목록 버튼박스 -->
-    
-    
-    <!-- 시작: 게시물 상세조회 화면 박스 -->
-    <div class="board_wrap">
-        <div class="board_view">
-            <div class="title">{{photoBoard.title}}</div>
-            <div class="info">
-                <dl>
-                    <dt>작성자: {{photoBoard.userId}}</dt>
-                    <dd></dd>
-                </dl>
-                <dl>
-                    <dt>작성일: {{photoBoard.createDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;{{photoBoard.createDate | date:'HH:mm:ss'}}</dt>
-                    <dd></dd>
-                </dl>
-            </div>
-            <div class="image-container" ng-repeat="imagePath in photoBoard.imagePaths">
-            <img ng-src="{{imagePath}}" alt="이미지" style="display: block; margin: 0 auto; width: 300px; height: 300px;">
-            <div class="pre-container">
-				<pre class="content">{{photoBoard.text}}</pre>
-				<button class="like_btn" ng-click="likeAdd()">추천 수: {{photoBoard.likeCount}}</button>
+	<strong>사진게시판</strong>
+
+
+	<!-- 시작: 수정 삭제 목록 박스 -->
+	<div class="read_btn">
+		<button type="button" ng-click="redirectToPhotoUpdate(photoBoard.index)">수정</button>
+		<button type="button" ng-click="removePhoto(photoBoard.index)">삭제</button>
+		<button type="button" ng-click="redirectToPhotoBoard()">목록</button>
+	</div>
+	<!-- 끝: 수정 삭제 목록 버튼박스 -->
+
+
+	<!-- 시작: 게시물 상세조회 화면 박스 -->
+	<div class="board_wrap">
+		<div class="board_view">
+			<div class="title">{{photoBoard.title}}</div>
+			<div class="info">
+				<dl>
+					<dt>작성자: {{photoBoard.userId}}</dt>
+					<dd></dd>
+				</dl>
+				<dl>
+					<dt>작성일: {{photoBoard.createDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;{{photoBoard.createDate |
+						date:'HH:mm:ss'}}</dt>
+					<dd></dd>
+				</dl>
 			</div>
-             
-        </div>
-            <p>첨부파일</p>
-        	<a ng-href="/files/{{item.fileId}}?fileName={{item.fileName}}" ng-repeat="item in photoBoard.file" download>{{item.fileName}}</a>
-        </div>
-    </div>
+			<div class="pre-container">
+				<img class="image-container" ng-repeat="item in photoBoard.file" ng-src="{{thumbnail(item)}}" alt="이미지"
+					style="display: block; margin: 0 auto; margin-top: 50px; width: 300px; height: 300px;">
+				<pre class="content">{{photoBoard.text}}</pre>
+				<img src="/static/image/like.jpg" alt="추천" ng-click="likeAdd()" class="like_btn">
+				<div class="like">
+					<p>{{photoBoard.likeCount}}</p>
+				</div>
+			</div>
+			<div class="board_file">
+				<p>첨부파일</p>
+				<a ng-href="/files/{{item.fileId}}?fileName={{item.fileName}}" ng-repeat="item in photoBoard.file"
+					download>{{item.fileName}}</a>
+			</div>
+		</div>
+	</div>
 	<!-- 끝: 게시물 상세조회 화면 박스 -->
-	
-	
+
+
 	<!-- 시작: 댓글 박스 -->
-    <div class="comment_write">
-        <h4>댓글</h4>
-            <div class="textarea_container">
-                <textarea class="comment_write_box" placeholder="댓글 내용을 입력해주세요." ng-model="newComment"></textarea>
-	            <input type="button" class="comment_write_btn" value="등록" ng-click="insertComment(null)" />
-        </div>
-    </div>
-    <!-- 끝: 댓글 박스 -->
-    
-    
-    <!-- 시작: 등록된 댓글 표시 -->
+	<div class="comment_write">
+		<h4>댓글 ({{commentlist.length}})</h4>
+		<div class="textarea_container">
+			<textarea class="comment_write_box" placeholder="댓글 내용을 입력해주세요." ng-model="newComment"></textarea>
+			<input type="button" class="comment_write_btn" value="등록" ng-click="insertComment(null)" />
+		</div>
+	</div>
+	<!-- 끝: 댓글 박스 -->
+
+
+	<!-- 시작: 등록된 댓글 표시 -->
 	<div class="comment_box">
 		<table class="comment">
 			<thead ng-if="commentlist.length > 0">
@@ -66,8 +71,8 @@
 				<tr ng-class="{'child_comment': comment.parentIndex != null}">
 					<td ng-if="comment.parentIndex != null"></td>
 					<td colspan="{{comment.parentIndex != null ? 1 : 2}}">{{ comment.userId }}</td>
-					
-					
+
+
 					<!-- 시작: 댓글 수정 -->
 					<td>
 						<div ng-if="!comment.update">{{ comment.text }}</div>
@@ -81,8 +86,8 @@
 
 
 					<td>{{ comment.createDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-					
-					
+
+
 					<!-- 시작: 댓글 수정, 삭제, 답글 버튼 -->
 					<td>
 						<input type="button" class="update_btn" value="수정" ng-click="updateComment(comment)" />
@@ -91,11 +96,11 @@
 							ng-if="comment.parentIndex == null && !comment.childCommentBox" />
 					</td>
 					<!-- 끝: 댓글 수정, 삭제, 답글 버튼 -->
-					
-					
+
+
 				</tr>
-				
-				
+
+
 				<!-- 시작: 대댓글 등록 -->
 				<tr ng-if="comment.childCommentBox">
 					<td></td>
@@ -112,12 +117,12 @@
 					</td>
 				</tr>
 				<!-- 끝: 대댓글 등록 -->
-				
-				
+
+
 			</tbody>
 		</table>
 	</div>
 	<!-- 끝: 등록된 댓글 표시 -->
-    
-    
+
+
 </div>

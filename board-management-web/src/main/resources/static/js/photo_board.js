@@ -35,6 +35,7 @@ app.controller("PhotoCtrl", function($scope, PhotoBoardFactory, $location, $rout
 	 */
     let findPhotoBoardList = function() {
         PhotoBoardFactory.readPhotoBoards({
+			
 			category: CATEGORY,
 			pageNumber: $scope.currentPage,
 			itemSize: $scope.itemsPerPage,
@@ -63,7 +64,13 @@ app.controller("PhotoCtrl", function($scope, PhotoBoardFactory, $location, $rout
 }
 
     
-    
+    $scope.thumbnail = function(file) {
+		if (file !== undefined && file.fileSize > 0) {
+			return '/files/' + file.fileId + '?fileName=' + file.fileName;
+		} else {
+			return '/static/image/No_img.png';
+		}
+	}
     
 
 	/**

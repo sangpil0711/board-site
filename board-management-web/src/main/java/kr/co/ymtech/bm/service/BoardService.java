@@ -102,7 +102,11 @@ public class BoardService implements IBoardService {
 		// dto -> vo 변환
 		BoardVO vo = new BoardVO();
 		vo.setTitle(board.getTitle());
-		vo.setText(board.getText());
+		if(board.getText() == null) {
+			vo.setText("");
+		} else {
+			vo.setText(board.getText());
+		}
 		vo.setCategory(board.getCategory());
 		vo.setCreateDate(new Date().getTime());
 
@@ -164,7 +168,11 @@ public class BoardService implements IBoardService {
 		BoardVO vo = new BoardVO();
 		vo.setIndex(board.getIndex());
 		vo.setTitle(board.getTitle());
-		vo.setText(board.getText());
+		if(board.getText() == null) {
+			vo.setText("");
+		} else {
+			vo.setText(board.getText());
+		}
 
 		try {
 			// 게시글 수정 시 추가된 파일이 있으면 동작

@@ -1,10 +1,11 @@
 app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoardFactory, CommentFactory, BoardFactory) {
 
 
-	//라우팅으로 받아오는 게시글 번호
+	// 라우팅으로 받아오는 게시글 번호
 	let index = $routeParams.index;
 
 	$scope.photoBoard = [];
+
 	/**
 	 * @function searchByPhotoIndex 게시판 번호에 맞는 데이터를 불러오는 함수
 	 * 
@@ -14,10 +15,15 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	let searchByPhotoIndex = function() {
 		PhotoBoardFactory.readPhotoBoard({ index: index }, function(response) {
 			$scope.photoBoard = response;
-			$scope.photoBoard.imagePaths = [];
-
-			for (let i = 0; i < response.file.length; i++) {
-				$scope.photoBoard.imagePaths.push("/files/" + response.file[i].fileId + "?fileName=" + response.file[i].fileName);
+			$scope.thumbnail = function(file) {
+				if (file !== undefined && file.fileSize > 0) {
+					return '/files/' + file.fileId + '?fileName=' + file.fileName;
+				}
+			}
+			if (!$scope.photoBoard.file || $scope.photoBoard.file.length === 0) {
+				$scope.noImageMessage = true;
+			} else {
+				$scope.noImageMessage = false;
 			}
 		},
 			function(error) {

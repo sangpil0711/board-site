@@ -1,5 +1,7 @@
 package kr.co.ymtech.bm.repository.vo;
 
+import java.util.List;
+
 public class PhotoBoardVO {
 
 	/** index : 게시글 번호 */
@@ -16,7 +18,8 @@ public class PhotoBoardVO {
 	private Long createDate;
 	/** likeCount : 게시글 추천 수 */
 	private Integer likeCount;
-	
+	/** file : 게시글 파일 정보 */
+	private List<FileVO> file;
 
 	/**
 	 * @Method 기본 생성자
@@ -111,6 +114,14 @@ public class PhotoBoardVO {
 	public void setLikeCount(Integer likeCount) {
 		this.likeCount = likeCount;
 	}
+	
+	public List<FileVO> getFile() {
+		return file;
+	}
+
+	public void setFile(List<FileVO> file) {
+		this.file = file;
+	}
 
 	@Override
 	public String toString() {
@@ -129,6 +140,8 @@ public class PhotoBoardVO {
 		builder.append(createDate);
 		builder.append(", likeCount=");
 		builder.append(likeCount);
+		builder.append(", file=");
+		builder.append(file);
 		builder.append("]");
 		return builder.toString();
 	}

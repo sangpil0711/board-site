@@ -32,7 +32,7 @@ import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
  */
 @Service
 public class PhotoBoardService implements IPhotoBoardService {
-	
+
 	/**
 	 * PhotoBoardService-PhotoBoardRepository 연결
 	 * 
@@ -52,13 +52,14 @@ public class PhotoBoardService implements IPhotoBoardService {
 	/**
 	 * @Method findPhotoBoard : 조건에 따른 게시글 정보를 DB에서 받아오는 메소드
 	 *
-	 * @see kr.co.ymtech.bm.service.IPhotoBoardService#findPhotoBoard(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String)
+	 * @see kr.co.ymtech.bm.service.IPhotoBoardService#findPhotoBoard(java.lang.Integer,
+	 *      java.lang.Integer, java.lang.String, java.lang.String)
 	 *
 	 * @param pageNumber : 게시판 페이지 번호
-	 * @param itemSize : 게시판 페이지 당 게시글 수
+	 * @param itemSize   : 게시판 페이지 당 게시글 수
 	 * @param searchType : 게시판 검색 유형
-	 * @param keyword : 게시판 검색어
-	 * @param category : 일반게시판,사진게시판 구분 카테고리 (일반게시판 0, 사진게시판 1)
+	 * @param keyword    : 게시판 검색어
+	 * @param category   : 일반게시판,사진게시판 구분 카테고리 (일반게시판 0, 사진게시판 1)
 	 * 
 	 * @return findPage 메소드와 findAll 메소드를 boardPageDTO 변수에 담아 반환
 	 *
@@ -66,23 +67,38 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 * @since 2023. 10. 31.
 	 */
 	@Override
-    public PhotoBoardPageDTO findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword, Integer category) {
-		
-		List<PhotoBoardVO> photoBoardList = photoBoardRepository.findPhotoBoard(pageNumber, itemSize, searchType, keyword, category);
+	public PhotoBoardPageDTO findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword,
+			Integer category) {
 
-	    Integer boardCount = photoBoardRepository.findCount(searchType, keyword, category);
+		List<PhotoBoardVO> photoBoardList = photoBoardRepository.findPhotoBoard(pageNumber, itemSize, searchType,
+				keyword, category);
+		Integer boardCount = photoBoardRepository.findCount(searchType, keyword, category);
 
-	    PhotoBoardPageDTO photoBoardPage = new PhotoBoardPageDTO();
-        photoBoardPage.setPhotoBoardList(photoBoardList);
-        photoBoardPage.setTotalCount(boardCount);
+		PhotoBoardPageDTO photoBoardPage = new PhotoBoardPageDTO();
+		photoBoardPage.setTotalCount(boardCount);
 
-        return photoBoardPage;
-    }
+		for (PhotoBoardVO vo : photoBoardList) {
+
+			List<FileVO> filesForBoard = photoBoardRepository.photoBoardFile(vo.getIndex(), pageNumber, itemSize,
+					searchType, keyword, category);
+
+			if (vo.getFile() == null) {
+				vo.setFile(new ArrayList<>());
+			}
+
+			vo.getFile().addAll(filesForBoard);
+		}
+
+		photoBoardPage.setPhotoBoardList(photoBoardList);
+
+		return photoBoardPage;
+	}
 
 	/**
 	 * @Method savePhotoBoard 사진게시판에 게시물을 저장하는 메소드
 	 *
-	 * @see kr.co.ymtech.bm.service.IPhotoBoardService#savePhotoBoard(kr.co.ymtech.bm.controller.dto.PhotoBoardDTO, java.util.List, java.util.List)
+	 * @see kr.co.ymtech.bm.service.IPhotoBoardService#savePhotoBoard(kr.co.ymtech.bm.controller.dto.PhotoBoardDTO,
+	 *      java.util.List, java.util.List)
 	 *
 	 * @param photo 클라이언트가 저장하려고 하는 게시물 정보
 	 * 
@@ -101,12 +117,16 @@ public class PhotoBoardService implements IPhotoBoardService {
 		PhotoBoardVO vo = new PhotoBoardVO();
 		vo.setIndex(lastPhotoBoard.getIndex() + 1);
 		vo.setTitle(photo.getTitle());
-		vo.setText(photo.getText());
+		if(photo.getText() == null) {
+			vo.setText("");
+		} else {
+			vo.setText(photo.getText());
+		}
 		vo.setCategory(photo.getCategory());
 		vo.setCreateDate(new Date().getTime());
 
 		try {
-			
+
 			// 게시글 작성 시 업로드 되는 파일이 있으면 동작
 			if (photo.getFiles() != null) {
 				for (int i = 0; i < photo.getFiles().size(); i++) {
@@ -142,25 +162,6 @@ public class PhotoBoardService implements IPhotoBoardService {
 
 	}
 	
-	
-//	@Override
-//	public Integer savePhotoBoard(PhotoBoardDTO photo) {
-//		PhotoBoardVO vo = new PhotoBoardVO();
-//		vo.setTitle(photo.getTitle());
-//		vo.setText(photo.getText());
-//		vo.setCategory(photo.getCategory());
-//
-//		if (photo.getCreateDate() == null) {
-//			vo.setCreateDate(new Date().getTime());
-//		} else {
-//			vo.setCreateDate(photo.getCreateDate());
-//		}
-//
-//		Integer save = photoBoardRepository.savePhotoBoard(vo);
-//
-//		return save;
-//	}
-
 	/**
 	 * 
 	 * @Method updatePhotoBoard 사진게시판 게시물 내용을 수정하는 메소드
@@ -183,7 +184,11 @@ public class PhotoBoardService implements IPhotoBoardService {
 		PhotoBoardVO vo = new PhotoBoardVO();
 		vo.setIndex(photo.getIndex());
 		vo.setTitle(photo.getTitle());
-		vo.setText(photo.getText());
+		if (photo.getText() == null) {
+			vo.setText("");
+		} else {
+			vo.setText(photo.getText());
+		}
 
 		try {
 			// 게시글 수정 시 추가된 파일이 있으면 동작
@@ -216,7 +221,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 
 			// 게시글 수정 시 삭제된 파일이 있으면 동작
 			if (photo.getDeleteFiles() != null) {
-				
+
 				// SAVE_PATH에 있는 파일 리스트를 전부 가져옴
 				File dir = new File(SAVE_PATH);
 				File files[] = dir.listFiles();
@@ -246,44 +251,25 @@ public class PhotoBoardService implements IPhotoBoardService {
 
 		photoBoardRepository.updatePhotoBoard(vo, photoBoardFiles);
 	}
-	
-	
-	
-	
-	
-	
-//	@Override
-//	public Integer updatePhotoBoard(PhotoBoardGetDTO photo) {
-//
-//		PhotoBoardVO vo = new PhotoBoardVO(); // dto -> vo 변환
-//		vo.setIndex(photo.getIndex());
-//		vo.setTitle(photo.getTitle());
-//		vo.setText(photo.getText());
-//
-//		Integer update = photoBoardRepository.updatePhotoBoard(vo);
-//
-//		return update;
-//	}
 
 	/**
-	 * Method : 사진게시물을 삭제하는 메소드 
+	 * Method : 사진게시물을 삭제하는 메소드
 	 * 
-	 * @param index: 사진게시물 번호 
+	 * @param index: 사진게시물 번호
 	 * 
 	 * @return : 사진게시물을 DB에서 삭제하고 성공하면 1, 실패하면 0을 photoboardlistDelete 변수에 담아 반환한다.
 	 * 
 	 * @author 박상현
-	 * @since  2023.10.25
+	 * @since 2023.10.25
 	 */
 	@Override
 	public Integer deletePhotoBoard(Integer index) {
-		
-		
+
 		List<FileVO> files = photoBoardRepository.files(index);
 
 		// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
 		for (FileVO file : files) {
-			
+
 			String filePath = SAVE_PATH + "/" + file.getFileId() + "_" + file.getFileName();
 
 			File deleteFile = new File(filePath);
@@ -307,20 +293,21 @@ public class PhotoBoardService implements IPhotoBoardService {
 	}
 
 	/**
-	 * Method : 사진게시물을 1개를 조회하는 메소드 
+	 * Method : 사진게시물을 1개를 조회하는 메소드
 	 * 
-	 * @param index: 사진게시물 번호 
+	 * @param index: 사진게시물 번호
 	 * 
-	 * @return : 조회한 게시물 1개의 내용을 photoBoardlistIndex 변수에 담고 ResponseEntity 를 사용하여 응답한다.
+	 * @return : 조회한 게시물 1개의 내용을 photoBoardlistIndex 변수에 담고 ResponseEntity 를 사용하여
+	 *         응답한다.
 	 * 
 	 * @author 박상현
-	 * @since  2023.10.25
+	 * @since 2023.10.25
 	 */
 	@Override
 	public PhotoBoardGetDTO searchByPhotoIndex(Integer index) {
-		
+
 		List<FileVO> fv = photoBoardRepository.files(index);
-		
+
 		PhotoBoardVO vo = photoBoardRepository.searchByPhotoIndex(index);
 
 		PhotoBoardGetDTO dto = new PhotoBoardGetDTO(); // vo -> dto 변환
@@ -334,13 +321,14 @@ public class PhotoBoardService implements IPhotoBoardService {
 		dto.setFile(fv);
 		return dto;
 	}
-	
+
 	/**
 	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
 	 *
-	 * @see kr.co.ymtech.bm.repository.IBoardRepository#boardLikeCount(java.lang.Integer, java.lang.Integer)
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#boardLikeCount(java.lang.Integer,
+	 *      java.lang.Integer)
 	 *
-	 * @param index 해당 게시글 번호
+	 * @param index     해당 게시글 번호
 	 * @param likeCount 해당 게시글 추천 수
 	 * 
 	 * @return boardRepository의 boardLikeCount메소드 실행

@@ -1,5 +1,6 @@
 body {
 	overflow-x: hidden;
+	height: 923px;
 }
 
 #container {
@@ -277,6 +278,7 @@ h3 {
 	justify-content: flex-start;
 	width: 70%;
 	margin: -10px auto;
+	margin-right: 230px;
 }
 
 .photo_box .img-button {
@@ -486,6 +488,12 @@ h3 {
 	border: 1px solid grey;
 	border-width: 1px 0;
 	border-top: none;
+}
+
+.board tbody .board_list td {
+	border: 1px solid grey;
+	border-width: 1px 0;
+	border-top: none;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -643,6 +651,7 @@ strong {
 	border-bottom: 1px dashed #ddd;
 	font-size: 20px;
 	font-weight: 600;
+	word-break: break-all;
 }
 
 .board_view .info {
@@ -687,15 +696,30 @@ strong {
 }
 
 .board_view .like_btn {
-	font-size: 15px;
-	min-width: 100px;
-	background-color: white;
-	border-color: grey;
-	position: absolute;
-	bottom: 50px;
-	left: 50%;
+	width: 50px;
+	height: 50px;
+	position: relative;
+	bottom: 120px;
+	left: 500px;
 	transform: translateX(-50%);
-	margin-top: 30px;
+}
+
+.board_view .like_btn:hover {
+	cursor: pointer;
+}
+
+.like {
+	color: rgb(79, 114, 228);
+	text-align: center;
+	width: 200px;
+	position: relative;
+	bottom: 130px;
+	left: 495px;
+	transform: translateX(-50%);
+}
+
+.board_file {
+	margin-top: -50px;
 }
 
 .read_btn {

@@ -8,18 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.ymtech.bm.controller.dto.BoardDTO;
-import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
+import kr.co.ymtech.bm.controller.dto.PhotoBoardUpdateDTO;
 import kr.co.ymtech.bm.service.BoardService;
 import kr.co.ymtech.bm.service.IBoardService;
-import kr.co.ymtech.bm.controller.dto.PhotoBoardUpdateDTO;
 import kr.co.ymtech.bm.service.IPhotoBoardService;
 import kr.co.ymtech.bm.service.PhotoBoardService;
 
@@ -88,8 +85,7 @@ public class PhotoBoardController {
 	public void savePhotoBoard(PhotoBoardDTO photo) {
 		photoBoardService.savePhotoBoard(photo);
 	}
-	
-	
+
 //	@PostMapping("/photos")
 //	public ResponseEntity<Integer> savePhotoBoard(@RequestBody PhotoBoardDTO photo) {
 //
@@ -113,9 +109,7 @@ public class PhotoBoardController {
 	public void updatePhotoBoard(@PathVariable Integer index, PhotoBoardUpdateDTO photo) {
 		photoBoardService.updatePhotoBoard(photo);
 	}
-	
-	
-	
+
 //	@PatchMapping("/photos/{index}")
 //	public ResponseEntity<Integer> updatePhotoBoard(@PathVariable Integer index, @RequestBody PhotoBoardGetDTO photo) {
 //
@@ -164,7 +158,7 @@ public class PhotoBoardController {
 	/**
 	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
 	 *
-	 * @param index 해당 게시글 번호
+	 * @param index     해당 게시글 번호
 	 * @param likeCount 해당 게시글 추천 수
 	 * 
 	 * @return 게시글의 번호와 추천 수를 boardLikeCount 변수에 담고 ResponseEntity 를 사용하여 응답
