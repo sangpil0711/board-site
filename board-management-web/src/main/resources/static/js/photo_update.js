@@ -1,6 +1,6 @@
 app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $routeParams, Upload) {
 	
-	//라우팅으로 받아오는 게시글 번호
+	// 라우팅으로 받아오는 게시글 번호
     let index = $routeParams.index;  
     // 업로드되는 파일의 총 크기
     let totalSize = 0;
@@ -9,7 +9,7 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
     // 추가된 파일 리스트
     let addFiles = [];
 
-	//수정되는 제목과 내용
+	// 수정되는 제목과 내용
 	$scope.photoBoard = {
 	    title: "",
 	    text: ""

@@ -35,6 +35,7 @@ app.controller("PhotoCtrl", function($scope, PhotoBoardFactory, $location, $rout
 	 */
     let findPhotoBoardList = function() {
         PhotoBoardFactory.readPhotoBoards({
+			
 			category: CATEGORY,
 			pageNumber: $scope.currentPage,
 			itemSize: $scope.itemsPerPage,

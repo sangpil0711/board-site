@@ -11,19 +11,12 @@ import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
  * @since 2023. 10. 31
  */
 public class PhotoBoardPageDTO {
-	/** photoBoardList : 게시글 정보 */
+
+	/** photoBoardList : 게시글 리스트 */
 	private List<PhotoBoardVO> photoBoardList;
-	/** totalCount : 총 게시글 수 */
+	/** totalCount : 게시글 총 개수 */
     private Integer totalCount;
-    
-    /**
-     * @Method getPhotoBoardList : PhotoBoardVO를 반환하는 메소드
-     *
-     * @return PhotoBoardVO에서 받은 photoBoardList 반환
-     *
-     * @author 박상현
-     * @since 2023. 10. 31
-     */
+
     public List<PhotoBoardVO> getPhotoBoardList() {
         return photoBoardList;
     }
@@ -31,16 +24,16 @@ public class PhotoBoardPageDTO {
     public void setPhotoBoardList(List<PhotoBoardVO> photoBoardList) {
         this.photoBoardList = photoBoardList;
     }
-    
+
     public Integer getTotalCount() {
         return totalCount;
     }
-    
+
     public void setTotalCount(Integer totalCount) {
         this.totalCount = totalCount;
     }
-   
-    @Override
+
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("PhotoBoardPageDTO [photoBoardList=");

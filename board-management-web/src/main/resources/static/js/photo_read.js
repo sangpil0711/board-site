@@ -1,10 +1,11 @@
 app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoardFactory, CommentFactory, BoardFactory) {
 
 
-	//라우팅으로 받아오는 게시글 번호
+	// 라우팅으로 받아오는 게시글 번호
 	let index = $routeParams.index;
 
 	$scope.photoBoard = [];
+
 	/**
 	 * @function searchByPhotoIndex 게시판 번호에 맞는 데이터를 불러오는 함수
 	 * 
