@@ -56,13 +56,19 @@ public interface ICommentRepository {
 	 * 
 	 * @param boardIndex : boardIndex는 게시글 번호를 담고 있고 게시글 번호를 보고 댓글 전체 삭제
 	 * 
-	 * @return : DB에 있는 해당 boardIndex 번호의 댓글 전체를 삭제하는 update 함수 실행
-	 * 
 	 * @author 박상현
 	 * @since  2023.09.20
 	 */
 	public Integer deleteAllComment(Integer boardIndex);
 
+	/**
+	 * Method : 게시글번호에 해당하는 대댓글 전체를 삭제하는 메소드
+	 * 
+	 * @param index : index는 댓글번호를 담고 있고 댓글 번호를 보고 데댓글 전체 삭제
+	 * 
+	 * @author 박상현
+	 * @since  2023.10.01
+	 */
 	public Integer deleteChildComments(Integer index);
 
 	

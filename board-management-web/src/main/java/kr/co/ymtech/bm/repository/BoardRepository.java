@@ -77,12 +77,12 @@ public class BoardRepository implements IBoardRepository {
 	}
 
 	/**
-	 * @Method findAll DB에 저장되어 있는 게시물 수를 조회하는 메소드
+	 * @Method findCount DB에 저장되어 있는 게시물 수를 조회하는 메소드
 	 *
 	 * @see kr.co.ymtech.bm.repository.IBoardRepository#findCount(java.lang.String,
 	 *      java.lang.String)
 	 *
-	 * @param stkdearchType 게시판 검색 유형
+	 * @param searchType    게시판 검색 유형
 	 * @param keyword       게시판 검색어
 	 * 
 	 * @return PageVO 클래스에 있는 객체를 하나만 포함하는 리스트를 생성 후 반환
@@ -392,5 +392,7 @@ public class BoardRepository implements IBoardRepository {
 				"SELECT * FROM file INNER JOIN (SELECT * FROM board ORDER BY like_count DESC OFFSET 0 LIMIT 5) AS best_board ON file.board_index = best_board.index WHERE board_index = ?",
 				mapper, index);
 	}
+	
+	
 
 }

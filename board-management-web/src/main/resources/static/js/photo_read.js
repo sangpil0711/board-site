@@ -12,26 +12,23 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @author 박상현
 	 * @since 2023. 10. 26.
 	 */
-	let searchByPhotoIndex = function() {
-		PhotoBoardFactory.readPhotoBoard({ index: index }, function(response) {
-			$scope.photoBoard = response;
-			$scope.thumbnail = function(file) {
-				if (file !== undefined && file.fileSize > 0) {
-					return '/files/' + file.fileId + '?fileName=' + file.fileName;
-				}
-			}
-			if (!$scope.photoBoard.file || $scope.photoBoard.file.length === 0) {
-				$scope.noImageMessage = true;
-			} else {
-				$scope.noImageMessage = false;
-			}
-		},
-			function(error) {
-				alert("게시물 데이터 불러오기 실패");
-				console.error("게시물 데이터 불러오기 실패", error);
-			})
-	};
-	searchByPhotoIndex();
+		let searchByPhotoIndex = function() {
+		      PhotoBoardFactory.readPhotoBoard({ index: index }, function(response) {
+		         $scope.photoBoard = response;
+		         $scope.thumbnail = function(file) {
+		            if (file !== undefined && file.fileSize > 0) {
+		               return '/files/' + file.fileId + '?fileName=' + file.fileName;
+		            }
+		         }
+		      },
+		         function(error) {
+		            alert("게시물 데이터 불러오기 실패");
+		            console.error("게시물 데이터 불러오기 실패", error);
+		         })
+		   };
+			searchByPhotoIndex();
+	
+	
 
 	/**
 	 * @function redirectToPhotoUpdate photo_update.html로 이동하는 함수

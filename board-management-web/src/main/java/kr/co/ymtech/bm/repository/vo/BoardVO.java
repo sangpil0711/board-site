@@ -47,6 +47,7 @@ public class BoardVO {
 	 * @param userId 게시글 작성자의 사용자 ID
 	 * @param category 게시글 카테고리
 	 * @param createDate 게시글 생성 날짜
+	 * @param likeCount 게시글 추천 수 
 	 * 
 	 * @author 박상현
 	 * @since  2023.09.18

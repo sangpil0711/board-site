@@ -57,20 +57,21 @@ app.controller("PhotoCtrl", function($scope, PhotoBoardFactory, $location, $rout
         });
     };
     
-    
-    		// 이미지 가져오는 함수
-		$scope.getImagePath = function(item) {
-    		return `${imageConfig.getImagePath()}/${item.imageFileName}`;
-}
 
-    
+    /**
+	 * @function thumbnail 사진게시판 이미지 파일을 미리 보여주는 함수
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 07.
+	 */
     $scope.thumbnail = function(file) {
-		if (file !== undefined && file.fileSize > 0) {
-			return '/files/' + file.fileId + '?fileName=' + file.fileName;
-		} else {
-			return '/static/image/No_img.png';
-		}
-	}
+      if (file !== undefined && file.fileSize > 0) {
+         return '/files/' + file.fileId + '?fileName=' + file.fileName;
+      } else {
+         return '/static/image/No_img.png';
+      }
+   }
+    
     
 
 	/**

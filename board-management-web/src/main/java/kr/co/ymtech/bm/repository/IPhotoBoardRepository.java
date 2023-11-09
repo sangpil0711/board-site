@@ -14,16 +14,30 @@ import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 public interface IPhotoBoardRepository {
 
 	/**
-	 * Method : 사진게시물을 조회하는 메소드
-	 * 
-	 * @param category : 게시물 카테고리 번호
+	 * @Method findPhotoBoard 검색 조건에 따른 게시글 표시와 페이지네이션 구현
+	 *
+	 * @param pageNumber 게시판 페이지 번호
+	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
+	 * @param category 게시판 카테고리
 	 * 
 	 * @author 박상현
-	 * @since 2023.10.24
+	 * @since 2023. 11. 02.
 	 */
 	public List<PhotoBoardVO> findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword,
 			Integer category);
 
+	/**
+	 * @Method findCount 화면에 표시되는 게시글 수 조회
+	 *
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
+	 * @param category 게시판 카테고리
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 02.
+	 */
 	public Integer findCount(String searchType, String keyword, Integer category);
 
 	/**
@@ -65,16 +79,63 @@ public interface IPhotoBoardRepository {
 	 * @since 2023.10.25
 	 */
 	public PhotoBoardVO searchByPhotoIndex(Integer index);
-
+	
+	/**
+	 * @Method files 게시물 번호에 해당되는 파일 정보를 조회
+	 *
+	 * @param index 해당 게시물 번호
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 01.
+	 */
 	public List<FileVO> files(Integer index);
-
+	
+	/**
+	 * @Method lastBoard 마지막에 저장된 게시물의 번호를 조회하는 메소드
+	 *
+	 * @author 박상현
+	 * @since 2023. 10. 12.
+	 */
 	public PhotoBoardVO lastPhotoBoard();
 
+	/**
+	 * @Method deleteFiles 게시물에 업로드된 파일을 전부 삭제하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 02.
+	 */
 	public Integer deleteFiles(Integer index);
-
+	
+	/**
+	 * @Method deleteFile 게시물에 업로드된 파일을 개별로 삭제하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param fileId 파일 uuid
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 02.
+	 */
 	public Integer deleteFile(Integer index, String fileId);
 
-	public List<FileVO> photoBoardFile(Integer index, Integer pageNumber, Integer itemSize, String searchType,
-			String keyword, Integer category);
+	/**
+	 * @Method photoBoardFile 사진 게시판 화면에 파일 정보를 가져오는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param pageNumber 게시판 페이지 번호
+	 * @param itemSize 게시판 페이지 당 게시글 수
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword 게시판 검색어
+	 * @param category 게시판 카테고리
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 02.
+	 */
+	public List<FileVO> photoBoardFile(Integer index, Integer pageNumber, Integer itemSize, String searchType, String keyword,
+			Integer category);
+	
+	
+
 
 }

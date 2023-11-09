@@ -2,11 +2,11 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 	
 	// 라우팅으로 받아오는 게시글 번호
     let index = $routeParams.index;  
-    
+    // 업로드되는 파일의 총 크기
     let totalSize = 0;
-    
+    // 삭제된 파일 리스트
     let deleteFiles = [];
-    
+    // 추가된 파일 리스트
     let addFiles = [];
 
 	// 수정되는 제목과 내용
@@ -15,11 +15,11 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 	    text: ""
 	};
 
-
+		// 업로드되는 파일 이름
 		$scope.fileNames = [];
-		
+		// 업로드되는 파일 데이터
 		$scope.selectedFiles = [];
-		
+		// 업로드 되는 사진게시판 리스트
 		$scope.photoBoard = [];
    /**
     * @function searchByPhotoIndex 게시판 번호에 맞는 데이터를 불러오는 함수
@@ -53,7 +53,12 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 
 
 
-
+	/**
+	 * @function selectFile 파일탐색기가 실행되어서 파일을 선택할 수 있는 함수
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 07.
+	 */
 	$scope.selectFile = function() {
 		document.getElementById("fileInput").click();
 	};
@@ -61,7 +66,14 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 
 
 
-
+	/**
+	 * @function onFileSelect 선택된 파일을 변수에 할당하고 크기를 제한하는 함수
+	 * 
+	 * @param $files 선택된 파일
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 07.
+	 */
 	$scope.onFileSelect = function($files) {
 
 		let exceedSizeFile = false;
@@ -73,6 +85,7 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 			
 			// 선택된 파일의 크기가 100MB를 초과하지 않으면 각 변수에 파일 데이터 할당 
 			else {
+				file.fileId = uuidv4();
 				$scope.selectedFiles.push(file);
 				$scope.fileNames.push(file.name);
 				totalSize += file.size;
@@ -87,10 +100,30 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 
 	};
 
+	/**
+	 * @function uuidv4 파일의 uuid를 생성하는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 11. 06.
+	 */
+	let uuidv4 = function() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = (Math.random() * 16) | 0,
+				v = c == 'x' ? r : (r & 0x3) | 0x8;
+			return v.toString(16);
+		});
+	}
 
 
 
-
+	/**
+	 * @function excludeFile 해당 파일을 리스트에서 삭제하는 함수
+	 * 
+	 * @param index 삭제할 파일 index
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 07.
+	 */
 	$scope.excludeFile = function(index) {
 		let confirmDelete = confirm("파일을 삭제하시겠습니까?");
 		

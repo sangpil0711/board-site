@@ -12,7 +12,7 @@ import kr.co.ymtech.bm.repository.vo.BoardVO;
  */
 public class BoardPageDTO {
 	
-	/** list : 게시글 정보 */
+	/** boardList : 게시글 정보 */
     private List<BoardVO> boardList;
     /** totalCount : 총 게시글 수 */
     private Integer totalCount;

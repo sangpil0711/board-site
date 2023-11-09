@@ -20,6 +20,7 @@ import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardUpdateDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
+import kr.co.ymtech.bm.repository.ICommentRepository;
 import kr.co.ymtech.bm.repository.IPhotoBoardRepository;
 import kr.co.ymtech.bm.repository.vo.FileVO;
 import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
@@ -40,12 +41,14 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 * @since 2023. 10. 24.
 	 */
 	private final IPhotoBoardRepository photoBoardRepository;
+	private final ICommentRepository commentRepository;
 	private final IBoardRepository boardRepository;
 	private final static String SAVE_PATH = "C:/boardFile";
 
 	@Autowired
-	public PhotoBoardService(IPhotoBoardRepository IphotoBoardRepository, IBoardRepository IboardRepository) {
+	public PhotoBoardService(IPhotoBoardRepository IphotoBoardRepository,   ICommentRepository IcommentRepository, IBoardRepository IboardRepository) {
 		this.photoBoardRepository = IphotoBoardRepository;
+		this.commentRepository = IcommentRepository;
 		this.boardRepository = IboardRepository;
 	}
 
@@ -67,32 +70,31 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 * @since 2023. 10. 31.
 	 */
 	@Override
-	public PhotoBoardPageDTO findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword,
-			Integer category) {
+	   public PhotoBoardPageDTO findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType,
+	           String keyword, Integer category) {
 
-		List<PhotoBoardVO> photoBoardList = photoBoardRepository.findPhotoBoard(pageNumber, itemSize, searchType,
-				keyword, category);
-		Integer boardCount = photoBoardRepository.findCount(searchType, keyword, category);
+	       List<PhotoBoardVO> photoBoardList = photoBoardRepository.findPhotoBoard(pageNumber, itemSize, searchType,
+	               keyword, category);
+	       Integer boardCount = photoBoardRepository.findCount(searchType, keyword, category);
 
-		PhotoBoardPageDTO photoBoardPage = new PhotoBoardPageDTO();
-		photoBoardPage.setTotalCount(boardCount);
+	       PhotoBoardPageDTO photoBoardPage = new PhotoBoardPageDTO();
+	       photoBoardPage.setTotalCount(boardCount);
 
-		for (PhotoBoardVO vo : photoBoardList) {
+	       for (PhotoBoardVO vo : photoBoardList) {
 
-			List<FileVO> filesForBoard = photoBoardRepository.photoBoardFile(vo.getIndex(), pageNumber, itemSize,
-					searchType, keyword, category);
+	           List<FileVO> filesForBoard = photoBoardRepository.photoBoardFile(vo.getIndex(), pageNumber, itemSize, searchType, keyword, category);
+	           
+	           if (vo.getFile() == null) {
+	               vo.setFile(new ArrayList<>());
+	           }
 
-			if (vo.getFile() == null) {
-				vo.setFile(new ArrayList<>());
-			}
+	           vo.getFile().addAll(filesForBoard);
+	       }
 
-			vo.getFile().addAll(filesForBoard);
-		}
+	       photoBoardPage.setPhotoBoardList(photoBoardList);
 
-		photoBoardPage.setPhotoBoardList(photoBoardList);
-
-		return photoBoardPage;
-	}
+	       return photoBoardPage;
+	   }
 
 	/**
 	 * @Method savePhotoBoard 사진게시판에 게시물을 저장하는 메소드
@@ -287,7 +289,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 
 		photoBoardRepository.deleteFiles(index);
 
-//		commentRepository.deleteAllComment(index);
+		commentRepository.deleteAllComment(index);
 
 		return photoBoardRepository.deletePhotoBoard(index);
 	}
