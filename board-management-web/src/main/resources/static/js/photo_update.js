@@ -21,6 +21,7 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 		$scope.selectedFiles = [];
 		// 업로드 되는 사진게시판 리스트
 		$scope.photoBoard = [];
+		
    /**
     * @function searchByPhotoIndex 게시판 번호에 맞는 데이터를 불러오는 함수
     * 
@@ -50,9 +51,6 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
     
     searchByPhotoIndex();
 
-
-
-
 	/**
 	 * @function selectFile 파일탐색기가 실행되어서 파일을 선택할 수 있는 함수
 	 * 
@@ -62,9 +60,6 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 	$scope.selectFile = function() {
 		document.getElementById("fileInput").click();
 	};
-
-
-
 
 	/**
 	 * @function onFileSelect 선택된 파일을 변수에 할당하고 크기를 제한하는 함수
@@ -103,8 +98,8 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 	/**
 	 * @function uuidv4 파일의 uuid를 생성하는 함수
 	 * 
-	 * @author 황상필
-	 * @since 2023. 11. 06.
+	 * @author 박상현
+	 * @since 2023. 11. 08.
 	 */
 	let uuidv4 = function() {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -113,8 +108,6 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 			return v.toString(16);
 		});
 	}
-
-
 
 	/**
 	 * @function excludeFile 해당 파일을 리스트에서 삭제하는 함수
@@ -151,11 +144,6 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 		}
 	};
 	
-	
-	
-	
-	
-    
    /**
     * @function updatePhoto 게시판 번호에 맞는 데이터를 수정하는 함수
     * 
@@ -185,6 +173,7 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 			alert('파일 데이터 전송 실패');
 		})
 	};
+	
    /**
     * @function redirectToPhotoRead photo_read.html로 이동하는 함수
     * 

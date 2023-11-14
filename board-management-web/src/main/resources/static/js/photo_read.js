@@ -81,32 +81,49 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @author 황상필
 	 * @since 2023. 11. 03.
 	 */
+//	let findComment = function() {
+//		CommentFactory.getComment({
+//			boardIndex: index
+//		},
+//			function(response) {
+//				$scope.commentlist = response;
+//				let commentNewlist = [];
+//
+//				// 배열을 순회하면서 댓글과 대댓글을 리스트에 추가
+//				$scope.commentlist.forEach(function(comment) {
+//					commentNewlist.push(comment);
+//					comment.childCommentBox = false;
+//					if (comment.childs !== null) {
+//						comment.childs.forEach(function(childComment) {
+//							commentNewlist.push(childComment);
+//						})
+//					}
+//				})
+//
+//				$scope.commentlist = commentNewlist;
+//			},
+//			function(error) {
+//				console.error("댓글 정보 불러오기 실패", error);
+//			});
+//	};
+//
+//	findComment();
+
+		$scope.commentlist = [];
 	let findComment = function() {
-		CommentFactory.getComment({
+		CommentFactory.getComment(
+		{
 			boardIndex: index
 		},
-			function(response) {
-				$scope.commentlist = response;
-				let commentNewlist = [];
-
-				// 배열을 순회하면서 댓글과 대댓글을 리스트에 추가
-				$scope.commentlist.forEach(function(comment) {
-					commentNewlist.push(comment);
-					comment.childCommentBox = false;
-					if (comment.childs !== null) {
-						comment.childs.forEach(function(childComment) {
-							commentNewlist.push(childComment);
-						})
-					}
-				})
-
-				$scope.commentlist = commentNewlist;
-			},
-			function(error) {
-				console.error("댓글 정보 불러오기 실패", error);
-			});
+		function(response) {
+			$scope.commentlist = response;
+			console.log('commentlist: ', $scope.commentlist)
+		},
+		function(error) {
+			console.error("댓글 정보 불러오기 실패", error);
+			
+		});
 	};
-
 	findComment();
 
 	/**

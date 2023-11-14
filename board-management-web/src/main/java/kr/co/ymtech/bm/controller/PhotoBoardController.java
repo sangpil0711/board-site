@@ -117,13 +117,7 @@ public class PhotoBoardController {
 		return new ResponseEntity<Integer>(updatePhotoBoard, HttpStatus.OK);
 	}
 
-//	@PatchMapping("/photos/{index}")
-//	public ResponseEntity<Integer> updatePhotoBoard(@PathVariable Integer index, @RequestBody PhotoBoardGetDTO photo) {
-//
-//		Integer photoBoardlistUpdate = photoBoardService.updatePhotoBoard(photo);
-//
-//		return new ResponseEntity<Integer>(photoBoardlistUpdate, HttpStatus.OK);
-//	}
+
 
 	/**
 	 * Method : 사진게시물을 삭제하는 메소드
