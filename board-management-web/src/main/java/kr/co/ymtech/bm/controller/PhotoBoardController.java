@@ -86,13 +86,6 @@ public class PhotoBoardController {
 		photoBoardService.savePhotoBoard(photo);
 	}
 
-//	@PostMapping("/photos")
-//	public ResponseEntity<Integer> savePhotoBoard(@RequestBody PhotoBoardDTO photo) {
-//
-//		Integer photoBoardlistSave = photoBoardService.savePhotoBoard(photo);
-//
-//		return new ResponseEntity<Integer>(photoBoardlistSave, HttpStatus.OK);
-//	}
 
 	/**
 	 * Method : 사진게시물을 수정하는 메소드
@@ -110,13 +103,7 @@ public class PhotoBoardController {
 		photoBoardService.updatePhotoBoard(photo);
 	}
 
-//	@PatchMapping("/photos/{index}")
-//	public ResponseEntity<Integer> updatePhotoBoard(@PathVariable Integer index, @RequestBody PhotoBoardGetDTO photo) {
-//
-//		Integer photoBoardlistUpdate = photoBoardService.updatePhotoBoard(photo);
-//
-//		return new ResponseEntity<Integer>(photoBoardlistUpdate, HttpStatus.OK);
-//	}
+
 
 	/**
 	 * Method : 사진게시물을 삭제하는 메소드

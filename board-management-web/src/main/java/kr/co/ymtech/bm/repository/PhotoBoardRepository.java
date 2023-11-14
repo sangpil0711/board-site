@@ -137,12 +137,6 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 		}
 	}
 
-//	@Override
-//	public Integer savePhotoBoard(PhotoBoardVO photo) {
-//		return jdbcTemplate.update("insert into board(title, content, category, create_Date) values(?, ?, ?, ?)",
-//				photo.getTitle(), photo.getText(), photo.getCategory(), photo.getCreateDate());
-//	}
-
 	/**
 	 * Method : 게시물 정보를 수정하는 메소드
 	 * 
@@ -168,12 +162,6 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 					files.getFileId(), photo.getIndex(), files.getFilePath(), files.getFileName(), files.getFileSize());
 		}
 	}
-
-//	@Override
-//	public Integer updatePhotoBoard(PhotoBoardVO photo) {
-//		return jdbcTemplate.update("update board set title = ?, content = ? where index = ? ", photo.getTitle(),
-//				photo.getText(), photo.getIndex());
-//	}
 
 	/**
 	 * Method : 게시물 정보를 삭제하는 메소드

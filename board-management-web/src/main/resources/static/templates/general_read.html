@@ -98,6 +98,37 @@
 
 
 				</tr>
+				<tr ng-repeat="commentChildren in comment.childs"  ng-class="{'child_comment': commentChildren.parentIndex != null}">
+					<td ng-if="commentChildren.parentIndex != null"></td>
+					<td colspan="{{commentChildren.parentIndex != null ? 1 : 2}}">{{ commentChildren.userId }}</td>
+
+
+					<!-- 시작: 댓글 수정 -->
+					<td>
+						<div ng-if="!commentChildren.update">{{ commentChildren.text }}</div>
+						<div ng-if="commentChildren.update">
+							<input type="text" class="update_write_box" ng-model="commentChildren.updatedText" />
+							<input type="button" class="update_btn" value="저장" ng-click="saveComment(commentChildren)" />
+							<input type="button" class="update_btn" value="취소" ng-click="cancelUpdate(commentChildren)" />
+						</div>
+					</td>
+					<!-- 끝: 댓글 수정 -->
+
+
+					<td>{{ commentChildren.createDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+
+
+					<!-- 시작: 댓글 수정, 삭제, 답글 버튼 -->
+					<td>
+						<input type="button" class="update_btn" value="수정" ng-click="updateComment(commentChildren)" />
+						<input type="button" class="delete_btn" value="삭제" ng-click="deleteComment(commentChildren.index)" />
+						<input type="button" class="child_comment_btn" value="답글" ng-click="insertChildComment(commentChildren)"
+							ng-if="commentChildren.parentIndex == null && !commentChildren.childCommentBox" />
+					</td>
+					<!-- 끝: 댓글 수정, 삭제, 답글 버튼 -->
+
+
+				</tr>
 
 
 				<!-- 시작: 대댓글 등록 -->

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -118,8 +119,8 @@ public class BoardService implements IBoardService {
 					MultipartFile files = board.getFiles().get(i);
 					String originalFileName = files.getOriginalFilename();
 					String uniqueID = UUID.randomUUID().toString();
-					String filePath = SAVE_PATH + "/" + uniqueID + "_" + originalFileName;
-
+//					String filePath = SAVE_PATH + "/" + uniqueID + "_" + originalFileName;
+					String filePath = Paths.get(SAVE_PATH).resolve(uniqueID + "_" + originalFileName).normalize().toString();
 					FileVO boardFile = new FileVO();
 					boardFile.setFileId(uniqueID);
 					boardFile.setFilePath(SAVE_PATH);

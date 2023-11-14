@@ -67,6 +67,7 @@ button:hover {
 }
 
 h3 {
+   width: 1016px;
    border-bottom: 2px solid rgb(79, 114, 228);
    color: rgb(79, 114, 228);
    font-weight: 600;
@@ -74,78 +75,109 @@ h3 {
 
 .board_best {
    display: inline-block;
-   margin-left: 500px;
+   margin-left: 480px;
    margin-top: 50px;
 }
 
 .best {
    display: flex;
    margin-bottom: 10px;
-   margin-left: -54px;
-   
+   margin-left: 8px;
 }
 
-.best_btn1 {
-   padding: 15px;
+.best td {
    font-size: 18px;
-   background-color: white;
+   height: 61.5px;
+   border: 1px solid gray;
+   border-left: none;
+   border-right: none;
+   border-top: none;
+}
+
+.general_best td a {
+   display: inline-block;
+   max-width: 700px;
+   vertical-align: middle;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
    color: black;
-   border: 1px solid grey;
-   font-weight: 500;
+}
+
+.photo_best td a {
+   display: inline-block;
+   max-width: 600px;
+   vertical-align: middle;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+   color: black;
+}
+
+.best span {
+   color: rgb(79, 114, 228);
+   shape-outside: border-box;
+}
+
+.general_best td:first-child {
    width: 800px;
-   height: 60px;
-   min-width: 800px;
-   text-align: left;
-   text-overflow: ellipsis;
-   white-space: nowrap;
-   overflow: hidden;
-   font-weight: 600;
-   border-right: none;
-   border-left: none;
+   padding-left: 10px;
+   max-width: 800px;
 }
 
-.best_btn2 {
-   padding: 15px;
-   margin-left: -4px;
-   font-size: 18px;
-   background-color: white;
-   color: black;
-   border: 1px solid grey;
-   border-left: none;
-   font-weight: 600;
+.general_best td:nth-child(2) {
+   width: 200px;
+   font-size: 15px;
+   text-align: right;
+   padding-right: 10px;
+}
+
+.photo_best td:first-child {
+   width: 100px;
+}
+
+.photo_best td:nth-child(2) {
    width: 700px;
-   height: 60px;
-   text-align: left;
-   text-overflow: ellipsis;
-   white-space: nowrap;
-   overflow: hidden;
-   border-right: none;
-   border-left: none;
+   padding-left: 10px;
+   max-width: 700px;
+}
+
+.photo_best td:nth-child(3) {
+   width: 200px;
+   font-size: 15px;
+   text-align: right;
+   padding-right: 10px;
 }
 
 .best img {
-   width: 100px; 
+   width: 100px;
    height: 60px;
-   margin-bottom: 4px;
    border: 1px solid grey;
    border-left: none;
    border-right: none;
+   border-bottom: none;
 }
 
-.best img:hover{
+.best img:hover {
+   cursor: pointer;
+}
+
+.best td a:hover {
    cursor: pointer;
 }
 
 .like_count {
    font-size: 15px;
-   margin-left: 40px;
+   margin-left: 15px;
+   margin-top: -4px;
    font-weight: 100;
    color: rgb(79, 114, 228);
 }
-.user_Id{
-	float: right;
-    font-weight: 100;
-    font-size: 15px;
+
+.user_Id {
+   float: right;
+   font-weight: 100;
+   font-size: 15px;
 }
 
 
@@ -224,8 +256,8 @@ h3 {
    background-color: white;
    position: relative;
    top: 15px;
-   left: 600px;
-   height: 30px;
+   left: 580px;
+   height: 32px;
 }
 
 .board_all {
@@ -244,6 +276,8 @@ h3 {
    font-size: 15px;
    color: black;
    background-color: white;
+   background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
+   background-size: 30px;
    position: relative;
    top: -55px;
    left: 1330px;
@@ -283,11 +317,12 @@ h3 {
    margin-bottom: 50px;
 }
 
+@media screen and (min-width: 768px) {
 .photo_box {
    justify-content: flex-start;
    width: 70%;
    margin: -10px auto;
-   margin-right: 190px;
+   margin-right: 230px;
 }
 
 .photo_box .img-button {
@@ -315,10 +350,7 @@ h3 {
 }
 
 .photo {
-   width: calc(20% - 10px);
-   /* 한 줄에 5개의 게시물을 표시하기 위해 (80% / 5) - 간격 값으로 설정 */
    margin: 5px;
-   /* 게시물 간격을 설정 */
    padding: 10px;
    box-sizing: border-box;
    text-align: center;
@@ -326,9 +358,7 @@ h3 {
 
 .img {
    max-width: 100%;
-   /* 이미지 크기를 이미지 박스에 맞게 조절 */
    max-height: auto;
-   /* 이미지 높이를 조절하지 않고 가로 비율 유지 */
 }
 
 .photo li {
@@ -358,7 +388,7 @@ h3 {
    text-align: center;
    font-size: 11px;
 }
-
+}
 .comment td {
    padding: 5px;
 }
@@ -494,6 +524,12 @@ h3 {
 }
 
 .board tbody td {
+   border: 1px solid grey;
+   border-width: 1px 0;
+   border-top: none;
+}
+
+.board tbody .board_list td {
    border: 1px solid grey;
    border-width: 1px 0;
    border-top: none;
@@ -654,6 +690,7 @@ strong {
    border-bottom: 1px dashed #ddd;
    font-size: 20px;
    font-weight: 600;
+   word-break: break-all;
 }
 
 .board_view .info {
@@ -698,15 +735,30 @@ strong {
 }
 
 .board_view .like_btn {
-   font-size: 15px;
-   min-width: 100px;
-   background-color: white;
-   border-color: grey;
-   position: absolute;
-   bottom: 50px;
-   left: 50%;
+   width: 50px;
+   height: 50px;
+   position: relative;
+   bottom: 120px;
+   left: 500px;
    transform: translateX(-50%);
-   margin-top: 30px;
+}
+
+.board_view .like_btn:hover {
+   cursor: pointer;
+}
+
+.like {
+   color: rgb(79, 114, 228);
+   text-align: center;
+   width: 200px;
+   position: relative;
+   bottom: 130px;
+   left: 495px;
+   transform: translateX(-50%);
+}
+
+.board_file {
+   margin-top: -50px;
 }
 
 .read_btn {

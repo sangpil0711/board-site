@@ -358,7 +358,9 @@ public class BoardRepository implements IBoardRepository {
 				return member;
 			}
 		};
-		return jdbcTemplate.query("SELECT * FROM board ORDER BY like_count DESC OFFSET 0 LIMIT 5", mapper);
+		return jdbcTemplate.query(
+				"SELECT * FROM board WHERE to_timestamp(create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC,"
+				+ " to_timestamp(create_date / 1000) DESC OFFSET 0 LIMIT 8", mapper);
 	}
 	
 	/**
@@ -374,24 +376,26 @@ public class BoardRepository implements IBoardRepository {
 	 * @since 2023. 11. 08.
 	 */
 	@Override
-	public List<FileVO> bestBoardFile(Integer index) {
+	   public List<FileVO> bestBoardFile(Integer index) {
+	      
+	      String sql = "SELECT * FROM board WHERE to_timestamp(create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, to_timestamp(create_date / 1000) DESC OFFSET 0 LIMIT 8";
 
-		RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
+	      RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
 
-			// ResultSet에 결과값을 담아 FileVO에 담음
-			@Override
-			public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+	         // ResultSet에 결과값을 담아 FileVO에 담음
+	         @Override
+	         public FileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-				FileVO member = new FileVO(rs.getString("uuid"), rs.getInt("board_index"),
-						rs.getString("file_location"), rs.getString("original_filename"), rs.getLong("file_size"));
+	            FileVO member = new FileVO(rs.getString("uuid"), rs.getInt("board_index"),
+	                  rs.getString("file_location"), rs.getString("original_filename"), rs.getLong("file_size"));
 
-				return member;
-			}
-		};
-		return jdbcTemplate.query(
-				"SELECT * FROM file INNER JOIN (SELECT * FROM board ORDER BY like_count DESC OFFSET 0 LIMIT 5) AS best_board ON file.board_index = best_board.index WHERE board_index = ?",
-				mapper, index);
-	}
+	            return member;
+	         }
+	      };
+	      return jdbcTemplate.query(
+	            "SELECT * FROM file INNER JOIN (" + sql + ") AS best_board ON file.board_index = best_board.index WHERE board_index = ?",
+	            mapper, index);
+	   }
 	
 	
 
