@@ -131,7 +131,7 @@ app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routePa
 			totalSize -= $scope.selectedFiles[index].size;
 			$scope.fileNames.splice(index, 1);
 
-			// 삭제된 파일 UUID
+			// 개별삭제 시 삭제된 파일 UUID
 			let deleteFileId = $scope.selectedFiles[index].fileId;
 			$scope.selectedFiles.splice(index, 1);
 

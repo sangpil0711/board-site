@@ -117,24 +117,21 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	 * @author 박상현
 	 * @since 2023.10.24
 	 */
-	@Transactional
 	@Override
-	public void savePhotoBoard(PhotoBoardVO photo, List<FileVO> file) {
+	public Integer savePhotoBoard(PhotoBoardVO photo, List<FileVO> file) {
 
 		// 게시글 정보를 DB에 저장
-		jdbcTemplate.update("INSERT INTO board(title, content, category, create_Date) VALUES(?, ?, ?, ?)",
-				photo.getTitle(), photo.getText(), photo.getCategory(), photo.getCreateDate());
-
-		// 저장한 게시글 번호
-		Integer boardIndex = jdbcTemplate.queryForObject("SELECT index FROM board ORDER BY index DESC OFFSET 0 LIMIT 1",
-				Integer.class);
+		Integer boardDB = jdbcTemplate.update("INSERT INTO board(index, title, content, category, create_Date) VALUES(?, ?, ?, ?, ?)",
+				photo.getIndex(), photo.getTitle(), photo.getText(), photo.getCategory(), photo.getCreateDate());
 
 		// 게시글에 업로드된 파일을 DB에 저장
 		for (FileVO files : file) {
 			jdbcTemplate.update(
 					"INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
-					files.getFileId(), boardIndex, files.getFilePath(), files.getFileName(), files.getFileSize());
+					files.getFileId(), files.getBoardIndex(), files.getFilePath(), files.getFileName(), files.getFileSize());
 		}
+		
+		return boardDB;
 	}
 
 	/**
@@ -149,10 +146,10 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	 */
 	@Transactional
 	@Override
-	public void updatePhotoBoard(PhotoBoardVO photo, List<FileVO> file) {
+	public Integer updatePhotoBoard(PhotoBoardVO photo, List<FileVO> file) {
 
 		// 수정된 게시글 정보를 DB에 저장
-		jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ? ", photo.getTitle(),
+		Integer boardDB = jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ? ", photo.getTitle(),
 				photo.getText(), photo.getIndex());
 
 		// 게시글에 추가된 파일을 DB에 저장
@@ -161,6 +158,8 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 					"INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
 					files.getFileId(), photo.getIndex(), files.getFilePath(), files.getFileName(), files.getFileSize());
 		}
+		
+		return boardDB;
 	}
 
 	/**
@@ -237,34 +236,6 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 
 		return jdbcTemplate.query("SELECT * FROM file WHERE board_index = ?", mapper, index);
 
-	}
-	
-	/**
-	 * @Method lastBoard 마지막에 저장된 게시물의 번호를 조회하는 메소드
-	 *
-	 * @see kr.co.ymtech.bm.repository.IPhotoBoardRepository#lastBoard()
-	 *
-	 * @return 마지막에 저장된 게시물 정보에서 index 값을 반환
-	 *
-	 * @author 박상현
-	 * @since 2023. 11. 06.
-	 */
-	@Override
-	public PhotoBoardVO lastPhotoBoard() {
-
-		RowMapper<PhotoBoardVO> mapper = new RowMapper<PhotoBoardVO>() {
-
-			// ResultSet에 결과값을 담아 BoardVO에 담음
-			@Override
-			public PhotoBoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				PhotoBoardVO member = new PhotoBoardVO(rs.getInt("index"), rs.getString("title"),
-						rs.getString("content"), rs.getString("user_id"), rs.getInt("category"),
-						rs.getLong("create_date"), rs.getInt("like_count"));
-
-				return member;
-			}
-		};
-		return jdbcTemplate.queryForObject("SELECT * FROM board ORDER BY index DESC OFFSET 0 LIMIT 1", mapper);
 	}
 
 	/**
@@ -350,6 +321,5 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	                  + ") AS photo_board ON file.board_index = photo_board.index WHERE board_index = ?",
 	            mapper, category, "%" + keyword + "%", offset, itemSize, index);
 	   }
-	
 	
 }

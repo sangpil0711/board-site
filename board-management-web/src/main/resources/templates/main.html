@@ -30,16 +30,13 @@
 		
 		
 		<!-- 시작: 상단 메뉴 -->
-		<div class="head">
-			<button type="button" class="ipp_btn" ng-click="redirectToMain()" title="메인화면으로 이동">IPP <span class="span">게시판</span></button>
 			<ul class="menu">
+				<li><button type="button" class="ipp_btn" ng-click="redirectToMain()" title="메인화면으로 이동">IPP <span class="span">게시판</span></button></li>
 				<li><button type="button" class="btn" ng-click="redirectToGeneralBoard()">일반게시판</button></li>
-				<li><button type="button" class="btn" ng-click="redirectToPhotoBoard()">사진게시판</button>
-				</li>
+				<li><button type="button" class="btn" ng-click="redirectToPhotoBoard()">사진게시판</button></li>
 				<li><button type="button" class="btn" ng-click="location.href='dash.html' ">통계</button></li>
-				<li><button type="button" class="btn" ng-click="location.href='file.html' ">파일탐색기</button></li>
+				<li><button type="button" class="btn" ng-click="redirectToFileExplorer()">파일탐색기</button></li>
 			</ul>
-		</div>
 		<!-- 끝: 상단 메뉴 -->
 	
 	

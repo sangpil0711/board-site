@@ -40,9 +40,18 @@ app.config(function($routeProvider) {
 		})
 		.when("/photo/update/:index", {
 			templateUrl: "static/templates/photo_update.html"
+		})
+		.when("/file", {
+			templateUrl: "static/templates/file_explorer.html"
 		});
 });
 
+/**
+ * @Method : 메인화면 게시글 리스트를 조회하는 함수
+ * 
+ * @author 황상필
+ * @since 2023. 11. 06.
+ */
 app.factory('MainFactory', function($resource) {
 	return $resource('/boards/best', null, {
 		

@@ -1,27 +1,27 @@
 <div id="container" ng-controller="BoardMain">
 
 
-   <!-- 시작: 베스트 게시글 박스 -->
-   <div class="board_best">
-      <h3>게시글 베스트</h3>
-      <table class="best" ng-repeat="item in board">
-         <tr class="general_best" ng-if="item.category == 0">
-            <td><a
-                  ng-click="redirectToReadGeneralBoard(item.index)">{{item.title}}</a>&nbsp;&nbsp;&nbsp;<span>({{item.likeCount}})</span>
-            </td>
-            <td>{{item.userId}} | {{item.createDate | date:'yyyy-MM-dd'}}</td>
-         </tr>
-         <tr class="photo_best" ng-if="item.category == 1">
-            <td><img ng-src="{{thumbnail(item.file[0])}}" alt="이미지" ng-click="redirectToReadPhotoBoard(item.index)"
-                  title="{{item.file[0] === undefined ? '사진이 없습니다' : item.file[0].fileName}}"></td>
-            <td><a
-                  ng-click="redirectToReadPhotoBoard(item.index)">{{item.title}}</a>&nbsp;&nbsp;&nbsp;<span>({{item.likeCount}})</span>
-            </td>
-            <td>{{item.userId}} | {{item.createDate | date:'yyyy-MM-dd'}}</td>
-         </tr>
-      </table>
-   </div>
-   <!-- 끝: 베스트 게시글 박스 -->
+	<!-- 시작: 베스트 게시글 박스 -->
+	<div class="board_best">
+		<h3>게시글 베스트</h3>
+		<table class="best" ng-repeat="item in board">
+			<tr class="general_best" ng-if="item.category == 0">
+				<td>
+					<a ng-click="redirectToReadGeneralBoard(item.index)">{{item.title}}</a>&nbsp;&nbsp;&nbsp;<span>({{item.likeCount}})</span>
+				</td>
+				<td>{{item.userId}} | {{item.createDate | date:'yyyy-MM-dd'}} {{item.createDate | date:'HH:mm:ss'}}</td>
+			</tr>
+			<tr class="photo_best" ng-if="item.category == 1">
+				<td><img ng-src="{{thumbnail(item.file[0])}}" alt="이미지" ng-click="redirectToReadPhotoBoard(item.index)"
+						title="{{item.file[0] === undefined ? '사진이 없습니다' : item.file[0].fileName}}"></td>
+				<td>
+					<a ng-click="redirectToReadPhotoBoard(item.index)">{{item.title}}</a>&nbsp;&nbsp;&nbsp;<span>({{item.likeCount}})</span>
+				</td>
+				<td>{{item.userId}} | {{item.createDate | date:'yyyy-MM-dd'}} {{item.createDate | date:'HH:mm:ss'}}</td>
+			</tr>
+		</table>
+	</div>
+	<!-- 끝: 베스트 게시글 박스 -->
 
 
 </div>

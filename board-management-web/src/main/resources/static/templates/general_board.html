@@ -1,41 +1,34 @@
 <div id="container" ng-controller="BoardCtrl">
 	
 	
-	<!-- 시작: 글쓰기 버튼 -->
-	<div>
+	<div class="board_option">
+		<!-- 글쓰기 박스 시작 -->
 		<button type="button" class="write_btn" ng-click="redirectToWrite()">글쓰기</button>
-	</div>
-	<!-- 끝: 글쓰기 버튼 -->
-	
-	<div>
-		<!-- 시작: 검색 유형 선택 박스 -->
+		<!-- 글쓰기 박스 끝 -->
+
+		<!-- 검색 유형 선택 박스 시작 -->
 		<select class="type_select" ng-model="searchType" ng-change="changeSearchType(searchType)"
 			ng-options="type.value as type.name for type in types"></select>
-		<!-- 끝: 검색 유형 선택 박스 -->
-		
+		<!-- 검색 유형 선택 박스 끝 -->
 
-		<!-- 시작: 검색어 입력 박스 -->
+		<!-- 검색어 입력 박스 시작 -->
 		<input type="text" class="search" ng-model="keyword" ng-keydown="$event.keyCode === 13 && search()"
 			placeholder="검색어 입력">
-		<!-- 끝: 검색어 입력 박스 -->
-		
+		<!-- 검색어 입력 박스 끝 -->
 
-		<!-- 시작: 검색 버튼 및 검색 초기화 버튼 -->
+		<!-- 검색 버튼 및 검색 초기화 버튼 시작 -->
 		<button class="search_btn" ng-click="search()">검색</button>
 		<button class="search_reset" ng-click="searchReset()">검색 초기화</button>
-		<!-- 끝: 검색 버튼 및 검색 초기화 버튼 -->
+		<!-- 검색 버튼 및 검색 초기화 버튼 끝 -->
 
-			
-			
+		<!-- 게시글 총 개수 및 페이지당 게시글 수 선택 박스 시작 -->
+		<div>
+			<p class="board_all">전체 {{totalItems}}개</p>
+			<select class="board_select" ng-model="itemsPerPage" ng-change="updatePage()"
+				ng-options="option.value as option.name for option in options"></select>
+		</div>
+		<!-- 게시글 총 개수 및 페이지당 게시글 수 선택 박스 끝 -->
 	</div>
-	
-	<!-- 시작: 게시글 총 개수 및 페이지당 게시글 수 선택 박스 -->
-	<div>
-		<p class="board_all">전체 {{totalItems}}개</p>
-		<select class="board_select" ng-model="itemsPerPage" ng-change="updatePage()"
-			ng-options="option.value as option.name for option in options"></select>
-	</div>
-	<!-- 끝: 게시글 총 개수 및 페이지당 게시글 수 선택 박스 -->
 	
 	<!-- 시작: 게시글 리스트 -->
 	<div class="board_box">
