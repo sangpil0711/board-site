@@ -1,5 +1,7 @@
 package kr.co.ymtech.bm.controller;
 
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -82,17 +84,16 @@ public class PhotoBoardController {
 	 * @since 2023.10.24
 	 */
 	@PostMapping(value = "/photos")
-	public void savePhotoBoard(PhotoBoardDTO photo) {
-		photoBoardService.savePhotoBoard(photo);
+	public ResponseEntity<Integer> savePhotoBoard(PhotoBoardDTO photo) {
+		
+		photo.setFiles(photo.getFiles() != null ? photo.getFiles() : Collections.emptyList());
+		
+		Integer savePhotoBoard = photoBoardService.savePhotoBoard(photo);
+		
+		System.out.println(photo.toString());
+		
+		return new ResponseEntity<Integer>(savePhotoBoard, HttpStatus.OK);
 	}
-
-//	@PostMapping("/photos")
-//	public ResponseEntity<Integer> savePhotoBoard(@RequestBody PhotoBoardDTO photo) {
-//
-//		Integer photoBoardlistSave = photoBoardService.savePhotoBoard(photo);
-//
-//		return new ResponseEntity<Integer>(photoBoardlistSave, HttpStatus.OK);
-//	}
 
 	/**
 	 * Method : 사진게시물을 수정하는 메소드
@@ -106,8 +107,14 @@ public class PhotoBoardController {
 	 * @since 2023.10.24
 	 */
 	@PatchMapping(value = "/photos/{index}")
-	public void updatePhotoBoard(@PathVariable Integer index, PhotoBoardUpdateDTO photo) {
-		photoBoardService.updatePhotoBoard(photo);
+	public ResponseEntity<Integer> updatePhotoBoard(@PathVariable Integer index, PhotoBoardUpdateDTO photo) {
+		
+		photo.setAddFiles(photo.getAddFiles() != null ? photo.getAddFiles() : Collections.emptyList());
+		photo.setDeleteFiles(photo.getDeleteFiles() != null ? photo.getDeleteFiles() : Collections.emptyList());
+		
+		Integer updatePhotoBoard = photoBoardService.updatePhotoBoard(photo);
+		
+		return new ResponseEntity<Integer>(updatePhotoBoard, HttpStatus.OK);
 	}
 
 //	@PatchMapping("/photos/{index}")

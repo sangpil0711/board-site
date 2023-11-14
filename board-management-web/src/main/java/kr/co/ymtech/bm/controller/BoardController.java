@@ -1,5 +1,6 @@
 package kr.co.ymtech.bm.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,8 +78,13 @@ public class BoardController {
 	 * @since 2023. 10. 26.
 	 */
 	@PostMapping(value = "/boards")
-	public void saveBoard(BoardDTO board) {
-		boardService.saveBoard(board);
+	public ResponseEntity<Integer> saveBoard(BoardDTO board) {
+		
+		board.setFiles(board.getFiles() != null ? board.getFiles() : Collections.emptyList());
+
+		Integer saveBoard = boardService.saveBoard(board);
+		
+		return new ResponseEntity<Integer>(saveBoard, HttpStatus.OK);
 	}
 
 	/**
@@ -91,8 +97,14 @@ public class BoardController {
 	 * @since 2023. 11. 01.
 	 */
 	@PatchMapping(value = "/boards/{index}")
-	public void updateBoard(@PathVariable Integer index, BoardUpdateDTO board) {
-		boardService.updateBoard(board);
+	public ResponseEntity<Integer> updateBoard(@PathVariable Integer index, BoardUpdateDTO board) {
+		
+		board.setAddFiles(board.getAddFiles() != null ? board.getAddFiles() : Collections.emptyList());
+		board.setDeleteFiles(board.getDeleteFiles() != null ? board.getDeleteFiles() : Collections.emptyList());
+		
+		Integer updateBoard = boardService.updateBoard(board);
+		
+		return new ResponseEntity<Integer>(updateBoard, HttpStatus.OK);
 	}
 
 	/**
@@ -125,16 +137,16 @@ public class BoardController {
 	 */
 	@GetMapping(value = "/boards/{index}")
 	public ResponseEntity<BoardGetDTO> searchByIndex(@PathVariable Integer index) {
-		
+
 		BoardGetDTO boardlistIndex = boardService.searchByIndex(index);
 
 		return new ResponseEntity<BoardGetDTO>(boardlistIndex, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
 	 *
-	 * @param index 해당 게시글 번호
+	 * @param index     해당 게시글 번호
 	 * @param likeCount 해당 게시글 추천 수
 	 * 
 	 * @return 게시글의 번호와 추천 수를 boardLikeCount 변수에 담고 ResponseEntity 를 사용하여 응답
@@ -144,12 +156,12 @@ public class BoardController {
 	 */
 	@PatchMapping(value = "/boards/{index}/{likeCount}")
 	public ResponseEntity<Integer> boardLikeCount(@PathVariable Integer index, @PathVariable Integer likeCount) {
-		
+
 		Integer boardLikeCount = boardService.boardLikeCount(index, likeCount);
 
 		return new ResponseEntity<Integer>(boardLikeCount, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * @Method bestBoard 추천 수가 많은 게시글을 반환하는 메소드
 	 *
@@ -160,9 +172,9 @@ public class BoardController {
 	 */
 	@GetMapping(value = "/boards/best")
 	public ResponseEntity<List<BoardGetDTO>> bestBoard() {
-		
+
 		List<BoardGetDTO> bestBoard = boardService.bestBoard();
-		
+
 		return new ResponseEntity<List<BoardGetDTO>>(bestBoard, HttpStatus.OK);
 	}
 

@@ -33,4 +33,14 @@ app.controller("BoardHead", function($scope, $location, $route) {
 		$route.reload();
 	};
 	
+	/**
+	 * @function redirectToReadFileExplorer file_explorer.html로 이동하는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2023. 11. 14.
+	 */
+	$scope.redirectToFileExplorer = function() {
+		$location.path('/file');
+	};
+	
 });

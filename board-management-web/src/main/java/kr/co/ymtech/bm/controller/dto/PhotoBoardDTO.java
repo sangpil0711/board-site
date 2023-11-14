@@ -98,6 +98,8 @@ public class PhotoBoardDTO {
 		builder.append(category);
 		builder.append(", createDate=");
 		builder.append(createDate);
+		builder.append(", files=");
+		builder.append(files);
 		builder.append("]");
 		return builder.toString();
 	}

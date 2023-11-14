@@ -82,8 +82,8 @@ public class BoardRepository implements IBoardRepository {
 	 * @see kr.co.ymtech.bm.repository.IBoardRepository#findCount(java.lang.String,
 	 *      java.lang.String)
 	 *
-	 * @param searchType    게시판 검색 유형
-	 * @param keyword       게시판 검색어
+	 * @param searchType 게시판 검색 유형
+	 * @param keyword    게시판 검색어
 	 * 
 	 * @return PageVO 클래스에 있는 객체를 하나만 포함하는 리스트를 생성 후 반환
 	 *
@@ -122,21 +122,22 @@ public class BoardRepository implements IBoardRepository {
 	 * @since 2023. 10. 30.
 	 */
 	@Override
-	public void saveBoard(BoardVO board, List<FileVO> file) {
+	public Integer saveBoard(BoardVO board, List<FileVO> file) {
 
 		// 게시글 정보를 DB에 저장
-		jdbcTemplate.update("INSERT INTO board(title, content, category, create_Date) VALUES(?, ?, ?, ?)",
-				board.getTitle(), board.getText(), board.getCategory(), board.getCreateDate());
-
-		// 저장한 게시글 번호
-		Integer boardIndex = jdbcTemplate.queryForObject("SELECT index FROM board ORDER BY index DESC OFFSET 0 LIMIT 1",
-				Integer.class);
+		Integer boardDB = jdbcTemplate.update(
+				"INSERT INTO board(index, title, content, category, create_Date) VALUES(?, ?, ?, ?, ?)", board.getIndex(), board.getTitle(),
+				board.getText(), board.getCategory(), board.getCreateDate());
 
 		// 게시글에 업로드된 파일을 DB에 저장
 		for (FileVO files : file) {
-	        jdbcTemplate.update("INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
-	                files.getFileId(), boardIndex, files.getFilePath(), files.getFileName(), files.getFileSize());
-	    }
+			jdbcTemplate.update(
+					"INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
+					files.getFileId(), files.getBoardIndex(), files.getFilePath(), files.getFileName(),
+					files.getFileSize());
+		}
+
+		return boardDB;
 	}
 
 	/**
@@ -153,10 +154,10 @@ public class BoardRepository implements IBoardRepository {
 	 * @since 2023. 10. 31.
 	 */
 	@Override
-	public void updateBoard(BoardVO board, List<FileVO> file) {
+	public Integer updateBoard(BoardVO board, List<FileVO> file) {
 
 		// 수정된 게시글 정보를 DB에 저장
-		jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ? ", board.getTitle(),
+		Integer boardDB = jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ? ", board.getTitle(),
 				board.getText(), board.getIndex());
 
 		// 게시글에 추가된 파일을 DB에 저장
@@ -165,6 +166,8 @@ public class BoardRepository implements IBoardRepository {
 					"INSERT INTO file(uuid, board_index, file_location, original_filename, file_size) VALUES(?, ?, ?, ?, ?)",
 					files.getFileId(), board.getIndex(), files.getFilePath(), files.getFileName(), files.getFileSize());
 		}
+		
+		return boardDB;
 	}
 
 	/**
@@ -216,7 +219,7 @@ public class BoardRepository implements IBoardRepository {
 
 		return jdbcTemplate.queryForObject("SELECT * FROM board WHERE index = ?", mapper, index);
 	}
-	
+
 	/**
 	 * 
 	 * @Method files 게시물 번호에 해당되는 파일 정보를 조회
@@ -261,21 +264,9 @@ public class BoardRepository implements IBoardRepository {
 	 * @since 2023. 10. 12.
 	 */
 	@Override
-	public BoardVO lastBoard() {
-
-		RowMapper<BoardVO> mapper = new RowMapper<BoardVO>() {
-
-			// ResultSet에 결과값을 담아 BoardVO에 담음
-			@Override
-			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
-						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"),
-						rs.getInt("like_count"));
-
-				return member;
-			}
-		};
-		return jdbcTemplate.queryForObject("SELECT * FROM board ORDER BY index DESC OFFSET 0 LIMIT 1", mapper);
+	public Integer lastBoardIndex() {
+		return jdbcTemplate.queryForObject("SELECT index FROM board ORDER BY index DESC OFFSET 0 LIMIT 1",
+				Integer.class);
 	}
 
 	/**
@@ -358,9 +349,11 @@ public class BoardRepository implements IBoardRepository {
 				return member;
 			}
 		};
-		return jdbcTemplate.query("SELECT * FROM board ORDER BY like_count DESC OFFSET 0 LIMIT 5", mapper);
+		return jdbcTemplate.query(
+				"SELECT * FROM board WHERE to_timestamp(create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, to_timestamp(create_date / 1000) DESC OFFSET 0 LIMIT 8",
+				mapper);
 	}
-	
+
 	/**
 	 * @Method bestBoardFile 추천 수가 많은 게시글에 업로드된 파일 정보를 받아오는 메소드
 	 *
@@ -376,6 +369,8 @@ public class BoardRepository implements IBoardRepository {
 	@Override
 	public List<FileVO> bestBoardFile(Integer index) {
 
+		String sql = "SELECT * FROM board WHERE to_timestamp(create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, to_timestamp(create_date / 1000) DESC OFFSET 0 LIMIT 8";
+
 		RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
 
 			// ResultSet에 결과값을 담아 FileVO에 담음
@@ -389,10 +384,9 @@ public class BoardRepository implements IBoardRepository {
 			}
 		};
 		return jdbcTemplate.query(
-				"SELECT * FROM file INNER JOIN (SELECT * FROM board ORDER BY like_count DESC OFFSET 0 LIMIT 5) AS best_board ON file.board_index = best_board.index WHERE board_index = ?",
+				"SELECT * FROM file INNER JOIN (" + sql
+						+ ") AS best_board ON file.board_index = best_board.index WHERE board_index = ?",
 				mapper, index);
 	}
-	
-	
 
 }

@@ -48,7 +48,7 @@ public interface IPhotoBoardRepository {
 	 * @author 박상현
 	 * @since 2023.10.24
 	 */
-	public void savePhotoBoard(PhotoBoardVO photo, List<FileVO> file);
+	public Integer savePhotoBoard(PhotoBoardVO photo, List<FileVO> file);
 
 	/**
 	 * Method : 사진게시물을 수정하는 메소드
@@ -58,7 +58,7 @@ public interface IPhotoBoardRepository {
 	 * @author 박상현
 	 * @since 2023.10.24
 	 */
-	public void updatePhotoBoard(PhotoBoardVO photo, List<FileVO> file);
+	public Integer updatePhotoBoard(PhotoBoardVO photo, List<FileVO> file);
 
 	/**
 	 * Method : 사진게시물을 삭제하는 메소드
@@ -89,14 +89,6 @@ public interface IPhotoBoardRepository {
 	 * @since 2023. 11. 01.
 	 */
 	public List<FileVO> files(Integer index);
-	
-	/**
-	 * @Method lastBoard 마지막에 저장된 게시물의 번호를 조회하는 메소드
-	 *
-	 * @author 박상현
-	 * @since 2023. 10. 12.
-	 */
-	public PhotoBoardVO lastPhotoBoard();
 
 	/**
 	 * @Method deleteFiles 게시물에 업로드된 파일을 전부 삭제하는 메소드

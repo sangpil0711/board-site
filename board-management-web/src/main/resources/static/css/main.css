@@ -1,11 +1,10 @@
 body {
 	overflow-x: hidden;
-	height: 923px;
 }
 
 #container {
 	overflow: hidden;
-	width: 1920px;
+	width: 100%;
 }
 
 ul {
@@ -20,14 +19,10 @@ ul li {
 	color: black;
 }
 
-.head {
-	display: inline-block;
-	margin-top: 30px;
-}
-
 .menu {
+	width: 100%;
+	margin-top: 30px;
 	border-bottom: 1px solid rgb(216, 213, 213);
-	width: 1920px;
 	height: 100px;
 	text-align: center;
 	display: flex;
@@ -40,15 +35,24 @@ ul li {
 }
 
 .ipp_btn {
+	white-space: nowrap;
 	border: none;
 	padding: 15px 30px;
-	font-size: 30px;
+	font-size: 35px;
 	background-color: white;
 	color: rgb(79, 114, 228);
 	font-weight: 600;
-	margin-top: 10px;
-	position: absolute;
-	left: 200px;
+	position: relative;
+	right: 50px;
+}
+
+@media (max-width: 1280px) {
+    .ipp_btn {
+		position: fixed;
+		top: 40px;
+		left: 0px;
+        right: unset;
+    }
 }
 
 .btn {
@@ -59,6 +63,12 @@ ul li {
 	background-color: white;
 	color: black;
 	font-weight: 600;
+}
+
+@media (max-width: 1190px) {
+    .btn {
+		visibility: hidden;
+    }
 }
 
 button:hover {
@@ -92,33 +102,49 @@ h3 {
 
 .best td {
 	font-size: 18px;
-	height: 50px;
+	height: 61.5px;
 	border: 1px solid gray;
 	border-left: none;
 	border-right: none;
 	border-top: none;
 }
 
-.best td a {
+.general_best td a {
+	display: inline-block;
+	max-width: 700px;
+	vertical-align: middle;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	color: black;
+}
+
+.photo_best td a {
+	display: inline-block;
+	max-width: 600px;
+	vertical-align: middle;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 	color: black;
 }
 
 .best span {
 	color: rgb(79, 114, 228);
+	shape-outside: border-box;
 }
 
 .general_best td:first-child {
 	width: 800px;
 	padding-left: 10px;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
 	max-width: 800px;
 }
 
 .general_best td:nth-child(2) {
 	width: 200px;
 	font-size: 15px;
+	text-align: right;
+	padding-right: 10px;
 }
 
 .photo_best td:first-child {
@@ -128,15 +154,14 @@ h3 {
 .photo_best td:nth-child(2) {
 	width: 700px;
 	padding-left: 10px;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
-	max-width: 680px;
+	max-width: 700px;
 }
 
 .photo_best td:nth-child(3) {
 	width: 200px;
 	font-size: 15px;
+	text-align: right;
+	padding-right: 10px;
 }
 
 .best img {
@@ -189,6 +214,13 @@ h3 {
 	right: 270px;
 }
 
+.board_option {
+	justify-content: flex-start;
+	width: 70%;
+	margin: -10px auto;
+	margin-top: 30px;
+}
+
 .write_btn {
 	border: 1px solid grey;
 	padding: 5px 5px;
@@ -197,8 +229,8 @@ h3 {
 	color: black;
 	font-weight: 300;
 	position: relative;
-	top: 50px;
-	left: 430px;
+	left: 150px;
+	top: 30px;
 }
 
 .type_select {
@@ -210,8 +242,8 @@ h3 {
 	background-size: 30px;
 	appearance: none;
 	position: relative;
-	top: 15px;
-	left: 530px;
+	top: 30px;
+	left: 190px;
 }
 
 .search_btn {
@@ -222,9 +254,10 @@ h3 {
 	color: black;
 	font-weight: 300;
 	font-size: 15px;
+	height: 34px;
 	position: relative;
-	top: 15px;
-	left: 570px;
+	top: 30px;
+	left: 240px;
 }
 
 .search {
@@ -234,8 +267,8 @@ h3 {
 	border-bottom-width: 1;
 	outline: none;
 	position: relative;
-	top: 15px;
-	left: 550px;
+	top: 30px;
+	left: 220px;
 	height: 30px;
 	width: 300px;
 }
@@ -245,16 +278,16 @@ h3 {
 	font-size: 13px;
 	background-color: white;
 	position: relative;
-	top: 15px;
-	left: 600px;
-	height: 30px;
+	top: 30px;
+	left: 270px;
+	height: 34px;
 }
 
 .board_all {
 	font-size: 17px;
 	position: relative;
-	top: -15px;
-	left: 1220px;
+	top: 0px;
+	left: 950px;
 }
 
 .board_select {
@@ -266,9 +299,11 @@ h3 {
 	font-size: 15px;
 	color: black;
 	background-color: white;
+	background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
+	background-size: 30px;
 	position: relative;
-	top: -55px;
-	left: 1330px;
+	top: -40px;
+	left: 1050px;
 }
 
 .board_box {
@@ -306,14 +341,16 @@ h3 {
 }
 
 .photo_box {
-	justify-content: flex-start;
-	width: 70%;
-	margin: -10px auto;
-	margin-right: 230px;
+	display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    position: relative;
+    left: 18%;
 }
 
 .photo_box .img-button {
-	max-width: 100%;
+	width: 100%;
 	text-align: center;
 	margin: 19px;
 	width: 160px;
@@ -329,6 +366,21 @@ h3 {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.photo_box .none_search div {
+	margin-left: 80px;
+	border: 1px solid grey;
+	border-width: 1px 0;
+	text-align: center;
+	font-size: 17px;
+	width: 1060px; 
+	height: 250px;
+}
+
+.photo_box .none_search div span {
+	position: relative;
+	top: 50%;
 }
 
 .photo_span {
@@ -886,3 +938,36 @@ pre {
 	width: 400px;
 	margin-left: 52px;
 }
+
+.file_title {
+	border: 2px solid grey;
+	color: grey;
+	padding: 5px 0;
+	text-align: center;
+	width: 700px;
+	font-size: 25px;
+	font-weight: 600;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.file_explorer {
+	border: 2px solid grey;
+	width: 700px;
+	height: 550px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.file_explorer img:hover {
+	cursor: pointer;
+}
+
+.file_explorer img:visited {
+	transform: rotate(90deg);
+}
+
+
+

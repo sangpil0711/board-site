@@ -7,7 +7,10 @@ import java.net.URLEncoder;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import kr.co.ymtech.bm.config.ImagePathConfig;
 
 /**
  * FileService 클래스
@@ -17,6 +20,19 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FileService implements IFileService {
+	
+	/**
+	 * BoardService-BoardRepository 연결
+	 * 
+	 * @author 황상필
+	 * @since 2023. 11. 06.
+	 */
+	private final ImagePathConfig imagePathConfig;
+
+	@Autowired
+	private FileService(ImagePathConfig imagePathConfig) {
+		this.imagePathConfig = imagePathConfig;
+	}
 
 	/**
 	 * @Method downloadFile 게시글에 업로드된 파일을 다운로드 하는 메소드
@@ -33,8 +49,7 @@ public class FileService implements IFileService {
 	@Override
 	public void downloadFile(HttpServletResponse response, String fileName, String fileId) {
 		
-		String SAVE_PATH = "C:/boardFile";
-		String filePath = SAVE_PATH + "/" + fileId + "_" + fileName;
+		String filePath = imagePathConfig.getImagePath() + "/" + fileId + "_" + fileName;
 
 		// 지정된 경로의 폴더에서 파일을 찾아서 다운로드
 		try (FileInputStream input = new FileInputStream(filePath); OutputStream output = response.getOutputStream()) {
@@ -43,7 +58,7 @@ public class FileService implements IFileService {
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName1 + "\"");
 			IOUtils.copy(input, output);
 		} catch (Exception e) {
-			System.out.println("파일 삭제 실패");
+			System.out.println("파일 다운로드 실패");
 		}
 	}
 

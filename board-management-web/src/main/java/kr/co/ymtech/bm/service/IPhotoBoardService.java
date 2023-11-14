@@ -32,7 +32,7 @@ public interface IPhotoBoardService {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	public void savePhotoBoard(PhotoBoardDTO photo);
+	public Integer savePhotoBoard(PhotoBoardDTO photo);
 
 	/**
 	 * Method : 사진게시물을 수정하는 메소드 
@@ -42,7 +42,7 @@ public interface IPhotoBoardService {
 	 * @author 박상현
 	 * @since  2023.10.24
 	 */
-	public void updatePhotoBoard(PhotoBoardUpdateDTO photo);
+	public Integer updatePhotoBoard(PhotoBoardUpdateDTO photo);
 
 	/**
 	 * Method : 사진게시물을 삭제하는 메소드 

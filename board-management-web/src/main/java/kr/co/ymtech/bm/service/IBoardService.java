@@ -37,7 +37,7 @@ public interface IBoardService {
 	 * @author 황상필
 	 * @since 2023. 10. 26.
 	 */
-	public void saveBoard(BoardDTO board);
+	public Integer saveBoard(BoardDTO board);
 
 	/**
 	 * @Method updateBoard 게시물 내용을 수정하는 메소드
@@ -47,7 +47,7 @@ public interface IBoardService {
 	 * @author 황상필
 	 * @since 2023. 11. 01.
 	 */
-	public void updateBoard(BoardUpdateDTO board);
+	public Integer updateBoard(BoardUpdateDTO board);
 
 	/**
 	 * @Method deleteBoard 게시물을 삭제하는 메소드

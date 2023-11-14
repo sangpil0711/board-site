@@ -51,7 +51,6 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 	/**
 	 * @function insert 게시글을 등록하는 함수
 	 * 
-	 * 
 	 * @author 황상필
 	 * @since 2023. 10. 26.
 	 */

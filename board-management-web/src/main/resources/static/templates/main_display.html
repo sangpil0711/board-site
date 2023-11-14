@@ -4,19 +4,22 @@
 	<!-- 시작: 베스트 게시글 박스 -->
 	<div class="board_best">
 		<h3>게시글 베스트</h3>
-		<ul class="best" ng-repeat="item in board">
-			<li>
-				<button type="button" class="best_btn1" ng-if="item.category == 0"
-					ng-click="redirectToReadGeneralBoard(item.index)">{{item.title}}</button>
-				<img ng-src="{{thumbnail(item.file[0])}}" ng-if="item.category == 1" alt="이미지"
-					ng-click="redirectToReadPhotoBoard(item.index)" title="{{item.file[0] === undefined ? '사진이 없습니다' : item.file[0].fileName}}">
-				<button type="button" class="best_btn2" ng-if="item.category == 1"
-					ng-click="redirectToReadPhotoBoard(item.index)">{{item.title}}
-				<span class="like_count">({{item.likeCount}})</span>
-				<span class= "user_Id">{{item.userId}} | {{item.createDate | date:'HH:mm:ss'}}</span>
-				</button>
-			</li>
-		</ul>
+		<table class="best" ng-repeat="item in board">
+			<tr class="general_best" ng-if="item.category == 0">
+				<td>
+					<a ng-click="redirectToReadGeneralBoard(item.index)">{{item.title}}</a>&nbsp;&nbsp;&nbsp;<span>({{item.likeCount}})</span>
+				</td>
+				<td>{{item.userId}} | {{item.createDate | date:'yyyy-MM-dd'}} {{item.createDate | date:'HH:mm:ss'}}</td>
+			</tr>
+			<tr class="photo_best" ng-if="item.category == 1">
+				<td><img ng-src="{{thumbnail(item.file[0])}}" alt="이미지" ng-click="redirectToReadPhotoBoard(item.index)"
+						title="{{item.file[0] === undefined ? '사진이 없습니다' : item.file[0].fileName}}"></td>
+				<td>
+					<a ng-click="redirectToReadPhotoBoard(item.index)">{{item.title}}</a>&nbsp;&nbsp;&nbsp;<span>({{item.likeCount}})</span>
+				</td>
+				<td>{{item.userId}} | {{item.createDate | date:'yyyy-MM-dd'}} {{item.createDate | date:'HH:mm:ss'}}</td>
+			</tr>
+		</table>
 	</div>
 	<!-- 끝: 베스트 게시글 박스 -->
 
