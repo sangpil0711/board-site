@@ -263,7 +263,7 @@ public class BoardService implements IBoardService {
 	public BoardGetDTO searchByIndex(Integer index) {
 
 		List<FileVO> fv = boardRepository.files(index);
-
+		
 		BoardVO vo = boardRepository.searchByIndex(index);
 
 		// vo -> dto 변환

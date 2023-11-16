@@ -24,9 +24,9 @@ spring:
     restart:
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/testdb
     username: postgres
-    password: "tkdvlf2136@@"
+    password: "0000"
     driver-class-name: org.postgresql.Driver
   sql:
     init:
@@ -35,6 +35,6 @@ spring:
 file:
   path:
     imagePath: C:/boardFile
-    explorerPath: C:/files
+    filePath: C:/FileExplorer
     
       
