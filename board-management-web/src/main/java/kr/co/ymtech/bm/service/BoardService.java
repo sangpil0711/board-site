@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.ymtech.bm.config.ImagePathConfig;
+import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
@@ -43,13 +43,14 @@ public class BoardService implements IBoardService {
 	 */
 	private final IBoardRepository boardRepository;
 	private final ICommentRepository commentRepository;
-	private final ImagePathConfig imagePathConfig;
+	private final PathConfig pathConfig;
 
 	@Autowired
-	private BoardService(IBoardRepository IboardRepository, ICommentRepository IcommentRepository, ImagePathConfig imagePathConfig) {
+	private BoardService(IBoardRepository IboardRepository, ICommentRepository IcommentRepository,
+			PathConfig pathConfig) {
 		this.boardRepository = IboardRepository;
 		this.commentRepository = IcommentRepository;
-		this.imagePathConfig = imagePathConfig;
+		this.pathConfig = pathConfig;
 	}
 
 	/**
@@ -120,12 +121,13 @@ public class BoardService implements IBoardService {
 			MultipartFile files = board.getFiles().get(i);
 			String originalFileName = files.getOriginalFilename();
 			String uniqueID = UUID.randomUUID().toString();
-			String filePath = Paths.get(imagePathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize().toString();
+			String filePath = Paths.get(pathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName)
+					.normalize().toString();
 
 			FileVO boardFile = new FileVO();
 			boardFile.setFileId(uniqueID);
 			boardFile.setBoardIndex(lastBoardIndex + 1);
-			boardFile.setFilePath(imagePathConfig.getImagePath());
+			boardFile.setFilePath(pathConfig.getImagePath());
 			boardFile.setFileName(originalFileName);
 			boardFile.setFileSize(files.getSize());
 
@@ -176,11 +178,12 @@ public class BoardService implements IBoardService {
 			MultipartFile file = board.getAddFiles().get(i);
 			String originalFileName = file.getOriginalFilename();
 			String uniqueID = UUID.randomUUID().toString();
-			String filePath = Paths.get(imagePathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize().toString();
+			String filePath = Paths.get(pathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName)
+					.normalize().toString();
 
 			FileVO boardFile = new FileVO();
 			boardFile.setFileId(uniqueID);
-			boardFile.setFilePath(imagePathConfig.getImagePath());
+			boardFile.setFilePath(pathConfig.getImagePath());
 			boardFile.setFileName(originalFileName);
 			boardFile.setFileSize(file.getSize());
 
@@ -195,7 +198,7 @@ public class BoardService implements IBoardService {
 		}
 
 		// 지정 경로에 있는 파일 리스트를 전부 가져옴
-		File dir = new File(imagePathConfig.getImagePath());
+		File dir = new File(pathConfig.getImagePath());
 		File files[] = dir.listFiles();
 
 		List<String> deleteFileNames = board.getDeleteFiles();
@@ -231,8 +234,8 @@ public class BoardService implements IBoardService {
 		// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
 		for (FileVO file : files) {
 
-			String filePath = Paths.get(imagePathConfig.getImagePath()).resolve(file.getFileId() + "_" + file.getFileName()).normalize()
-					.toString();
+			String filePath = Paths.get(pathConfig.getImagePath()).resolve(file.getFileId() + "_" + file.getFileName())
+					.normalize().toString();
 
 			File deleteFile = new File(filePath);
 

@@ -10,7 +10,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.ymtech.bm.config.ImagePathConfig;
+import kr.co.ymtech.bm.config.PathConfig;
 
 /**
  * FileService 클래스
@@ -27,11 +27,11 @@ public class FileService implements IFileService {
 	 * @author 황상필
 	 * @since 2023. 11. 06.
 	 */
-	private final ImagePathConfig imagePathConfig;
+	private final PathConfig pathConfig;
 
 	@Autowired
-	private FileService(ImagePathConfig imagePathConfig) {
-		this.imagePathConfig = imagePathConfig;
+	private FileService(PathConfig pathConfig) {
+		this.pathConfig = pathConfig;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class FileService implements IFileService {
 	@Override
 	public void downloadFile(HttpServletResponse response, String fileName, String fileId) {
 		
-		String filePath = imagePathConfig.getImagePath() + "/" + fileId + "_" + fileName;
+		String filePath = pathConfig.getImagePath() + "/" + fileId + "_" + fileName;
 
 		// 지정된 경로의 폴더에서 파일을 찾아서 다운로드
 		try (FileInputStream input = new FileInputStream(filePath); OutputStream output = response.getOutputStream()) {

@@ -35,5 +35,6 @@ spring:
 file:
   path:
     imagePath: C:/boardFile
+    explorerPath: C:/files
     
       

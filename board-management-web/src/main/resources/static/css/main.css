@@ -959,15 +959,42 @@ pre {
 	height: 550px;
 	margin-left: auto;
 	margin-right: auto;
+	padding-top: 20px;
+	padding-left: 0px;
+}
+
+.file_explorer ul {
+	padding-left: 0px;
+}
+
+.file_explorer img {
+	width: 20px;
+	height: 20px;
 }
 
 .file_explorer img:hover {
 	cursor: pointer;
 }
 
-.file_explorer img:visited {
-	transform: rotate(90deg);
+.file_explorer span {
+	margin-left: 10px;
+	font-size: 15px;
+	font-weight: 600;
 }
 
+.file_explorer .file_crud {
+	float: right;
+	margin-left: 10px;
+	margin-right: 10px;
+}
 
+.file_explorer ul li {
+	margin-top: 10px;
+	margin-right: 0px;
+	position: relative;
+}
+
+img.extended {
+  transform: rotate(90deg); /* 또는 다른 효과를 적용할 수 있습니다. */
+}
 
