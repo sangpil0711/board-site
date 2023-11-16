@@ -7,23 +7,34 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("file.path")
 public class ImagePathConfig {
 
-   private String imagePath;
+	private String imagePath;
+	private String filePath;
 
-   public String getImagePath() {
-      return imagePath;
-   }
+	public String getImagePath() {
+		return imagePath;
+	}
 
-   public void setImagePath(String imagePath) {
-      this.imagePath = imagePath;
-   }
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 
-   @Override
-   public String toString() {
-      StringBuilder builder = new StringBuilder();
-      builder.append("ImagePathConfig [imagePath=");
-      builder.append(imagePath);
-      builder.append("]");
-      return builder.toString();
-   }
-   
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ImagePathConfig [imagePath=");
+		builder.append(imagePath);
+		builder.append(", filePath=");
+		builder.append(filePath);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

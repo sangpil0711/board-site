@@ -371,8 +371,6 @@ public class BoardRepository implements IBoardRepository {
 	      
 	      String sql = "SELECT * FROM board WHERE to_timestamp(create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, to_timestamp(create_date / 1000) DESC OFFSET 0 LIMIT 8";
 
-		String sql = "SELECT * FROM board WHERE to_timestamp(create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, to_timestamp(create_date / 1000) DESC OFFSET 0 LIMIT 8";
-
 		RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
 
 	         // ResultSet에 결과값을 담아 FileVO에 담음
