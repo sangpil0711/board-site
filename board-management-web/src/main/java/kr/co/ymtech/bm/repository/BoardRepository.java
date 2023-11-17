@@ -368,8 +368,8 @@ public class BoardRepository implements IBoardRepository {
 	 */
 	@Override
 	   public List<FileVO> bestBoardFile(Integer index) {
-	      
-	      String sql = "SELECT * FROM board WHERE to_timestamp(create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, to_timestamp(create_date / 1000) DESC OFFSET 0 LIMIT 8";
+
+		String sql = "SELECT * FROM board WHERE to_timestamp(create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, to_timestamp(create_date / 1000) DESC OFFSET 0 LIMIT 8";
 
 		RowMapper<FileVO> mapper = new RowMapper<FileVO>() {
 
@@ -380,13 +380,14 @@ public class BoardRepository implements IBoardRepository {
 	            FileVO member = new FileVO(rs.getString("uuid"), rs.getInt("board_index"),
 	                  rs.getString("file_location"), rs.getString("original_filename"), rs.getLong("file_size"));
 
-				return member;
-			}
-		};
-		return jdbcTemplate.query(
-				"SELECT * FROM file INNER JOIN (" + sql
-						+ ") AS best_board ON file.board_index = best_board.index WHERE board_index = ?",
-				mapper, index);
-	}
+	            return member;
+	         }
+	      };
+	      return jdbcTemplate.query(
+	            "SELECT * FROM file INNER JOIN (" + sql + ") AS best_board ON file.board_index = best_board.index WHERE board_index = ?",
+	            mapper, index);
+	   }
+	
+	
 
 }

@@ -124,10 +124,9 @@ app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routePa
 	 * @since 2023. 11. 06.
 	 */
 	$scope.excludeFile = function(index) {
-		let confirmDelete = confirm("파일을 삭제하시겠습니까?");
 
 		// 파일을 삭제하는 동작
-		if (confirmDelete) {
+		if (confirm("파일을 삭제하시겠습니까?")) {
 			totalSize -= $scope.selectedFiles[index].size;
 			$scope.fileNames.splice(index, 1);
 

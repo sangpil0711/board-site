@@ -36,10 +36,9 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	 * @since 2023. 09. 15.
 	 */
 	$scope.remove = function() {
-		let confirmDelete = confirm("게시물을 삭제하시겠습니까?");
 
 		// 게시물 삭제 시 알림창을 띄우고 확인을 누르면 게시물 삭제
-		if (confirmDelete) {
+		if (confirm("게시물을 삭제하시겠습니까?")) {
 			BoardFactory.deleteBoard({ index: index }, function() {
 				$location.path('/board');
 			},
@@ -226,8 +225,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	 * @since 2023. 10. 13.
 	 */
 	$scope.deleteComment = function(commentIndex) {
-		let confirmDelete = confirm("댓글을 삭제하시겠습니까?");
-		if (confirmDelete) {
+		if (confirm("댓글을 삭제하시겠습니까?")) {
 			CommentFactory.deleteComment({ index: commentIndex, boardIndex: index }, function() {
 				findComment();
 			})

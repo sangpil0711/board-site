@@ -59,8 +59,7 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @since 2023. 10. 26.
 	 */
 	$scope.removePhoto = function() {
-		let confirmDelete = confirm("게시물을 삭제하시겠습니까?");
-		if (confirmDelete) {
+		if (confirm("게시물을 삭제하시겠습니까?")) {
 			PhotoBoardFactory.deletePhotoBoard({ index: index }, function() {
 				$location.path('/photo');
 			},
@@ -231,8 +230,7 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @since 2023. 11. 03.
 	 */
 	$scope.deleteComment = function(commentIndex) {
-		let confirmDelete = confirm("댓글을 삭제하시겠습니까?");
-		if (confirmDelete) {
+		if (confirm("댓글을 삭제하시겠습니까?")) {
 			CommentFactory.deleteComment({ index: commentIndex, boardIndex: index }, function() {
 				findComment();
 			})

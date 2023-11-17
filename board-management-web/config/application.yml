@@ -31,10 +31,8 @@ spring:
   sql:
     init:
       platform: postgres
-      
+
 file:
   path:
     imagePath: C:/boardFile
     filePath: C:/FileExplorer
-    
-      

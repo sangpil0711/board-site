@@ -94,8 +94,7 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 	 * @since 2023. 10. 31.
 	 */
 	$scope.excludeFile = function(index) {
-		let confirmDelete = confirm("파일을 삭제하시겠습니까?");
-		if (confirmDelete) {
+		if (confirm("파일을 삭제하시겠습니까?")) {
 			totalSize -= $scope.selectedFiles[index].size;
 			$scope.fileNames.splice(index, 1);
 			$scope.selectedFiles.splice(index, 1);
