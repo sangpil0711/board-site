@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ import kr.co.ymtech.bm.service.IBoardService;
  * @since 2023. 09. 18.
  */
 @RestController
+@RequestMapping("/boards")
 public class BoardController {
 
 	/**
@@ -59,8 +61,7 @@ public class BoardController {
 	 * @author 황상필
 	 * @since 2023. 10. 05.
 	 */
-	@GetMapping(value = "/boards")
-	@ResponseBody
+	@GetMapping(value = "")
 	public ResponseEntity<BoardPageDTO> findBoardPage(@RequestParam Integer pageNumber, @RequestParam Integer itemSize,
 			@RequestParam String searchType, @RequestParam String keyword, @RequestParam Integer category) {
 
@@ -77,7 +78,7 @@ public class BoardController {
 	 * @author 황상필
 	 * @since 2023. 10. 26.
 	 */
-	@PostMapping(value = "/boards")
+	@PostMapping(value = "")
 	public ResponseEntity<Integer> saveBoard(BoardDTO board) {
 		
 		board.setFiles(board.getFiles() != null ? board.getFiles() : Collections.emptyList());
@@ -96,7 +97,7 @@ public class BoardController {
 	 * @author 황상필
 	 * @since 2023. 11. 01.
 	 */
-	@PatchMapping(value = "/boards/{index}")
+	@PatchMapping(value = "/{index}")
 	public ResponseEntity<Integer> updateBoard(@PathVariable Integer index, BoardUpdateDTO board) {
 		
 		board.setAddFiles(board.getAddFiles() != null ? board.getAddFiles() : Collections.emptyList());
@@ -117,7 +118,7 @@ public class BoardController {
 	 * @author 박상현
 	 * @since 2023. 09. 18.
 	 */
-	@DeleteMapping(value = "/boards/{index}")
+	@DeleteMapping(value = "/{index}")
 	public ResponseEntity<Integer> deleteBoard(@PathVariable Integer index) {
 
 		Integer boardlistDelete = boardService.deleteBoard(index);
@@ -135,7 +136,7 @@ public class BoardController {
 	 * @author 박상현
 	 * @since 2023. 09. 18.
 	 */
-	@GetMapping(value = "/boards/{index}")
+	@GetMapping(value = "/{index}")
 	public ResponseEntity<BoardGetDTO> searchByIndex(@PathVariable Integer index) {
 
 		BoardGetDTO boardlistIndex = boardService.searchByIndex(index);
@@ -154,7 +155,7 @@ public class BoardController {
 	 * @author 황상필
 	 * @since 2023. 11. 03.
 	 */
-	@PatchMapping(value = "/boards/{index}/{likeCount}")
+	@PatchMapping(value = "/{index}/{likeCount}")
 	public ResponseEntity<Integer> boardLikeCount(@PathVariable Integer index, @PathVariable Integer likeCount) {
 
 		Integer boardLikeCount = boardService.boardLikeCount(index, likeCount);
@@ -170,7 +171,7 @@ public class BoardController {
 	 * @author 황상필
 	 * @since 2023. 11. 06.
 	 */
-	@GetMapping(value = "/boards/best")
+	@GetMapping(value = "/best")
 	public ResponseEntity<List<BoardGetDTO>> bestBoard() {
 
 		List<BoardGetDTO> bestBoard = boardService.bestBoard();
