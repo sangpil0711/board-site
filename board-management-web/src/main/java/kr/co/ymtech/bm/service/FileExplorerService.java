@@ -1,64 +1,72 @@
 package kr.co.ymtech.bm.service;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 
+import kr.co.ymtech.bm.config.ImagePathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 
 @Service
 public class FileExplorerService implements IFileExplorerService {
 
-	@Override
-	public List<FileDTO> loadAllFiles(String path) {
+   private final ImagePathConfig imagePathConfig;
 
-		File file = new File(path);
-		File[] files = file.listFiles();
-		List<FileDTO> list = new ArrayList<>();
-		FileDTO dto = null;
+   public FileExplorerService(ImagePathConfig imagePathConfig) {
+      this.imagePathConfig = imagePathConfig;
+   }
 
-		if (files != null) {
-			for (File F : files) {
+   @Override
+   public List<FileDTO> loadAllFiles(String path, int depth, String name) {
+      File file = null;
 
-				dto = new FileDTO();
+      if (path == null && depth == 0) {
+         file = new File(imagePathConfig.getFilePath());
+         path = imagePathConfig.getFilePath();
+      } else {
+         file = new File(Paths.get(path).resolve(name).normalize().toString());
+         path = Paths.get(path).resolve(name).normalize().toString();
+      }
 
-				// #1. 각 파일 정보 저장
-				dto.setName(F.getName());
-				dto.setIsDirectory(F.isDirectory());
-				dto.setPath(F.getPath());
+      File[] files = file.listFiles();
+      List<FileDTO> list = new ArrayList<>();
+      FileDTO dto = null;
 
-				// #2. 디렉토리인지 검사 -> 디렉토리면 재귀
-//	            if (F.isDirectory()) {
-//	            	dto.setChilds(
-//	            			loadAllFiles(F.getAbsolutePath())
-//            			);
-//	            }
+      if (files != null) {
+         for (File f : files) {
 
-				list.add(dto);
-			}
-		}
+            dto = new FileDTO();
 
-		return list;
-	}
+            dto.setName(f.getName());
+            dto.setIsDirectory(f.isDirectory());
+            dto.setPath(path);
+            dto.setDepth(depth);
 
-	@Override
-	public void createFolder() {
+            list.add(dto);
+         }
+      }
 
-		String path = "C:/FileExplorer/새폴더";
-		File Folder = new File(path);
+      return list;
+   }
 
-		if (!Folder.exists()) {
-			try {
-				Folder.mkdir(); // 폴더 생성합니다.
-				System.out.printf("폴더가 생성되었습니다.");
-			} catch (Exception e) {
-				e.getStackTrace();
-			}
-		} else {
-			System.out.printf("이미 폴더가 생성되어 있습니다.");
-		}
-	}
+//   @Override
+//   public void createFolder() {
+//
+//      String path = "C:/FileExplorer/새폴더";
+//      File Folder = new File(path);
+//
+//      if (!Folder.exists()) {
+//         try {
+//            Folder.mkdir(); // 폴더 생성합니다.
+//            System.out.printf("폴더가 생성되었습니다.");
+//         } catch (Exception e) {
+//            e.getStackTrace();
+//         }
+//      } else {
+//         System.out.printf("이미 폴더가 생성되어 있습니다.");
+//      }
+//   }
 
 }

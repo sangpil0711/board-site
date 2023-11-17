@@ -3,42 +3,32 @@ package kr.co.ymtech.bm.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.ymtech.bm.config.ImagePathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 import kr.co.ymtech.bm.service.FileExplorerService;
 import kr.co.ymtech.bm.service.IFileExplorerService;
 
 @RestController
+@RequestMapping("/fileExplorer")
 public class FileExplorerController {
 
-	private final ImagePathConfig imagePathConfig;
-	
 	private final IFileExplorerService fileExplorerService;
-	
-	public FileExplorerController(FileExplorerService fileExplorerService, ImagePathConfig imagePathConfig) {
+
+	public FileExplorerController(FileExplorerService fileExplorerService) {
 		this.fileExplorerService = fileExplorerService;
-		this.imagePathConfig = imagePathConfig;
 	}
-	
-	
-	
-	@GetMapping("/fileExplorer")
-	public List<FileDTO> loadAllFiles() {
-		
-		return fileExplorerService.loadAllFiles(imagePathConfig.getFilePath());
+
+	@GetMapping("")
+	public List<FileDTO> loadAllFiles(String path, int depth, String name) {
+		return fileExplorerService.loadAllFiles(path, depth, name);
 	}
-	
-	
-	@PostMapping("/fileExplorer")
-	public void createFolder() {
-		fileExplorerService.createFolder();
-		
-	}
-	
-	
-	
+
+//	@PostMapping("/fileExplorer")
+//	public void createFolder() {
+//		fileExplorerService.createFolder();
+//
+//	}
 
 }

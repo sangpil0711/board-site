@@ -64,7 +64,21 @@ app.factory('MainFactory', function($resource) {
 		}
 		
 	})
-})
+});
+
+app.factory('ExplorerFactory', function($resource) {
+	return $resource('/fileExplorer', null, {
+		
+		fileExplorer: {
+			method: 'GET',
+			isArray: true,
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		}
+		
+	})
+});
 
 /**
  * @Method : 게시글을 저장, 조회, 수정, 삭제하는 함수

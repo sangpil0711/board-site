@@ -1,33 +1,18 @@
 package kr.co.ymtech.bm.controller.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FileDTO {
 
 	private String name;
 	private Boolean isDirectory;
-	private List<FileDTO> childs;
 	private String Path;
-
-	public FileDTO() {
-		this.childs = new ArrayList<>();
-	}
+	private Integer depth;
 
 	public String getName() {
 		return name;
 	}
-
-	public List<FileDTO> getChilds() {
-		return childs;
-	}
-
+	
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public void setChilds(List<FileDTO> childs) {
-		this.childs = childs;
 	}
 
 	public Boolean getIsDirectory() {
@@ -45,15 +30,28 @@ public class FileDTO {
 	public void setPath(String path) {
 		this.Path = path;
 	}
+	
+	public Integer getDepth() {
+		return depth;
+	}
+
+	public void setDepth(Integer depth) {
+		this.depth = depth;
+	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("FileDTO [name=");
 		builder.append(name);
-		builder.append(", childs=");
-		builder.append(childs);
+		builder.append(", isDirectory=");
+		builder.append(isDirectory);
+		builder.append(", Path=");
+		builder.append(Path);
+		builder.append(", depth=");
+		builder.append(depth);
 		builder.append("]");
 		return builder.toString();
 	}
+
 }
