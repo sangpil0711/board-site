@@ -8,6 +8,6 @@ public interface IFileExplorerService {
 
 //	public void createFolder();
 
-	public List<FileDTO> loadAllFiles(String path, int depth);
+	public List<FileDTO> loadAllFiles(String parentPath, String directoryName);
 
 }

@@ -69,54 +69,52 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 		$location.path('/board');
 	}
 
+	//	let findComment = function() {
+	//		CommentFactory.getComment({
+	//			boardIndex: index
+	//		},
+	//			function(response) {
+	//				$scope.commentlist = response;
+	//				let commentNewlist = [];
+	//				// 배열을 순회하면서 댓글과 대댓글을 리스트에 추가
+	//				$scope.commentlist.forEach(function(comment) {
+	//					commentNewlist.push(comment);
+	//					comment.childCommentBox = false;
+	//					if (comment.childs !== null) {
+	//						comment.childs.forEach(function(childComment) {
+	//							commentNewlist.push(childComment);
+	//						})
+	//					}
+	//				})
+	//
+	//				$scope.commentlist = commentNewlist;
+	//			},
+	//			function(error) {
+	//				console.error("댓글 정보 불러오기 실패", error);
+	//			});
+	//	};
+	//
+	//	findComment();
+
 	/**
 	 * @function findComment 댓글과 답글을 조회하는 함수
 	 * 
 	 * @author 박상현
 	 * @since 2023. 10. 19.
 	 */
-//	let findComment = function() {
-//		CommentFactory.getComment({
-//			boardIndex: index
-//		},
-//			function(response) {
-//				$scope.commentlist = response;
-//				let commentNewlist = [];
-//				// 배열을 순회하면서 댓글과 대댓글을 리스트에 추가
-//				$scope.commentlist.forEach(function(comment) {
-//					commentNewlist.push(comment);
-//					comment.childCommentBox = false;
-//					if (comment.childs !== null) {
-//						comment.childs.forEach(function(childComment) {
-//							commentNewlist.push(childComment);
-//						})
-//					}
-//				})
-//
-//				$scope.commentlist = commentNewlist;
-//			},
-//			function(error) {
-//				console.error("댓글 정보 불러오기 실패", error);
-//			});
-//	};
-//
-//	findComment();
-	
-	
-	
-		$scope.commentlist = [];
+	$scope.commentlist = [];
 	let findComment = function() {
 		CommentFactory.getComment(
-		{
-			boardIndex: index
-		},
-		function(response) {
-			$scope.commentlist = response;
-			console.log('commentlist: ', $scope.commentlist)
-		},
-		function(error) {
-			console.error("댓글 정보 불러오기 실패", error);
-		})
+			{
+				boardIndex: index
+			},
+			function(response) {
+				$scope.commentlist = response;
+				console.log('commentlist: ', $scope.commentlist)
+			},
+			function(error) {
+				console.error("댓글 정보 불러오기 실패", error);
+			})
 	};
 	findComment();
 
@@ -231,7 +229,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 			})
 		}
 	};
-	
+
 	/**
 	 * @function likeAdd 추천 수가 1씩 증가하는 함수
 	 * 
@@ -241,7 +239,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	$scope.likeAdd = function() {
 		$scope.board.likeCount++
 		BoardFactory.boardLike({ index: index, likeCount: $scope.board.likeCount }, function() {
-			
+
 		})
 	};
 

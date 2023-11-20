@@ -1,39 +1,77 @@
 package kr.co.ymtech.bm.service;
 
+import java.awt.dnd.DropTargetAdapter;
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import kr.co.ymtech.bm.config.ImagePathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 
+/**
+ * 파일 탐색기 FileExplorerService 클래스
+ * 
+ * @author 박상현
+ * @since 2023. 11. 17.
+ */
 @Service
 public class FileExplorerService implements IFileExplorerService {
 
+	/**
+	 * 파일 경로 연결
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 17.
+	 */
+	private final ImagePathConfig imagePathConfig;
+
+	public FileExplorerService(ImagePathConfig imagePathConfig) {
+		this.imagePathConfig = imagePathConfig;
+	}
+
+	/**
+	 * 
+	 * @Method loadAllFiles 서버안에 있는 모든 파일들을 가져오는 함수
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#loadAllFiles(java.lang.String,
+	 *      java.lang.String)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 17.
+	 */
 	@Override
-	public List<FileDTO> loadAllFiles(String path, int depth) {
+	public List<FileDTO> loadAllFiles(String parentPath, String directoryName) {
+		File file = null;
 
-		File file = new File(path);
-		File[] files = file.listFiles();
+		if (parentPath == null) {
+			file = new File(imagePathConfig.getFilePath());
+			parentPath = imagePathConfig.getFilePath();
+		} else {
+			file = new File(Paths.get(parentPath).resolve(directoryName).normalize().toString());
+			parentPath = Paths.get(parentPath).resolve(directoryName).normalize().toString();
+		}
+
+	
 		List<FileDTO> list = new ArrayList<>();
-		FileDTO dto = null;
 
-		if (files != null) {
-			for (File F : files) {
+		if (file.isDirectory()) { // parentPath가 디렉토리 인 경우만 처리
+			File[] files = file.listFiles();
+			FileDTO dto = null;
 
-				dto = new FileDTO();
+			if (files != null) {   //files null 일때 예외 처리 
+				for (File f : files) {
+					dto = new FileDTO();
+					dto.setName(f.getName());
+					dto.setIsDirectory(f.isDirectory());
+					dto.setPath(parentPath);
 
-				// #1. 각 파일 정보 저장
-				dto.setName(F.getName());
-				dto.setIsDirectory(F.isDirectory());
-				dto.setPath(F.getPath());
-				dto.setDepth(depth);
+					if (f.isDirectory()) { // 디렉토리인 경우에만 재귀 호출 수행
+						dto.setChild(loadAllFiles(parentPath, f.getName()));
+					}
 
-				// 디렉토리인 경우 재귀 호출 시 깊이 증가
-				if (F.isDirectory()) {
-					list.addAll(loadAllFiles(F.getAbsolutePath(), depth + 1));
+					list.add(dto);
 				}
-
-				list.add(dto);
 			}
 		}
 

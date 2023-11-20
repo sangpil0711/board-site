@@ -1,18 +1,29 @@
 package kr.co.ymtech.bm.controller.dto;
 
+import java.util.List;
+
+/**
+ * 파일 정보를 저장하는 클래스
+ * 
+ * @author 박상현
+ * @since 2023. 11. 17.
+ */
 public class FileDTO {
 
+	/** name : 파일 이름 */
 	private String name;
+	/** isDirectory : 디렉토리(폴더) */
 	private Boolean isDirectory;
+	/** Path : 파일 경로 */
 	private String Path;
-	private Integer depth;
+	private List<FileDTO> child;
 
-	public Integer getDepth() {
-		return depth;
+	public List<FileDTO> getChild() {
+		return child;
 	}
 
-	public void setDepth(Integer depth) {
-		this.depth = depth;
+	public void setChild(List<FileDTO> child) {
+		this.child = child;
 	}
 
 	public String getName() {
@@ -48,8 +59,8 @@ public class FileDTO {
 		builder.append(isDirectory);
 		builder.append(", Path=");
 		builder.append(Path);
-		builder.append(", depth=");
-		builder.append(depth);
+		builder.append(", child=");
+		builder.append(child);
 		builder.append("]");
 		return builder.toString();
 	}
