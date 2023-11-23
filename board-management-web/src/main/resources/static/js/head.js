@@ -41,6 +41,7 @@ app.controller("BoardHead", function($scope, $location, $route) {
 	 */
 	$scope.redirectToFileExplorer = function() {
 		$location.path('/file');
+		$route.reload();
 	};
 	
 });

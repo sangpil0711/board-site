@@ -118,27 +118,29 @@ app.controller("PhotoUpdate", function($scope, PhotoBoardFactory, $location, $ro
 	 * @since 2023. 11. 07.
 	 */
 	$scope.excludeFile = function(index) {
-		
+
 		// 파일을 삭제하는 동작
 		if (confirm("파일을 삭제하시겠습니까?")) {
 			totalSize -= $scope.selectedFiles[index].size;
 			$scope.fileNames.splice(index, 1);
-			
-			// 삭제된 파일 id
+
+			// 개별삭제 시 삭제된 파일 이름
+			let deleteFile = $scope.selectedFiles[index].fileId + '_' + $scope.selectedFiles[index].fileName;
+			// 개별삭제 시 삭제된 파일 UUID
 			let deleteFileId = $scope.selectedFiles[index].fileId;
 			$scope.selectedFiles.splice(index, 1);
-			
+
 			// 추가된 파일의 파일 UUID가 deleteFileId와 일치할 때의 index
 			let addFilesIndex = addFiles.findIndex(file => file.fileId === deleteFileId);
-			
+
 			// 추가된 파일의 파일 UUID가 deleteFileId와 일치하면 addFiles 배열에서 삭제 
 			if (addFiles.some(file => file.fileId === deleteFileId)) {
 				addFiles.splice(addFilesIndex, 1);
 			}
-			
+
 			// 추가된 파일의 파일 UUID가 deleteFileId와 일치하지 않으면 deleteFiles 배열에 추가
 			else {
-				deleteFiles.push(deleteFileId);
+				deleteFiles.push(deleteFile);
 			}
 		}
 	};

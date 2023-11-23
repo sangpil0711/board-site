@@ -1,11 +1,14 @@
 package kr.co.ymtech.bm.controller.dto;
 
+import java.util.List;
+
 public class FileDTO {
 
 	private String name;
 	private Boolean isDirectory;
 	private String Path;
-	private Integer depth;
+	private Boolean folderState;
+	private List<FileDTO> child;
 
 	public String getName() {
 		return name;
@@ -31,12 +34,20 @@ public class FileDTO {
 		this.Path = path;
 	}
 	
-	public Integer getDepth() {
-		return depth;
+	public Boolean getFolderState() {
+		return folderState;
 	}
 
-	public void setDepth(Integer depth) {
-		this.depth = depth;
+	public void setFolderState(Boolean folderState) {
+		this.folderState = folderState;
+	}
+	
+	public List<FileDTO> getChild() {
+		return child;
+	}
+
+	public void setChild(List<FileDTO> child) {
+		this.child = child;
 	}
 
 	@Override
@@ -48,8 +59,10 @@ public class FileDTO {
 		builder.append(isDirectory);
 		builder.append(", Path=");
 		builder.append(Path);
-		builder.append(", depth=");
-		builder.append(depth);
+		builder.append(", folderState=");
+		builder.append(folderState);
+		builder.append(", child=");
+		builder.append(child);
 		builder.append("]");
 		return builder.toString();
 	}

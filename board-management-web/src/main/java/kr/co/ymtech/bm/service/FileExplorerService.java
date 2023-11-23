@@ -1,55 +1,113 @@
 package kr.co.ymtech.bm.service;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 
 import kr.co.ymtech.bm.config.ImagePathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 
+/**
+ * 파일 탐색기 FileExplorerService 클래스
+ * 
+ * @author 박상현
+ * @since 2023. 11. 17.
+ */
 @Service
 public class FileExplorerService implements IFileExplorerService {
 
-   private final ImagePathConfig imagePathConfig;
+	/**
+	 * 파일 경로 연결
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 17.
+	 */
+	private final ImagePathConfig imagePathConfig;
 
-   public FileExplorerService(ImagePathConfig imagePathConfig) {
-      this.imagePathConfig = imagePathConfig;
-   }
+	public FileExplorerService(ImagePathConfig imagePathConfig) {
+		this.imagePathConfig = imagePathConfig;
+	}
 
-   @Override
-   public List<FileDTO> loadAllFiles(String path, int depth, String name) {
-      File file = null;
+	/**
+	 * 
+	 * @Method loadAllFiles 서버안에 있는 모든 파일들을 가져오는 함수
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#loadAllFiles(java.lang.String,
+	 *      java.lang.String)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 17.
+	 */
+	@Override
+	public List<FileDTO> loadAllFiles(String parentPath, String directoryName) {
+		File file = null;
 
-      if (path == null && depth == 0) {
-         file = new File(imagePathConfig.getFilePath());
-         path = imagePathConfig.getFilePath();
-      } else {
-         file = new File(Paths.get(path).resolve(name).normalize().toString());
-         path = Paths.get(path).resolve(name).normalize().toString();
-      }
+		if (parentPath == null) {
+			file = new File(imagePathConfig.getFilePath());
+			parentPath = imagePathConfig.getFilePath();
+		} else {
+			file = new File(Paths.get(parentPath).resolve(directoryName).normalize().toString());
+			parentPath = Paths.get(parentPath).resolve(directoryName).normalize().toString();
+		}
 
-      File[] files = file.listFiles();
-      List<FileDTO> list = new ArrayList<>();
-      FileDTO dto = null;
+		List<FileDTO> list = new ArrayList<>();
 
-      if (files != null) {
-         for (File f : files) {
+		if (file.isDirectory()) { // parentPath가 디렉토리 인 경우만 처리
+			File[] files = file.listFiles();
+			FileDTO dto = null;
 
-            dto = new FileDTO();
+			if (files != null) { // files null 일때 예외 처리
+				for (File f : files) {
+					dto = new FileDTO();
+					dto.setName(f.getName());
+					dto.setIsDirectory(f.isDirectory());
+					dto.setPath(parentPath);
 
-            dto.setName(f.getName());
-            dto.setIsDirectory(f.isDirectory());
-            dto.setPath(path);
-            dto.setDepth(depth);
+					if (f.isDirectory()) { // 디렉토리인 경우에만 재귀 호출 수행
+						dto.setChild(loadAllFiles(parentPath, f.getName()));
+					}
 
-            list.add(dto);
-         }
-      }
+					list.add(dto);
+				}
+			}
+		}
+		list.sort((f1, f2) -> {
+			if (f1.getIsDirectory() && !f2.getIsDirectory()) {
+				return -1; // f1은 디렉토리이고, f2는 파일입니다.
+			} else if (!f1.getIsDirectory() && f2.getIsDirectory()) {
+				return 1; // f1은 파일이고, f2는 디렉토리입니다.
+			} else {
+				return f1.getName().compareToIgnoreCase(f2.getName()); // 둘 다 디렉토리이거나 둘 다 파일인 경우 알파벳 순으로 정렬합니다.
+			}
+		});
 
-      return list;
-   }
+		return list;
+	}
+
+	@Override
+	public void downloadFile(HttpServletResponse response, String Name, String Path) {
+		
+		String filePath = Paths.get(Path).resolve(Name).normalize().toString();
+
+		// 지정된 경로의 폴더에서 파일을 찾아서 다운로드
+		try (FileInputStream input = new FileInputStream(filePath); OutputStream output = response.getOutputStream()) {
+			String fileName = URLEncoder.encode(Name, "UTF-8");
+			fileName = fileName.replaceAll("\\+", "%20");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+			IOUtils.copy(input, output);
+		} catch (Exception e) {
+			System.out.println("파일 다운로드 실패");
+		}
+	}
 
 //   @Override
 //   public void createFolder() {

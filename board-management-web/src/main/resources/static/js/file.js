@@ -1,28 +1,58 @@
 app.controller("BoardFile", function($scope, ExplorerFactory) {
 
 	$scope.files = [];
-	$scope.folderOpen = [];
+	$scope.folderState = [];
 
-	let fileExplorer = function(path, name, depth) {
-		ExplorerFactory.fileExplorer({
-			path: path,
-			name: name,
-			depth: depth
+	let exploreFile = function(path, name) {
+		ExplorerFactory.exploreFile({
+			parentPath: path,
+			directoryName: name
 		}, function(response) {
-			$scope.files = $scope.files.concat(response);
-			console.log($scope.files);
+			$scope.files = response;
 		})
 	};
 
-	fileExplorer(null, null, 0);
+	exploreFile(null, null);
 
-	$scope.folderEvent = function(index, path, name, depth) {
-		$scope.folderOpen[index] = !$scope.folderOpen[index];
-		if ($scope.folderOpen[index]){
-			fileExplorer(path, name, depth + 1);
-		} else {
-			fileExplorer(path.substr(0, path.lastIndexOf('\\')), '', depth - 1);
+	let childFileState = function(item, folderState) {
+		item.folderState = folderState;
+		if (item.child && item.child.length > 0) {
+			item.child.forEach(function(childItem) {
+				childFileState(childItem, folderState);
+			});
+		}
+	}
+
+	$scope.openFolder = function(file) {
+		file.folderState = !file.folderState;
+		if (!file.folderState) {
+			childFileState(file, false);
 		}
 	};
+
+	$scope.selectFile = function() {
+		document.getElementById("fileInput").click();
+	}
+
+	$scope.insertFile = function() {
+		Upload.upload({
+			url: '/fileExplorer',
+			method: 'POST',
+			params: {},
+			data: {
+				files: $scope.selectedFiles,
+			},
+		}).success(function() {
+			$scope.redirectToBoard();
+		}).error(function() {
+			alert('파일 업로드 실패');
+		})
+	};
+
+	$scope.downloadFile = function(name, path) {
+		ExplorerFactory.downloadFile({ Name: name, Path: path }, function() {
+			window.location.href = '/fileExplorer/' + encodeURIComponent(name) + '?Path=' + encodeURIComponent(path);
+		})
+	}
 
 });

@@ -1,18 +1,8 @@
 <div id="container" ng-controller="BoardFile">
-
-	<div class="file_title">파일 탐색기</div>
-
-	<div class="file_explorer">
-		<ul ng-repeat="item in files" ng-style="{'margin-left': (10 * item.depth) + 'px'}">
-			<li>
-				<img ng-if="item.isDirectory" ng-click="folderEvent($index, item.path, item.name, item.depth)"
-					ng-class="{'folder_open': folderOpen[$index], 'folder_close': !folderOpen[$index]}">
-				<img ng-class="{'folder_icon': item.isDirectory, 'file_icon': !item.isDirectory}">
-				<span>{{item.name}}</span>
-				<img class="file_remove">
-				<img ng-class="{'file_plus': item.isDirectory, 'file_download': !item.isDirectory}">
-			</li>
-		</ul>
-	</div>
-
+    <div class="file_title">파일 탐색기</div>
+    <div class="file_explorer">
+        <ul>
+            <li ng-include="'/static/templates/file_tree.html'"></li>
+        </ul>
+    </div>
 </div>

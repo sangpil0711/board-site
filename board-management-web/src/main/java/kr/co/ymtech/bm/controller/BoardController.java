@@ -1,6 +1,5 @@
 package kr.co.ymtech.bm.controller;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,8 +78,6 @@ public class BoardController {
 	 */
 	@PostMapping(value = "/boards")
 	public ResponseEntity<Integer> saveBoard(BoardDTO board) {
-		
-		board.setFiles(board.getFiles() != null ? board.getFiles() : Collections.emptyList());
 
 		Integer saveBoard = boardService.saveBoard(board);
 		
@@ -98,9 +95,6 @@ public class BoardController {
 	 */
 	@PatchMapping(value = "/boards/{index}")
 	public ResponseEntity<Integer> updateBoard(@PathVariable Integer index, BoardUpdateDTO board) {
-		
-		board.setAddFiles(board.getAddFiles() != null ? board.getAddFiles() : Collections.emptyList());
-		board.setDeleteFiles(board.getDeleteFiles() != null ? board.getDeleteFiles() : Collections.emptyList());
 		
 		Integer updateBoard = boardService.updateBoard(board);
 		

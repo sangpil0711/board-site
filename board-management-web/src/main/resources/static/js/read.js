@@ -112,7 +112,6 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 		},
 		function(response) {
 			$scope.commentlist = response;
-			console.log('commentlist: ', $scope.commentlist)
 		},
 		function(error) {
 			console.error("댓글 정보 불러오기 실패", error);
