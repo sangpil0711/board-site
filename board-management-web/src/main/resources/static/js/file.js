@@ -1,41 +1,8 @@
+
 app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location) {
 
-   $scope.files = [];
-   $scope.folderState = [];
-
-   let exploreFile = function(path, name) {
-      ExplorerFactory.exploreFile({
-         parentPath: path,
-         directoryName: name
-      }, function(response) {
-         $scope.files = response;
-      })
-   };
-
-   exploreFile(null, null);
-
-   $scope.openFolder = function(index) {
-      $scope.folderState[index] = !$scope.folderState[index];
-   };
-   
-   $scope.selectFile = function() {
-		document.getElementById("fileInput").click();
-	}
-	
-	$scope.onFileSelect = function($files) {
-
-		$files.forEach(function(file) {
-			
-				$scope.selectedFiles.push(file);
-		})
-		insertFile();
-	};
-   
-   	let insertFile = function() {
-app.controller("BoardFile", function($scope, ExplorerFactory) {
-
 	$scope.files = [];
-	$scope.folderState = [];
+	$scope.selectedFiles = [];
 
 	let exploreFile = function(path, name) {
 		ExplorerFactory.exploreFile({
@@ -68,7 +35,18 @@ app.controller("BoardFile", function($scope, ExplorerFactory) {
 		document.getElementById("fileInput").click();
 	}
 
-	$scope.insertFile = function() {
+	$scope.onFileSelect = function($files) {
+
+		$files.forEach(function(file) {
+			$scope.selectedFiles.push(file);
+		})
+		if ($scope.selectedFiles && $scope.selectedFiles > 0) {
+			insertFile();
+		}
+
+	};
+
+	let insertFile = function() {
 		Upload.upload({
 			url: '/fileExplorer',
 			method: 'POST',
@@ -87,6 +65,10 @@ app.controller("BoardFile", function($scope, ExplorerFactory) {
 		ExplorerFactory.downloadFile({ Name: name, Path: path }, function() {
 			window.location.href = '/fileExplorer/' + encodeURIComponent(name) + '?Path=' + encodeURIComponent(path);
 		})
+	}
+
+	$scope.redirectToFileExplorer = function() {
+		$location.path('/fileExplorer');
 	}
 
 });

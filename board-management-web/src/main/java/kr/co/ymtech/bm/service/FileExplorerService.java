@@ -2,6 +2,9 @@ package kr.co.ymtech.bm.service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
@@ -14,7 +17,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.ymtech.bm.config.ImagePathConfig;
+import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 
 /**
@@ -81,57 +84,38 @@ public class FileExplorerService implements IFileExplorerService {
 				}
 			}
 		}
-		 list.sort((file1, file2) -> {
-             if (file1.getIsDirectory() && !file2.getIsDirectory()) {
-                 return -1; // f1은 디렉토리이고, f2는 파일입니다.
-             } else if (!file1.getIsDirectory() && file2.getIsDirectory()) {
-                 return 1; // f1은 파일이고, f2는 디렉토리입니다.
-             } else {
-            	 return 0;
-             }
-         });
-
+		list.sort((file1, file2) -> {
+			if (file1.getIsDirectory() && !file2.getIsDirectory()) {
+				return -1; // f1은 디렉토리이고, f2는 파일입니다.
+			} else if (!file1.getIsDirectory() && file2.getIsDirectory()) {
+				return 1; // f1은 파일이고, f2는 디렉토리입니다.
+			} else {
+				return 0;
+			}
+		});
 
 		return list;
+
 	}
 
 	@Override
 	public void saveFiles(List<MultipartFile> files) {
-	    for (MultipartFile file : files) {
-	        String originalFilename = file.getOriginalFilename();
-	        String directoryPath = Paths.get(PathConfig.getFilePath(), originalFilename).normalize().toString();
-	        System.out.println(files);
+		for (MultipartFile file : files) {
+			String originalFilename = file.getOriginalFilename();
+			String directoryPath = Paths.get(PathConfig.getFilePath(), originalFilename).normalize().toString();
+			System.out.println(files);
 
-	        try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(directoryPath)) {
-	            IOUtils.copy(input, output);
-	        } catch (IOException e) {
-	            System.out.println("파일 업로드 실패");
-	        }
-	    }
+			try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(directoryPath)) {
+				IOUtils.copy(input, output);
+			} catch (IOException e) {
+				System.out.println("파일 업로드 실패");
+			}
+		}
 	}
 
-
-//	@Override
-//	public void createFolder() {
-//
-//		String path = "C:/FileExplorer/새폴더";
-//		File Folder = new File(path);
-//
-//		if (!Folder.exists()) {
-//			try {
-//				Folder.mkdir(); // 폴더 생성합니다.
-//				System.out.printf("폴더가 생성되었습니다.");
-//			} catch (Exception e) {
-//				e.getStackTrace();
-//			}
-//		} else {
-//			System.out.printf("이미 폴더가 생성되어 있습니다.");
-//		}
-//	}
-
-}
+	@Override
 	public void downloadFile(HttpServletResponse response, String Name, String Path) {
-		
+
 		String filePath = Paths.get(Path).resolve(Name).normalize().toString();
 
 		// 지정된 경로의 폴더에서 파일을 찾아서 다운로드
@@ -144,23 +128,5 @@ public class FileExplorerService implements IFileExplorerService {
 			System.out.println("파일 다운로드 실패");
 		}
 	}
-
-//   @Override
-//   public void createFolder() {
-//
-//      String path = "C:/FileExplorer/새폴더";
-//      File Folder = new File(path);
-//
-//      if (!Folder.exists()) {
-//         try {
-//            Folder.mkdir(); // 폴더 생성합니다.
-//            System.out.printf("폴더가 생성되었습니다.");
-//         } catch (Exception e) {
-//            e.getStackTrace();
-//         }
-//      } else {
-//         System.out.printf("이미 폴더가 생성되어 있습니다.");
-//      }
-//   }
 
 }
