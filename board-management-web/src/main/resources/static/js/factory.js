@@ -196,7 +196,7 @@ app.factory('PhotoBoardFactory', function($resource) {
 app.factory('ExplorerFactory', function($resource) {
    return $resource('/fileExplorer', null, {
       
-      fileExplorer: {
+      exploreFile: {
          method: 'GET',
          isArray: true,
          headers: {

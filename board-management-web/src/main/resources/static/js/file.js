@@ -1,33 +1,55 @@
-app.controller("BoardFile", function($scope, ExplorerFactory) {
+app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location) {
 
    $scope.files = [];
-   $scope.folderOpen = [];
+   $scope.folderState = [];
 
-   let fileExplorer = function(path, name, depth) {
-      ExplorerFactory.fileExplorer({
-         path: path,
-         name: name,
-         depth: depth
+   let exploreFile = function(path, name) {
+      ExplorerFactory.exploreFile({
+         parentPath: path,
+         directoryName: name
       }, function(response) {
-         $scope.files = $scope.files.concat(response);
+         $scope.files = response;
       })
    };
 
-   fileExplorer(null, null, 0);
+   exploreFile(null, null);
 
-   $scope.folderEvent = function(index, path, name, depth) {
-      $scope.folderOpen[index] = !$scope.folderOpen[index];
-      if ($scope.folderOpen[index]) {
-         fileExplorer(path, name, depth + 1);
-      } else {
-         folderClose(depth, path);
-      }
+   $scope.openFolder = function(index) {
+      $scope.folderState[index] = !$scope.folderState[index];
    };
+   
+   $scope.selectFile = function() {
+		document.getElementById("fileInput").click();
+	}
+	
+	$scope.onFileSelect = function($files) {
 
-   let folderClose = function(depth, path) {
-      $scope.files = $scope.files.filter(function(file) {
-         return file.depth <= depth && file.path.includes(path);
-      })
-   };
-
+		$files.forEach(function(file) {
+			
+				$scope.selectedFiles.push(file);
+		})
+		insertFile();
+	};
+   
+   	let insertFile = function() {
+		Upload.upload({
+			url: '/fileExplorer',
+			method: 'POST',
+			params: {},
+			data: {
+				files: $scope.selectedFiles,
+			},
+		}).success(function() {
+			$scope.redirectToFileExplorer();
+		}).error(function() {
+			alert('파일 업로드 실패');
+		})
+	};
+	
+	    $scope.redirectToFileExplorer = function() {
+        $location.path('/fileExplorer');
+    }
+	
+	
+   
 });

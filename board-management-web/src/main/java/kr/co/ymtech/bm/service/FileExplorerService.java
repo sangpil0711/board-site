@@ -1,12 +1,19 @@
 package kr.co.ymtech.bm.service;
 
-import java.awt.dnd.DropTargetAdapter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
-import kr.co.ymtech.bm.config.ImagePathConfig;
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 
 /**
@@ -24,10 +31,10 @@ public class FileExplorerService implements IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 17.
 	 */
-	private final ImagePathConfig imagePathConfig;
+	private final PathConfig PathConfig;
 
-	public FileExplorerService(ImagePathConfig imagePathConfig) {
-		this.imagePathConfig = imagePathConfig;
+	public FileExplorerService(PathConfig PathConfig) {
+		this.PathConfig = PathConfig;
 	}
 
 	/**
@@ -45,21 +52,20 @@ public class FileExplorerService implements IFileExplorerService {
 		File file = null;
 
 		if (parentPath == null) {
-			file = new File(imagePathConfig.getFilePath());
-			parentPath = imagePathConfig.getFilePath();
+			file = new File(PathConfig.getFilePath());
+			parentPath = PathConfig.getFilePath();
 		} else {
 			file = new File(Paths.get(parentPath).resolve(directoryName).normalize().toString());
 			parentPath = Paths.get(parentPath).resolve(directoryName).normalize().toString();
 		}
 
-	
 		List<FileDTO> list = new ArrayList<>();
 
 		if (file.isDirectory()) { // parentPath가 디렉토리 인 경우만 처리
 			File[] files = file.listFiles();
 			FileDTO dto = null;
 
-			if (files != null) {   //files null 일때 예외 처리 
+			if (files != null) { // files null 일때 예외 처리
 				for (File f : files) {
 					dto = new FileDTO();
 					dto.setName(f.getName());
@@ -74,9 +80,35 @@ public class FileExplorerService implements IFileExplorerService {
 				}
 			}
 		}
+		 list.sort((file1, file2) -> {
+             if (file1.getIsDirectory() && !file2.getIsDirectory()) {
+                 return -1; // f1은 디렉토리이고, f2는 파일입니다.
+             } else if (!file1.getIsDirectory() && file2.getIsDirectory()) {
+                 return 1; // f1은 파일이고, f2는 디렉토리입니다.
+             } else {
+            	 return 0;
+             }
+         });
+
 
 		return list;
 	}
+
+	@Override
+	public void saveFiles(List<MultipartFile> files) {
+	    for (MultipartFile file : files) {
+	        String originalFilename = file.getOriginalFilename();
+	        String directoryPath = Paths.get(PathConfig.getFilePath(), originalFilename).normalize().toString();
+	        System.out.println(files);
+
+	        try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(directoryPath)) {
+	            IOUtils.copy(input, output);
+	        } catch (IOException e) {
+	            System.out.println("파일 업로드 실패");
+	        }
+	    }
+	}
+
 
 //	@Override
 //	public void createFolder() {

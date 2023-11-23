@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class PathConfig {
 
 	private String imagePath;
-	private String explorerPath;
+	private String filePath;
 
 	public String getImagePath() {
 		return imagePath;
@@ -18,21 +18,21 @@ public class PathConfig {
 		this.imagePath = imagePath;
 	}
 
-	public String getExplorerPath() {
-		return explorerPath;
+	public String getFilePath() {
+		return filePath;
 	}
 
-	public void setExplorerPath(String explorerPath) {
-		this.explorerPath = explorerPath;
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("PathConfig [imagePath=");
+		builder.append("ImagePathConfig [imagePath=");
 		builder.append(imagePath);
-		builder.append(", explorerPath=");
-		builder.append(explorerPath);
+		builder.append(", filePath=");
+		builder.append(filePath);
 		builder.append("]");
 		return builder.toString();
 	}
