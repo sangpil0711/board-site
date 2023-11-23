@@ -48,16 +48,6 @@ app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routePa
 	getDataByIndex();
 
 	/**
-	 * @function selectFile 파일탐색기가 실행되어서 파일을 선택할 수 있는 함수
-	 * 
-	 * @author 황상필
-	 * @since 2023. 10. 23.
-	 */
-	$scope.selectFile = function() {
-		document.getElementById("fileInput").click();
-	};
-
-	/**
 	 * @function uuidv4 파일의 uuid를 생성하는 함수
 	 * 
 	 * @author 황상필

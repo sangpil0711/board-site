@@ -2,6 +2,9 @@ package kr.co.ymtech.bm.service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
@@ -14,8 +17,9 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.ymtech.bm.config.ImagePathConfig;
+import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
+import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
 
 /**
  * 파일 탐색기 FileExplorerService 클래스
@@ -111,11 +115,13 @@ public class FileExplorerService implements IFileExplorerService {
 		}
 	}
 
-	public void saveFiles(List<MultipartFile> files) {
-	    for (MultipartFile file : files) {
-	        String originalFilename = file.getOriginalFilename();
-	        String directoryPath = Paths.get(PathConfig.getFilePath(), originalFilename).normalize().toString();
-	        System.out.println(files);
+	public void saveFiles(FileExplorerDTO uploadFile) {
+		
+		String directoryPath = null;
+		String filePath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
+		
+	    for (MultipartFile file : uploadFile.getFiles()) {
+	        directoryPath = Paths.get(filePath).resolve(file.getOriginalFilename()).normalize().toString();
 
 	        try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(directoryPath)) {
 	            IOUtils.copy(input, output);

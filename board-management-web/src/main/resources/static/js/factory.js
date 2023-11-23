@@ -214,24 +214,5 @@ app.factory('PhotoBoardFactory', function($resource) {
 	})
 })
 
-/**
- * @Method : 서버의 파일리스트를 가져오는 함수
- * 
- * @author 황상필
- * @since 2023. 11. 15.
- */
-app.factory('ExplorerFactory', function($resource) {
-   return $resource('/fileExplorer', null, {
-      
-      exploreFile: {
-         method: 'GET',
-         isArray: true,
-         headers: {
-            "Content-Type": 'application/json'
-         },
-      }
-      
-   })
-});
 
 

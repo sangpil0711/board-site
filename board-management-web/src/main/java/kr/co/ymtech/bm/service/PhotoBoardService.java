@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.ymtech.bm.config.ImagePathConfig;
+import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
@@ -45,15 +45,15 @@ public class PhotoBoardService implements IPhotoBoardService {
 	private final IPhotoBoardRepository photoBoardRepository;
 	private final ICommentRepository commentRepository;
 	private final IBoardRepository boardRepository;
-	private final ImagePathConfig imagePathConfig;
+	private final PathConfig pathConfig;
 
 	@Autowired
 	public PhotoBoardService(IPhotoBoardRepository IphotoBoardRepository, ICommentRepository IcommentRepository,
-			IBoardRepository IboardRepository, ImagePathConfig imagePathConfig) {
+			IBoardRepository IboardRepository, PathConfig pathConfig) {
 		this.photoBoardRepository = IphotoBoardRepository;
 		this.commentRepository = IcommentRepository;
 		this.boardRepository = IboardRepository;
-		this.imagePathConfig = imagePathConfig;
+		this.pathConfig = pathConfig;
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 */
 	@Override
 	public Integer savePhotoBoard(PhotoBoardDTO photo) {
-		
+
 		String originalFileName = null;
 		String uniqueID = null;
 		String filePath = null;
@@ -131,12 +131,13 @@ public class PhotoBoardService implements IPhotoBoardService {
 		for (MultipartFile file : photo.getFiles()) {
 			originalFileName = file.getOriginalFilename();
 			uniqueID = UUID.randomUUID().toString();
-			filePath = Paths.get(imagePathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize().toString();
+			filePath = Paths.get(pathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize()
+					.toString();
 
 			boardFile = new FileVO();
 			boardFile.setFileId(uniqueID);
 			boardFile.setBoardIndex(lastBoardIndex + 1);
-			boardFile.setFilePath(imagePathConfig.getImagePath());
+			boardFile.setFilePath(pathConfig.getImagePath());
 			boardFile.setFileName(originalFileName);
 			boardFile.setFileSize(file.getSize());
 
@@ -169,7 +170,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 */
 	@Override
 	public Integer updatePhotoBoard(PhotoBoardUpdateDTO photo) {
-		
+
 		String originalFileName = null;
 		String uniqueID = null;
 		String filePath = null;
@@ -190,12 +191,13 @@ public class PhotoBoardService implements IPhotoBoardService {
 		for (MultipartFile file : photo.getAddFiles()) {
 			originalFileName = file.getOriginalFilename();
 			uniqueID = UUID.randomUUID().toString();
-			filePath = Paths.get(imagePathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize().toString();
+			filePath = Paths.get(pathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize()
+					.toString();
 
 			boardFile = new FileVO();
 			boardFile.setFileId(uniqueID);
 			boardFile.setBoardIndex(photo.getIndex());
-			boardFile.setFilePath(imagePathConfig.getImagePath());
+			boardFile.setFilePath(pathConfig.getImagePath());
 			boardFile.setFileName(originalFileName);
 			boardFile.setFileSize(file.getSize());
 
@@ -208,10 +210,10 @@ public class PhotoBoardService implements IPhotoBoardService {
 				System.out.println("파일 저장 실패");
 			}
 		}
-		
+
 		// 삭제한 파일 리스트를 반복하며 파일 삭제
 		for (String deleteFileName : deleteFiles) {
-			deleteFilePath = Paths.get(imagePathConfig.getImagePath()).resolve(deleteFileName).normalize().toString();
+			deleteFilePath = Paths.get(pathConfig.getImagePath()).resolve(deleteFileName).normalize().toString();
 			deleteFileId = deleteFileName.substring(0, deleteFileName.indexOf("_"));
 			deleteFile = new File(deleteFilePath);
 			deleteFile.delete();
@@ -240,8 +242,8 @@ public class PhotoBoardService implements IPhotoBoardService {
 
 		// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
 		for (FileVO file : files) {
-			filePath = Paths.get(imagePathConfig.getImagePath()).resolve(file.getFileId() + "_" + file.getFileName()).normalize()
-					.toString();
+			filePath = Paths.get(pathConfig.getImagePath()).resolve(file.getFileId() + "_" + file.getFileName())
+					.normalize().toString();
 
 			File deleteFile = new File(filePath);
 			deleteFile.delete();

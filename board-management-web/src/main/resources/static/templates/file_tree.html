@@ -5,9 +5,7 @@
 		<img ng-class="{'folder_icon': item.isDirectory, 'file_icon': !item.isDirectory}">
 		<span>{{item.name}}</span>
 		<img class="file_remove">
-		<input type="file" id="fileInput" style="display: none;" ng-if="item.isDirectory"
-			ngf-select="onFileSelect($files)" multiple>
-		<img class="file_plus" ng-if="item.isDirectory" ng-click="selectFile()">
+		<img class="file_plus" ng-if="item.isDirectory" ng-click="selectFile()" ngf-select="onFileSelect($files, item)" multiple>
 		<img ng-click="downloadFile(item.name, item.path)" class="file_download" ng-if="!item.isDirectory">
 		<ul ng-if="item.child && item.folderState">
 			<li ng-include="'/static/templates/file_tree.html'" ng-init="files = item.child"></li>

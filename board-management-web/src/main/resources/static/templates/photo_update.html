@@ -20,9 +20,7 @@
 	
 	<!-- 시작: 이미지선택 버튼 -->
 	<div>
-		<input type="file" id="fileInput" name="files" style="display: none;" file-model="files" ngf-select="onFileSelect($files)"
-			accept="image/*" multiple>
-		<button class="file_btn" ng-click="selectFile()">이미지선택<br>(최대 100MB)</button>
+		<button class="file_btn" ngf-select="onFileSelect($files)" accept="image/*" multiple>이미지선택<br>(최대 100MB)</button>
 	</div>
 	<!-- 끝: 이미지선택 버튼 -->
 
