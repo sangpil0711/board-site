@@ -1,40 +1,50 @@
-app.controller("BoardFile", function($scope, ExplorerFactory) {
 
-	$scope.files = [];
-	$scope.folderState = [];
+app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location) {
 
-	let exploreFile = function(path, name) {
-		ExplorerFactory.exploreFile({
-			parentPath: path,
-			directoryName: name
-		}, function(response) {
-			$scope.files = response;
-		})
-	};
+   $scope.files = [];
+   $scope.folderState = [];
 
-	exploreFile(null, null);
+   let exploreFile = function(path, name) {
+      ExplorerFactory.exploreFile({
+         parentPath: path,
+         directoryName: name
+      }, function(response) {
+         $scope.files = response;
+      })
+   };
 
-	let childFileState = function(item, folderState) {
-		item.folderState = folderState;
-		if (item.child && item.child.length > 0) {
-			item.child.forEach(function(childItem) {
-				childFileState(childItem, folderState);
-			});
-		}
+   exploreFile(null, null);
+
+   let childFileState = function(item, folderState) {
+	item.folderState = folderState;
+	if (item.child && item.child.length > 0) {
+		item.child.forEach(function(childItem) {
+			childFileState(childItem, folderState);
+		});
 	}
+}
 
-	$scope.openFolder = function(file) {
-		file.folderState = !file.folderState;
-		if (!file.folderState) {
-			childFileState(file, false);
-		}
-	};
-
-	$scope.selectFile = function() {
+   $scope.openFolder = function(file) {
+	file.folderState = !file.folderState;
+	if (!file.folderState) {
+		childFileState(file, false);
+	}
+};
+   
+   $scope.selectFile = function() {
 		document.getElementById("fileInput").click();
 	}
+	
+	$scope.onFileSelect = function($files) {
 
-	$scope.insertFile = function() {
+		$files.forEach(function(file) {
+			
+				$scope.selectedFiles.push(file);
+		})
+		insertFile();
+	};
+   
+   	let insertFile = function() {
 		Upload.upload({
 			url: '/fileExplorer',
 			method: 'POST',
@@ -43,7 +53,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory) {
 				files: $scope.selectedFiles,
 			},
 		}).success(function() {
-			$scope.redirectToBoard();
+			$scope.redirectToFileExplorer();
 		}).error(function() {
 			alert('파일 업로드 실패');
 		})
@@ -55,4 +65,11 @@ app.controller("BoardFile", function($scope, ExplorerFactory) {
 		})
 	}
 
+	
+	    $scope.redirectToFileExplorer = function() {
+        $location.path('/fileExplorer');
+    }
+	
+	
+   
 });

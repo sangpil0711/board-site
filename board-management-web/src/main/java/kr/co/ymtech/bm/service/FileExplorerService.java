@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.ymtech.bm.config.ImagePathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
@@ -31,10 +32,10 @@ public class FileExplorerService implements IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 17.
 	 */
-	private final ImagePathConfig imagePathConfig;
+	private final PathConfig PathConfig;
 
-	public FileExplorerService(ImagePathConfig imagePathConfig) {
-		this.imagePathConfig = imagePathConfig;
+	public FileExplorerService(PathConfig PathConfig) {
+		this.PathConfig = PathConfig;
 	}
 
 	/**
@@ -52,8 +53,8 @@ public class FileExplorerService implements IFileExplorerService {
 		File file = null;
 
 		if (parentPath == null) {
-			file = new File(imagePathConfig.getFilePath());
-			parentPath = imagePathConfig.getFilePath();
+			file = new File(PathConfig.getFilePath());
+			parentPath = PathConfig.getFilePath();
 		} else {
 			file = new File(Paths.get(parentPath).resolve(directoryName).normalize().toString());
 			parentPath = Paths.get(parentPath).resolve(directoryName).normalize().toString();
@@ -80,15 +81,16 @@ public class FileExplorerService implements IFileExplorerService {
 				}
 			}
 		}
-		list.sort((f1, f2) -> {
-			if (f1.getIsDirectory() && !f2.getIsDirectory()) {
-				return -1; // f1은 디렉토리이고, f2는 파일입니다.
-			} else if (!f1.getIsDirectory() && f2.getIsDirectory()) {
-				return 1; // f1은 파일이고, f2는 디렉토리입니다.
-			} else {
-				return f1.getName().compareToIgnoreCase(f2.getName()); // 둘 다 디렉토리이거나 둘 다 파일인 경우 알파벳 순으로 정렬합니다.
-			}
-		});
+		 list.sort((file1, file2) -> {
+             if (file1.getIsDirectory() && !file2.getIsDirectory()) {
+                 return -1; // f1은 디렉토리이고, f2는 파일입니다.
+             } else if (!file1.getIsDirectory() && file2.getIsDirectory()) {
+                 return 1; // f1은 파일이고, f2는 디렉토리입니다.
+             } else {
+            	 return 0;
+             }
+         });
+
 
 		return list;
 	}
@@ -109,22 +111,18 @@ public class FileExplorerService implements IFileExplorerService {
 		}
 	}
 
-//   @Override
-//   public void createFolder() {
-//
-//      String path = "C:/FileExplorer/새폴더";
-//      File Folder = new File(path);
-//
-//      if (!Folder.exists()) {
-//         try {
-//            Folder.mkdir(); // 폴더 생성합니다.
-//            System.out.printf("폴더가 생성되었습니다.");
-//         } catch (Exception e) {
-//            e.getStackTrace();
-//         }
-//      } else {
-//         System.out.printf("이미 폴더가 생성되어 있습니다.");
-//      }
-//   }
+	public void saveFiles(List<MultipartFile> files) {
+	    for (MultipartFile file : files) {
+	        String originalFilename = file.getOriginalFilename();
+	        String directoryPath = Paths.get(PathConfig.getFilePath(), originalFilename).normalize().toString();
+	        System.out.println(files);
+
+	        try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(directoryPath)) {
+	            IOUtils.copy(input, output);
+	        } catch (IOException e) {
+	            System.out.println("파일 업로드 실패");
+	        }
+	    }
+	}
 
 }

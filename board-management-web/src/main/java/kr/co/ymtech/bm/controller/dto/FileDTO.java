@@ -2,9 +2,17 @@ package kr.co.ymtech.bm.controller.dto;
 
 import java.util.List;
 
+/**
+ * 파일 정보를 저장하는 클래스
+ * 
+ * @author 박상현
+ * @since 2023. 11. 17.
+ */
 public class FileDTO {
 
+	/** name : 파일 이름 */
 	private String name;
+	/** isDirectory : 디렉토리(폴더) */
 	private Boolean isDirectory;
 	private String Path;
 	private Boolean folderState;
@@ -31,7 +39,7 @@ public class FileDTO {
 	}
 
 	public void setPath(String path) {
-		this.Path = path;
+		Path = path;
 	}
 	
 	public Boolean getFolderState() {

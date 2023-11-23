@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties("file.path")
-public class ImagePathConfig {
+public class PathConfig {
 
 	private String imagePath;
 	private String filePath;

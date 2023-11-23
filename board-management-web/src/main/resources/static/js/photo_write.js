@@ -16,6 +16,7 @@ app.controller("PhotoWrite", function($scope, $location, Upload) {
 	 */
 	$scope.selectFile = function() {
 		document.getElementById("fileInput").click();
+		$scope.insertPhoto();
 	}
 	
 	/**
