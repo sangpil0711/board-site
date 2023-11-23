@@ -5,17 +5,7 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 	// 업로드되는 파일 이름
 	$scope.fileNames = [];
 	// 업로드되는 파일 데이터
-	$scope.selectedFiles = [];		
-
-	/**
-	 * @function selectFile 파일탐색기가 실행되어서 파일을 선택할 수 있는 함수
-	 * 
-	 * @author 황상필
-	 * @since 2023. 10. 23.
-	 */
-	$scope.selectFile = function() {
-		document.getElementById("fileInput").click();
-	}
+	$scope.selectedFiles = [];
 
 	/**
 	 * @function onFileSelect 선택된 파일을 변수에 할당하고 크기를 제한하는 함수

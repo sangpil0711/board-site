@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.ymtech.bm.controller.dto.FileDTO;
+import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
 import kr.co.ymtech.bm.service.FileExplorerService;
 import kr.co.ymtech.bm.service.IFileExplorerService;
 
@@ -53,10 +53,9 @@ public class FileExplorerController {
 	}
 	
 	@PostMapping("")
-	public void saveFiles(List<MultipartFile> files) {
-		System.out.println(files);
-		fileExplorerService.saveFiles(files);
+	public void saveFiles(FileExplorerDTO uploadFile) {
 		
+		fileExplorerService.saveFiles(uploadFile);
 	}
 
 	@GetMapping("/{Name}")
@@ -64,16 +63,5 @@ public class FileExplorerController {
 
 		fileExplorerService.downloadFile(response, Name, Path);
 	}
-
-//   @PostMapping("")
-//   public ResponseEntity<Integer> saveFiles() {
-//      return null;
-//   }
-
-//   @PostMapping("/fileExplorer")
-//   public void createFolder() {
-//      fileExplorerService.createFolder();
-//      
-//   }
 
 }

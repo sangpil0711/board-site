@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
+import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
 
 /**
  * 파일 탐색기 FileExplorerService 클래스
@@ -99,21 +100,6 @@ public class FileExplorerService implements IFileExplorerService {
 	}
 
 	@Override
-	public void saveFiles(List<MultipartFile> files) {
-		for (MultipartFile file : files) {
-			String originalFilename = file.getOriginalFilename();
-			String directoryPath = Paths.get(PathConfig.getFilePath(), originalFilename).normalize().toString();
-			System.out.println(files);
-
-			try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(directoryPath)) {
-				IOUtils.copy(input, output);
-			} catch (IOException e) {
-				System.out.println("파일 업로드 실패");
-			}
-		}
-	}
-
-	@Override
 	public void downloadFile(HttpServletResponse response, String Name, String Path) {
 
 		String filePath = Paths.get(Path).resolve(Name).normalize().toString();
@@ -127,6 +113,22 @@ public class FileExplorerService implements IFileExplorerService {
 		} catch (Exception e) {
 			System.out.println("파일 다운로드 실패");
 		}
+	}
+
+	public void saveFiles(FileExplorerDTO uploadFile) {
+		
+		String directoryPath = null;
+		String filePath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
+		
+	    for (MultipartFile file : uploadFile.getFiles()) {
+	        directoryPath = Paths.get(filePath).resolve(file.getOriginalFilename()).normalize().toString();
+
+	        try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(directoryPath)) {
+	            IOUtils.copy(input, output);
+	        } catch (IOException e) {
+	            System.out.println("파일 업로드 실패");
+	        }
+	    }
 	}
 
 }
