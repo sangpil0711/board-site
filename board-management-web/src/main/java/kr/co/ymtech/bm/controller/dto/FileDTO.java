@@ -14,22 +14,14 @@ public class FileDTO {
 	private String name;
 	/** isDirectory : 디렉토리(폴더) */
 	private Boolean isDirectory;
-	/** Path : 파일 경로 */
 	private String Path;
+	private Boolean folderState;
 	private List<FileDTO> child;
-
-	public List<FileDTO> getChild() {
-		return child;
-	}
-
-	public void setChild(List<FileDTO> child) {
-		this.child = child;
-	}
 
 	public String getName() {
 		return name;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -49,6 +41,22 @@ public class FileDTO {
 	public void setPath(String path) {
 		Path = path;
 	}
+	
+	public Boolean getFolderState() {
+		return folderState;
+	}
+
+	public void setFolderState(Boolean folderState) {
+		this.folderState = folderState;
+	}
+	
+	public List<FileDTO> getChild() {
+		return child;
+	}
+
+	public void setChild(List<FileDTO> child) {
+		this.child = child;
+	}
 
 	@Override
 	public String toString() {
@@ -59,6 +67,8 @@ public class FileDTO {
 		builder.append(isDirectory);
 		builder.append(", Path=");
 		builder.append(Path);
+		builder.append(", folderState=");
+		builder.append(folderState);
 		builder.append(", child=");
 		builder.append(child);
 		builder.append("]");

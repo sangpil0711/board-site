@@ -1,15 +1,16 @@
 <ul>
-   <li ng-repeat="item in files track by $index">
-      <img ng-if="item.isDirectory" ng-click="openFolder($index, item)"
-         ng-class="{'folder_open': folderState[$index], 'folder_close': !folderState[$index]}">
-      <img ng-class="{'folder_icon': item.isDirectory, 'file_icon': !item.isDirectory}">
-      <span>{{item.name}}</span>
-      <img class="file_remove">
-      <input type="file" id="fileInput" style="display: none;" ng-if="item.isDirectory" ngf-select="onFileSelect($files)" multiple>
-      <img class="file_plus" ng-if="item.isDirectory" ng-click="selectFile()">
-      <img class="file_download" ng-if="!item.isDirectory">
-      <ul ng-if="item.child && folderState[$index]">
-         <li ng-include="'/static/templates/file_tree.html'" ng-init="files = item.child"></li>
-      </ul>
-   </li>
+	<li ng-repeat="item in files">
+		<img ng-if="item.isDirectory" ng-click="openFolder(item)"
+			ng-class="{'folder_open': item.folderState, 'folder_close': !item.folderState}">
+		<img ng-class="{'folder_icon': item.isDirectory, 'file_icon': !item.isDirectory}">
+		<span>{{item.name}}</span>
+		<img class="file_remove">
+		<input type="file" id="fileInput" style="display: none;" ng-if="item.isDirectory"
+			ngf-select="onFileSelect($files)" multiple>
+		<img class="file_plus" ng-if="item.isDirectory" ng-click="selectFile()">
+		<img ng-click="downloadFile(item.name, item.path)" class="file_download" ng-if="!item.isDirectory">
+		<ul ng-if="item.child && item.folderState">
+			<li ng-include="'/static/templates/file_tree.html'" ng-init="files = item.child"></li>
+		</ul>
+	</li>
 </ul>

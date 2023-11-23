@@ -2,11 +2,12 @@ package kr.co.ymtech.bm.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,21 +47,25 @@ public class FileExplorerController {
 	 */
 	@GetMapping("")
 	public List<FileDTO> loadAllFiles(String parentPath, String directoryName) {
-
+		
 		return fileExplorerService.loadAllFiles(parentPath, directoryName);
 	}
 
-	@PostMapping("")
-	public void saveFiles(List<MultipartFile> files) {
-		System.out.println(files);
-		fileExplorerService.saveFiles(files);
-		
+	@GetMapping("/{Name}")
+	public void downloadFile(HttpServletResponse response, @PathVariable String Name, @RequestParam String Path) {
+
+		fileExplorerService.downloadFile(response, Name, Path);
 	}
 
-//	@PostMapping("/fileExplorer")
-//	public void createFolder() {
-//		fileExplorerService.createFolder();
-//		
-//	}
+//   @PostMapping("")
+//   public ResponseEntity<Integer> saveFiles() {
+//      return null;
+//   }
+
+//   @PostMapping("/fileExplorer")
+//   public void createFolder() {
+//      fileExplorerService.createFolder();
+//      
+//   }
 
 }

@@ -1,5 +1,6 @@
 package kr.co.ymtech.bm.repository.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoBoardVO {
@@ -19,7 +20,7 @@ public class PhotoBoardVO {
 	/** likeCount : 게시글 추천 수 */
 	private Integer likeCount;
 	/** file : 게시글 첨부파일 */
-	private List<FileVO> file;
+	private List<FileVO> file = new ArrayList<FileVO>();
 	
 
 	/**

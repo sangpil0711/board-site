@@ -1,5 +1,6 @@
 package kr.co.ymtech.bm.controller.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +18,7 @@ public class PhotoBoardUpdateDTO {
 		/** title : 게시글 제목 */
 		private String title;
 		/** text : 게시글 내용 */
-		private String text;
+		private String text = "";
 		/** userId : 게시글 작성자 아이디 */
 		private String userId;
 		/** category : 게시글 카테고리 */
@@ -25,9 +26,9 @@ public class PhotoBoardUpdateDTO {
 		/** createDate : 게시글 작성일 */
 		private Long createDate;
 		/** addFiles : 추가된 첨부파일 */
-		private List<MultipartFile> addFiles;
+		private List<MultipartFile> addFiles = new ArrayList<MultipartFile>();
 		/**	deleteFiles : 삭제된 첨부파일 */
-		private List<String> deleteFiles;
+		private List<String> deleteFiles = new ArrayList<String>();
 
 		public Integer getIndex() {
 			return index;

@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.ymtech.bm.config.PathConfig;
+import kr.co.ymtech.bm.config.ImagePathConfig;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
@@ -43,14 +43,14 @@ public class BoardService implements IBoardService {
 	 */
 	private final IBoardRepository boardRepository;
 	private final ICommentRepository commentRepository;
-	private final PathConfig pathConfig;
+	private final ImagePathConfig imagePathConfig;
 
 	@Autowired
 	private BoardService(IBoardRepository IboardRepository, ICommentRepository IcommentRepository,
-			PathConfig pathConfig) {
+			ImagePathConfig imagePathConfig) {
 		this.boardRepository = IboardRepository;
 		this.commentRepository = IcommentRepository;
-		this.pathConfig = pathConfig;
+		this.imagePathConfig = imagePathConfig;
 	}
 
 	/**
@@ -101,40 +101,41 @@ public class BoardService implements IBoardService {
 	@Override
 	public Integer saveBoard(BoardDTO board) {
 
+		String originalFileName = null;
+		String uniqueID = null;
+		String filePath = null;
+		FileVO boardFile = null;
 		List<FileVO> boardFiles = new ArrayList<FileVO>();
 		Integer lastBoardIndex = boardRepository.lastBoardIndex();
+		
+		System.out.println(board.getText());
 
 		// dto -> vo 변환
 		BoardVO vo = new BoardVO();
 		vo.setIndex(lastBoardIndex + 1);
 		vo.setTitle(board.getTitle());
-		if (board.getText() == null) {
-			vo.setText("");
-		} else {
-			vo.setText(board.getText());
-		}
+		vo.setText(board.getText());
 		vo.setCategory(board.getCategory());
 		vo.setCreateDate(new Date().getTime());
 
 		// 게시글 작성 시 선택된 파일을 업로드
-		for (int i = 0; i < board.getFiles().size(); i++) {
-			MultipartFile files = board.getFiles().get(i);
-			String originalFileName = files.getOriginalFilename();
-			String uniqueID = UUID.randomUUID().toString();
-			String filePath = Paths.get(pathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName)
-					.normalize().toString();
+		for (MultipartFile file : board.getFiles()) {
+			originalFileName = file.getOriginalFilename();
+			uniqueID = UUID.randomUUID().toString();
+			filePath = Paths.get(imagePathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize()
+					.toString();
 
-			FileVO boardFile = new FileVO();
+			boardFile = new FileVO();
 			boardFile.setFileId(uniqueID);
 			boardFile.setBoardIndex(lastBoardIndex + 1);
-			boardFile.setFilePath(pathConfig.getImagePath());
+			boardFile.setFilePath(imagePathConfig.getImagePath());
 			boardFile.setFileName(originalFileName);
-			boardFile.setFileSize(files.getSize());
+			boardFile.setFileSize(file.getSize());
 
 			boardFiles.add(boardFile);
 
 			// 업로드 되는 파일을 지정된 경로의 폴더에 저장
-			try (InputStream input = files.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
+			try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
 				IOUtils.copy(input, output);
 			} catch (IOException e) {
 				System.out.println("파일 업로드 실패");
@@ -161,29 +162,32 @@ public class BoardService implements IBoardService {
 	@Override
 	public Integer updateBoard(BoardUpdateDTO board) {
 
+		String originalFileName = null;
+		String uniqueID = null;
+		String filePath = null;
+		FileVO boardFile = null;
+		String deleteFilePath = null;
+		File deleteFile = null;
+		String deleteFileId = null;
+		List<String> deleteFiles = board.getDeleteFiles();
 		List<FileVO> boardFiles = new ArrayList<FileVO>();
 
 		// dto -> vo 변환
 		BoardVO vo = new BoardVO();
 		vo.setIndex(board.getIndex());
 		vo.setTitle(board.getTitle());
-		if (board.getText() == null) {
-			vo.setText("");
-		} else {
-			vo.setText(board.getText());
-		}
+		vo.setText(board.getText());
 
 		// 추가된 파일의 크기에 따라 반복하여 파일을 저장
-		for (int i = 0; i < board.getAddFiles().size(); i++) {
-			MultipartFile file = board.getAddFiles().get(i);
-			String originalFileName = file.getOriginalFilename();
-			String uniqueID = UUID.randomUUID().toString();
-			String filePath = Paths.get(pathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName)
-					.normalize().toString();
+		for (MultipartFile file : board.getAddFiles()) {
+			originalFileName = file.getOriginalFilename();
+			uniqueID = UUID.randomUUID().toString();
+			filePath = Paths.get(imagePathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize()
+					.toString();
 
-			FileVO boardFile = new FileVO();
+			boardFile = new FileVO();
 			boardFile.setFileId(uniqueID);
-			boardFile.setFilePath(pathConfig.getImagePath());
+			boardFile.setFilePath(imagePathConfig.getImagePath());
 			boardFile.setFileName(originalFileName);
 			boardFile.setFileSize(file.getSize());
 
@@ -197,20 +201,14 @@ public class BoardService implements IBoardService {
 			}
 		}
 
-		// 지정 경로에 있는 파일 리스트를 전부 가져옴
-		File dir = new File(pathConfig.getImagePath());
-		File files[] = dir.listFiles();
+		// 삭제한 파일 리스트를 반복하며 파일 삭제
+		for (String deleteFileName : deleteFiles) {
+			deleteFilePath = Paths.get(imagePathConfig.getImagePath()).resolve(deleteFileName).normalize().toString();
+			deleteFileId = deleteFileName.substring(0, deleteFileName.indexOf("_"));
+			deleteFile = new File(deleteFilePath);
+			deleteFile.delete();
 
-		List<String> deleteFileNames = board.getDeleteFiles();
-
-		// 가져온 파일리스트에서 삭제된 파일의 UUID가 포함되어 있으면 지정된 경로의 폴더에서 삭제
-		for (String deleteFileName : deleteFileNames) {
-			for (File file : files) {
-				if (file.getName().contains(deleteFileName)) {
-					file.delete();
-				}
-			}
-			boardRepository.deleteFile(board.getIndex(), deleteFileName);
+			boardRepository.deleteFile(board.getIndex(), deleteFileId);
 		}
 
 		return boardRepository.updateBoard(vo, boardFiles);
@@ -229,16 +227,15 @@ public class BoardService implements IBoardService {
 	@Override
 	public Integer deleteBoard(Integer index) {
 
+		String filePath = null;
 		List<FileVO> files = boardRepository.files(index);
 
 		// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
 		for (FileVO file : files) {
-
-			String filePath = Paths.get(pathConfig.getImagePath()).resolve(file.getFileId() + "_" + file.getFileName())
+			filePath = Paths.get(imagePathConfig.getImagePath()).resolve(file.getFileId() + "_" + file.getFileName())
 					.normalize().toString();
 
 			File deleteFile = new File(filePath);
-
 			deleteFile.delete();
 		}
 
@@ -263,11 +260,10 @@ public class BoardService implements IBoardService {
 	public BoardGetDTO searchByIndex(Integer index) {
 
 		List<FileVO> fv = boardRepository.files(index);
-		
 		BoardVO vo = boardRepository.searchByIndex(index);
+		BoardGetDTO dto = new BoardGetDTO();
 
 		// vo -> dto 변환
-		BoardGetDTO dto = new BoardGetDTO();
 		dto.setIndex(vo.getIndex());
 		dto.setTitle(vo.getTitle());
 		dto.setText(vo.getText());
@@ -310,12 +306,13 @@ public class BoardService implements IBoardService {
 	 */
 	@Override
 	public List<BoardGetDTO> bestBoard() {
+		BoardGetDTO dto = null;
 		List<BoardVO> voList = boardRepository.bestBoard();
 		List<BoardGetDTO> dtoList = new ArrayList<>();
 
 		// vo -> dto 변환
 		for (BoardVO vo : voList) {
-			BoardGetDTO dto = new BoardGetDTO();
+			dto = new BoardGetDTO();
 			List<FileVO> files = boardRepository.bestBoardFile(vo.getIndex());
 			dto.setIndex(vo.getIndex());
 			dto.setTitle(vo.getTitle());

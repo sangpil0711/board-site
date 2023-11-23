@@ -130,6 +130,8 @@ app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routePa
 			totalSize -= $scope.selectedFiles[index].size;
 			$scope.fileNames.splice(index, 1);
 
+			// 개별삭제 시 삭제된 파일 이름
+			let deleteFile = $scope.selectedFiles[index].fileId + '_' + $scope.selectedFiles[index].fileName;
 			// 개별삭제 시 삭제된 파일 UUID
 			let deleteFileId = $scope.selectedFiles[index].fileId;
 			$scope.selectedFiles.splice(index, 1);
@@ -144,7 +146,7 @@ app.controller("BoardUpdate", function($scope, BoardFactory, $location, $routePa
 
 			// 추가된 파일의 파일 UUID가 deleteFileId와 일치하지 않으면 deleteFiles 배열에 추가
 			else {
-				deleteFiles.push(deleteFileId);
+				deleteFiles.push(deleteFile);
 			}
 		}
 	};

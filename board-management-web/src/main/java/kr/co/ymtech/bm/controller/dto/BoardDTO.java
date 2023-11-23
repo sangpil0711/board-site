@@ -1,5 +1,6 @@
 package kr.co.ymtech.bm.controller.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +18,7 @@ public class BoardDTO {
 	/** title : 게시글 제목 */
 	private String title;
 	/** text : 게시글 내용 */
-	private String text;
+	private String text = "";
 	/** userId : 게시글 작성자 아이디 */
 	private String userId;
 	/** category : 게시글 카테고리 */
@@ -25,7 +26,7 @@ public class BoardDTO {
 	/** createDate : 게시글 작성일 */
 	private Long createDate;
 	/** files : 게시글 첨부파일 */
-	private List<MultipartFile> files;
+	private List<MultipartFile> files = new ArrayList<MultipartFile>();
 	
 	public List<MultipartFile> getFiles() {
 		return files;

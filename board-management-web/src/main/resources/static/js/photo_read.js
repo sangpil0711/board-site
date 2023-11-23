@@ -116,7 +116,6 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 		},
 		function(response) {
 			$scope.commentlist = response;
-			console.log('commentlist: ', $scope.commentlist)
 		},
 		function(error) {
 			console.error("댓글 정보 불러오기 실패", error);

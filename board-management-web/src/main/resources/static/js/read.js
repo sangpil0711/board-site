@@ -105,16 +105,15 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	$scope.commentlist = [];
 	let findComment = function() {
 		CommentFactory.getComment(
-			{
-				boardIndex: index
-			},
-			function(response) {
-				$scope.commentlist = response;
-				console.log('commentlist: ', $scope.commentlist)
-			},
-			function(error) {
-				console.error("댓글 정보 불러오기 실패", error);
-			})
+		{
+			boardIndex: index
+		},
+		function(response) {
+			$scope.commentlist = response;
+		},
+		function(error) {
+			console.error("댓글 정보 불러오기 실패", error);
+		})
 	};
 	findComment();
 

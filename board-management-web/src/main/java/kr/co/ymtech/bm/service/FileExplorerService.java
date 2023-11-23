@@ -1,19 +1,20 @@
 package kr.co.ymtech.bm.service;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.ymtech.bm.config.PathConfig;
+import kr.co.ymtech.bm.config.ImagePathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 
 /**
@@ -127,5 +128,39 @@ public class FileExplorerService implements IFileExplorerService {
 //			System.out.printf("이미 폴더가 생성되어 있습니다.");
 //		}
 //	}
+
+}
+	public void downloadFile(HttpServletResponse response, String Name, String Path) {
+		
+		String filePath = Paths.get(Path).resolve(Name).normalize().toString();
+
+		// 지정된 경로의 폴더에서 파일을 찾아서 다운로드
+		try (FileInputStream input = new FileInputStream(filePath); OutputStream output = response.getOutputStream()) {
+			String fileName = URLEncoder.encode(Name, "UTF-8");
+			fileName = fileName.replaceAll("\\+", "%20");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+			IOUtils.copy(input, output);
+		} catch (Exception e) {
+			System.out.println("파일 다운로드 실패");
+		}
+	}
+
+//   @Override
+//   public void createFolder() {
+//
+//      String path = "C:/FileExplorer/새폴더";
+//      File Folder = new File(path);
+//
+//      if (!Folder.exists()) {
+//         try {
+//            Folder.mkdir(); // 폴더 생성합니다.
+//            System.out.printf("폴더가 생성되었습니다.");
+//         } catch (Exception e) {
+//            e.getStackTrace();
+//         }
+//      } else {
+//         System.out.printf("이미 폴더가 생성되어 있습니다.");
+//      }
+//   }
 
 }

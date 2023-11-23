@@ -1,7 +1,5 @@
 package kr.co.ymtech.bm.controller;
 
-import java.util.Collections;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,11 +84,7 @@ public class PhotoBoardController {
 	@PostMapping(value = "/photos")
 	public ResponseEntity<Integer> savePhotoBoard(PhotoBoardDTO photo) {
 		
-		photo.setFiles(photo.getFiles() != null ? photo.getFiles() : Collections.emptyList());
-		
 		Integer savePhotoBoard = photoBoardService.savePhotoBoard(photo);
-		
-		System.out.println(photo.toString());
 		
 		return new ResponseEntity<Integer>(savePhotoBoard, HttpStatus.OK);
 	}
@@ -108,9 +102,6 @@ public class PhotoBoardController {
 	 */
 	@PatchMapping(value = "/photos/{index}")
 	public ResponseEntity<Integer> updatePhotoBoard(@PathVariable Integer index, PhotoBoardUpdateDTO photo) {
-		
-		photo.setAddFiles(photo.getAddFiles() != null ? photo.getAddFiles() : Collections.emptyList());
-		photo.setDeleteFiles(photo.getDeleteFiles() != null ? photo.getDeleteFiles() : Collections.emptyList());
 		
 		Integer updatePhotoBoard = photoBoardService.updatePhotoBoard(photo);
 		
