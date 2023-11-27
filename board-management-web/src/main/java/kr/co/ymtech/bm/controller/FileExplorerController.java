@@ -4,15 +4,20 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.ymtech.bm.controller.dto.FileDTO;
-import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
+import kr.co.ymtech.bm.controller.dto.SaveFileDTO;
+import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
+import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
 import kr.co.ymtech.bm.service.FileExplorerService;
 import kr.co.ymtech.bm.service.IFileExplorerService;
 
@@ -53,15 +58,33 @@ public class FileExplorerController {
 	}
 
 	@PostMapping("")
-	public void saveFiles(FileExplorerDTO uploadFile) {
+	public void saveFiles(SaveFileDTO uploadFile) {
 		
 		fileExplorerService.saveFiles(uploadFile);
+	}
+	
+	@PostMapping("/{Name}")
+	public void saveFolder(@PathVariable String Name, @RequestBody SaveFolderDTO saveFolderDTO) {
+		
+		fileExplorerService.saveFolder(Name, saveFolderDTO);
 	}
 
 	@GetMapping("/{Name}")
 	public void downloadFile(HttpServletResponse response, @PathVariable String Name, @RequestParam String Path) {
 
 		fileExplorerService.downloadFile(response, Name, Path);
+	}
+	
+	@DeleteMapping("/{Name}")
+    public void deleteFile(@PathVariable String Name, @RequestParam String Path) {
+      
+      fileExplorerService.deleteFile(Path, Name);
+   }
+	
+	@PatchMapping("")
+	public void updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
+		
+		fileExplorerService.updateFile(updateFileDTO);
 	}
 
 }
