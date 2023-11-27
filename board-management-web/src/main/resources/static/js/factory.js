@@ -89,9 +89,23 @@ app.factory('ExplorerFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-
+		
 		deleteFile: {
 			method: 'DELETE',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+		
+		createFolder: {
+			method: 'POST',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+		
+		updateFile: {
+			method: 'PATCH',
 			headers: {
 				"Content-Type": 'application/json'
 			},

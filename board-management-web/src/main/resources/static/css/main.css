@@ -909,23 +909,17 @@ pre {
 }
 
 .file_explorer {
-   border: 2px solid grey;
-   width: 700px;
-   height: 550px;
-   margin-left: auto;
-   margin-right: auto;
-   padding-top: 20px;
-   padding-left: 0px;
-   overflow: overlay;
+	border: 2px solid grey;
+	width: 700px;
+	height: 550px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow-x: hidden;
+	overflow-y: overlay;
 }
 
 .file_explorer ul {
 	padding-left: 0px;
-}
-
-.file_explorer img {
-	width: 20px;
-	height: 20px;
 }
 
 .file_explorer img:hover {
@@ -950,94 +944,64 @@ pre {
 	position: relative;
 }
 
-img.extended {
-  transform: rotate(90deg); /* 또는 다른 효과를 적용할 수 있습니다. */
-}
-.file_title {
-   border: 2px solid grey;
-   color: grey;
-   padding: 5px 0;
-   text-align: center;
-   width: 700px;
-   font-size: 25px;
-   font-weight: 600;
-   margin-top: 50px;
-   margin-bottom: 30px;
-   margin-left: auto;
-   margin-right: auto;
-}
-
-.file_explorer {
-   border: 2px solid grey;
-   width: 700px;
-   height: 550px;
-   margin-left: auto;
-   margin-right: auto;
-   padding-top: 20px;
-   padding-left: 0px;
-}
-
-.file_explorer ul {
-   padding-left: 0px;
-}
-
-.file_explorer img {
-   width: 20px;
-   height: 20px;
-}
-
-.file_explorer img:hover {
-   cursor: pointer;
-}
-
-.file_explorer span {
-   margin-left: 10px;
-   font-size: 15px;
-   font-weight: 600;
-}
-
-.file_explorer ul li {
-   margin-top: 10px;
-   margin-right: 0px;
-}
-
 .folder_close {
-   content: url(/static/image/caret-right-solid.svg);
+	width: 20px;
+	height: 20px;
+	content: url(/static/image/caret-right-solid.svg);
 }
 
 .folder_open {
-   content: url(/static/image/caret-right-solid.svg);
-   transform: rotate(90deg);
+	width: 20px;
+	height: 20px;
+	content: url(/static/image/caret-right-solid.svg);
+	transform: rotate(90deg);
 }
 
 .folder_icon {
-   content: url(/static/image/folder-regular.svg);
+	width: 20px;
+	height: 20px;
+	content: url(/static/image/folder-regular.svg);
 }
 
 .file_icon {
-   content: url(/static/image/file-regular.svg)
+	width: 20px;
+	height: 20px;
+	content: url(/static/image/file-regular.svg)
 }
 
 .file_remove {
-   margin-right: 10px;
-   float: right;
-   content: url(/static/image/trash-can-solid.svg);
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	float: right;
+	content: url(/static/image/trash-can-solid.svg);
 }
 
 .file_download {
-   margin-right: 10px;
-   float: right;
-   content: url(/static/image/download-solid.svg);
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	float: right;
+	content: url(/static/image/download-solid.svg);
 }
 
 .file_plus {
-   margin-right: 10px;
-   float: right;
-   content: url(/static/image/square-plus-regular.svg);
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	float: right;
+	content: url(/static/image/file-plus-solid.svg);
+}
+
+.folder_plus {
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	float: right;
+	content: url(/static/image/folder-plus.svg);
 }
 
 .file_explorer .folder_icon:hover,
 .file_explorer .file_icon:hover {
-   cursor: default;
+	cursor: default;
 }
-

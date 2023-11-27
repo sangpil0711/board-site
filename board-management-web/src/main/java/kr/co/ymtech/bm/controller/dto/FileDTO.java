@@ -40,7 +40,7 @@ public class FileDTO {
 	public void setPath(String path) {
 		Path = path;
 	}
-
+	
 	public List<FileDTO> getChild() {
 		return child;
 	}

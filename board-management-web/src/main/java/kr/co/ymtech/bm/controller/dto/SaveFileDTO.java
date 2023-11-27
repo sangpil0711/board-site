@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class FileExplorerDTO {
+public class SaveFileDTO {
 	
 	/** Path : 폴더 경로 */
-	private String path;
+	private String path = null;
 	/** Name : 폴더 이름 */
-	private String name;
+	private String name = null;
 	/** files : 파일 데이터 */
 	private List<MultipartFile> files;
 

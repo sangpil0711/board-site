@@ -1,6 +1,20 @@
 <div id="container" ng-controller="BoardFile">
 	<div class="file_title">파일 탐색기</div>
 	<div class="file_explorer">
+		<div class="main_plus">
+			<img class="main_folder_plus" ng-click="makeChildFolder(null)">
+			<img class="main_file_plus" ngf-select="onFileSelect($files, null)" multiple>
+		</div>
+		<ul ng-if="childFolderBox" style="display: flex; align-items: center;">
+			<li>
+				<img class="folder_icon" style="margin-left: 17px;">
+				<input type="text" class="folder_name" ng-model="newFolderName">
+				<div class="folder_decide">
+					<button ng-click="makeFolder(null, newFolderName)">생성</button>
+					<button ng-click="cancelChildFolder(null)">취소</button>
+				</div>
+			</li>
+		</ul>
 		<ul>
 			<li ng-include="'/static/templates/file_tree.html'"></li>
 		</ul>
