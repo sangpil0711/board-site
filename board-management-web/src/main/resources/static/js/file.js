@@ -77,6 +77,14 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 		}
 
 	};
+	
+	$scope.deleteFile = function(file) {
+      if (confirm("파일을 삭제하시겠습니까?")) {
+         ExplorerFactory.deleteFile({ Name: file.name, Path: file.path }, function() {
+            redirectToFileExplorer();
+         })
+      }
+   }
 
 	/**
 	 * @function insertFile 파일 정보를 서버로 전달하는 함수

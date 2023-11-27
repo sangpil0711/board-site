@@ -54,7 +54,7 @@ app.config(function($routeProvider) {
  */
 app.factory('MainFactory', function($resource) {
 	return $resource('/boards/best', null, {
-		
+
 		bestBoard: {
 			method: 'GET',
 			isArray: true,
@@ -62,7 +62,7 @@ app.factory('MainFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		}
-		
+
 	})
 });
 
@@ -74,7 +74,7 @@ app.factory('MainFactory', function($resource) {
  */
 app.factory('ExplorerFactory', function($resource) {
 	return $resource('/fileExplorer/:Name', null, {
-		
+
 		exploreFile: {
 			method: 'GET',
 			isArray: true,
@@ -82,14 +82,21 @@ app.factory('ExplorerFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-		
+
 		downloadFile: {
 			method: 'GET',
 			headers: {
 				"Content-Type": 'application/json'
 			},
+		},
+
+		deleteFile: {
+			method: 'DELETE',
+			headers: {
+				"Content-Type": 'application/json'
+			},
 		}
-		
+
 	})
 });
 
@@ -115,7 +122,7 @@ app.factory('BoardFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-		
+
 		boardLike: {
 			method: 'PATCH',
 			headers: {
@@ -182,7 +189,7 @@ app.factory('PhotoBoardFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-		
+
 		readPhotoBoard: {
 			method: 'GET',
 			headers: {
@@ -196,7 +203,7 @@ app.factory('PhotoBoardFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-			
+
 		updatePhotoBoard: {
 			method: 'PATCH',
 			headers: {

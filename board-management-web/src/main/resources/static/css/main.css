@@ -909,13 +909,14 @@ pre {
 }
 
 .file_explorer {
-	border: 2px solid grey;
-	width: 700px;
-	height: 550px;
-	margin-left: auto;
-	margin-right: auto;
-	padding-top: 20px;
-	padding-left: 0px;
+   border: 2px solid grey;
+   width: 700px;
+   height: 550px;
+   margin-left: auto;
+   margin-right: auto;
+   padding-top: 20px;
+   padding-left: 0px;
+   overflow: overlay;
 }
 
 .file_explorer ul {

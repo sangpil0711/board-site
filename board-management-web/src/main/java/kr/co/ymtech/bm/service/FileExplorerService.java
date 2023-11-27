@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
+import kr.co.ymtech.bm.repository.vo.FileVO;
 
 /**
  * 파일 탐색기 FileExplorerService 클래스
@@ -48,6 +49,9 @@ public class FileExplorerService implements IFileExplorerService {
 	 * 
 	 * @see kr.co.ymtech.bm.service.IFileExplorerService#loadAllFiles(java.lang.String,
 	 *      java.lang.String)
+	 * 
+	 * @param parentPath    파일의 부모 경로
+	 * @param directoryName 디렉토리 이름
 	 *
 	 * @author 박상현
 	 * @since 2023. 11. 17.
@@ -96,9 +100,47 @@ public class FileExplorerService implements IFileExplorerService {
 		});
 
 		return list;
-
 	}
 
+	/**
+	 * @Method uploadFiles 서버에 파일을 업로드 하는 함수
+	 * 
+	 * @param uploadFile 서버에 업로드 할 파일
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#uploadFiles(kr.co.ymtech.bm.controller.dto.FileExplorerDTO)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 23.
+	 */
+	public void uploadFiles(FileExplorerDTO uploadFile) {
+
+		String directoryPath = null;
+		String filePath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
+
+		for (MultipartFile file : uploadFile.getFiles()) {
+			directoryPath = Paths.get(filePath).resolve(file.getOriginalFilename()).normalize().toString();
+
+			try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(directoryPath)) {
+				IOUtils.copy(input, output);
+			} catch (IOException e) {
+				System.out.println("파일 업로드 실패");
+			}
+		}
+	}
+
+	/**
+	 * @Method 서버에 있는 파일을 다운로드 하는 함수
+	 * 
+	 * @param response http응답
+	 * @param Name     업로드 된 파일 이름
+	 * @param Path     업로드 된 파일 경로
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#downloadFile(javax.servlet.http.HttpServletResponse,
+	 *      java.lang.String, java.lang.String)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 23.
+	 */
 	@Override
 	public void downloadFile(HttpServletResponse response, String Name, String Path) {
 
@@ -115,20 +157,40 @@ public class FileExplorerService implements IFileExplorerService {
 		}
 	}
 
-	public void saveFiles(FileExplorerDTO uploadFile) {
-		
-		String directoryPath = null;
-		String filePath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
-		
-	    for (MultipartFile file : uploadFile.getFiles()) {
-	        directoryPath = Paths.get(filePath).resolve(file.getOriginalFilename()).normalize().toString();
+	/**
+	 * @Method deleteFile 서버에서 파일을 삭제하는 함수
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#deleteFile(java.lang.String,
+	 *      java.lang.String)
+	 * 
+	 * @param Name 삭제할 파일 이름
+	 * @param Path 삭제할 파일 경로
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 23.
+	 */
+	@Override
+	public void deleteFile(String Path, String Name) {
 
-	        try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(directoryPath)) {
-	            IOUtils.copy(input, output);
-	        } catch (IOException e) {
-	            System.out.println("파일 업로드 실패");
-	        }
-	    }
+		File deletedFile = new File(Paths.get(Path).resolve(Name).normalize().toString());
+		deletedFile.delete();
+	}
+
+	@Override
+	public void createDirectory() {
+		String path = "C:\\FileExplorer";
+		File Folder = new File(path);
+
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir();
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		} else {
+			System.out.println("이미 폴더가 생성되어 있습니다.");
+		}
 	}
 
 }
