@@ -1,9 +1,7 @@
 package kr.co.ymtech.bm.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -57,9 +55,9 @@ public class FileExplorerController {
 	}
 	
 	/**
-	 * @Method uploadFiles 서버에 파일을 업로드 하는 함수
+	 * @Method saveFiles 서버에 파일을 업로드 하는 함수
 	 * 
-	 * @param uploadFile 서버에 업로드 할 파일
+	 * @param saveFiles 서버에 업로드 할 파일
 	 *
 	 * @author 박상현
 	 * @since 2023. 11. 23.
@@ -78,7 +76,7 @@ public class FileExplorerController {
 
 	/**
 	 * @Method downloadFile 서버에 있는 파일을 다운로드 하는 함수
-	 * 
+	 *                3333rrrr
 	 * @param response http응답
 	 * @param Name 업로드 된 파일 이름
 	 * @param Path 업로드 된 파일 경로
@@ -92,18 +90,6 @@ public class FileExplorerController {
 		fileExplorerService.downloadFile(response, Name, Path);
 	}
 	
-	@DeleteMapping("/{Name}")
-    public void deleteFile(@PathVariable String Name, @RequestParam String Path) {
-      
-      fileExplorerService.deleteFile(Path, Name);
-   }
-	
-	@PatchMapping("")
-	public void updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
-		
-		fileExplorerService.updateFile(updateFileDTO);
-	}
-
 	/**
 	 * @Method deleteFile 서버에서 파일을 삭제하는 함수
 	 * 
@@ -119,11 +105,16 @@ public class FileExplorerController {
       fileExplorerService.deleteFile(Path, Name);
    }
 	
-	@GetMapping("/createDirectory")
-	public void createDirectory() {
-		fileExplorerService.createDirectory();
-	}
+//	@GetMapping("/createDirectory")
+//	public void createDirectory() {
+//		fileExplorerService.createDirectory();
+//	}
 	
+	@PatchMapping("")
+	public void updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
+		
+		fileExplorerService.updateFile(updateFileDTO);
+	}
 	
 
 }

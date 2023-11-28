@@ -1,6 +1,6 @@
 <div id="container" ng-controller="BoardFile">
 	<div class="file_title">파일 탐색기</div>
-	<div class="file_explorer">
+	<div class="file_explorer" ng-drop="onDrop($event)" ng-dragover="dragOver($event)">
 		<div class="main_plus">
 			<img class="main_folder_plus" ng-click="makeChildFolder(null)">
 			<img class="main_file_plus" ngf-select="onFileSelect($files, null)" multiple>
