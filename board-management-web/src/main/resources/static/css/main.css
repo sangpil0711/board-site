@@ -1005,3 +1005,54 @@ pre {
 .file_explorer .file_icon:hover {
 	cursor: default;
 }
+
+.main_plus {
+	width: 120px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	position: relative;
+	left: 550px;
+	margin-top: 10px;
+}
+
+.main_folder_plus {
+	width: 30px;
+	content: url(/static/image/folder-plus.svg);
+}
+
+.main_file_plus {
+	margin-left: 42px;
+	width: 30px;
+	content: url(/static/image/file-plus-solid.svg);
+}
+
+.folder_name {
+	margin-left: 10px;
+	width: 500px;
+	height: 25px;
+}
+
+.file_decide {
+	float: right;
+	margin-right: 20px;
+}
+
+.file_decide button {
+	font-size: 12px;
+	font-weight: 600;
+	background-color: white;
+	margin-left: 5px;
+	width: 40px;
+	height: 25px;
+	border: 2px solid grey;
+}
+
+.file_update {
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	float: right;
+	content: url(/static/image/pen-to-square-regular.svg);
+}
+
+

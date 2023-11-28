@@ -20,12 +20,23 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 	let exploreFile = function(path, name) {
 		ExplorerFactory.exploreFile({ Path: path, Name: name }, function(response) {
 			$scope.files = response;
+			fileDepth($scope.files, 0);
 		}, function(error) {
 			console.error("파일 리스트 불러오기 실패", error);
 		});
 	};
 
 	exploreFile(null, null);
+
+	let fileDepth = function(files, depth) {
+		files.forEach(function(file) {
+			file.depth = depth;
+
+			if (file.child && file.child.length > 0) {
+				fileDepth(file.child, depth + 1);
+			}
+		})
+	};
 
 	/**
 	 * @function childFileState 해당 폴더의 하위 파일 folderState를 변경하는 함수
@@ -36,15 +47,13 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 	 * @author 황상필
 	 * @since 2023. 11. 23.
 	 */
-	let childFileState = function(item, folderState, childFolderBox) {
-		item.folderState = false;
-		item.folderState = folderState;
-		item.childFolderBox = childFolderBox;
+	let childFileState = function(file, folderState) {
+		file.folderState = folderState;
 
 		// child가 존재하면 child를 돌면서 folderState 변경
-		if (item.child && item.child.length > 0) {
-			item.child.forEach(function(childItem) {
-				childFileState(childItem, folderState, childFolderBox);
+		if (file.child && file.child.length > 0) {
+			file.child.forEach(function(childItem) {
+				childFileState(childItem, folderState);
 			});
 		}
 	}
@@ -60,7 +69,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 	$scope.openFolder = function(file) {
 		file.folderState = !file.folderState;
 		if (!file.folderState) {
-			childFileState(file, false, false);
+			childFileState(file, false);
 		}
 	};
 
@@ -154,11 +163,11 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 	 */
 	$scope.deleteFile = function(file) {
 		if (confirm("파일을 삭제하시겠습니까?")) {
-				ExplorerFactory.deleteFile({ Name: file.name, Path: file.path }, function() {
-					redirectToFileExplorer();
-				}, function(error) {
-					console.error("파일 삭제 실패", error);
-				})
+			ExplorerFactory.deleteFile({ Name: file.name, Path: file.path }, function() {
+				redirectToFileExplorer();
+			}, function(error) {
+				console.error("파일 삭제 실패", error);
+			})
 		}
 	};
 
@@ -173,9 +182,12 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 	$scope.makeChildFolder = function(folder) {
 		if (folder == null) {
 			$scope.childFolderBox = true;
+			otherFileState($scope.files, folder, false, false);
 		} else {
+			$scope.childFolderBox = false;
 			folder.childFolderBox = true;
 			folder.folderState = true;
+			otherFileState($scope.files, folder, false, false);
 		}
 	};
 
@@ -233,7 +245,39 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 	 */
 	$scope.updateFile = function(file) {
 		file.updateFileBox = true;
+		file.childFolderBox = false;
+		$scope.childFolderBox = false;
+		otherFileState($scope.files, file, false, false);
 	};
+
+	/**
+	 * @function otherFileState 다른 파일의 updateFileBox와 childFolderBox 상태를 변경하는 함수
+	 * 
+	 * @param files 파일 리스트
+	 * @param selectFile 선택한 파일
+	 * @param updateFileBox 파일 수정 상태
+	 * @param childFolderBox 폴더 생성 상태
+	 * 
+	 * @author 황상필
+	 * @since 2023. 11. 28.
+	 */
+	let otherFileState = function(files, selectFile, updateFileBox, childFolderBox) {
+
+		// 파일 전체를 반복하면서 동작 수행 
+		files.forEach(function(item) {
+
+			// 선택한 파일이 아니면 updateFileBox와 childFolderBox를 변경
+			if (item !== selectFile) {
+				item.updateFileBox = updateFileBox;
+				item.childFolderBox = childFolderBox;
+			}
+
+			// child가 존재하면 child를 돌면서 updateFileBox와 childFolderBox를 변경
+			if (item.child && item.child.length > 0) {
+				otherFileState(item.child, selectFile, updateFileBox, childFolderBox);
+			}
+		});
+	}
 
 	/**
 	 * @function cancelUpdateFile 파일 이름 수정 박스를 취소하는 함수
@@ -302,5 +346,9 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
         event.preventDefault();
     };
 	
+
+	$scope.moveFile = function(file) {
+		console.log(file);
+	}
 
 });

@@ -1,36 +1,15 @@
-.main_plus {
-	width: 120px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+.plus_name {
+	margin-bottom: 30px;
 	position: relative;
-	left: 581px;
-	margin-bottom: 20px;
-	margin-top: 10px;
+	left: 522px;
 }
 
-.main_folder_plus {
-	margin-left: 20px;
-	width: 30px;
-	content: url(/static/image/folder-plus.svg);
-}
-
-.main_file_plus {
-	margin-left: 5px;
-	width: 30px;
-	content: url(/static/image/file-plus-solid.svg);
-}
-
-.folder_name {
-	margin-left: 10px;
-	width: 500px;
-	height: 25px;
-}
-
-.folder_decide {
+.main_file_decide {
 	float: right;
+	margin-left: 15px;
 }
 
-.folder_decide button {
+.main_file_decide button {
 	font-size: 12px;
 	font-weight: 600;
 	background-color: white;
@@ -38,13 +17,5 @@
 	width: 40px;
 	height: 25px;
 	border: 2px solid grey;
-}
-
-.file_update {
-	width: 20px;
-	height: 20px;
-	margin-right: 10px;
-	float: right;
-	content: url(/static/image/pen-to-square-regular.svg);
 }
 

@@ -234,9 +234,16 @@ public class FileExplorerService implements IFileExplorerService {
 	 */
 	@Override
 	public void updateFile(UpdateFileDTO updateFileDTO) {
+		Path oldFileName = null;
+		Path newFileName = null;
 		try {
-			Path oldFileName = Paths.get(PathConfig.getFilePath()).resolve(updateFileDTO.getName()).normalize();
-			Path newFileName = Paths.get(PathConfig.getFilePath()).resolve(updateFileDTO.getNewFileName()).normalize();
+			if (updateFileDTO.getPath() == PathConfig.getFilePath()) {
+				oldFileName = Paths.get(PathConfig.getFilePath()).resolve(updateFileDTO.getName()).normalize();
+				newFileName = Paths.get(PathConfig.getFilePath()).resolve(updateFileDTO.getNewFileName()).normalize();
+			} else {
+				oldFileName = Paths.get(updateFileDTO.getPath()).resolve(updateFileDTO.getName()).normalize();
+				newFileName = Paths.get(updateFileDTO.getPath()).resolve(updateFileDTO.getNewFileName()).normalize();
+			}
 			Files.move(oldFileName, newFileName);
 		} catch (IOException e) {
 			System.out.println("파일 이름 변경 실패");
