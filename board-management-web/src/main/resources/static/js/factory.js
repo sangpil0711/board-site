@@ -10,7 +10,7 @@
  * @author 황상필
  * @since 2023. 09. 01.
  */
-var app = angular.module("myApp", ['ngResource', 'ngRoute', 'ui.bootstrap', 'ngFileUpload']);
+var app = angular.module("myApp", ['ngResource', 'ngRoute', 'ui.bootstrap', 'ngFileUpload', 'dndLists']);
 
 app.config(function($routeProvider) {
 	$routeProvider

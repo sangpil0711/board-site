@@ -145,41 +145,50 @@ public class FileExplorerService implements IFileExplorerService {
 	public void deleteFile(String Path, String Name) {
 
 		File deletedFile = new File(Paths.get(Path).resolve(Name).normalize().toString());
-		
+
 		if (deletedFile.isDirectory()) {
-	        try {
-	            FileUtils.deleteDirectory(deletedFile);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    } else {
-	        deletedFile.delete();
-	    }
+			try {
+				FileUtils.deleteDirectory(deletedFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			deletedFile.delete();
+		}
 	}
 
 	@Override
 	public void saveFolder(String Name, SaveFolderDTO saveFolderDTO) {
-		
+
 		String filePath = null;
-		
+
 		if ("null".equals(Name)) {
-			filePath = Paths.get(PathConfig.getFilePath()).resolve(saveFolderDTO.getNewFolderName()).normalize().toString();
+			filePath = Paths.get(PathConfig.getFilePath()).resolve(saveFolderDTO.getNewFolderName()).normalize()
+					.toString();
 		} else {
-			filePath = Paths.get(saveFolderDTO.getPath()).resolve(Name).resolve(saveFolderDTO.getNewFolderName()).normalize().toString();
+			filePath = Paths.get(saveFolderDTO.getPath()).resolve(Name).resolve(saveFolderDTO.getNewFolderName())
+					.normalize().toString();
 		}
 
 		File folder = new File(filePath);
 
 		folder.mkdir();
 	}
-	
+
 	@Override
 	public void updateFile(UpdateFileDTO updateFileDTO) {
+		Path oldFileName = null;
+		Path newFileName = null;
 		try {
-			Path oldFileName = Paths.get(PathConfig.getFilePath()).resolve(updateFileDTO.getName()).normalize();
-			Path newFileName = Paths.get(PathConfig.getFilePath()).resolve(updateFileDTO.getNewFileName()).normalize();
+			if (updateFileDTO.getPath() == PathConfig.getFilePath()) {
+				oldFileName = Paths.get(PathConfig.getFilePath()).resolve(updateFileDTO.getName()).normalize();
+				newFileName = Paths.get(PathConfig.getFilePath()).resolve(updateFileDTO.getNewFileName()).normalize();
+			} else {
+				oldFileName = Paths.get(updateFileDTO.getPath()).resolve(updateFileDTO.getName()).normalize();
+				newFileName = Paths.get(updateFileDTO.getPath()).resolve(updateFileDTO.getNewFileName()).normalize();
+			}
 			Files.move(oldFileName, newFileName);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.out.println("파일 이름 변경 실패");
 		}
 	}
