@@ -22,4 +22,6 @@ public interface IFileExplorerService {
 	public void saveFolder(String Name, SaveFolderDTO saveFolderDTO);
 	
 	public void updateFile(UpdateFileDTO updateFileDTO);
+	
+	public void moveFile(String fileName, String folderName, String oldPath, String newPath);
 }

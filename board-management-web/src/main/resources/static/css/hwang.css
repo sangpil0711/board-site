@@ -19,3 +19,7 @@
 	border: 2px solid grey;
 }
 
+.file_explorer span.click {
+	background-color: rgb(193, 231, 253);
+	border: 1px solid skyblue;
+}
