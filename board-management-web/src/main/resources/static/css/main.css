@@ -927,7 +927,12 @@ pre {
 }
 
 .file_explorer span {
-	margin-left: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding-left: 10px;
 	font-size: 15px;
 	font-weight: 600;
 }
@@ -1026,7 +1031,7 @@ pre {
 	content: url(/static/image/file-plus-solid.svg);
 }
 
-.folder_name {
+.file_name_box {
 	margin-left: 10px;
 	width: 500px;
 	height: 25px;
@@ -1054,5 +1059,3 @@ pre {
 	float: right;
 	content: url(/static/image/pen-to-square-regular.svg);
 }
-
-

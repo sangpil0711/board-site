@@ -104,15 +104,16 @@ public class FileExplorerController {
 		fileExplorerService.deleteFile(Path, Name);
 	}
 
-//	@GetMapping("/createDirectory")
-//	public void createDirectory() {
-//		fileExplorerService.createDirectory();
-//	}
-
 	@PatchMapping("")
 	public void updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
 
 		fileExplorerService.updateFile(updateFileDTO);
+	}
+
+	@PatchMapping("/{Name}")
+	public void moveFile(@PathVariable String fileName, @RequestParam String folderName, @RequestParam String oldPath,
+			@RequestParam String newPath) {
+		fileExplorerService.moveFile(fileName, folderName, oldPath, newPath);
 	}
 
 }

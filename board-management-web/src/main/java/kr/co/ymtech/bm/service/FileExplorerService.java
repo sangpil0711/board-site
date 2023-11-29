@@ -250,4 +250,15 @@ public class FileExplorerService implements IFileExplorerService {
 		}
 	}
 
+	@Override
+	public void moveFile(String fileName, String folderName, String oldPath, String newPath) {
+		try {
+			Path oldFilePath = Paths.get(oldPath).resolve(fileName).normalize();
+			Path newFilePath = Paths.get(newPath).resolve(folderName).resolve(fileName).normalize();
+			Files.move(oldFilePath, newFilePath);
+		} catch (IOException e) {
+			System.out.println("파일 이동 실패");
+		}
+	}
+
 }

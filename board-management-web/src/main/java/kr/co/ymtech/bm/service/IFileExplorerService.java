@@ -77,4 +77,6 @@ public interface IFileExplorerService {
 	 * @since 2023. 11. 28.
 	 */
 	public void updateFile(UpdateFileDTO updateFileDTO);
+	
+	public void moveFile(String fileName, String folderName, String oldPath, String newPath);
 }

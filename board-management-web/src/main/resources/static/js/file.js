@@ -1,5 +1,5 @@
 
-app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location, $route) {
+app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 
 	// 해당 폴더 파일 리스트
 	$scope.files = [];
@@ -119,22 +119,11 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 				files: $scope.selectedFiles
 			},
 		}).success(function() {
-			redirectToFileExplorer();
+			exploreFile(null, null);
 		}).error(function() {
 			alert('파일 업로드 실패');
 		})
 	};
-
-	/**
-	 * @function redirectToFileExplorer file_explorer.html 화면으로 이동하는 함수
-	 * 
-	 * @author 황상필
-	 * @since 2023. 11. 23.
-	 */
-	let redirectToFileExplorer = function() {
-		$location.path('/file');
-		$route.reload();
-	}
 
 	/**
 	 * @function downloadFile 파일을 다운로드하는 함수
@@ -164,7 +153,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 	$scope.deleteFile = function(file) {
 		if (confirm("파일을 삭제하시겠습니까?")) {
 			ExplorerFactory.deleteFile({ Name: file.name, Path: file.path }, function() {
-				redirectToFileExplorer();
+				exploreFile(null, null);
 			}, function(error) {
 				console.error("파일 삭제 실패", error);
 			})
@@ -228,7 +217,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 			alert("파일 이름을 입력해주세요.")
 		} else {
 			ExplorerFactory.createFolder({ Name: folder === null ? "null" : folder.name }, folderData, function() {
-				redirectToFileExplorer();
+				exploreFile(null, null);
 			}, function(error) {
 				console.error("폴더 생성 실패", error);
 			});
@@ -311,17 +300,39 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 				newFileName: newFileName == undefined ? file.name : newFileName
 			}
 			ExplorerFactory.updateFile(fileData, function() {
-				redirectToFileExplorer();
+				exploreFile(null, null);
 			}, function(error) {
 				console.error("파일 이름 변경 실패", error);
 			});
 		}
 	};
 
-
+	$scope.clickFile = function(file) {
+		$scope.clickItem = file;
+	}
 
 	$scope.moveFile = function(file) {
+		$scope.dragFile = file;
 		console.log(file);
+	}
+
+	$scope.onFileDrop = function(folder) {
+		console.log(folder);
+		Upload.upload({
+			url: '/fileExplorer',
+			method: 'PATCH',
+			params: {},
+			data: { 	// 요청된 경로의 Controller로 전달할 데이터
+				fileName: $scope.dragFile.name,
+				folderName: folder.name,
+				oldPath: $scope.dragFile.path,
+				newPath: folder.path
+			},
+		}).success(function() {
+			exploreFile(null, null);
+		}).error(function() {
+			alert('파일 업로드 실패');
+		})
 	}
 
 });
