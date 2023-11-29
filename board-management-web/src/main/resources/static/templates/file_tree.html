@@ -1,5 +1,5 @@
 <ul dnd-list="files">
-	<li ng-repeat="item in files" dnd-draggable="item" dnd-effect-allowed="move" dnd-moved="moveFile(item)">
+	<li ng-repeat="item in files" dnd-draggable="item" dnd-effect-allowed="move" dnd-moved="onDrop(item)">
 		
 			<!-- 파일 펼치기 버튼 시작 -->
 			<img ng-if="item.isDirectory" ng-click="openFolder(item)"

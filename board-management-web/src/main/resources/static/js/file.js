@@ -91,14 +91,14 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 		insertFile(folder);
 		$scope.selectedFiles = [];
 	};
-	
+
 	$scope.deleteFile = function(file) {
-      if (confirm("파일을 삭제하시겠습니까?")) {
-         ExplorerFactory.deleteFile({ Name: file.name, Path: file.path }, function() {
-            redirectToFileExplorer();
-         })
-      }
-   }
+		if (confirm("파일을 삭제하시겠습니까?")) {
+			ExplorerFactory.deleteFile({ Name: file.name, Path: file.path }, function() {
+				redirectToFileExplorer();
+			})
+		}
+	}
 
 	/**
 	 * @function insertFile 파일 정보를 서버로 전달하는 함수
@@ -317,35 +317,8 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload, $location,
 			});
 		}
 	};
-	
-	 /**
-     * @function onDrop 파일 탐색기에 파일이 드롭되었을 때의 이벤트를 처리합니다.
-     * 
-     * @param event 드롭 이벤트.
-     * @param folder 파일을 놓을 대상 폴더.
-     */
-    $scope.onDrop = function (event, folder) {
-        event.preventDefault();
 
-        var files = event.dataTransfer.files;
-        $scope.selectedFiles = [];
 
-        for (var i = 0; i < files.length; i++) {
-            // 드롭된 파일을 선택된 파일 목록에 추가
-            $scope.selectedFiles.push(files[i]);
-        }
-
-        // 선택된 파일을 해당 폴더에 추가하는 함수 호출
-        insertFile(folder);
-
-        // 선택된 파일 목록 초기화
-        $scope.selectedFiles = [];
-    };
-    
-        $scope.dragOver = function (event) {
-        event.preventDefault();
-    };
-	
 
 	$scope.moveFile = function(file) {
 		console.log(file);
