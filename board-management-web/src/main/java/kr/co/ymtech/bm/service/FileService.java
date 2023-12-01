@@ -27,11 +27,11 @@ public class FileService implements IFileService {
 	 * @author 황상필
 	 * @since 2023. 11. 06.
 	 */
-	private final PathConfig pathConfig;
+	private final PathConfig PathConfig;
 
 	@Autowired
-	private FileService(PathConfig pathConfig) {
-		this.pathConfig = pathConfig;
+	private FileService(PathConfig PathConfig) {
+		this.PathConfig = PathConfig;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class FileService implements IFileService {
 	@Override
 	public void downloadFile(HttpServletResponse response, String fileName, String fileId) {
 		
-		String filePath = pathConfig.getImagePath() + "/" + fileId + "_" + fileName;
+		String filePath = PathConfig.getImagePath() + "/" + fileId + "_" + fileName;
 
 		// 지정된 경로의 폴더에서 파일을 찾아서 다운로드
 		try (FileInputStream input = new FileInputStream(filePath); OutputStream output = response.getOutputStream()) {

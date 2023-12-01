@@ -12,14 +12,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
@@ -53,6 +50,9 @@ public class FileExplorerService implements IFileExplorerService {
 	 * 
 	 * @see kr.co.ymtech.bm.service.IFileExplorerService#loadAllFiles(java.lang.String,
 	 *      java.lang.String)
+	 * 
+	 * @param parentPath    파일의 부모 경로
+	 * @param directoryName 디렉토리 이름
 	 *
 	 * @author 박상현
 	 * @since 2023. 11. 17.
@@ -92,9 +92,9 @@ public class FileExplorerService implements IFileExplorerService {
 		}
 		list.sort((file1, file2) -> {
 			if (file1.getIsDirectory() && !file2.getIsDirectory()) {
-				return -1; // f1은 디렉토리이고, f2는 파일입니다.
+				return -1; // file1은 디렉토리이고, file2는 파일입니다.
 			} else if (!file1.getIsDirectory() && file2.getIsDirectory()) {
-				return 1; // f1은 파일이고, f2는 디렉토리입니다.
+				return 1; // file1은 파일이고, file2는 디렉토리입니다.
 			} else {
 				return 0;
 			}
@@ -103,22 +103,16 @@ public class FileExplorerService implements IFileExplorerService {
 		return list;
 	}
 
-	@Override
-	public void downloadFile(HttpServletResponse response, String Name, String Path) {
-
-		String filePath = Paths.get(Path).resolve(Name).normalize().toString();
-
-		// 지정된 경로의 폴더에서 파일을 찾아서 다운로드
-		try (FileInputStream input = new FileInputStream(filePath); OutputStream output = response.getOutputStream()) {
-			String fileName = URLEncoder.encode(Name, "UTF-8");
-			fileName = fileName.replaceAll("\\+", "%20");
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-			IOUtils.copy(input, output);
-		} catch (Exception e) {
-			System.out.println("파일 다운로드 실패");
-		}
-	}
-
+	/**
+	 * @Method saveFiles 서버에 파일을 업로드 하는 함수
+	 * 
+	 * @param uploadFile 서버에 업로드 할 파일
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#saveFiles(kr.co.ymtech.bm.controller.dto.UploadFileDTO)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 23.
+	 */
 	public void uploadFiles(UploadFileDTO uploadFile) {
 
 		String directoryPath = null;
@@ -141,6 +135,47 @@ public class FileExplorerService implements IFileExplorerService {
 		}
 	}
 
+	/**
+	 * @Method 서버에 있는 파일을 다운로드 하는 함수
+	 * 
+	 * @param response http응답
+	 * @param Name     업로드 된 파일 이름
+	 * @param Path     업로드 된 파일 경로
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#downloadFile(javax.servlet.http.HttpServletResponse,
+	 *      java.lang.String, java.lang.String)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 23.
+	 */
+	@Override
+	public void downloadFile(HttpServletResponse response, String Name, String Path) {
+
+		String filePath = Paths.get(Path).resolve(Name).normalize().toString();
+
+		// 지정된 경로의 폴더에서 파일을 찾아서 다운로드
+		try (FileInputStream input = new FileInputStream(filePath); OutputStream output = response.getOutputStream()) {
+			String fileName = URLEncoder.encode(Name, "UTF-8");
+			fileName = fileName.replaceAll("\\+", "%20");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+			IOUtils.copy(input, output);
+		} catch (Exception e) {
+			System.out.println("파일 다운로드 실패");
+		}
+	}
+
+	/**
+	 * @Method deleteFile 서버에 업로드 된 디렉토리 또는 파일을 삭제하는 함수
+	 * 
+	 * @Param Path 삭제할 파일 또는 디렉토리 경로
+	 * @param Name 삭제할 파일 또는 디렉토리 이름
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#deleteFile(java.lang.String,
+	 *      java.lang.String)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 28.
+	 */
 	@Override
 	public void deleteFile(String Path, String Name) {
 
@@ -157,6 +192,18 @@ public class FileExplorerService implements IFileExplorerService {
 		}
 	}
 
+	/**
+	 * @Method saveFolder 서버에 디렉토리를 추가하는 함수
+	 * 
+	 * @param Name          추가할 디렉토리 이름
+	 * @param saveFolderDTO 추가할 디렉토리 정보
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#saveFolder(java.lang.String,
+	 *      kr.co.ymtech.bm.controller.dto.SaveFolderDTO)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 28.
+	 */
 	@Override
 	public void saveFolder(String Name, SaveFolderDTO saveFolderDTO) {
 
@@ -175,6 +222,16 @@ public class FileExplorerService implements IFileExplorerService {
 		folder.mkdir();
 	}
 
+	/**
+	 * @Method updateFile 파일 또는 디렉토리 이름을 수정하는 함수
+	 * 
+	 * @param updateFileDTO 수정할 파일혹은 디렉토리 정보
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#updateFile(kr.co.ymtech.bm.controller.dto.UpdateFileDTO)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 28.
+	 */
 	@Override
 	public void updateFile(UpdateFileDTO updateFileDTO) {
 		Path oldFileName = null;
@@ -193,11 +250,33 @@ public class FileExplorerService implements IFileExplorerService {
 		}
 	}
 
+	/**
+	 * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
+	 * 
+	 * @param fileName   파일 또는 디렉토리 이름
+	 * @param folderName 디렉토라 이름
+	 * @param oldPath    원래 경로
+	 * @param newPath    새로운 경로
+	 *
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#moveFile(java.lang.String,
+	 *      java.lang.String, java.lang.String, java.lang.String)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 30.
+	 */
 	@Override
 	public void moveFile(String fileName, String folderName, String oldPath, String newPath) {
+		Path oldFilePath;
+		Path newFilePath;
 		try {
-			Path oldFilePath = Paths.get(oldPath).resolve(fileName).normalize();
-			Path newFilePath = Paths.get(newPath).resolve(folderName).resolve(fileName).normalize();
+			if (folderName == null && newPath == null) {
+				oldFilePath = Paths.get(oldPath).resolve(fileName).normalize();
+				newFilePath = Paths.get(PathConfig.getFilePath()).resolve(fileName).normalize();
+
+			} else {
+				oldFilePath = Paths.get(oldPath).resolve(fileName).normalize();
+				newFilePath = Paths.get(newPath).resolve(folderName).resolve(fileName).normalize();
+			}
 			Files.move(oldFilePath, newFilePath);
 		} catch (IOException e) {
 			System.out.println("파일 이동 실패");
