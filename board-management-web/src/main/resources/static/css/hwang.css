@@ -23,3 +23,7 @@
 	background-color: rgb(193, 231, 253);
 	border: 1px solid skyblue;
 }
+
+.file_explorer span.hover:hover {
+	background-color: rgb(224, 243, 254);
+}

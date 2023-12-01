@@ -1,6 +1,6 @@
 <ul>
 	<li ng-repeat="item in files" dnd-list="files" dnd-draggable="item" dnd-effect-allowed="move"
-		dnd-moved="moveFile(item)" ng-drop="onFileDrop(item)">
+		dnd-moved="moveFile(item)" dnd-drag-over="dragOver(item)">
 
 		<!-- 파일 펼치기 버튼 시작 -->
 		<img ng-if="item.isDirectory" ng-click="openFolder(item)"
@@ -12,8 +12,8 @@
 		<!-- 파일/폴더 아이콘 끝 -->
 
 		<!-- 파일 이름 시작 -->
-		<span ng-style="{'width': 470 - item.depth * 31  + 'px'}" ng-if="!item.updateFileBox" ng-blur="clickItem = null"
-			ng-click="clickFile(item)" ng-class="{ 'click': item === clickItem }">{{item.name}}</span>
+		<span ng-style="{'width': 470 - item.depth * 31  + 'px'}" ng-if="!item.updateFileBox" ng-click="clickFile(item)"
+			ng-class="{ 'click': item === clickItem, 'hover': item !== clickItem}">{{item.name}}</span>
 		<!-- 파일 이름 끝 -->
 
 		<!-- 수정 시 파일 이름 입력 박스 시작 -->
@@ -52,9 +52,9 @@
 		<!-- 폴더 생성 박스 시작 -->
 		<ul ng-if="item.childFolderBox">
 			<li>
-				<img class="folder_icon" style="margin-left: 17px;">
+				<img class="folder_icon" style="margin-left: 38px;">
 				<input type="text" class="file_name_box" ng-model="newFolderName"
-					ng-style="{'width': 461 - item.depth * 31  + 'px'}">
+					ng-style="{'width': 440 - item.depth * 31  + 'px'}">
 				<div class="file_decide">
 					<button ng-click="makeFolder(item, newFolderName)">생성</button>
 					<button ng-click="cancelChildFolder(item)">취소</button>

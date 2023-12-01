@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
-import kr.co.ymtech.bm.controller.dto.SaveFileDTO;
+import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
 
@@ -119,7 +119,7 @@ public class FileExplorerService implements IFileExplorerService {
 		}
 	}
 
-	public void saveFiles(SaveFileDTO uploadFile) {
+	public void uploadFiles(UploadFileDTO uploadFile) {
 
 		String directoryPath = null;
 		String filePath = null;
@@ -150,7 +150,7 @@ public class FileExplorerService implements IFileExplorerService {
 			try {
 				FileUtils.deleteDirectory(deletedFile);
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("파일 삭제 실패");
 			}
 		} else {
 			deletedFile.delete();

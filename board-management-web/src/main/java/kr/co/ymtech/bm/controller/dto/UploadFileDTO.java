@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class SaveFileDTO {
+public class UploadFileDTO {
 	
 	/** Path : 폴더 경로 */
 	private String path = null;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.ymtech.bm.controller.dto.FileDTO;
-import kr.co.ymtech.bm.controller.dto.SaveFileDTO;
+import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
 import kr.co.ymtech.bm.service.FileExplorerService;
@@ -58,9 +58,9 @@ public class FileExplorerController {
 	}
 
 	@PostMapping("")
-	public void saveFiles(SaveFileDTO uploadFile) {
+	public void saveFiles(UploadFileDTO uploadFile) {
 
-		fileExplorerService.saveFiles(uploadFile);
+		fileExplorerService.uploadFiles(uploadFile);
 	}
 
 	@PostMapping("/{Name}")
@@ -87,7 +87,7 @@ public class FileExplorerController {
 		fileExplorerService.updateFile(updateFileDTO);
 	}
 
-	@PatchMapping("/{Name}")
+	@PatchMapping("/{fileName}")
 	public void moveFile(@PathVariable String fileName, @RequestParam String folderName, @RequestParam String oldPath,
 			@RequestParam String newPath) {
 		fileExplorerService.moveFile(fileName, folderName, oldPath, newPath);
