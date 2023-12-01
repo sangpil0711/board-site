@@ -969,6 +969,7 @@ pre {
 }
 
 .file_icon {
+	margin-left: 24px;
 	width: 20px;
 	height: 20px;
 	content: url(/static/image/file-regular.svg)
@@ -1033,7 +1034,7 @@ pre {
 
 .file_name_box {
 	margin-left: 10px;
-	width: 500px;
+	width: 480px;
 	height: 25px;
 }
 

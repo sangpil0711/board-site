@@ -185,7 +185,7 @@ public class FileExplorerService implements IFileExplorerService {
 			try {
 				FileUtils.deleteDirectory(deletedFile);
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("파일 삭제 실패");
 			}
 		} else {
 			deletedFile.delete();
