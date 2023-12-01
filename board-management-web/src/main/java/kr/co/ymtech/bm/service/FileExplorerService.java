@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
-import kr.co.ymtech.bm.controller.dto.SaveFileDTO;
+import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
 
@@ -108,12 +108,12 @@ public class FileExplorerService implements IFileExplorerService {
 	 * 
 	 * @param uploadFile 서버에 업로드 할 파일
 	 * 
-	 * @see kr.co.ymtech.bm.service.IFileExplorerService#saveFiles(kr.co.ymtech.bm.controller.dto.SaveFileDTO)
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#saveFiles(kr.co.ymtech.bm.controller.dto.UploadFileDTO)
 	 *
 	 * @author 박상현
 	 * @since 2023. 11. 23.
 	 */
-	public void saveFiles(SaveFileDTO uploadFile) {
+	public void uploadFiles(UploadFileDTO uploadFile) {
 
 		String directoryPath = null;
 		String filePath = null;
@@ -250,11 +250,33 @@ public class FileExplorerService implements IFileExplorerService {
 		}
 	}
 
+	/**
+	 * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
+	 * 
+	 * @param fileName   파일 또는 디렉토리 이름
+	 * @param folderName 디렉토라 이름
+	 * @param oldPath    원래 경로
+	 * @param newPath    새로운 경로
+	 *
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#moveFile(java.lang.String,
+	 *      java.lang.String, java.lang.String, java.lang.String)
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 30.
+	 */
 	@Override
 	public void moveFile(String fileName, String folderName, String oldPath, String newPath) {
+		Path oldFilePath;
+		Path newFilePath;
 		try {
-			Path oldFilePath = Paths.get(oldPath).resolve(fileName).normalize();
-			Path newFilePath = Paths.get(newPath).resolve(folderName).resolve(fileName).normalize();
+			if (folderName == null && newPath == null) {
+				oldFilePath = Paths.get(oldPath).resolve(fileName).normalize();
+				newFilePath = Paths.get(PathConfig.getFilePath()).resolve(fileName).normalize();
+
+			} else {
+				oldFilePath = Paths.get(oldPath).resolve(fileName).normalize();
+				newFilePath = Paths.get(newPath).resolve(folderName).resolve(fileName).normalize();
+			}
 			Files.move(oldFilePath, newFilePath);
 		} catch (IOException e) {
 			System.out.println("파일 이동 실패");

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
-import kr.co.ymtech.bm.controller.dto.SaveFileDTO;
+import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
 import kr.co.ymtech.bm.service.FileExplorerService;
@@ -42,6 +42,9 @@ public class FileExplorerController {
 
 	/**
 	 * @Method loadAllFiles 서버안에 있는 모든 파일들을 가져오는 함수
+	 * 
+	 * @param parentPath 파일의 부모경로
+	 * @Param directoryName 디렉토리 이름
 	 *
 	 * @return 파일 경로, 깊이, 파일이름 을 가지고 반환
 	 *
@@ -63,15 +66,9 @@ public class FileExplorerController {
 	 * @since 2023. 11. 23.
 	 */
 	@PostMapping("")
-	public void saveFiles(SaveFileDTO uploadFile) {
+	public void uploadFiles(UploadFileDTO uploadFile) {
 
-		fileExplorerService.saveFiles(uploadFile);
-	}
-
-	@PostMapping("/{Name}")
-	public void saveFolder(@PathVariable String Name, @RequestBody SaveFolderDTO saveFolderDTO) {
-
-		fileExplorerService.saveFolder(Name, saveFolderDTO);
+		fileExplorerService.uploadFiles(uploadFile);
 	}
 
 	/**
@@ -104,16 +101,49 @@ public class FileExplorerController {
 		fileExplorerService.deleteFile(Path, Name);
 	}
 
+	/**
+	 * @Method saveFolder 서버에 디렉토리를 추가하는 함수
+	 * 
+	 * @param Name          추가할 디렉토리 이름
+	 * @param saveFolderDTO 추가할 디렉토리 정보
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 28.
+	 */
+	@PostMapping("/{Name}")
+	public void saveFolder(@PathVariable String Name, @RequestBody SaveFolderDTO saveFolderDTO) {
+
+		fileExplorerService.saveFolder(Name, saveFolderDTO);
+	}
+
+	/**
+	 * @Method updateFile 파일 또는 디렉토리 이름을 수정하는 함수
+	 * 
+	 * @param updateFileDTO 수정할 파일혹은 디렉토리 정보
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 28.
+	 */
 	@PatchMapping("")
 	public void updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
 
 		fileExplorerService.updateFile(updateFileDTO);
 	}
 
-	@PatchMapping("/{Name}")
-	public void moveFile(@PathVariable String fileName, @RequestParam String folderName, @RequestParam String oldPath,
-			@RequestParam String newPath) {
+	/**
+	 * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
+	 * 
+	 * @param fileName   파일 또는 디렉토리 이름
+	 * @param folderName 디렉토라 이름
+	 * @param oldPath    원래 경로
+	 * @param newPath    새로운 경로
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 30.
+	 */
+	@PatchMapping("/{fileName}")
+	public void moveFile(@PathVariable String fileName, @RequestParam(required = false) String folderName,
+			@RequestParam String oldPath, @RequestParam(required = false) String newPath) {
 		fileExplorerService.moveFile(fileName, folderName, oldPath, newPath);
 	}
-
 }

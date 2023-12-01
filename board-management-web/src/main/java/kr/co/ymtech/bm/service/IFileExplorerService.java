@@ -3,7 +3,7 @@ package kr.co.ymtech.bm.service;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
-import kr.co.ymtech.bm.controller.dto.SaveFileDTO;
+import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
 
@@ -44,7 +44,7 @@ public interface IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 24.
 	 */
-	public void saveFiles(SaveFileDTO uploadFile);
+	public void uploadFiles(UploadFileDTO uploadFile);
 
 	/**
 	 * @Method deleteFile 서버에서 파일을 삭제하는 함수
@@ -77,6 +77,17 @@ public interface IFileExplorerService {
 	 * @since 2023. 11. 28.
 	 */
 	public void updateFile(UpdateFileDTO updateFileDTO);
-	
+
+	/**
+	 * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
+	 * 
+	 * @param fileName   파일 또는 디렉토리 이름
+	 * @param folderName 디렉토라 이름
+	 * @param oldPath    원래 경로
+	 * @param newPath    새로운 경로
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 30.
+	 */
 	public void moveFile(String fileName, String folderName, String oldPath, String newPath);
 }
