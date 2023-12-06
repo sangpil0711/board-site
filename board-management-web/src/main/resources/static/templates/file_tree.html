@@ -1,6 +1,6 @@
-<ul>
-	<li ng-repeat="item in files" dnd-list="files" dnd-draggable="item" dnd-effect-allowed="move"
-		dnd-moved="moveFile(item)" dnd-drag-over="dragOver(item)">
+<ul dnd-list="files">
+	<li ng-repeat="item in files" dnd-draggable="true" dnd-effect-allowed="move"
+		dnd-moved="dragFile(item)" dnd-dragover="dragOver(item)" dnd-drop="dropFile(item)" ng-drag-over="allowDrop(event)">
 
 		<!-- 파일 펼치기 버튼 시작 -->
 		<img ng-if="item.isDirectory" ng-click="openFolder(item)"
@@ -13,7 +13,7 @@
 
 		<!-- 파일 이름 시작 -->
 		<span ng-style="{'width': 470 - item.depth * 31  + 'px'}" ng-if="!item.updateFileBox" ng-click="clickFile(item)"
-			ng-class="{ 'click': item === clickItem, 'hover': item !== clickItem}">{{item.name}}</span>
+			ng-class="{ 'click': item.clickItem, 'hover': !item.clickItem}">{{item.name}}</span>
 		<!-- 파일 이름 끝 -->
 
 		<!-- 수정 시 파일 이름 입력 박스 시작 -->
@@ -26,12 +26,12 @@
 		<!-- 파일 삭제 버튼 끝 -->
 
 		<!-- 파일 생성 버튼 시작 -->
-		<img class="file_plus" ng-if="item.isDirectory && !item.updateFileBox" ngf-select="onFileSelect($files, item)"
+		<img class="file_plus" ng-if="item.isDirectory && !item.updateFileBox" ngf-select="uploadSelectFiles($files, item)"
 			multiple>
 		<!-- 파일 생성 버튼 끝 -->
 
 		<!-- 폴더 생성 버튼 시작 -->
-		<img class="folder_plus" ng-if="item.isDirectory && !item.updateFileBox" ng-click="makeChildFolder(item)">
+		<img class="folder_plus" ng-if="item.isDirectory && !item.updateFileBox" ng-click="showChildFolderBox(item)">
 		<!-- 폴더 생성 버튼 끝 -->
 
 		<!-- 파일 다운로드 버튼 시작 -->
@@ -39,13 +39,13 @@
 		<!-- 파일 다운로드 버튼 끝 -->
 
 		<!-- 파일 수정 박스 표시 버튼 시작 -->
-		<img class="file_update" ng-click="updateFile(item)" ng-if="!item.updateFileBox">
+		<img class="file_update" ng-click="showUpdateFileBox(item)" ng-if="!item.updateFileBox">
 		<!-- 파일 수정 박스 표시 버튼 끝 -->
 
 		<!-- 파일 수정완료 및 취소 버튼 시작 -->
 		<div class="file_decide" ng-if="item.updateFileBox">
 			<button ng-click="update(item, newFileName)">수정</button>
-			<button ng-click="cancelUpdateFile(item)">취소</button>
+			<button ng-click="cancelUpdateFileBox(item)">취소</button>
 		</div>
 		<!-- 파일 수정완료 및 취소 버튼 끝 -->
 
@@ -57,7 +57,7 @@
 					ng-style="{'width': 440 - item.depth * 31  + 'px'}">
 				<div class="file_decide">
 					<button ng-click="makeFolder(item, newFolderName)">생성</button>
-					<button ng-click="cancelChildFolder(item)">취소</button>
+					<button ng-click="cancelChildFolderBox(item)">취소</button>
 				</div>
 			</li>
 		</ul>

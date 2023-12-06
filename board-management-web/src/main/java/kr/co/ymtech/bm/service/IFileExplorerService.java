@@ -1,11 +1,11 @@
 package kr.co.ymtech.bm.service;
 
-import java.util.List;
 import javax.servlet.http.HttpServletResponse;
-import kr.co.ymtech.bm.controller.dto.FileDTO;
-import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
+
+import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
+import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
 
 /**
  * IFileExplorerService 인터페이스
@@ -22,7 +22,7 @@ public interface IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 24.
 	 */
-	public List<FileDTO> loadAllFiles(String parentPath, String directoryName);
+	public FileExplorerDTO loadAllFiles(String parentPath, String directoryName);
 
 	/**
 	 * @Method 서버에 있는 파일을 다운로드 하는 함수
@@ -34,7 +34,7 @@ public interface IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 24.
 	 */
-	public void downloadFile(HttpServletResponse response, String Name, String Path);
+	public void downloadFile(HttpServletResponse response, String name, String path);
 
 	/**
 	 * @Method saveFiles 서버에 파일을 업로드 하는 함수
@@ -44,7 +44,7 @@ public interface IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 24.
 	 */
-	public void uploadFiles(UploadFileDTO uploadFile);
+	public String uploadFiles(UploadFileDTO uploadFile);
 
 	/**
 	 * @Method deleteFile 서버에서 파일을 삭제하는 함수
@@ -55,7 +55,7 @@ public interface IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 24.
 	 */
-	public void deleteFile(String Path, String Name);
+	public String deleteFile(String path, String name);
 
 	/**
 	 * @Method saveFolder 서버에 디렉토리를 추가하는 함수
@@ -66,7 +66,7 @@ public interface IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 28.
 	 */
-	public void saveFolder(String Name, SaveFolderDTO saveFolderDTO);
+	public String saveFolder(String name, SaveFolderDTO saveFolderDTO);
 
 	/**
 	 * @Method updateFile 파일 또는 디렉토리 이름을 수정하는 함수
@@ -76,7 +76,7 @@ public interface IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 28.
 	 */
-	public void updateFile(UpdateFileDTO updateFileDTO);
+	public String updateFile(UpdateFileDTO updateFileDTO);
 
 	/**
 	 * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
@@ -89,5 +89,5 @@ public interface IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 30.
 	 */
-	public void moveFile(String fileName, String folderName, String oldPath, String newPath);
+	public String moveFile(String fileName, String folderName, String oldPath, String newPath);
 }
