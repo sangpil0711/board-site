@@ -73,11 +73,10 @@ app.factory('MainFactory', function($resource) {
  * @since 2023. 11. 15.
  */
 app.factory('ExplorerFactory', function($resource) {
-	return $resource('/fileExplorer/:Name', null, {
+	return $resource('/fileExplorer/:name', null, {
 
 		exploreFile: {
 			method: 'GET',
-			isArray: true,
 			headers: {
 				"Content-Type": 'application/json'
 			},
@@ -89,21 +88,22 @@ app.factory('ExplorerFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-		
+
 		deleteFile: {
 			method: 'DELETE',
 			headers: {
 				"Content-Type": 'application/json'
 			},
 		},
-		
+
 		createFolder: {
 			method: 'POST',
+			url: '/fileExplorer/directory',
 			headers: {
 				"Content-Type": 'application/json'
 			},
 		},
-		
+
 		updateFile: {
 			method: 'PATCH',
 			headers: {

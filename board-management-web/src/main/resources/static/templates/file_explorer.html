@@ -1,37 +1,37 @@
 <div id="container" ng-controller="BoardFile">
-	<div class="file_title">파일 탐색기</div>
-	<div class="file_explorer">
-		
-		<!-- 파일/폴더 생성 버튼 시작 -->
-		<div class="main_plus">
-			<img class="main_folder_plus" ng-click="makeChildFolder(null)">
-			<img class="main_file_plus" ngf-select="onFileSelect($files, null)" multiple>
-		</div>
-		<div class="plus_name">
-			<span>폴더 생성</span>
-			<span>파일 추가</span>
-		</div>
-		<!-- 파일/폴더 생성 버튼 끝 -->
-		
-		<!-- 폴더 생성 박스 시작 -->
-		<ul ng-if="childFolderBox" style="display: flex; align-items: center;">
-			<li>
-				<img class="folder_icon" style="margin-left: 38px;">
-				<input type="text" class="file_name_box" ng-model="newFolderName">
-				<div class="main_file_decide">
-					<button ng-click="makeFolder(null, newFolderName)">생성</button>
-					<button ng-click="cancelChildFolder(null)">취소</button>
-				</div>
-			</li>
-		</ul>
-		<!-- 폴더 생성 박스 끝 -->
-		
-		<!-- 파일 리스트 시작 -->
-		<ul>
-			<li ng-include="'/static/templates/file_tree.html'"></li>
-		</ul>
-		<!-- 파일 리스트 끝 -->
-		
-	</div>
-	
+   <div class="file_title">파일 탐색기</div>
+   <div class="file_explorer">
+      
+      <!-- 파일/폴더 생성 버튼 시작 -->
+      <div class="main_plus">
+         <img class="main_folder_plus" ng-click="showChildFolderBox(undefined)">
+         <img class="main_file_plus" ngf-select="uploadSelectFiles($files, undefined)" multiple>
+      </div>
+      <div class="plus_name">
+         <span>폴더 생성</span>
+         <span>파일 추가</span>
+      </div>
+      <!-- 파일/폴더 생성 버튼 끝 -->
+      
+      <!-- 폴더 생성 박스 시작 -->
+      <ul ng-if="childFolderBox" style="display: flex; align-items: center;">
+         <li>
+            <img class="folder_icon" style="margin-left: 38px;">
+            <input type="text" class="file_name_box" ng-model="newFolderName">
+            <div class="main_file_decide">
+               <button ng-click="makeFolder(undefined, newFolderName)">생성</button>
+               <button ng-click="cancelChildFolderBox(undefined)">취소</button>
+            </div>
+         </li>
+      </ul>
+      <!-- 폴더 생성 박스 끝 -->
+      
+      <!-- 파일 리스트 시작 -->
+      <ul>
+         <li ng-include="'/static/templates/file_tree.html'"></li>
+      </ul>
+      <!-- 파일 리스트 끝 -->
+      
+   </div>
+   
 </div>

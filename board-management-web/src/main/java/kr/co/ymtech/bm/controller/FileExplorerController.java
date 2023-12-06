@@ -1,7 +1,8 @@
 package kr.co.ymtech.bm.controller;
 
-import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -11,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import kr.co.ymtech.bm.controller.dto.FileDTO;
-import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
+import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
+import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
+import kr.co.ymtech.bm.controller.dto.UploadFileResponseDTO;
 import kr.co.ymtech.bm.service.FileExplorerService;
 import kr.co.ymtech.bm.service.IFileExplorerService;
 
@@ -52,9 +54,11 @@ public class FileExplorerController {
 	 * @since 2023. 11. 17.
 	 */
 	@GetMapping("")
-	public List<FileDTO> loadAllFiles(String parentPath, String directoryName) {
+	public ResponseEntity<FileExplorerDTO> loadAllFiles(String parentPath, String directoryName) {
 
-		return fileExplorerService.loadAllFiles(parentPath, directoryName);
+		FileExplorerDTO loadAllFileList = fileExplorerService.loadAllFiles(parentPath, directoryName);
+
+		return new ResponseEntity<FileExplorerDTO>(loadAllFileList, HttpStatus.OK);
 	}
 
 	/**
@@ -66,13 +70,15 @@ public class FileExplorerController {
 	 * @since 2023. 11. 23.
 	 */
 	@PostMapping("")
-	public void uploadFiles(UploadFileDTO uploadFile) {
+	public ResponseEntity<UploadFileResponseDTO> uploadFiles(UploadFileDTO uploadFile) {
 
-		fileExplorerService.uploadFiles(uploadFile);
+		UploadFileResponseDTO uploadResult = fileExplorerService.uploadFiles(uploadFile);
+
+		return new ResponseEntity<UploadFileResponseDTO>(uploadResult, HttpStatus.OK);
 	}
 
 	/**
-	 * @Method downloadFile 서버에 있는 파일을 다운로드 하는 함수 3333rrrr
+	 * @Method downloadFile 서버에 있는 파일을 다운로드 하는 함수
 	 * @param response http응답
 	 * @param Name     업로드 된 파일 이름
 	 * @param Path     업로드 된 파일 경로
@@ -80,10 +86,10 @@ public class FileExplorerController {
 	 * @author 박상현
 	 * @since 2023. 11. 23.
 	 */
-	@GetMapping("/{Name}")
-	public void downloadFile(HttpServletResponse response, @PathVariable String Name, @RequestParam String Path) {
+	@GetMapping("/{name}")
+	public void downloadFile(HttpServletResponse response, @PathVariable String name, @RequestParam String path) {
 
-		fileExplorerService.downloadFile(response, Name, Path);
+		fileExplorerService.downloadFile(response, name, path);
 	}
 
 	/**
@@ -95,25 +101,38 @@ public class FileExplorerController {
 	 * @author 박상현
 	 * @since 2023. 11. 23.
 	 */
-	@DeleteMapping("/{Name}")
-	public void deleteFile(@PathVariable String Name, @RequestParam String Path) {
+	@DeleteMapping("/{name}")
+	public ResponseEntity<String> deleteFile(@PathVariable String name, @RequestParam String path) {
 
-		fileExplorerService.deleteFile(Path, Name);
+		String deleteResult = fileExplorerService.deleteFile(name, path);
+
+		if ("파일 삭제 성공!".equals(deleteResult)) {
+			return new ResponseEntity<String>(deleteResult, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(deleteResult, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**
 	 * @Method saveFolder 서버에 디렉토리를 추가하는 함수
 	 * 
-	 * @param Name          추가할 디렉토리 이름
 	 * @param saveFolderDTO 추가할 디렉토리 정보
+	 * @param name          디렉토리 이름
 	 *
 	 * @author 박상현
 	 * @since 2023. 11. 28.
 	 */
-	@PostMapping("/{Name}")
-	public void saveFolder(@PathVariable String Name, @RequestBody SaveFolderDTO saveFolderDTO) {
+	@PostMapping("/directory")
+	public ResponseEntity<String> saveFolder(@RequestParam(required = false) String name,
+			@RequestBody SaveFolderDTO saveFolderDTO) {
 
-		fileExplorerService.saveFolder(Name, saveFolderDTO);
+		String saveFolderResult = fileExplorerService.saveFolder(name, saveFolderDTO);
+
+		if ("디렉토리 생성 성공!".equals(saveFolderResult)) {
+			return new ResponseEntity<String>(saveFolderResult, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(saveFolderResult, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**
@@ -125,9 +144,15 @@ public class FileExplorerController {
 	 * @since 2023. 11. 28.
 	 */
 	@PatchMapping("")
-	public void updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
+	public ResponseEntity<String> updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
 
-		fileExplorerService.updateFile(updateFileDTO);
+		String updateResult = fileExplorerService.updateFile(updateFileDTO);
+
+		if ("파일 이름 변경 성공!".equals(updateResult)) {
+			return new ResponseEntity<String>(updateResult, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(updateResult, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**
@@ -142,8 +167,18 @@ public class FileExplorerController {
 	 * @since 2023. 11. 30.
 	 */
 	@PatchMapping("/{fileName}")
-	public void moveFile(@PathVariable String fileName, @RequestParam(required = false) String folderName,
-			@RequestParam String oldPath, @RequestParam(required = false) String newPath) {
-		fileExplorerService.moveFile(fileName, folderName, oldPath, newPath);
+	public ResponseEntity<String> moveFile(//
+			@PathVariable(name = "fileName") String fileName //
+			, @RequestParam(name = "folder-name", required = false) String folderName //
+			, @RequestParam(name = "old-path") String oldPath //
+			, @RequestParam(name = "new-path", required = false) String newPath //
+	) {
+		String moveFileResult = fileExplorerService.moveFile(fileName, folderName, oldPath, newPath);
+
+		if ("파일 이동 성공!".equals(moveFileResult)) {
+			return new ResponseEntity<String>(moveFileResult, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(moveFileResult, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

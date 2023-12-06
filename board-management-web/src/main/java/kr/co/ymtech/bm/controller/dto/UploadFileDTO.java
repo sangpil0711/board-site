@@ -7,9 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadFileDTO {
 	
 	/** Path : 폴더 경로 */
-	private String path = null;
+	private String path;
 	/** Name : 폴더 이름 */
-	private String name = null;
+	private String name;
 	/** files : 파일 데이터 */
 	private List<MultipartFile> files;
 
