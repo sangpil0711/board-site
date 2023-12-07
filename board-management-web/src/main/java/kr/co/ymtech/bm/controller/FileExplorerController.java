@@ -1,7 +1,6 @@
 package kr.co.ymtech.bm.controller;
 
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
@@ -43,146 +41,143 @@ public class FileExplorerController {
       this.fileExplorerService = fileExplorerService;
    }
 
-   /**
-    * @Method loadAllFiles 서버안에 있는 모든 파일들을 가져오는 함수
-    * 
-    * @param parentPath 파일의 부모경로
-    * @Param directoryName 디렉토리 이름
-    *
-    * @return 파일 경로, 깊이, 파일이름 을 가지고 반환
-    *
-    * @author 박상현
-    * @since 2023. 11. 17.
-    */
-   @GetMapping("")
-   public ResponseEntity<FileExplorerDTO> loadAllFiles(String parentPath, String directoryName) {
-      
-	   FileExplorerDTO loadAllFileList = fileExplorerService.loadAllFiles(parentPath, directoryName);
-      
-      return new ResponseEntity<FileExplorerDTO>(loadAllFileList, HttpStatus.OK);
-   }
+	/**
+	 * @Method loadAllFiles 서버안에 있는 모든 파일들을 가져오는 함수
+	 * 
+	 * @param parentPath 파일의 부모경로
+	 * @Param directoryName 디렉토리 이름
+	 *
+	 * @return 파일 경로, 깊이, 파일이름 을 가지고 반환
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 17.
+	 */
+	@GetMapping("")
+	public ResponseEntity<FileExplorerDTO> loadAllFiles(String parentPath, String directoryName) {
 
-   /**
-    * @Method saveFiles 서버에 파일을 업로드 하는 함수
-    * 
-    * @param saveFiles 서버에 업로드 할 파일
-    *
-    * @author 박상현
-    * @since 2023. 11. 23.
-    */
-   @PostMapping("")
-   public ResponseEntity<String> uploadFiles(UploadFileDTO uploadFile) {
+		FileExplorerDTO loadAllFileList = fileExplorerService.loadAllFiles(parentPath, directoryName);
 
-      String uploadResult = fileExplorerService.uploadFiles(uploadFile);
-      
-      if("파일 업로드 성공!".equals(uploadResult)) {
-    	  return new ResponseEntity<String>(uploadResult, HttpStatus.OK);
-      } else {
-    	  return new ResponseEntity<String>(uploadResult, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-   }
+		return new ResponseEntity<FileExplorerDTO>(loadAllFileList, HttpStatus.OK);
+	}
 
-   /**
-    * @Method downloadFile 서버에 있는 파일을 다운로드 하는 함수
-    * @param response http응답
-    * @param Name     업로드 된 파일 이름
-    * @param Path     업로드 된 파일 경로
-    *
-    * @author 박상현
-    * @since 2023. 11. 23.
-    */
-   @GetMapping("/{name}")
-   public void downloadFile(HttpServletResponse response, @PathVariable String name, @RequestParam String path) {
+	/**
+	 * @Method saveFiles 서버에 파일을 업로드 하는 함수
+	 * 
+	 * @param saveFiles 서버에 업로드 할 파일
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 23.
+	 */
+	@PostMapping("")
+	public ResponseEntity<UploadFileResponseDTO> uploadFiles(UploadFileDTO uploadFile) {
 
-      fileExplorerService.downloadFile(response, name, path);
-   }
+		UploadFileResponseDTO uploadResult = fileExplorerService.uploadFiles(uploadFile);
 
-   /**
-    * @Method deleteFile 서버에서 파일을 삭제하는 함수
-    * 
-    * @param Name 삭제할 파일 이름
-    * @param Path 삭제할 파일 경로
-    *
-    * @author 박상현
-    * @since 2023. 11. 23.
-    */
-   @DeleteMapping("/{name}")
-   public ResponseEntity<String> deleteFile(@PathVariable String name, @RequestParam String path) {
+		return new ResponseEntity<UploadFileResponseDTO>(uploadResult, HttpStatus.OK);
+	}
 
-      String deleteResult = fileExplorerService.deleteFile(name, path);
-      
-      if("파일 삭제 성공!".equals(deleteResult)) {
-    	  return new ResponseEntity<String>(deleteResult, HttpStatus.OK);
-      } else {
-    	  return new ResponseEntity<String>(deleteResult, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-   }
+	/**
+	 * @Method downloadFile 서버에 있는 파일을 다운로드 하는 함수
+	 * @param response http응답
+	 * @param Name     업로드 된 파일 이름
+	 * @param Path     업로드 된 파일 경로
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 23.
+	 */
+	@GetMapping("/{name}")
+	public void downloadFile(HttpServletResponse response, @PathVariable String name, @RequestParam String path) {
 
-   /**
-    * @Method saveFolder 서버에 디렉토리를 추가하는 함수
-    * 
-    * @param saveFolderDTO 추가할 디렉토리 정보
-    * @param name          디렉토리 이름
-    *
-    * @author 박상현
-    * @since 2023. 11. 28.
-    */
-   @PostMapping("/directory")
-   public ResponseEntity<String> saveFolder(@RequestParam(required = false) String name, @RequestBody SaveFolderDTO saveFolderDTO) {
-   
-      String saveFolderResult = fileExplorerService.saveFolder(name, saveFolderDTO); 
-      
-      if("디렉토리 생성 성공!".equals(saveFolderResult)) {
-    	  return new ResponseEntity<String>(saveFolderResult, HttpStatus.OK);
-      } else {
-    	  return new ResponseEntity<String>(saveFolderResult, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-   }
+		fileExplorerService.downloadFile(response, name, path);
+	}
 
-   /**
-    * @Method updateFile 파일 또는 디렉토리 이름을 수정하는 함수
-    * 
-    * @param updateFileDTO 수정할 파일혹은 디렉토리 정보
-    * 
-    * @author 박상현
-    * @since 2023. 11. 28.
-    */
-   @PatchMapping("")
-   public ResponseEntity<String> updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
-      
-      String updateResult = fileExplorerService.updateFile(updateFileDTO);
-      
-      if("파일 이름 변경 성공!".equals(updateResult)) {
-    	  return new ResponseEntity<String>(updateResult, HttpStatus.OK);
-      } else {
-    	  return new ResponseEntity<String>(updateResult, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-   }
+	/**
+	 * @Method deleteFile 서버에서 파일을 삭제하는 함수
+	 * 
+	 * @param Name 삭제할 파일 이름
+	 * @param Path 삭제할 파일 경로
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 23.
+	 */
+	@DeleteMapping("/{name}")
+	public ResponseEntity<String> deleteFile(@PathVariable String name, @RequestParam String path) {
 
-   /**
-    * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
-    * 
-    * @param fileName   파일 또는 디렉토리 이름
-    * @param folderName 디렉토라 이름
-    * @param oldPath    원래 경로
-    * @param newPath    새로운 경로
-    *
-    * @author 박상현
-    * @since 2023. 11. 30.
-    */
-   @PatchMapping("/{fileName}")
-   public ResponseEntity<String> moveFile(//
-         @PathVariable(name = "fileName") String fileName //
-         , @RequestParam(name = "folder-name", required = false) String folderName //
-         , @RequestParam(name = "old-path") String oldPath //
-         , @RequestParam(name = "new-path", required = false) String newPath //
-   ) {
-      String moveFileResult = fileExplorerService.moveFile(fileName, folderName, oldPath, newPath);
-      
-      if("파일 이동 성공!".equals(moveFileResult)) {
-    	  return new ResponseEntity<String>(moveFileResult, HttpStatus.OK);
-      } else {
-    	  return new ResponseEntity<String>(moveFileResult, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-   }
+		String deleteResult = fileExplorerService.deleteFile(name, path);
+
+		if ("파일 삭제 성공!".equals(deleteResult)) {
+			return new ResponseEntity<String>(deleteResult, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(deleteResult, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * @Method saveFolder 서버에 디렉토리를 추가하는 함수
+	 * 
+	 * @param saveFolderDTO 추가할 디렉토리 정보
+	 * @param name          디렉토리 이름
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 28.
+	 */
+	@PostMapping("/directory")
+	public ResponseEntity<String> saveFolder(@RequestParam(required = false) String name,
+			@RequestBody SaveFolderDTO saveFolderDTO) {
+
+		String saveFolderResult = fileExplorerService.saveFolder(name, saveFolderDTO);
+
+		if ("디렉토리 생성 성공!".equals(saveFolderResult)) {
+			return new ResponseEntity<String>(saveFolderResult, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(saveFolderResult, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * @Method updateFile 파일 또는 디렉토리 이름을 수정하는 함수
+	 * 
+	 * @param updateFileDTO 수정할 파일혹은 디렉토리 정보
+	 * 
+	 * @author 박상현
+	 * @since 2023. 11. 28.
+	 */
+	@PatchMapping("")
+	public ResponseEntity<String> updateFile(@RequestBody UpdateFileDTO updateFileDTO) {
+
+		String updateResult = fileExplorerService.updateFile(updateFileDTO);
+
+		if ("파일 이름 변경 성공!".equals(updateResult)) {
+			return new ResponseEntity<String>(updateResult, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(updateResult, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
+	 * 
+	 * @param fileName   파일 또는 디렉토리 이름
+	 * @param folderName 디렉토라 이름
+	 * @param oldPath    원래 경로
+	 * @param newPath    새로운 경로
+	 *
+	 * @author 박상현
+	 * @since 2023. 11. 30.
+	 */
+	@PatchMapping("/{fileName}")
+	public ResponseEntity<String> moveFile(//
+			@PathVariable(name = "fileName") String fileName //
+			, @RequestParam(name = "folder-name", required = false) String folderName //
+			, @RequestParam(name = "old-path") String oldPath //
+			, @RequestParam(name = "new-path", required = false) String newPath //
+	) {
+		String moveFileResult = fileExplorerService.moveFile(fileName, folderName, oldPath, newPath);
+
+		if ("파일 이동 성공!".equals(moveFileResult)) {
+			return new ResponseEntity<String>(moveFileResult, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(moveFileResult, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

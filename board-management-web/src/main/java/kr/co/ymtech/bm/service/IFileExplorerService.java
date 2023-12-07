@@ -6,6 +6,7 @@ import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
 import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
+import kr.co.ymtech.bm.controller.dto.UploadFileResponseDTO;
 
 /**
  * IFileExplorerService 인터페이스
@@ -42,9 +43,10 @@ public interface IFileExplorerService {
 	 * @param uploadFile 서버에 업로드 할 파일
 	 *
 	 * @author 박상현
+	 * @return 
 	 * @since 2023. 11. 24.
 	 */
-	public String uploadFiles(UploadFileDTO uploadFile);
+	public UploadFileResponseDTO uploadFiles(UploadFileDTO uploadFile);
 
 	/**
 	 * @Method deleteFile 서버에서 파일을 삭제하는 함수
@@ -53,17 +55,19 @@ public interface IFileExplorerService {
 	 * @param Name 삭제할 파일 이름
 	 *
 	 * @author 박상현
+	 * @return 
 	 * @since 2023. 11. 24.
 	 */
-	public String deleteFile(String path, String name);
+	public String deleteFile(String name, String path);
 
 	/**
 	 * @Method saveFolder 서버에 디렉토리를 추가하는 함수
 	 * 
-	 * @param Name          추가할 디렉토리 이름
 	 * @param saveFolderDTO 추가할 디렉토리 정보
+	 * @param name 디렉토리 이름 
 	 *
 	 * @author 박상현
+	 * @return 
 	 * @since 2023. 11. 28.
 	 */
 	public String saveFolder(String name, SaveFolderDTO saveFolderDTO);
@@ -74,6 +78,7 @@ public interface IFileExplorerService {
 	 * @param updateFileDTO 수정할 파일혹은 디렉토리 정보
 	 * 
 	 * @author 박상현
+	 * @return 
 	 * @since 2023. 11. 28.
 	 */
 	public String updateFile(UpdateFileDTO updateFileDTO);
@@ -87,6 +92,7 @@ public interface IFileExplorerService {
 	 * @param newPath    새로운 경로
 	 *
 	 * @author 박상현
+	 * @return 
 	 * @since 2023. 11. 30.
 	 */
 	public String moveFile(String fileName, String folderName, String oldPath, String newPath);

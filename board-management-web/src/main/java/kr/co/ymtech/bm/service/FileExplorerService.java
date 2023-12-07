@@ -63,7 +63,8 @@ public class FileExplorerService implements IFileExplorerService {
 	 */
 	@Override
 	public FileExplorerDTO loadAllFiles(String parentPath, String directoryName) {
-		File file = null;
+
+		File file;
 
 		if (parentPath == null) {
 			file = new File(PathConfig.getFilePath());
@@ -125,41 +126,42 @@ public class FileExplorerService implements IFileExplorerService {
 	 * @since 2023. 11. 23.
 	 */
 	@Override
-	public String uploadFiles(UploadFileDTO uploadFile) {
+	public UploadFileResponseDTO uploadFiles(UploadFileDTO uploadFile) {
 
+		UploadFileResponseDTO uploadFileResponse = new UploadFileResponseDTO();
 		String directoryPath;
 		String filePath;
-
+		Integer successCount = 0;
+		Integer failCount = 0;
+		List<String> successFileNames = new ArrayList<String>();
+		
 		if (uploadFile.getPath() == null && uploadFile.getName() == null) {
-			filePath = PathConfig.getFilePath();
+			directoryPath = PathConfig.getFilePath();
 		} else {
-			filePath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
+			directoryPath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
 		}
-
-		List<String> failedFiles = new ArrayList<>();
-
+		
 		for (MultipartFile file : uploadFile.getFiles()) {
-			directoryPath = Paths.get(filePath).resolve(file.getOriginalFilename()).normalize().toString();
+			filePath = Paths.get(directoryPath).resolve(file.getOriginalFilename()).normalize().toString();
 
-			if (Files.exists(Paths.get(directoryPath))) {
-				// 중복된 파일이면 실패 목록에 추가
-				failedFiles.add(file.getOriginalFilename());
-			} else {
-				try (InputStream input = file.getInputStream();
-						OutputStream output = new FileOutputStream(directoryPath)) {
-					IOUtils.copy(input, output);
-				} catch (IOException e) {
-					// 파일 업로드 실패 시 실패 목록에 추가
-					failedFiles.add(file.getOriginalFilename());
-				}
+			File existingFile = new File(filePath);
+			if (existingFile.exists()) {
+				failCount++;
+				continue;
+			}
+			try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
+				IOUtils.copy(input, output);
+				successCount++;
+				successFileNames.add(file.getOriginalFilename());
+			} catch (IOException e) {
+				System.out.println("1");
 			}
 		}
-
-		if (!failedFiles.isEmpty()) {
-			return "파일 업로드 실패!";
-		}
-
-		return "파일 업로드 성공!";
+		uploadFileResponse.setFailCount(failCount);
+		uploadFileResponse.setSuccessCount(successCount);
+		uploadFileResponse.setSuccessFileNames(successFileNames);
+		
+		return uploadFileResponse;
 	}
 
 	/**

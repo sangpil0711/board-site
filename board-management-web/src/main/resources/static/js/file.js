@@ -108,13 +108,14 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 					return data;
 				}
 			]
-		}).then(function() {
-			alert('파일 업로드 성공');
-			data.files.forEach(function(file) {
+		}).then(function(message) {
+			let dataMessage = JSON.parse(message.data)
+			alert(`성공: ${dataMessage.successCount}, 실패: ${dataMessage.failCount}`);
+			console.log(dataMessage)
+			dataMessage.successFileNames.forEach(function(file) {
 				let newFile = {
-					name: file.name,
+					name: file,
 					isDirectory: false,
-					child: null,
 					path: folder == undefined ? $scope.firstPath : folder.path + "\\" + folder.name,
 					depth: folder == undefined ? 0 : folder.depth + 1
 				};
