@@ -3,6 +3,7 @@ package kr.co.ymtech.bm.service;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
+import kr.co.ymtech.bm.controller.dto.MoveFileDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
 import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
@@ -95,5 +96,5 @@ public interface IFileExplorerService {
 	 * @return 
 	 * @since 2023. 11. 30.
 	 */
-	public String moveFile(String fileName, String folderName, String oldPath, String newPath);
+	public String moveFile(MoveFileDTO moveFileDTO);
 }

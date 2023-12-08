@@ -1,8 +1,7 @@
 <div id="container" ng-controller="BoardFile">
 	<div class="file_title">파일 탐색기</div>
-	<div class="file_explorer">
-		
-		<!-- 파일/폴더 생성 버튼 시작 -->
+	
+	<!-- 파일/폴더 생성 버튼 시작 -->
 		<div class="main_plus">
 			<img class="main_folder_plus" ng-click="showChildFolderBox(undefined)">
 			<img class="main_file_plus" ngf-select="uploadSelectFiles($files, undefined)" multiple>
@@ -12,6 +11,9 @@
 			<span>파일 추가</span>
 		</div>
 		<!-- 파일/폴더 생성 버튼 끝 -->
+		
+	<!-- 파일 리스트 시작 -->
+	<div class="file_explorer">
 		
 		<!-- 폴더 생성 박스 시작 -->
 		<ul ng-if="childFolderBox" style="display: flex; align-items: center;">
@@ -26,12 +28,10 @@
 		</ul>
 		<!-- 폴더 생성 박스 끝 -->
 		
-		<!-- 파일 리스트 시작 -->
 		<ul>
 			<li ng-include="'/static/templates/file_tree.html'"></li>
 		</ul>
-		<!-- 파일 리스트 끝 -->
-		
 	</div>
+	<!-- 파일 리스트 끝 -->
 	
 </div>

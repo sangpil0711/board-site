@@ -925,7 +925,8 @@ pre {
 .file_explorer {
 	border: 2px solid grey;
 	width: 700px;
-	height: 550px;
+	height: 500px;
+	padding-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
 	overflow-x: hidden;
@@ -1021,11 +1022,21 @@ pre {
 
 .main_plus {
 	width: 120px;
-	padding-top: 10px;
-	padding-bottom: 10px;
 	position: relative;
-	left: 550px;
+	left: 1180px;
 	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.plus_name {
+	margin-bottom: 20px;
+	position: relative;
+	left: 1150px;
+}
+
+.plus_name span {
+	margin-left: 14px;
+	font-weight: 600;
 }
 
 .main_folder_plus {
@@ -1037,6 +1048,11 @@ pre {
 	margin-left: 42px;
 	width: 30px;
 	content: url(/static/image/file-plus-solid.svg);
+}
+
+.main_file_plus:hover,
+.main_folder_plus:hover {
+	cursor: pointer;
 }
 
 .file_name_box {
@@ -1066,12 +1082,6 @@ pre {
 	margin-right: 10px;
 	float: right;
 	content: url(/static/image/pen-to-square-regular.svg);
-}
-
-.plus_name {
-	margin-bottom: 30px;
-	position: relative;
-	left: 522px;
 }
 
 .main_file_decide {

@@ -4,7 +4,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	// 해당 폴더 파일 리스트
 	$scope.files = [];
 	// 업로드되는 파일 데이터
-	let selectedFiles = [];
+	const selectedFiles = [];
 	// 생성되는 폴더 이름
 	$scope.newFolderName = '';
 
@@ -17,7 +17,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	 * @author 황상필
 	 * @since 2023. 11. 17.
 	 */
-	let exploreFile = function(path, name) {
+	const exploreFile = function(path, name) {
 		ExplorerFactory.exploreFile({ path: path, name: name }, function(response) {
 			$scope.files = response.fileList;
 			$scope.firstPath = response.firstPath;
@@ -38,7 +38,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	 * @author 황상필
 	 * @since 2023. 11. 28.
 	 */
-	let setDepthFile = function(files, depth) {
+	const setDepthFile = function(files, depth) {
 		files.forEach(function(file) {
 			file.depth = depth;
 
@@ -88,15 +88,15 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	 * @author 황상필
 	 * @since 2023. 11. 23.
 	 */
-	let insertFile = function(folder) {
+	const insertFile = function(folder) {
 		const data = {
 			files: selectedFiles
 		};
+
 		if (folder != null) {
 			data.path = folder.path;
 			data.name = folder.name;
 		}
-
 
 		Upload.upload({
 			url: '/fileExplorer',
@@ -109,11 +109,12 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 				}
 			]
 		}).then(function(message) {
-			let dataMessage = JSON.parse(message.data)
+			const dataMessage = JSON.parse(message.data)
 			alert(`성공: ${dataMessage.successCount}, 실패: ${dataMessage.failCount}`);
-			console.log(dataMessage)
 			dataMessage.successFileNames.forEach(function(file) {
-				let newFile = {
+				
+				// 배열에 추가될파일 정보
+				const newFile = {
 					name: file,
 					isDirectory: false,
 					path: folder == undefined ? $scope.firstPath : folder.path + "\\" + folder.name,
@@ -123,7 +124,9 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 				// 최상위 폴더일 경우 동작
 				if (folder == undefined) {
 					$scope.files.push(newFile);
-				} else {
+				}
+				// 최상위 폴더가 아닐 경우 동작 
+				else {
 					folder.child.push(newFile);
 				}
 			})
@@ -181,13 +184,12 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	 * @author 황상필
 	 * @since 2023. 12. 05.
 	 */
-	let deleteFileFromArray = function(files, fileName, filePath) {
+	const deleteFileFromArray = function(files, fileName, filePath) {
 		files.forEach(function(file, index) {
 			// 파일 이름과 경로가 일치하는 경우 배열에서 파일 삭제
 			if (file.name === fileName && file.path === filePath) {
 				files.splice(index, 1);
 			}
-
 			// 하위 파일이 존재할 경우 하위 파일 검사
 			if (file.child && file.child.length > 0) {
 				deleteFileFromArray(file.child, fileName, filePath);
@@ -210,6 +212,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 			$scope.childFolderBox = true;
 			changeOtherFileState($scope.files, folder, false, false);
 		}
+		// 최상위 폴더가 아닌 폴더에 폴더를 생성할 경우 동작
 		else {
 			$scope.childFolderBox = false;
 			folder.childFolderBox = true;
@@ -229,10 +232,11 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	 */
 	$scope.cancelChildFolderBox = function(folder) {
 
-		// 최상위 폴더에 폴더를 생성을 취소할 경우 동작
+		// 최상위 폴더의 폴더생성을 취소할 경우 동작
 		if (folder == undefined) {
 			$scope.childFolderBox = false;
 		}
+		// 최상위 폴더가 아닌 폴더의 폴더생성을 취소할 경우 동작
 		else {
 			folder.childFolderBox = false;
 		}
@@ -249,7 +253,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	 */
 	$scope.makeFolder = function(folder, newFolderName) {
 		// 폴더 생성 시 필요한 정보      
-		let folderData = {
+		const folderData = {
 			path: folder == undefined ? null : folder.path,
 			newFolderName: newFolderName
 		};
@@ -263,7 +267,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 				alert("폴더 생성 성공");
 
 				// 배열에 폴더 추가 시 필요한 정보
-				let newFolder = {
+				const newFolder = {
 					name: newFolderName,
 					isDirectory: true,
 					child: [],
@@ -276,6 +280,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 					$scope.files.push(newFolder);
 					$scope.childFolderBox = false;
 				}
+				// 최상위 폴더가 아닐 경우 동작
 				else {
 					folder.child.push(newFolder);
 					folder.childFolderBox = false;
@@ -315,7 +320,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	 * @author 황상필
 	 * @since 2023. 11. 28.
 	 */
-	let changeOtherFileState = function(files, selectFile, updateFileBox, childFolderBox, clickItem) {
+	const changeOtherFileState = function(files, selectFile, updateFileBox, childFolderBox, clickItem) {
 
 		// 파일 전체를 반복하면서 동작 수행 
 		files.forEach(function(item) {
@@ -361,7 +366,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 		}
 
 		// 파일 이름 변경 시 필요한 데이터
-		let fileData = {
+		const fileData = {
 			name: file.name,
 			path: file.path,
 			newFileName: newFileName == undefined ? file.name : newFileName
@@ -389,7 +394,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	$scope.clickFile = function(file) {
 		file.clickItem = !file.clickItem;
 		changeOtherClickState($scope.files, file, false);
-	}
+	};
 
 	/**
 	 * @function changeOtherClickState 다른 파일의 클릭 상태를 변경하는 함수
@@ -401,7 +406,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	 * @author 황상필
 	 * @since 2023. 12. 04.
 	 */
-	let changeOtherClickState = function(files, selectFile, clickItem) {
+	const changeOtherClickState = function(files, selectFile, clickItem) {
 
 		// 파일 전체를 반복하면서 동작 수행 
 		files.forEach(function(item) {
@@ -416,23 +421,69 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 				changeOtherClickState(item.child, selectFile, clickItem);
 			}
 		});
-	}
+	};
 
+	/**
+	 * @function dragFile 드래그한 파일정보를 가져오는 함수
+	 * 
+	 * @param file 드래그한 파일
+	 * 
+	 * @author 황상필
+	 * @since 2023. 12. 07.
+	 */
 	$scope.dragFile = function(file) {
 		$scope.dragItem = file;
-		console.log(file);
-	}
+	};
 
-	$scope.dragOver = function(folder) {
-		console.log(folder);
-	}
-
+	/**
+	 * @function dropFile 파일이 들어간 폴더 정보를 가져오는 함수
+	 * 
+	 * @param targetFolder 파일이 들어간 폴더
+	 * 
+	 * @author 황상필
+	 * @since 2023. 12. 07.
+	 */
 	$scope.dropFile = function(targetFolder) {
-		console.log("Dropped file", $scope.dragFile, "onto folder", targetFolder);
-	}
+		
+		console.log(targetFolder);
+		
+		if (targetFolder != undefined) {
 
-	$scope.allowDrop = function(event) {
-		event.preventDefault();
-	}
+			// 파일 이동 시 필요한 파일 정보
+			const moveFileData = {
+				fileName: $scope.dragItem.name,
+				folderName: targetFolder.name,
+				oldPath: $scope.dragItem.path,
+				newPath: targetFolder.path
+			}
+
+			deleteFileFromArray($scope.files, $scope.dragItem.name, $scope.dragItem.path);
+
+			// 배열에 추가될 파일 정보
+			const newFile = {
+				name: $scope.dragItem.name,
+				isDirectory: $scope.dragItem.isDirectory,
+				path: targetFolder == undefined ? $scope.firstPath : targetFolder.path + "\\" + targetFolder.name,
+				depth: targetFolder == undefined ? 0 : targetFolder.depth + 1
+			};
+
+			// 최상위 폴더일 경우 동작
+			if (targetFolder == undefined) {
+				$scope.files.push(newFile);
+			}
+			// 최상위 폴더가 아닐 경우 동작 
+			else {
+				targetFolder.child.push(newFile);
+			}
+
+			ExplorerFactory.moveFile(moveFileData, function() {
+				alert("파일 이동 성공");
+			}, function(error) {
+				alert("파일 이동 실패");
+				console.error("파일 이동 실패", error);
+			});
+		}
+
+	};
 
 });
