@@ -67,7 +67,7 @@ app.factory('MainFactory', function($resource) {
 });
 
 /**
- * @Method : 서버의 파일리스트를 가져오는 함수
+ * @Method : 파일탐색기 동작을 수행하는 함수
  * 
  * @author 황상필
  * @since 2023. 11. 15.
@@ -94,6 +94,10 @@ app.factory('ExplorerFactory', function($resource) {
 			headers: {
 				"Content-Type": 'application/json'
 			},
+			transformResponse: 
+			function (data) {
+                return data;
+            }
 		},
 
 		createFolder: {
@@ -102,6 +106,10 @@ app.factory('ExplorerFactory', function($resource) {
 			headers: {
 				"Content-Type": 'application/json'
 			},
+			transformResponse: 
+			function (data) {
+                return data;
+            }
 		},
 
 		updateFile: {
@@ -109,6 +117,22 @@ app.factory('ExplorerFactory', function($resource) {
 			headers: {
 				"Content-Type": 'application/json'
 			},
+			transformResponse: 
+			function (data) {
+                return data;
+            }
+		},
+		
+		moveFile: {
+			method: 'PATCH',
+			url: '/fileExplorer/move',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+			transformResponse: 
+			function (data) {
+                return data;
+            }
 		}
 
 	})

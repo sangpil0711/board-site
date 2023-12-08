@@ -1,6 +1,7 @@
 package kr.co.ymtech.bm.controller;
 
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
+import kr.co.ymtech.bm.controller.dto.MoveFileDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
 import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
@@ -30,17 +33,17 @@ import kr.co.ymtech.bm.service.IFileExplorerService;
 @RequestMapping("/fileExplorer")
 public class FileExplorerController {
 
-	/**
-	 * Controller-Service 연결
-	 * 
-	 * @author 박상현
-	 * @since 2023. 11. 17.
-	 */
-	private final IFileExplorerService fileExplorerService;
+   /**
+    * Controller-Service 연결
+    * 
+    * @author 박상현
+    * @since 2023. 11. 17.
+    */
+   private final IFileExplorerService fileExplorerService;
 
-	public FileExplorerController(FileExplorerService fileExplorerService) {
-		this.fileExplorerService = fileExplorerService;
-	}
+   public FileExplorerController(FileExplorerService fileExplorerService) {
+      this.fileExplorerService = fileExplorerService;
+   }
 
 	/**
 	 * @Method loadAllFiles 서버안에 있는 모든 파일들을 가져오는 함수
@@ -166,14 +169,10 @@ public class FileExplorerController {
 	 * @author 박상현
 	 * @since 2023. 11. 30.
 	 */
-	@PatchMapping("/{fileName}")
-	public ResponseEntity<String> moveFile(//
-			@PathVariable(name = "fileName") String fileName //
-			, @RequestParam(name = "folder-name", required = false) String folderName //
-			, @RequestParam(name = "old-path") String oldPath //
-			, @RequestParam(name = "new-path", required = false) String newPath //
-	) {
-		String moveFileResult = fileExplorerService.moveFile(fileName, folderName, oldPath, newPath);
+	@PatchMapping("/move")
+	public ResponseEntity<String> moveFile(@RequestBody MoveFileDTO moveFileDTO) {
+		
+		String moveFileResult = fileExplorerService.moveFile(moveFileDTO);
 
 		if ("파일 이동 성공!".equals(moveFileResult)) {
 			return new ResponseEntity<String>(moveFileResult, HttpStatus.OK);

@@ -12,14 +12,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
+import kr.co.ymtech.bm.controller.dto.MoveFileDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
 import kr.co.ymtech.bm.controller.dto.UpdateFileDTO;
 import kr.co.ymtech.bm.controller.dto.UploadFileDTO;
@@ -275,12 +279,13 @@ public class FileExplorerService implements IFileExplorerService {
 		Path oldFileName = Paths.get(updateFileDTO.getPath()).resolve(updateFileDTO.getName()).normalize();
 		Path newFileName = Paths.get(updateFileDTO.getPath()).resolve(updateFileDTO.getNewFileName()).normalize();
 		if (Files.exists(newFileName)) {
-			return "파일 이름 변경 실패!";
-		}
-		try {
-			Files.move(oldFileName, newFileName);
-		} catch (IOException e) {
-			return "파일 이름 변경 실패!";
+			return "파일 이름 중복이므로 변경 실패!";
+		} else {
+			try {
+				Files.move(oldFileName, newFileName);
+			} catch (IOException e) {
+				return "파일 이름 변경 실패!";
+			}
 		}
 		return "파일 이름 변경 성공!";
 	}
@@ -300,17 +305,17 @@ public class FileExplorerService implements IFileExplorerService {
 	 * @since 2023. 11. 30.
 	 */
 	@Override
-	public String moveFile(String fileName, String folderName, String oldPath, String newPath) {
-		Path oldFilePath = Paths.get(oldPath).resolve(fileName).normalize();
+	public String moveFile(MoveFileDTO moveFileDTO) {
+		Path oldFilePath = Paths.get(moveFileDTO.getOldPath()).resolve(moveFileDTO.getFileName()).normalize();
 		Path newFilePath;
 		try {
-			if (folderName == null && newPath == null) {
-				newFilePath = Paths.get(PathConfig.getFilePath()).resolve(fileName).normalize();
+			if (moveFileDTO.getFolderName() == null && moveFileDTO.getNewPath() == null) {
+				newFilePath = Paths.get(PathConfig.getFilePath()).resolve(moveFileDTO.getFileName()).normalize();
 				if (Files.exists(newFilePath)) {
 					return "파일 이름 중복이므로 이동 실패!";
 				}
 			} else {
-				newFilePath = Paths.get(newPath).resolve(folderName).resolve(fileName).normalize();
+				newFilePath = Paths.get(moveFileDTO.getNewPath()).resolve(moveFileDTO.getFolderName()).resolve(moveFileDTO.getFileName()).normalize();
 				if (Files.exists(newFilePath)) {
 					return "파일 이름 중복이므로 이동 실패!";
 				}

@@ -105,8 +105,6 @@ public class BoardService implements IBoardService {
 		FileVO boardFile = null;
 		List<FileVO> boardFiles = new ArrayList<FileVO>();
 		Integer lastBoardIndex = boardRepository.lastBoardIndex();
-		
-		System.out.println(board.getText());
 
 		// dto -> vo 변환
 		BoardVO vo = new BoardVO();
