@@ -132,7 +132,7 @@ public class FileExplorerService implements IFileExplorerService {
 		Integer successCount = 0;
 		Integer failCount = 0;
 		List<String> successFileNames = new ArrayList<String>();
-		
+				
 		if (uploadFile.getPath() == null && uploadFile.getName() == null) {
 			directoryPath = PathConfig.getFilePath();
 		} else {
@@ -143,7 +143,7 @@ public class FileExplorerService implements IFileExplorerService {
 			filePath = Paths.get(directoryPath).resolve(file.getOriginalFilename()).normalize().toString();
 
 			File existingFile = new File(filePath);
-			if (existingFile.exists()) {
+			if (existingFile.exists()) {       // 파일 중복시 failCount 올리고 for문으로 돌아감
 				failCount++;
 				continue;
 			}
@@ -152,7 +152,8 @@ public class FileExplorerService implements IFileExplorerService {
 				successCount++;
 				successFileNames.add(file.getOriginalFilename());
 			} catch (IOException e) {
-				System.out.println("1");
+				uploadFileResponse.setErrorMessage("파일 처리 중에 서버 오류가 발생!");
+				return uploadFileResponse;
 			}
 		}
 		uploadFileResponse.setFailCount(failCount);

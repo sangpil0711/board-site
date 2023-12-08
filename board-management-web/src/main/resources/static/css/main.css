@@ -909,154 +909,188 @@ pre {
 }
 
 .file_explorer {
-	border: 2px solid grey;
-	width: 700px;
-	height: 550px;
-	margin-left: auto;
-	margin-right: auto;
-	overflow-x: hidden;
-	overflow-y: overlay;
+   border: 2px solid grey;
+   width: 700px;
+   height: 500px;
+   padding-top: 20px;
+   margin-left: auto;
+   margin-right: auto;
+   overflow-x: hidden;
+   overflow-y: overlay;
 }
 
 .file_explorer ul {
-	padding-left: 0px;
+   padding-left: 0px;
 }
 
 .file_explorer img:hover {
-	cursor: pointer;
+   cursor: pointer;
 }
 
 .file_explorer span {
-	display: inline-block;
-	vertical-align: middle;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	padding-left: 10px;
-	font-size: 15px;
-	font-weight: 600;
-}
-
-.file_explorer .file_crud {
-	float: right;
-	margin-left: 10px;
-	margin-right: 10px;
+   display: inline-block;
+   vertical-align: middle;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   padding-left: 10px;
+   font-size: 15px;
+   font-weight: 600;
 }
 
 .file_explorer ul li {
-	margin-top: 10px;
-	margin-right: 0px;
-	position: relative;
+   margin-top: 10px;
+   margin-right: 0px;
 }
 
 .folder_close {
-	width: 20px;
-	height: 20px;
-	content: url(/static/image/caret-right-solid.svg);
+   width: 20px;
+   height: 20px;
+   content: url(/static/image/caret-right-solid.svg);
 }
 
 .folder_open {
-	width: 20px;
-	height: 20px;
-	content: url(/static/image/caret-right-solid.svg);
-	transform: rotate(90deg);
+   width: 20px;
+   height: 20px;
+   content: url(/static/image/caret-right-solid.svg);
+   transform: rotate(90deg);
 }
 
 .folder_icon {
-	width: 20px;
-	height: 20px;
-	content: url(/static/image/folder-regular.svg);
+   width: 20px;
+   height: 20px;
+   content: url(/static/image/folder-regular.svg);
 }
 
 .file_icon {
-	margin-left: 24px;
-	width: 20px;
-	height: 20px;
-	content: url(/static/image/file-regular.svg)
+   margin-left: 24px;
+   width: 20px;
+   height: 20px;
+   content: url(/static/image/file-regular.svg)
 }
 
 .file_remove {
-	width: 20px;
-	height: 20px;
-	margin-right: 10px;
-	float: right;
-	content: url(/static/image/trash-can-solid.svg);
+   width: 20px;
+   height: 20px;
+   margin-right: 10px;
+   float: right;
+   content: url(/static/image/trash-can-solid.svg);
 }
 
 .file_download {
-	width: 20px;
-	height: 20px;
-	margin-right: 10px;
-	float: right;
-	content: url(/static/image/download-solid.svg);
+   width: 20px;
+   height: 20px;
+   margin-right: 10px;
+   float: right;
+   content: url(/static/image/download-solid.svg);
 }
 
 .file_plus {
-	width: 20px;
-	height: 20px;
-	margin-right: 10px;
-	float: right;
-	content: url(/static/image/file-plus-solid.svg);
+   width: 20px;
+   height: 20px;
+   margin-right: 10px;
+   float: right;
+   content: url(/static/image/file-plus-solid.svg);
 }
 
 .folder_plus {
-	width: 20px;
-	height: 20px;
-	margin-right: 10px;
-	float: right;
-	content: url(/static/image/folder-plus.svg);
+   width: 20px;
+   height: 20px;
+   margin-right: 10px;
+   float: right;
+   content: url(/static/image/folder-plus.svg);
 }
 
 .file_explorer .folder_icon:hover,
 .file_explorer .file_icon:hover {
-	cursor: default;
+   cursor: default;
 }
 
 .main_plus {
-	width: 120px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	position: relative;
-	left: 550px;
-	margin-top: 10px;
+   width: 120px;
+   position: relative;
+   left: 1180px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+
+.plus_name {
+   margin-bottom: 20px;
+   position: relative;
+   left: 1150px;
+}
+
+.plus_name span {
+   position: relative;
+   left: 636px;
+   margin: 7px;
+   
 }
 
 .main_folder_plus {
-	width: 30px;
-	content: url(/static/image/folder-plus.svg);
+   width: 30px;
+   content: url(/static/image/folder-plus.svg);
 }
 
 .main_file_plus {
-	margin-left: 42px;
-	width: 30px;
-	content: url(/static/image/file-plus-solid.svg);
+   margin-left: 42px;
+   width: 30px;
+   content: url(/static/image/file-plus-solid.svg);
+}
+
+.main_file_plus:hover,
+.main_folder_plus:hover {
+   cursor: pointer;
 }
 
 .file_name_box {
-	margin-left: 10px;
-	width: 480px;
-	height: 25px;
+   margin-left: 10px;
+   width: 480px;
+   height: 25px;
 }
 
 .file_decide {
-	float: right;
-	margin-right: 20px;
+   float: right;
+   margin-right: 20px;
 }
 
 .file_decide button {
-	font-size: 12px;
-	font-weight: 600;
-	background-color: white;
-	margin-left: 5px;
-	width: 40px;
-	height: 25px;
-	border: 2px solid grey;
+   font-size: 12px;
+   font-weight: 600;
+   background-color: white;
+   margin-left: 5px;
+   width: 40px;
+   height: 25px;
+   border: 2px solid grey;
 }
 
 .file_update {
-	width: 20px;
-	height: 20px;
-	margin-right: 10px;
-	float: right;
-	content: url(/static/image/pen-to-square-regular.svg);
+   width: 20px;
+   height: 20px;
+   margin-right: 10px;
+   float: right;
+   content: url(/static/image/pen-to-square-regular.svg);
+}
+
+.main_file_decide {
+   float: right;
+   margin-left: 15px;
+}
+
+.main_file_decide button {
+   font-size: 12px;
+   font-weight: 600;
+   background-color: white;
+   margin-left: 5px;
+   width: 40px;
+   height: 25px;
+   border: 2px solid grey;
+}
+
+.file_explorer span.click {
+   background-color: rgb(193, 231, 253);
+}
+
+.file_explorer span.hover:hover {
+   background-color: rgb(224, 243, 254);
 }

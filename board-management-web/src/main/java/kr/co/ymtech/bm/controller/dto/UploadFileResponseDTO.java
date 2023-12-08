@@ -4,12 +4,22 @@ import java.util.List;
 
 public class UploadFileResponseDTO {
 
+	/** successCount: 파일 업로드 성공 횟수 */
 	private Integer successCount;
-
+	/** failCount: 파일 업로드 실패 횟수 */
 	private Integer failCount;
+	/** error: 서버 에러 메세지 */
+	private String errorMessage;
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
 	private List<String> successFileNames;
-
 
 	public List<String> getSuccessFileNames() {
 		return successFileNames;
@@ -42,6 +52,8 @@ public class UploadFileResponseDTO {
 		builder.append(successCount);
 		builder.append(", failCount=");
 		builder.append(failCount);
+		builder.append(", errorMessage=");
+		builder.append(errorMessage);
 		builder.append(", successFileNames=");
 		builder.append(successFileNames);
 		builder.append("]");
