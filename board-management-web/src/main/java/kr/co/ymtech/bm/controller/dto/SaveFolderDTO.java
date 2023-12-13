@@ -6,7 +6,17 @@ public class SaveFolderDTO {
 	private String path;
 	/** newFolderName : 생성한 폴더 이름 */
 	private String newFolderName;
+	/** name : 파일 이름 */
+	private String name;
 
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getPath() {
 		return path;
@@ -27,10 +37,12 @@ public class SaveFolderDTO {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SaveFolderDTO [Path=");
+		builder.append("SaveFolderDTO [path=");
 		builder.append(path);
 		builder.append(", newFolderName=");
 		builder.append(newFolderName);
+		builder.append(", name=");
+		builder.append(name);
 		builder.append("]");
 		return builder.toString();
 	}

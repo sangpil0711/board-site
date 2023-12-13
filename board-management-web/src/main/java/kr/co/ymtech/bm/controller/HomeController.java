@@ -16,12 +16,26 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView homepage() {
 
 		ModelAndView model = new ModelAndView();
 
 		model.setViewName("main");
+		
+		return model;
+
+
+		
+		
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView login() {
+
+		ModelAndView model = new ModelAndView();
+
+		model.setViewName("login");
 
 		return model;
 	}

@@ -12,14 +12,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
@@ -136,18 +133,18 @@ public class FileExplorerService implements IFileExplorerService {
 		Integer successCount = 0;
 		Integer failCount = 0;
 		List<String> successFileNames = new ArrayList<String>();
-				
+
 		if (uploadFile.getPath() == null && uploadFile.getName() == null) {
 			directoryPath = PathConfig.getFilePath();
 		} else {
 			directoryPath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
 		}
-		
+
 		for (MultipartFile file : uploadFile.getFiles()) {
 			filePath = Paths.get(directoryPath).resolve(file.getOriginalFilename()).normalize().toString();
 
 			File existingFile = new File(filePath);
-			if (existingFile.exists()) {       // 파일 중복시 failCount 올리고 for문으로 돌아감
+			if (existingFile.exists()) { // 파일 중복시 failCount 올리고 for문으로 돌아감
 				failCount++;
 				continue;
 			}
@@ -163,7 +160,7 @@ public class FileExplorerService implements IFileExplorerService {
 		uploadFileResponse.setFailCount(failCount);
 		uploadFileResponse.setSuccessCount(successCount);
 		uploadFileResponse.setSuccessFileNames(successFileNames);
-		
+
 		return uploadFileResponse;
 	}
 
@@ -238,15 +235,15 @@ public class FileExplorerService implements IFileExplorerService {
 	 * @since 2023. 11. 28.
 	 */
 	@Override
-	public String saveFolder(String name, SaveFolderDTO saveFolderDTO) {
+	public String saveFolder(SaveFolderDTO saveFolderDTO) {
 
 		String filePath;
 
-		if (saveFolderDTO.getPath() == null && name == null) {
+		if (saveFolderDTO.getPath() == null && saveFolderDTO.getName() == null) {
 			filePath = Paths.get(PathConfig.getFilePath()).resolve(saveFolderDTO.getNewFolderName()).normalize()
 					.toString();
 		} else {
-			filePath = Paths.get(saveFolderDTO.getPath()).resolve(name).resolve(saveFolderDTO.getNewFolderName())
+			filePath = Paths.get(saveFolderDTO.getPath()).resolve(saveFolderDTO.getName()).resolve(saveFolderDTO.getNewFolderName())
 					.normalize().toString();
 		}
 
@@ -293,13 +290,9 @@ public class FileExplorerService implements IFileExplorerService {
 	/**
 	 * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
 	 * 
-	 * @param fileName   파일 또는 디렉토리 이름
-	 * @param folderName 디렉토라 이름
-	 * @param oldPath    원래 경로
-	 * @param newPath    새로운 경로
-	 *
-	 * @see kr.co.ymtech.bm.service.IFileExplorerService#moveFile(java.lang.String,
-	 *      java.lang.String, java.lang.String, java.lang.String)
+	 * @param moveFileDTO 이동과 관련된 파일 정보
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#moveFile(kr.co.ymtech.bm.controller.dto.MoveFileDTO)
 	 *
 	 * @author 박상현
 	 * @since 2023. 11. 30.
@@ -309,13 +302,14 @@ public class FileExplorerService implements IFileExplorerService {
 		Path oldFilePath = Paths.get(moveFileDTO.getOldPath()).resolve(moveFileDTO.getFileName()).normalize();
 		Path newFilePath;
 		try {
-			if (moveFileDTO.getFolderName() == null && moveFileDTO.getNewPath() == null) {
+			if (moveFileDTO.getNewPath() == null && moveFileDTO.getFileName() == null) {
 				newFilePath = Paths.get(PathConfig.getFilePath()).resolve(moveFileDTO.getFileName()).normalize();
 				if (Files.exists(newFilePath)) {
 					return "파일 이름 중복이므로 이동 실패!";
 				}
 			} else {
-				newFilePath = Paths.get(moveFileDTO.getNewPath()).resolve(moveFileDTO.getFolderName()).resolve(moveFileDTO.getFileName()).normalize();
+				newFilePath = Paths.get(moveFileDTO.getNewPath()).resolve(moveFileDTO.getFolderName())
+						.resolve(moveFileDTO.getFileName()).normalize();
 				if (Files.exists(newFilePath)) {
 					return "파일 이름 중복이므로 이동 실패!";
 				}

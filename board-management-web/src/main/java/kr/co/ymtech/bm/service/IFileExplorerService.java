@@ -1,7 +1,6 @@
 package kr.co.ymtech.bm.service;
 
 import javax.servlet.http.HttpServletResponse;
-
 import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
 import kr.co.ymtech.bm.controller.dto.MoveFileDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
@@ -71,7 +70,7 @@ public interface IFileExplorerService {
 	 * @return 
 	 * @since 2023. 11. 28.
 	 */
-	public String saveFolder(String name, SaveFolderDTO saveFolderDTO);
+	public String saveFolder(SaveFolderDTO saveFolderDTO);
 
 	/**
 	 * @Method updateFile 파일 또는 디렉토리 이름을 수정하는 함수
@@ -87,10 +86,7 @@ public interface IFileExplorerService {
 	/**
 	 * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
 	 * 
-	 * @param fileName   파일 또는 디렉토리 이름
-	 * @param folderName 디렉토라 이름
-	 * @param oldPath    원래 경로
-	 * @param newPath    새로운 경로
+	 * @param moveFileDTO 이동과 관련된 파일 정보
 	 *
 	 * @author 박상현
 	 * @return 

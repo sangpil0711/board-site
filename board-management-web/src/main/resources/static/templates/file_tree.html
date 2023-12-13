@@ -1,4 +1,4 @@
-<ul dnd-list="files" dnd-drop="dropFile(file)">
+<ul dnd-list="files" dnd-drop="event.stopPropagation();dropFile(file);">
 	<li ng-repeat="file in files" dnd-dragstart="dragFile(file)" dnd-draggable="file" dnd-effect-allowed="move">
 
       <!-- 파일 펼치기 버튼 시작 -->
@@ -12,7 +12,7 @@
 
 		<!-- 파일 이름 시작 -->
 		<span ng-style="{'width': 470 - file.depth * 31  + 'px'}" ng-if="!file.updateFileBox" ng-click="clickFile(file)"
-			ng-class="{ 'click': file.clickfile, 'hover': !file.clickfile}">{{file.name}}</span>
+			ng-class="{ 'click': file.clickItem, 'hover': !file.clickItem}">{{file.name}}</span>
 		<!-- 파일 이름 끝 -->
 
       <!-- 수정 시 파일 이름 입력 박스 시작 -->

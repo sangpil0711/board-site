@@ -3,8 +3,8 @@
 	
 	<!-- 파일/폴더 생성 버튼 시작 -->
 		<div class="main_plus">
-			<img class="main_folder_plus" ng-click="showChildFolderBox(undefined)">
-			<img class="main_file_plus" ngf-select="uploadSelectFiles($files, undefined)" multiple>
+			<img class="main_folder_plus" ng-click="showChildFolderBox()">
+			<img class="main_file_plus" ngf-select="uploadSelectFiles($files)" multiple>
 		</div>
 		<div class="plus_name">
 			<span>폴더 생성</span>
@@ -22,7 +22,7 @@
 				<input type="text" class="file_name_box" ng-model="newFolderName">
 				<div class="main_file_decide">
 					<button ng-click="makeFolder(undefined, newFolderName)">생성</button>
-					<button ng-click="cancelChildFolderBox(undefined)">취소</button>
+					<button ng-click="cancelChildFolderBox()">취소</button>
 				</div>
 			</li>
 		</ul>

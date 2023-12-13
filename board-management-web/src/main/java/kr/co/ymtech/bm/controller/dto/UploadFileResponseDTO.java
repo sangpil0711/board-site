@@ -10,6 +10,8 @@ public class UploadFileResponseDTO {
 	private Integer failCount;
 	/** error: 서버 에러 메세지 */
 	private String errorMessage;
+	/** successFileNames: 성공 파일 이름 */
+	private List<String> successFileNames;
 
 	public String getErrorMessage() {
 		return errorMessage;
@@ -18,8 +20,6 @@ public class UploadFileResponseDTO {
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
-
-	private List<String> successFileNames;
 
 	public List<String> getSuccessFileNames() {
 		return successFileNames;
