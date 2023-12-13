@@ -1103,6 +1103,6 @@ pre {
 	background-color: rgb(193, 231, 253);
 }
 
-.file_explorer span.hover:hover {
+.file_explorer span:hover {
 	background-color: rgb(224, 243, 254);
 }

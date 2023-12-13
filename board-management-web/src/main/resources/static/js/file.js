@@ -1,10 +1,10 @@
 
-app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
+app.controller("BoardFile", function($scope, $timeout, ExplorerFactory, Upload) {
 
 	// 해당 폴더 파일 리스트
 	$scope.files = [];
 	// 업로드되는 파일 데이터
-	const selectedFiles = [];
+	let selectedFiles = [];
 	// 생성되는 폴더 이름
 	$scope.newFolderName = '';
 
@@ -93,10 +93,12 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 			files: selectedFiles
 		};
 
-		if (folder != null) {
+		if (folder != undefined) {
 			data.path = folder.path;
 			data.name = folder.name;
 		}
+
+		console.log(folder);
 
 		Upload.upload({
 			url: '/fileExplorer',
@@ -112,8 +114,8 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 			const dataMessage = JSON.parse(message.data)
 			alert(`성공: ${dataMessage.successCount}, 실패: ${dataMessage.failCount}`);
 			dataMessage.successFileNames.forEach(function(file) {
-				
-				// 배열에 추가될파일 정보
+
+				// 배열에 추가될 파일 정보
 				const newFile = {
 					name: file,
 					isDirectory: false,
@@ -132,7 +134,8 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 			})
 
 		}).catch(function(error) {
-			alert('파일 업로드 실패', error);
+			console.error("폴더 생성 실패", error);
+			alert('파일 업로드 실패');
 		})
 
 	};
@@ -251,19 +254,23 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	 * @author 황상필
 	 * @since 2023. 11. 24.
 	 */
-	$scope.makeFolder = function(folder, newFolderName) {
+	$scope.makeFolder = function(newFolderName, folder) {
 		// 폴더 생성 시 필요한 정보      
 		const folderData = {
-			path: folder == undefined ? null : folder.path,
 			newFolderName: newFolderName
 		};
+
+		if (folder != undefined) {
+			folderData.path = folder.path;
+			folderData.name = folder.name;
+		}
 
 		// 파일 이름이 입력되지 않았을 경우 동작
 		if (newFolderName == '') {
 			alert("파일 이름을 입력해주세요.");
 		}
 		else {
-			ExplorerFactory.createFolder({ name: folder == undefined ? null : folder.name }, folderData, function() {
+			ExplorerFactory.createFolder(folderData, function() {
 				alert("폴더 생성 성공");
 
 				// 배열에 폴더 추가 시 필요한 정보
@@ -289,7 +296,7 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 			}, function(error) {
 				alert("폴더 생성 실패");
 				console.error("폴더 생성 실패", error);
-			});
+			})
 		}
 	};
 
@@ -424,66 +431,118 @@ app.controller("BoardFile", function($scope, ExplorerFactory, Upload) {
 	};
 
 	/**
-	 * @function dragFile 드래그한 파일정보를 가져오는 함수
+	 * @function dragStartEvt 드래그 시작 시 파일정보를 가져오는 함수
 	 * 
 	 * @param file 드래그한 파일
 	 * 
 	 * @author 황상필
 	 * @since 2023. 12. 07.
 	 */
-	$scope.dragFile = function(file) {
+	$scope.dragStartEvt = function(file) {
 		$scope.dragItem = file;
 	};
+	
+	// 파일 중복 처리
+	$scope.isCheck = false;
 
 	/**
 	 * @function dropFile 파일이 들어간 폴더 정보를 가져오는 함수
 	 * 
-	 * @param targetFolder 파일이 들어간 폴더
+	 * @param targetList 드롭한 파일의 상위 폴더 파일 리스트
+	 * @param targetIndex 드롭한 파일의 index
 	 * 
 	 * @author 황상필
 	 * @since 2023. 12. 07.
 	 */
-	$scope.dropFile = function(targetFolder) {
-		
-		console.log(targetFolder);
-		
-		if (targetFolder != undefined) {
+	$scope.dropFile = function(targetList, targetIndex) {
 
-			// 파일 이동 시 필요한 파일 정보
+		// $scope.isCheck가 true면 함수 종료
+		if ($scope.isCheck) {
+			return;
+		}
+
+		$scope.isCheck = true;
+
+		// 0.1초 후에 다시 $scope.isCheck를 false로 설정
+		$timeout(function() {
+			$scope.isCheck = false;
+		}, 100);
+
+		let targetFile = targetList[targetIndex];
+
+		// targetFile이 존재하고 드래그한 파일과 같지 않으면 동작
+		if (targetFile != undefined && targetFile != $scope.dragItem) {
+
+			// 서버로 보낼 파일 정보
 			const moveFileData = {
 				fileName: $scope.dragItem.name,
-				folderName: targetFolder.name,
 				oldPath: $scope.dragItem.path,
-				newPath: targetFolder.path
-			}
+				newPath: targetFile.isDirectory ? targetFile.path + "\\" + targetFile.name : targetFile.path
+			};
 
-			deleteFileFromArray($scope.files, $scope.dragItem.name, $scope.dragItem.path);
-
-			// 배열에 추가될 파일 정보
+			// 폴더에 추가될 파일 정보
 			const newFile = {
 				name: $scope.dragItem.name,
 				isDirectory: $scope.dragItem.isDirectory,
-				path: targetFolder == undefined ? $scope.firstPath : targetFolder.path + "\\" + targetFolder.name,
-				depth: targetFolder == undefined ? 0 : targetFolder.depth + 1
+				child: $scope.dragItem.child,
+				clickItem: false,
+				path: targetFile.isDirectory ? targetFile.path + "\\" + targetFile.name : targetFile.path,
+				depth: targetFile.path == $scope.firstPath ? 0 : targetFile.depth + 1
 			};
-
-			// 최상위 폴더일 경우 동작
-			if (targetFolder == undefined) {
-				$scope.files.push(newFile);
-			}
-			// 최상위 폴더가 아닐 경우 동작 
-			else {
-				targetFolder.child.push(newFile);
-			}
 
 			ExplorerFactory.moveFile(moveFileData, function() {
 				alert("파일 이동 성공");
+				deleteFileFromArray($scope.files, $scope.dragItem.name, $scope.dragItem.path);
+
+				// 파일의 depth가 0이고 디렉토리가 아니면 $scope.files 배열에 추가
+				if (targetFile.depth == 0 && !targetFile.isDirectory) {
+					$scope.files.push(newFile);
+				}
+				// 파일이 디렉토리이면 파일의 child 배열에 추가 
+				else if (targetFile.isDirectory) {
+					targetFile.child.push(newFile);
+				} 
+				// 파일이 디렉토리가 아니면 파일의 상위폴더 child 배열에 추가
+				else {
+					findParentFolder($scope.files, targetFile, newFile);
+				}
+
+				newFile.clickItem = true;
+				changeOtherClickState($scope.files, newFile, false);
 			}, function(error) {
 				alert("파일 이동 실패");
 				console.error("파일 이동 실패", error);
-			});
+			})
 		}
+	};
 
+	/**
+	 * @function findParentFolder 파일이 들어간 폴더 정보를 가져오는 함수
+	 * 
+	 * @param files 전체 파일 리스트
+	 * @param targetFile 드롭한 파일
+	 * @param newFile 배열에 추가할 파일
+	 * 
+	 * @author 황상필
+	 * @since 2023. 12. 13.
+	 */
+	const findParentFolder = function(files, targetFile, newFile) {
+
+		// targetFile.path의 마지막 "\\"의 앞 부분을 추출 
+		const filePath = targetFile.path.substring(0, targetFile.path.lastIndexOf("\\"));
+		// targetFile.path의 마지막 "\\" 뒷 부분 문자열을 추출
+		const fileName = targetFile.path.substring(targetFile.path.lastIndexOf("\\") + 1);
+
+		files.forEach(function(file) {
+			// 파일 경로가 filePath와 같고 파일 이름이 fileName과 같은 경우 해당 파일의 child 경로에 추가
+			if (file.path.replace(/\//g, "\\") == filePath && file.name == fileName) {
+				file.child.push(newFile);
+			}
+			// 하위 파일이 존재할 경우 하위 파일 검사
+			if (file.child && file.child.length > 0) {
+				findParentFolder(file.child, targetFile, newFile);
+			}
+		})
 	};
 
 });

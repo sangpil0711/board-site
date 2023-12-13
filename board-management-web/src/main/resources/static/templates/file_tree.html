@@ -1,41 +1,45 @@
-<ul dnd-list="files" dnd-drop="dropFile(file)">
-	<li ng-repeat="file in files" dnd-dragstart="dragFile(file)" dnd-draggable="file" dnd-effect-allowed="move">
+<ul dnd-list="files" dnd-drop="dropFile(files, index)">
+	<li ng-repeat="file in files"
+		dnd-dragstart="dragStartEvt(file)"
+		dnd-draggable="file" dnd-effect-allowed="move">
 
-      <!-- 파일 펼치기 버튼 시작 -->
-      <img ng-if="file.isDirectory" ng-click="openFolder(file)"
-         ng-class="{'folder_open': file.folderState, 'folder_close': !file.folderState}">
-      <!-- 파일 펼치기 버튼 끝 -->
+		<!-- 파일 펼치기 버튼 시작 -->
+		<img ng-if="file.isDirectory" ng-click="openFolder(file)"
+			ng-class="{'folder_open': file.folderState, 'folder_close': !file.folderState}">
+		<!-- 파일 펼치기 버튼 끝 -->
 
-      <!-- 파일/폴더 아이콘 시작 -->
-      <img ng-class="{'folder_icon': file.isDirectory, 'file_icon': !file.isDirectory}">
-      <!-- 파일/폴더 아이콘 끝 -->
+		<!-- 파일/폴더 아이콘 시작 -->
+		<img ng-class="{'folder_icon': file.isDirectory, 'file_icon': !file.isDirectory}">
+		<!-- 파일/폴더 아이콘 끝 -->
 
 		<!-- 파일 이름 시작 -->
-		<span ng-style="{'width': 470 - file.depth * 31  + 'px'}" ng-if="!file.updateFileBox" ng-click="clickFile(file)"
-			ng-class="{ 'click': file.clickfile, 'hover': !file.clickfile}">{{file.name}}</span>
+		<span ng-style="{'width': 470 - file.depth * 31 + 'px'}" ng-if="!file.updateFileBox" ng-click="clickFile(file)"
+			ng-class="{'click': file.clickItem}">
+			{{file.name}}
+		</span>
 		<!-- 파일 이름 끝 -->
 
-      <!-- 수정 시 파일 이름 입력 박스 시작 -->
-      <input type="text" class="file_name_box" ng-show="file.updateFileBox" ng-model="newFileName"
-         ng-value="file.name" ng-style="{'width': 470 - file.depth * 31  + 'px'}">
-      <!-- 수정 시 파일 이름 입력 박스 끝 -->
+		<!-- 수정 시 파일 이름 입력 박스 시작 -->
+		<input type="text" class="file_name_box" ng-show="file.updateFileBox" ng-model="newFileName"
+			ng-value="file.name" ng-style="{'width': 470 - file.depth * 31 + 'px'}">
+		<!-- 수정 시 파일 이름 입력 박스 끝 -->
 
-      <!-- 파일 삭제 버튼 시작 -->
-      <img class="file_remove" ng-click="deleteFile(file)" ng-if="!file.updateFileBox">
-      <!-- 파일 삭제 버튼 끝 -->
+		<!-- 파일 삭제 버튼 시작 -->
+		<img class="file_remove" ng-click="deleteFile(file)" ng-if="!file.updateFileBox">
+		<!-- 파일 삭제 버튼 끝 -->
 
 		<!-- 파일 생성 버튼 시작 -->
-		<img class="file_plus" ng-if="file.isDirectory && !file.updateFileBox" ngf-select="uploadSelectFiles($files, file)"
-			multiple>
+		<img class="file_plus" ng-if="file.isDirectory && !file.updateFileBox"
+			ngf-select="uploadSelectFiles($files, file)" multiple>
 		<!-- 파일 생성 버튼 끝 -->
 
 		<!-- 폴더 생성 버튼 시작 -->
 		<img class="folder_plus" ng-if="file.isDirectory && !file.updateFileBox" ng-click="showChildFolderBox(file)">
 		<!-- 폴더 생성 버튼 끝 -->
 
-      <!-- 파일 다운로드 버튼 시작 -->
-      <img ng-click="downloadFile(file)" class="file_download" ng-if="!file.isDirectory && !file.updateFileBox">
-      <!-- 파일 다운로드 버튼 끝 -->
+		<!-- 파일 다운로드 버튼 시작 -->
+		<img ng-click="downloadFile(file)" class="file_download" ng-if="!file.isDirectory && !file.updateFileBox">
+		<!-- 파일 다운로드 버튼 끝 -->
 
 		<!-- 파일 수정 박스 표시 버튼 시작 -->
 		<img class="file_update" ng-click="showUpdateFileBox(file)" ng-if="!file.updateFileBox">
@@ -53,20 +57,21 @@
 			<li>
 				<img class="folder_icon" style="margin-left: 38px;">
 				<input type="text" class="file_name_box" ng-model="newFolderName"
-					ng-style="{'width': 440 - file.depth * 31  + 'px'}">
+					ng-style="{'width': 440 - file.depth * 31 + 'px'}">
 				<div class="file_decide">
-					<button ng-click="makeFolder(file, newFolderName)">생성</button>
+					<button ng-click="makeFolder(newFolderName, file)">생성</button>
 					<button ng-click="cancelChildFolderBox(file)">취소</button>
 				</div>
 			</li>
 		</ul>
 		<!-- 폴더 생성 박스 끝 -->
 
-      <!-- 하위 파일 리스트 시작 -->
-      <ul ng-if="file.child && file.folderState">
-         <li ng-include="'/static/templates/file_tree.html'" ng-init="files = file.child"></li>
-      </ul>
-      <!-- 하위 파일 리스트 끝 -->
+		<!-- 하위 파일 리스트 시작 -->
+		<ul ng-if="file.child && file.folderState">
+			<!-- 파일 트리 템플릿 재사용 -->
+			<li ng-include="'/static/templates/file_tree.html'" ng-init="files = file.child"></li>
+		</ul>
+		<!-- 하위 파일 리스트 끝 -->
 
-   </li>
+	</li>
 </ul>

@@ -71,7 +71,7 @@ public interface IFileExplorerService {
 	 * @return 
 	 * @since 2023. 11. 28.
 	 */
-	public String saveFolder(String name, SaveFolderDTO saveFolderDTO);
+	public String saveFolder(SaveFolderDTO saveFolderDTO);
 
 	/**
 	 * @Method updateFile 파일 또는 디렉토리 이름을 수정하는 함수

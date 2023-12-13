@@ -126,10 +126,9 @@ public class FileExplorerController {
 	 * @since 2023. 11. 28.
 	 */
 	@PostMapping("/directory")
-	public ResponseEntity<String> saveFolder(@RequestParam(required = false) String name,
-			@RequestBody SaveFolderDTO saveFolderDTO) {
+	public ResponseEntity<String> saveFolder(@RequestBody SaveFolderDTO saveFolderDTO) {
 
-		String saveFolderResult = fileExplorerService.saveFolder(name, saveFolderDTO);
+		String saveFolderResult = fileExplorerService.saveFolder(saveFolderDTO);
 
 		if ("디렉토리 생성 성공!".equals(saveFolderResult)) {
 			return new ResponseEntity<String>(saveFolderResult, HttpStatus.OK);

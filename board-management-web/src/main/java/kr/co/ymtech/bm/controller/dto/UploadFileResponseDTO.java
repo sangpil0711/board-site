@@ -4,11 +4,14 @@ import java.util.List;
 
 public class UploadFileResponseDTO {
 
+	/** successCount: 파일 업로드 성공 횟수 */
 	private Integer successCount;
-
+	/** failCount: 파일 업로드 실패 횟수 */
 	private Integer failCount;
-
+	/** successFileNames: 성공 파일 이름 */
 	private List<String> successFileNames;
+	/** errorMessage: 서버 에러 메시지 */
+	private String errorMessage;
 
 
 	public List<String> getSuccessFileNames() {
@@ -34,6 +37,14 @@ public class UploadFileResponseDTO {
 	public void setFailCount(Integer failCount) {
 		this.failCount = failCount;
 	}
+	
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
 	@Override
 	public String toString() {
@@ -44,7 +55,10 @@ public class UploadFileResponseDTO {
 		builder.append(failCount);
 		builder.append(", successFileNames=");
 		builder.append(successFileNames);
+		builder.append(", errorMessage=");
+		builder.append(errorMessage);
 		builder.append("]");
 		return builder.toString();
 	}
+
 }
