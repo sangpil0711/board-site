@@ -42,6 +42,8 @@ public class SaveFolderDTO {
 		builder.append(path);
 		builder.append(", newFolderName=");
 		builder.append(newFolderName);
+		builder.append(", name=");
+		builder.append(name);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -12,14 +12,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.FileDTO;
 import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
@@ -130,42 +127,42 @@ public class FileExplorerService implements IFileExplorerService {
 	   @Override
 	   public UploadFileResponseDTO uploadFiles(UploadFileDTO uploadFile) {
 
-	      UploadFileResponseDTO uploadFileResponse = new UploadFileResponseDTO();
-	      String directoryPath;
-	      String filePath;
-	      Integer successCount = 0;
-	      Integer failCount = 0;
-	      List<String> successFileNames = new ArrayList<String>();
+		UploadFileResponseDTO uploadFileResponse = new UploadFileResponseDTO();
+		String directoryPath;
+		String filePath;
+		Integer successCount = 0;
+		Integer failCount = 0;
+		List<String> successFileNames = new ArrayList<String>();
 
-	      if (uploadFile.getPath() == null && uploadFile.getName() == null) {
-	         directoryPath = PathConfig.getFilePath();
-	      } else {
-	         directoryPath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
-	      }
+		if (uploadFile.getPath() == null && uploadFile.getName() == null) {
+			directoryPath = PathConfig.getFilePath();
+		} else {
+			directoryPath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
+		}
 
-	      for (MultipartFile file : uploadFile.getFiles()) {
-	         filePath = Paths.get(directoryPath).resolve(file.getOriginalFilename()).normalize().toString();
+		for (MultipartFile file : uploadFile.getFiles()) {
+			filePath = Paths.get(directoryPath).resolve(file.getOriginalFilename()).normalize().toString();
 
-	         File existingFile = new File(filePath);
-	         if (existingFile.exists()) { // 파일 중복시 failCount 올리고 for문으로 돌아감
-	            failCount++;
-	            continue;
-	         }
-	         try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
-	            IOUtils.copy(input, output);
-	            successCount++;
-	            successFileNames.add(file.getOriginalFilename());
-	         } catch (IOException e) {
-	            uploadFileResponse.setErrorMessage("파일 처리 중에 서버 오류가 발생!");
-	            return uploadFileResponse;
-	         }
-	      }
-	      uploadFileResponse.setFailCount(failCount);
-	      uploadFileResponse.setSuccessCount(successCount);
-	      uploadFileResponse.setSuccessFileNames(successFileNames);
+			File existingFile = new File(filePath);
+			if (existingFile.exists()) { // 파일 중복시 failCount 올리고 for문으로 돌아감
+				failCount++;
+				continue;
+			}
+			try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
+				IOUtils.copy(input, output);
+				successCount++;
+				successFileNames.add(file.getOriginalFilename());
+			} catch (IOException e) {
+				uploadFileResponse.setErrorMessage("파일 처리 중에 서버 오류가 발생!");
+				return uploadFileResponse;
+			}
+		}
+		uploadFileResponse.setFailCount(failCount);
+		uploadFileResponse.setSuccessCount(successCount);
+		uploadFileResponse.setSuccessFileNames(successFileNames);
 
-	      return uploadFileResponse;
-	   }
+		return uploadFileResponse;
+	}
 
 	/**
 	 * @Method 서버에 있는 파일을 다운로드 하는 함수
@@ -293,13 +290,9 @@ public class FileExplorerService implements IFileExplorerService {
 	/**
 	 * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
 	 * 
-	 * @param fileName   파일 또는 디렉토리 이름
-	 * @param folderName 디렉토라 이름
-	 * @param oldPath    원래 경로
-	 * @param newPath    새로운 경로
-	 *
-	 * @see kr.co.ymtech.bm.service.IFileExplorerService#moveFile(java.lang.String,
-	 *      java.lang.String, java.lang.String, java.lang.String)
+	 * @param moveFileDTO 이동과 관련된 파일 정보
+	 * 
+	 * @see kr.co.ymtech.bm.service.IFileExplorerService#moveFile(kr.co.ymtech.bm.controller.dto.MoveFileDTO)
 	 *
 	 * @author 박상현
 	 * @since 2023. 11. 30.

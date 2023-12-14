@@ -1,7 +1,6 @@
 package kr.co.ymtech.bm.controller;
 
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import kr.co.ymtech.bm.controller.dto.FileExplorerDTO;
 import kr.co.ymtech.bm.controller.dto.MoveFileDTO;
 import kr.co.ymtech.bm.controller.dto.SaveFolderDTO;
@@ -160,10 +158,7 @@ public class FileExplorerController {
 	/**
 	 * @Method moveFile 파일 또는 디렉토리를 이동하는 함수
 	 * 
-	 * @param fileName   파일 또는 디렉토리 이름
-	 * @param folderName 디렉토라 이름
-	 * @param oldPath    원래 경로
-	 * @param newPath    새로운 경로
+	 * @param moveFileDTO 이동과 관련된 파일 정보
 	 *
 	 * @author 박상현
 	 * @since 2023. 11. 30.
