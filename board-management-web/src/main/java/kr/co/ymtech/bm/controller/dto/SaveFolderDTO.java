@@ -8,8 +8,6 @@ public class SaveFolderDTO {
 	private String path;
 	/** newFolderName : 생성한 폴더 이름 */
 	private String newFolderName;
-	/** name : 파일 이름 */
-	private String name;
 
 	public String getPath() {
 		return path;

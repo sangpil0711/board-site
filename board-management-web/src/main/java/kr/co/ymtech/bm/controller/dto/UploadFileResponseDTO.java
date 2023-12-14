@@ -13,14 +13,6 @@ public class UploadFileResponseDTO {
 	/** errorMessage: 서버 에러 메시지 */
 	private String errorMessage;
 
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-
 	public List<String> getSuccessFileNames() {
 		return successFileNames;
 	}
@@ -44,11 +36,11 @@ public class UploadFileResponseDTO {
 	public void setFailCount(Integer failCount) {
 		this.failCount = failCount;
 	}
-	
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}
-	
+
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}

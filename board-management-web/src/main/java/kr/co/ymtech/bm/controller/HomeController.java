@@ -1,11 +1,11 @@
 package kr.co.ymtech.bm.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 public class HomeController {
 
 	/**
@@ -16,7 +16,7 @@ public class HomeController {
 	 * @author 황상필
 	 * @since 2023. 09. 18.
 	 */
-	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView homepage() {
 
 		ModelAndView model = new ModelAndView();
