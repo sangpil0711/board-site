@@ -21,16 +21,26 @@ public class HomeController {
 
 		ModelAndView model = new ModelAndView();
 
-		model.setViewName("main");
+		// #1. 로그인 하지 않으면, 로그인 페이지가 떠야함
+		// #2. 로그인이 성공하면, 메인 페이지가 떠야함,,
 		
+		// 로그인 되어있는지 검사,,,
+		if (true) {
+			model.setViewName("main");
+		}
+
 		return model;
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
 
 		ModelAndView model = new ModelAndView();
 
+		// #1. 로그인 하지 않으면, 로그인 페이지가 떠야함
+		// #2. 로그인이 성공하면, 메인 페이지가 떠야함,,
+		
+		// 로그인 되어있는지 검사,,,
 		model.setViewName("login");
 
 		return model;

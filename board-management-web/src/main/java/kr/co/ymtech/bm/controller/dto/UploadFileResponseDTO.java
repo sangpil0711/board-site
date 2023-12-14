@@ -36,11 +36,11 @@ public class UploadFileResponseDTO {
 	public void setFailCount(Integer failCount) {
 		this.failCount = failCount;
 	}
-	
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}
-	
+
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}

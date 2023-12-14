@@ -1,5 +1,9 @@
-app.controller("BoardLogin", function() {
-
+app.controller("BoardLogin", function($scope) {
+	
+	$scope.loginForm = {
+		userId: null,
+		password: null
+	};
 	
 
 });
