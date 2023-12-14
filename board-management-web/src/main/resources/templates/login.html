@@ -14,10 +14,19 @@
 </head>
 
 <body ng-app="myApp">
-	<div id="container" ng-controller="BoardHead">
+	<div id="container" ng-controller="BoardLogin">
 
-		
-		
+		<form th:action="@{/j_security_check}" method="post">
+			<h1 class="login_title">IPP<span>게시판</span></h1>
+
+			<input type="text" name="userId" class="login_id" placeholder="아이디를 입력해주세요." required>
+			<input type="password" name="userPw" class="login_pw" placeholder="비밀번호를 입력해주세요." required>
+
+			<button class="login_btn">로그인</button>
+		</form>
+
+		<button class="signup_btn">회원가입</button>
+
 	</div>
 </body>
 

@@ -14,7 +14,7 @@ var app = angular.module("myApp", ['ngResource', 'ngRoute', 'ui.bootstrap', 'ngF
 
 app.config(function($routeProvider) {
 	$routeProvider
-		.when("/main", {
+		.when("/", {
 			templateUrl: "static/templates/main_display.html"
 		})
 		.when("/board", {
