@@ -8,10 +8,10 @@ public class UploadFileResponseDTO {
 	private Integer successCount;
 	/** failCount: 파일 업로드 실패 횟수 */
 	private Integer failCount;
-	/** error: 서버 에러 메세지 */
-	private String errorMessage;
 	/** successFileNames: 성공 파일 이름 */
 	private List<String> successFileNames;
+	/** errorMessage: 서버 에러 메시지 */
+	private String errorMessage;
 
 	public String getErrorMessage() {
 		return errorMessage;
@@ -44,6 +44,14 @@ public class UploadFileResponseDTO {
 	public void setFailCount(Integer failCount) {
 		this.failCount = failCount;
 	}
+	
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
 	@Override
 	public String toString() {
@@ -56,7 +64,10 @@ public class UploadFileResponseDTO {
 		builder.append(errorMessage);
 		builder.append(", successFileNames=");
 		builder.append(successFileNames);
+		builder.append(", errorMessage=");
+		builder.append(errorMessage);
 		builder.append("]");
 		return builder.toString();
 	}
+
 }

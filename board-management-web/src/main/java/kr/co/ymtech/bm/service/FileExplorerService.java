@@ -124,45 +124,45 @@ public class FileExplorerService implements IFileExplorerService {
 	 * @author 박상현
 	 * @since 2023. 11. 23.
 	 */
-	@Override
-	public UploadFileResponseDTO uploadFiles(UploadFileDTO uploadFile) {
+	   @Override
+	   public UploadFileResponseDTO uploadFiles(UploadFileDTO uploadFile) {
 
-		UploadFileResponseDTO uploadFileResponse = new UploadFileResponseDTO();
-		String directoryPath;
-		String filePath;
-		Integer successCount = 0;
-		Integer failCount = 0;
-		List<String> successFileNames = new ArrayList<String>();
+	      UploadFileResponseDTO uploadFileResponse = new UploadFileResponseDTO();
+	      String directoryPath;
+	      String filePath;
+	      Integer successCount = 0;
+	      Integer failCount = 0;
+	      List<String> successFileNames = new ArrayList<String>();
 
-		if (uploadFile.getPath() == null && uploadFile.getName() == null) {
-			directoryPath = PathConfig.getFilePath();
-		} else {
-			directoryPath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
-		}
+	      if (uploadFile.getPath() == null && uploadFile.getName() == null) {
+	         directoryPath = PathConfig.getFilePath();
+	      } else {
+	         directoryPath = Paths.get(uploadFile.getPath()).resolve(uploadFile.getName()).normalize().toString();
+	      }
 
-		for (MultipartFile file : uploadFile.getFiles()) {
-			filePath = Paths.get(directoryPath).resolve(file.getOriginalFilename()).normalize().toString();
+	      for (MultipartFile file : uploadFile.getFiles()) {
+	         filePath = Paths.get(directoryPath).resolve(file.getOriginalFilename()).normalize().toString();
 
-			File existingFile = new File(filePath);
-			if (existingFile.exists()) { // 파일 중복시 failCount 올리고 for문으로 돌아감
-				failCount++;
-				continue;
-			}
-			try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
-				IOUtils.copy(input, output);
-				successCount++;
-				successFileNames.add(file.getOriginalFilename());
-			} catch (IOException e) {
-				uploadFileResponse.setErrorMessage("파일 처리 중에 서버 오류가 발생!");
-				return uploadFileResponse;
-			}
-		}
-		uploadFileResponse.setFailCount(failCount);
-		uploadFileResponse.setSuccessCount(successCount);
-		uploadFileResponse.setSuccessFileNames(successFileNames);
+	         File existingFile = new File(filePath);
+	         if (existingFile.exists()) { // 파일 중복시 failCount 올리고 for문으로 돌아감
+	            failCount++;
+	            continue;
+	         }
+	         try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
+	            IOUtils.copy(input, output);
+	            successCount++;
+	            successFileNames.add(file.getOriginalFilename());
+	         } catch (IOException e) {
+	            uploadFileResponse.setErrorMessage("파일 처리 중에 서버 오류가 발생!");
+	            return uploadFileResponse;
+	         }
+	      }
+	      uploadFileResponse.setFailCount(failCount);
+	      uploadFileResponse.setSuccessCount(successCount);
+	      uploadFileResponse.setSuccessFileNames(successFileNames);
 
-		return uploadFileResponse;
-	}
+	      return uploadFileResponse;
+	   }
 
 	/**
 	 * @Method 서버에 있는 파일을 다운로드 하는 함수
@@ -302,14 +302,13 @@ public class FileExplorerService implements IFileExplorerService {
 		Path oldFilePath = Paths.get(moveFileDTO.getOldPath()).resolve(moveFileDTO.getFileName()).normalize();
 		Path newFilePath;
 		try {
-			if (moveFileDTO.getNewPath() == null && moveFileDTO.getFileName() == null) {
+			if (moveFileDTO.getNewPath() == PathConfig.getFilePath()) {
 				newFilePath = Paths.get(PathConfig.getFilePath()).resolve(moveFileDTO.getFileName()).normalize();
 				if (Files.exists(newFilePath)) {
 					return "파일 이름 중복이므로 이동 실패!";
 				}
 			} else {
-				newFilePath = Paths.get(moveFileDTO.getNewPath()).resolve(moveFileDTO.getFolderName())
-						.resolve(moveFileDTO.getFileName()).normalize();
+				newFilePath = Paths.get(moveFileDTO.getNewPath()).resolve(moveFileDTO.getFileName()).normalize();
 				if (Files.exists(newFilePath)) {
 					return "파일 이름 중복이므로 이동 실패!";
 				}
