@@ -7,7 +7,7 @@ app.controller("BoardHead", function($scope, $location, $route) {
 	 * @since 2023. 09. 01.
 	 */
 	$scope.redirectToMain = function() {
-		$location.path('/');
+		$location.path('/main');
 		$route.reload();
 	};
 	
