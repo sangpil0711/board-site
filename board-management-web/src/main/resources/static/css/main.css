@@ -1106,3 +1106,62 @@ pre {
 .file_explorer span.hover:hover {
    background-color: rgb(224, 243, 254);
 }
+
+.login_title {
+   font-size: 45px;
+   position: absolute;
+   left: 710px;
+   top: 150px;
+   color: rgb(79, 114, 228);
+}
+
+.login_title span {
+   margin-left: 30px;
+   color: black;
+}
+
+.login_id {
+   position: absolute;
+   left: 585px;
+   top: 290px;
+   font-size: 20px;
+   padding: 10px;
+   height: 30px;
+   width: 500px;
+}
+
+.login_pw {
+   position: absolute;
+   left: 585px;
+   top: 360px;
+   font-size: 20px;
+   padding: 10px;
+   height: 30px;
+   width: 500px;
+}
+
+.login_btn {
+   position: absolute;
+   left: 585px;
+   top: 460px;
+   font-size: 22px;
+   font-weight: 600;
+   text-align: center;
+   background-color: black;
+   color: white;
+   height: 60px;
+   width: 524px;
+}
+
+.signup_btn {
+   position: absolute;
+   left: 585px;
+   top: 530px;
+   font-size: 22px;
+   font-weight: 600;
+   text-align: center;
+   background-color: white;
+   color: black;
+   height: 60px;
+   width: 524px;
+}

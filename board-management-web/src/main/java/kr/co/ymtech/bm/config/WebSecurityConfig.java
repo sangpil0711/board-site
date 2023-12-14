@@ -1,53 +1,46 @@
-//package kr.co.ymtech.bm.config;
-//
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//
-//@Configuration
-//@EnableWebSecurity
-//public class WebSecurityConfig{
-//	
-//
-//
-//	protected void configure(HttpSecurity http) throws Exception {
-//		http.csrf().disable().authorizeRequests()
-//				// /about 요청에 대해서는 로그인을 요구함
-//				.antMatchers("/login").authenticated()
-//				// /admin 요청에 대해서는 ROLE_ADMIN 역할을 가지고 있어야 함
-//				.antMatchers("/login").hasRole("ADMIN")
-//				// 나머지 요청에 대해서는 로그인을 요구하지 않음
-//				.anyRequest().permitAll().and()
-//				// 로그인하는 경우에 대해 설정함
-//				.formLogin()
-//				// 로그인 페이지를 제공하는 URL을 설정함
-//				.loginPage("/login")
-//				// 로그인 성공 URL을 설정함
-//				.successForwardUrl("/main")
-//				// 로그인 실패 URL을 설정함
-//				.failureForwardUrl("/login").permitAll();
-//	}
-//
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
-//
-//	@Bean
-//	public CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
-//		CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager());
-//		customAuthenticationFilter.setFilterProcessesUrl("/user/login");
-//		customAuthenticationFilter.setAuthenticationSuccessHandler(customLoginSuccessHandler());
-//		customAuthenticationFilter.afterPropertiesSet();
-//		return customAuthenticationFilter;
-//	}
-//
-//	@Bean
-//	public CustomLoginSuccessHandler customLoginSuccessHandler() {
-//		return new CustomLoginSuccessHandler();
-//	}
-//
-//}
+package kr.co.ymtech.bm.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig{
+	
+	 
+	@Bean
+    WebSecurityCustomizer webSecurityCustomizer() {
+       return (web) -> web.ignoring();
+    }
+
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http.headers(headers -> headers.frameOptions().sameOrigin())
+                .csrf(csrf -> csrf.disable()).authorizeHttpRequests((authorize) -> authorize.antMatchers("/" //
+                 , "/signup" //
+                 , "/login" //
+                 , "/tveta/libs/**" //
+                 , "/popup/**" //
+                 , "/static/**") //
+                .permitAll()
+                // 앞에서 설정한 이외의 모든 페이지는 로그인 필요
+                .anyRequest().authenticated())
+                .formLogin(login -> login
+                        // 로그인 페이지 URL은 "/login"
+                        .loginPage("/login")
+                        // 로그인 성공시 "/"로 이동
+                        .successForwardUrl("/")
+                        // 로그인 실패시에도 "/login"로 이동
+                        .failureForwardUrl("/login").permitAll()
+                        .usernameParameter("username")//
+                        .passwordParameter("password"));
+        
+        return http.build();
+    }
+
+}
