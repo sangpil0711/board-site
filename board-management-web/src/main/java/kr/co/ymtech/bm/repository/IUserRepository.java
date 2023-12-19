@@ -4,7 +4,8 @@ import kr.co.ymtech.bm.repository.vo.UserVO;
 
 public interface IUserRepository {
 
-	public String login(UserVO user);
+
+	UserVO findByUsername(Object principal);
 
 
 }
