@@ -4,7 +4,7 @@ public class UserVO {
 
 	private String id;
 	private String password;
-	private String name;
+	private String username;
 	private String email;
 	private Long createDate;
 	private Integer gradeId;
@@ -18,7 +18,7 @@ public class UserVO {
 	}
 
 	public String getName() {
-		return name;
+		return username;
 	}
 
 	public String getEmail() {
@@ -42,7 +42,7 @@ public class UserVO {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.username = name;
 	}
 
 	public void setEmail(String email) {
@@ -64,8 +64,8 @@ public class UserVO {
 		builder.append(id);
 		builder.append(", password=");
 		builder.append(password);
-		builder.append(", name=");
-		builder.append(name);
+		builder.append(", username=");
+		builder.append(username);
 		builder.append(", email=");
 		builder.append(email);
 		builder.append(", createDate=");

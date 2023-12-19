@@ -1,5 +1,8 @@
 package kr.co.ymtech.bm.controller;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,42 +11,65 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-	/**
-	 * @Method homepage "/" 경로로 'GET' 요청이 들어오면 return 값을 반환하는 메소드
-	 *
-	 * @return "main.html" 반환
-	 *
-	 * @author 황상필
-	 * @since 2023. 09. 18.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView homepage() {
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView main() {
+        ModelAndView model = new ModelAndView();
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		ModelAndView model = new ModelAndView();
+        // 로그인 여부 확인
+        if (auth == null || !UsernamePasswordAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
+            model.setViewName("login"); // 로그인 안되어 있으면 로그인 페이지로 이동
+        } else {
+        	
+        	try {
 
-		// #1. 로그인 하지 않으면, 로그인 페이지가 떠야함
-		// #2. 로그인이 성공하면, 메인 페이지가 떠야함,,
-		
-		// 로그인 되어있는지 검사,,,
-		if (true) {
-			model.setViewName("main");
-		}
+        		if (auth.getAuthorities().isEmpty()) {
+        			model.setViewName("login");
+        		} else {
+        			model.setViewName("main");
+        			
+//        			Iterator<? extends GrantedAuthority> itrAuthority = auth.getAuthorities().iterator();
+//        			GrantedAuthorityDetail authDetail = null;
+//        			
+//        			while (itrAuthority.hasNext()) {
+//        				authDetail = (GrantedAuthorityDetail) itrAuthority.next();
+//        				UserGrade userGrade = authDetail.getGrade();
+//        				
+//        				switch (userGrade.getId()) {
+//        				case UserGrade.ADMIN:
+//        				case UserGrade.USER:
+//        					// 사용자 정보 가져오기
+//        					String userJSON = new ObjectMapper().writeValueAsString(authDetail.getUser());
+//        					JSONObject obj = new JSONObject(userJSON);
+//        					
+//        					break;
+//        				case UserGrade.UNKNOWN_USER:
+//        					
+//        					break;
+//        				case UserGrade.INVALID_UNKNOWN_AND_ERROR:
+//        					
+//        					break;
+//        				case UserGrade.NOT_ENTERED_ID_OR_PASSWORD:
+//        				default:
+//        					
+//        					break;
+//        				}
+//        			}
+        		}
+        		
 
-		return model;
-	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login() {
+             } catch (Exception e) {
+             }
+        }
 
-		ModelAndView model = new ModelAndView();
+        return model;
+    }
 
-		// #1. 로그인 하지 않으면, 로그인 페이지가 떠야함
-		// #2. 로그인이 성공하면, 메인 페이지가 떠야함,,
-		
-		// 로그인 되어있는지 검사,,,
-		model.setViewName("login");
-
-		return model;
-	}
-
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView login() {
+        ModelAndView model = new ModelAndView();
+        model.setViewName("login");
+        return model;
+    }
 }
