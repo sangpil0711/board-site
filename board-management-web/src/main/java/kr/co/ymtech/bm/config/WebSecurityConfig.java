@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig{
 	
+	
 	 
 	@Bean
     WebSecurityCustomizer webSecurityCustomizer() {
@@ -25,8 +26,10 @@ public class WebSecurityConfig{
                  , "/signup" //
                  , "/login" //
                  , "/tveta/libs/**" //
-                 , "/popup/**" //
-                 , "/static/**") //
+                 , "/boards/**" //
+                 , "/static/**"
+                 , "/fileExplorer/**") //
+                		
                 .permitAll()
                 // 앞에서 설정한 이외의 모든 페이지는 로그인 필요
                 .anyRequest().authenticated())
@@ -35,10 +38,10 @@ public class WebSecurityConfig{
                         .loginPage("/login")
                         // 로그인 성공시 "/"로 이동
                         .successForwardUrl("/")
-                        // 로그인 실패시에도 "/login"로 이동
+                        // 로그인 실패시 "/login"로 이동
                         .failureForwardUrl("/login").permitAll()
-                        .usernameParameter("username")//
-                        .passwordParameter("password"));
+                        .usernameParameter("userId")//
+                        .passwordParameter("userPw"));
         
         return http.build();
     }

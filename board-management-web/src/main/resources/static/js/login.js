@@ -4,6 +4,5 @@ app.controller("BoardLogin", function($scope) {
 		userId: null,
 		password: null
 	};
-	
 
 });

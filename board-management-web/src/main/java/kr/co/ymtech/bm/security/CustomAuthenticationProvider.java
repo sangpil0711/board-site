@@ -23,6 +23,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return new UsernamePasswordAuthenticationToken(principal, password, authorities);
     }
 
+    // UsernamePasswordAuthenticationToken 클래스를 지원하는 메소드
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
