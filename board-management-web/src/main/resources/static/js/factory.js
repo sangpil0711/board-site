@@ -65,7 +65,6 @@ app.factory('MainFactory', function($resource) {
 
 	})
 });
-
 /**
  * @Method : 파일탐색기 동작을 수행하는 함수
  * 
@@ -94,10 +93,10 @@ app.factory('ExplorerFactory', function($resource) {
 			headers: {
 				"Content-Type": 'application/json'
 			},
-			transformResponse: 
-			function (data) {
-                return data;
-            }
+			transformResponse:
+				function(data) {
+					return data;
+				}
 		},
 
 		createFolder: {
@@ -106,10 +105,10 @@ app.factory('ExplorerFactory', function($resource) {
 			headers: {
 				"Content-Type": 'application/json'
 			},
-			transformResponse: 
-			function (data) {
-                return data;
-            }
+			transformResponse:
+				function(data) {
+					return data;
+				}
 		},
 
 		updateFile: {
@@ -117,22 +116,22 @@ app.factory('ExplorerFactory', function($resource) {
 			headers: {
 				"Content-Type": 'application/json'
 			},
-			transformResponse: 
-			function (data) {
-                return data;
-            }
+			transformResponse:
+				function(data) {
+					return data;
+				}
 		},
-		
+
 		moveFile: {
 			method: 'PATCH',
 			url: '/fileExplorer/move',
 			headers: {
 				"Content-Type": 'application/json'
 			},
-			transformResponse: 
-			function (data) {
-                return data;
-            }
+			transformResponse:
+				function(data) {
+					return data;
+				}
 		}
 
 	})

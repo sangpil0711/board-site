@@ -43,12 +43,7 @@ app.controller("BoardHead", function($scope, $location, $route, $http) {
 		$location.path('/file');
 		$route.reload();
 	};
-
-	$http.get('/j_security_check')
-		.then(function(response) {
-			$scope.username = response.username;
-		}, function(error) {
-			console.error("사용자 정보 가져오기 실패", error);
-		});
-
+	
+	
+	
 });

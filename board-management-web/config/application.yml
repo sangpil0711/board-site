@@ -1,5 +1,8 @@
 server:
   port: 8000
+  servlet:
+    session:
+      timeout: 15
 
 spring:
   servlet:
@@ -35,7 +38,6 @@ spring:
     user:
        name: user
        password: 1234  
-       
        
 file:
   path:
