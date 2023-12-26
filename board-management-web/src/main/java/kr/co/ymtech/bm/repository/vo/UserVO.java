@@ -17,10 +17,6 @@ public class UserVO {
 		return password;
 	}
 
-	public String getName() {
-		return username;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -41,8 +37,12 @@ public class UserVO {
 		this.password = password;
 	}
 
-	public void setName(String name) {
-		this.username = name;
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public void setEmail(String email) {

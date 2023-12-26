@@ -2,54 +2,56 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 
 <head>
-	<meta charset="utf-8">
-	<title>웹프로젝트</title>
-	<link rel="stylesheet" type="text/css" th:href="@{static/css/bootstrap.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{static/css/main.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{static/css/hwang.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{static/css/park.css}" />
-	<script type="text/javascript" th:src="@{static/js/angularjs/angular.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/angular-resource.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/angular-route.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/ui-bootstrap.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/ng-file-upload.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/ng-file-upload-shim.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/angular-drag-and-drop-lists.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/factory.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/head.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/main.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/board.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/read.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/update.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/write.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/photo_board.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/photo_read.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/photo_update.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/photo_write.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/file.js}"></script>
+   <meta charset="utf-8">
+   <title>웹프로젝트</title>
+   <link rel="stylesheet" type="text/css" th:href="@{static/css/bootstrap.css}" />
+   <link rel="stylesheet" type="text/css" th:href="@{static/css/main.css}" />
+   <link rel="stylesheet" type="text/css" th:href="@{static/css/hwang.css}" />
+   <link rel="stylesheet" type="text/css" th:href="@{static/css/park.css}" />
+   <script type="text/javascript" th:src="@{static/js/angularjs/angular.min.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/angularjs/angular-resource.min.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/angularjs/angular-route.min.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/angularjs/ui-bootstrap.min.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/angularjs/ng-file-upload.min.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/angularjs/ng-file-upload-shim.min.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/angularjs/angular-drag-and-drop-lists.min.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/factory.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/head.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/main.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/board.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/read.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/update.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/write.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/photo_board.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/photo_read.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/photo_update.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/photo_write.js}"></script>
+   <script type="text/javascript" th:src="@{static/js/file.js}"></script>
 </head>
 
 <body ng-app="myApp">
-	<div id="container" ng-controller="BoardHead">
-		
-		
-		<!-- 시작: 상단 메뉴 -->
-			<ul class="menu">
-				<li><button class="ipp_btn" ng-click="redirectToMain()" title="메인화면으로 이동">IPP <span class="span">게시판</span></button></li>
-				<li><button class="btn" ng-click="redirectToGeneralBoard()">일반게시판</button></li>
-				<li><button class="btn" ng-click="redirectToPhotoBoard()">사진게시판</button></li>
-				<li><button class="btn" ng-click="location.href='dash.html' ">통계</button></li>
-				<li><button class="btn" ng-click="redirectToFileExplorer()">파일탐색기</button></li>
-			</ul>
-		<!-- 끝: 상단 메뉴 -->
-	
-	
-		<!-- 시작: 라우팅 화면 -->
-		<div ng-view></div>
-		<!-- 끝: 라우팅 화면 -->
-		
-		
-	</div>
+   <div id="container" ng-controller="BoardHead">
+      
+      
+      <!-- 시작: 상단 메뉴 -->
+         <ul class="menu">
+            <li><button class="ipp_btn" ng-click="redirectToMain()" title="메인화면으로 이동">IPP <span class="span">게시판</span></button></li>
+            <li><button class="btn" ng-click="redirectToGeneralBoard()">일반게시판</button></li>
+            <li><button class="btn" ng-click="redirectToPhotoBoard()">사진게시판</button></li>
+            <li><button class="btn" ng-click="location.href='dash.html' ">통계</button></li>
+            <li><button class="btn" ng-click="redirectToFileExplorer()">파일탐색기</button></li>
+            <li class="user"><p th:text="${UserVO.username} + '님'"></p>
+            <p><a ng-href="/j_security_check_logout">로그아웃</a></p></li>
+         </ul>
+      <!-- 끝: 상단 메뉴 -->
+   
+   
+      <!-- 시작: 라우팅 화면 -->
+      <div ng-view></div>
+      <!-- 끝: 라우팅 화면 -->
+      
+      
+   </div>
 </body>
 
 </html>
