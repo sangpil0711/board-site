@@ -11,65 +11,33 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView main() {
-        ModelAndView model = new ModelAndView();
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView main() {
+		ModelAndView model = new ModelAndView();
 
-        // 로그인 여부 확인
-        if (auth == null || !UsernamePasswordAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
-            model.setViewName("login"); // 로그인 안되어 있으면 로그인 페이지로 이동
-        } else {
-        	
-        	try {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        		if (auth.getAuthorities().isEmpty()) {
-        			model.setViewName("login");
-        		} else {
-        			model.setViewName("main");
-        			
-//        			Iterator<? extends GrantedAuthority> itrAuthority = auth.getAuthorities().iterator();
-//        			GrantedAuthorityDetail authDetail = null;
-//        			
-//        			while (itrAuthority.hasNext()) {
-//        				authDetail = (GrantedAuthorityDetail) itrAuthority.next();
-//        				UserGrade userGrade = authDetail.getGrade();
-//        				
-//        				switch (userGrade.getId()) {
-//        				case UserGrade.ADMIN:
-//        				case UserGrade.USER:
-//        					// 사용자 정보 가져오기
-//        					String userJSON = new ObjectMapper().writeValueAsString(authDetail.getUser());
-//        					JSONObject obj = new JSONObject(userJSON);
-//        					
-//        					break;
-//        				case UserGrade.UNKNOWN_USER:
-//        					
-//        					break;
-//        				case UserGrade.INVALID_UNKNOWN_AND_ERROR:
-//        					
-//        					break;
-//        				case UserGrade.NOT_ENTERED_ID_OR_PASSWORD:
-//        				default:
-//        					
-//        					break;
-//        				}
-//        			}
-        		}
-        		
+		// 로그인 여부 확인
+		if (auth == null || !UsernamePasswordAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
+			model.setViewName("login"); // 로그인 안되어 있으면 로그인 페이지로 이동
+		} else {
+			try {
+				if (auth.getAuthorities().isEmpty()) {
+					model.setViewName("login");
+				} else {
+					model.setViewName("main");
+				}
+			} catch (Exception e) {
+			}
+		}
 
-             } catch (Exception e) {
-             }
-        }
+		return model;
+	}
 
-        return model;
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login() {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("login");
-        return model;
-    }
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView login() {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("login");
+		return model;
+	}
 }

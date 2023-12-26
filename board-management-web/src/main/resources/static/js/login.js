@@ -1,8 +1,7 @@
-app.controller("BoardLogin", function($scope) {
-	
-	$scope.loginForm = {
-		userId: null,
-		password: null
-	};
+var app = angular.module("myApp", ['ngResource']);
 
+app.controller("BoardLogin", function() {
+	
+	
+    
 });

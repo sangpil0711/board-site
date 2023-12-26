@@ -66,6 +66,20 @@ button:hover {
 	box-shadow: none;
 }
 
+.user p{
+	font-size: 18px;
+	font-weight: 500;
+	color: black;
+}
+
+.user a {
+	color: black;
+}
+
+.user a:hover {
+	cursor: pointer;
+}
+
 h3 {
 	width: 1016px;
 	border-bottom: 2px solid rgb(79, 114, 228);
@@ -172,31 +186,6 @@ h3 {
 	margin-top: -4px;
 	font-weight: 100;
 	color: rgb(79, 114, 228);
-}
-
-.user_Id {
-	float: right;
-	font-weight: 100;
-	font-size: 15px;
-}
-
-
-.user_update {
-	float: right;
-	margin-right: 280px;
-	margin-bottom: 50px;
-}
-
-.username {
-	border-left-width: 0;
-	border-right-width: 0;
-	border-top-width: 0;
-	border-bottom-width: 1;
-	width: 100px;
-	margin-top: 20px;
-	position: absolute;
-	top: 50px;
-	right: 270px;
 }
 
 .board_option {
@@ -1110,7 +1099,7 @@ pre {
 .login_title {
 	font-size: 45px;
 	position: absolute;
-	left: 843px;
+	left: 847px;
 	top: 150px;
 	color: rgb(79, 114, 228);
 }
@@ -1143,7 +1132,7 @@ pre {
 .login_btn {
 	position: absolute;
 	left: 710px;
-	top: 460px;
+	top: 470px;
 	font-size: 22px;
 	font-weight: 600;
 	text-align: center;
@@ -1156,7 +1145,7 @@ pre {
 .signup_btn {
 	position: absolute;
 	left: 710px;
-	top: 530px;
+	top: 540px;
 	font-size: 22px;
 	font-weight: 600;
 	text-align: center;
@@ -1164,4 +1153,12 @@ pre {
 	color: black;
 	height: 60px;
 	width: 524px;
+}
+
+.login_alert {
+	position: absolute;
+	left: 710px;
+	top: 410px;
+	color: red;
+	font-weight: 500;
 }

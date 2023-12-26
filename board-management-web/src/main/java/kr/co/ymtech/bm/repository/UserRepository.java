@@ -23,7 +23,7 @@ public class UserRepository {
 
     // 사용자 아이디를 기반으로 사용자 정보 조회
     public UserVO findByUsername(String username) {
-        String query = "SELECT * FROM user WHERE username = ?";
+        String query = "SELECT * FROM \"user\" WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
@@ -33,10 +33,10 @@ public class UserRepository {
                     UserVO user = new UserVO();
                     user.setId(resultSet.getString("id"));
                     user.setPassword(resultSet.getString("password"));
-                    user.setName(resultSet.getString("username"));
+                    user.setName(resultSet.getString("name"));
                     user.setEmail(resultSet.getString("email"));
-                    user.setCreateDate(resultSet.getLong("createDate"));
-                    user.setGradeId(resultSet.getInt("gradeId"));
+                    user.setCreateDate(resultSet.getLong("create_date"));
+                    user.setGradeId(resultSet.getInt("grade_id"));
 
                     return user;
                 }

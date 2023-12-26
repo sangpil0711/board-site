@@ -4,18 +4,12 @@
 <head>
 	<meta charset="utf-8">
 	<title>웹프로젝트</title>
-	<link rel="stylesheet" type="text/css" th:href="@{static/css/main.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{static/css/hwang.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{static/css/park.css}" />
-	<script type="text/javascript" th:src="@{static/js/angularjs/angular.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/angular-resource.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/angular-route.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/ui-bootstrap.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/ng-file-upload.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/ng-file-upload-shim.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/angularjs/angular-drag-and-drop-lists.min.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/factory.js}"></script>
-	<script type="text/javascript" th:src="@{static/js/login.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/hwang.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/park.css}" />
+	<script type="text/javascript" th:src="@{/static/js/angularjs/angular.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/angularjs/angular-resource.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/login.js}"></script>
 </head>
 
 <body ng-app="myApp">
@@ -24,14 +18,19 @@
 		<form th:action="@{/j_security_check}" method="post">
 			<h1 class="login_title">IPP<span>게시판</span></h1>
 
-			<input type="text" name="userId" class="login_id" placeholder="아이디를 입력해주세요." required>
-			<input type="password" name="userPw" class="login_pw" placeholder="비밀번호를 입력해주세요." autocomplete="off"
+			<input type="text" name="username" class="login_id" placeholder="아이디를 입력해주세요." th:value="${username}" required>
+			<input type="password" name="password" class="login_pw" placeholder="비밀번호를 입력해주세요." autocomplete="off"
 				required>
+				
+			<div th:if="${param.error}">
+				<p th:text="${exception}" class="login_alert"></p>
+			</div>
 
 			<button class="login_btn">로그인</button>
 		</form>
 
 		<button class="signup_btn">회원가입</button>
+		
 
 	</div>
 </body>
