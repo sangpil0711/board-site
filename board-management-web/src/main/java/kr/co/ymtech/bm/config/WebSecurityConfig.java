@@ -40,8 +40,8 @@ public class WebSecurityConfig {
 						.antMatchers(
 									 "/login",
 									 "/boards/**",
-									 "/static/**",
-									 "/fileExplorer/**")
+									 "/static/**"
+									 )
 									 .permitAll() // 특정 경로에 대한 접근을 허용합니다.
 									 .anyRequest().authenticated()) // 나머지 요청은 인증이 필요합니다.
 				.formLogin(login -> login
@@ -78,33 +78,6 @@ public class WebSecurityConfig {
 //    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
-//    
-//	@Bean
-//	WebSecurityCustomizer webSecurityCustomizer() {
-//		return (web) -> web.ignoring();
-//	} // 정적 자원에 대한 보안설정 무시
-//
-//	@Bean
-//	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//		// HTTP 보안 구성을 정의합니다.
-//		http.headers(headers -> headers.frameOptions().sameOrigin()) // iframe에서의 동작을 설정합니다.
-//				.csrf(csrf -> csrf.disable()) // CSRF 보호를 비활성화합니다.
-//				.authorizeHttpRequests((authorize) -> authorize
-//						.antMatchers("/",
-//									 "/login",
-//									 "/boards/**",
-//									 "/static/**",
-//									 "/fileExplorer/**")
-//									 .permitAll() // 특정 경로에 대한 접근을 허용합니다.
-//									 .anyRequest().authenticated()) // 나머지 요청은 인증이 필요합니다.
-//				.formLogin(login -> login.loginPage("/login") // 로그인 페이지의 URL을 설정합니다.
-//						.successForwardUrl("/main") // 로그인 성공시 이동할 페이지를 설정합니다.
-//						.failureForwardUrl("/login") // 로그인 실패시 이동할 페이지를 설정합니다.
-//						.permitAll() // 로그인 페이지는 모두에게 허용합니다.
-//						.usernameParameter("username") // 사용자명 파라미터의 이름을 설정합니다.
-//						.passwordParameter("password")); // 비밀번호 파라미터의 이름을 설정합니다.
-//
-//		return http.build();
-//	}
+
 
 }

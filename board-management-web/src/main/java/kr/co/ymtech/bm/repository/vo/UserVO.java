@@ -8,6 +8,8 @@ public class UserVO {
 	private String email;
 	private Long createDate;
 	private Integer gradeId;
+	private String gradeName;
+	private String desc;
 
 	public String getId() {
 		return id;
@@ -15,6 +17,22 @@ public class UserVO {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public String getGradeName() {
+		return gradeName;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setGradeName(String gradeName) {
+		this.gradeName = gradeName;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public String getEmail() {
@@ -72,6 +90,10 @@ public class UserVO {
 		builder.append(createDate);
 		builder.append(", gradeId=");
 		builder.append(gradeId);
+		builder.append(", gradeName=");
+		builder.append(gradeName);
+		builder.append(", desc=");
+		builder.append(desc);
 		builder.append("]");
 		return builder.toString();
 	}
