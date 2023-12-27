@@ -10,19 +10,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import kr.co.ymtech.bm.security.CustomAuthenticationFilter;
 import kr.co.ymtech.bm.security.CustomAuthenticationProvider;
+import kr.co.ymtech.bm.security.CustomLoginFailureHandler;
 import kr.co.ymtech.bm.security.CustomLoginSuccessHandler;
 
 @Configuration
 //@EnableWebSecurity
 public class WebSecurityConfig {
-	
-	@Autowired
+   
+   @Autowired
     private CustomAuthenticationProvider provider;
-	
-	@Bean
-	WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring();
-	} // 정적 자원에 대한 보안설정 무시
+   
+   @Bean
+   WebSecurityCustomizer webSecurityCustomizer() {
+      return (web) -> web.ignoring();
+   } // 정적 자원에 대한 보안설정 무시
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -56,7 +57,7 @@ public class WebSecurityConfig {
 						.logoutUrl("/j_security_check_logout")
 						.logoutSuccessUrl("/").invalidateHttpSession(false)).addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // 비밀번호 파라미터의 이름을 설정합니다.
 
-		return http.build();
+      return http.build();
     }
     
     @Bean
@@ -65,11 +66,17 @@ public class WebSecurityConfig {
     }
     
     @Bean
+    CustomLoginFailureHandler customLoginFailureHandler() {
+        return new CustomLoginFailureHandler();
+    }
+    
+    @Bean
     CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
         customAuthenticationFilter.setFilterProcessesUrl("/j_security_check");
         customAuthenticationFilter.setAuthenticationManager(provider::authenticate);
         customAuthenticationFilter.setAuthenticationSuccessHandler(customLoginSuccessHandler());
+        customAuthenticationFilter.setAuthenticationFailureHandler(customLoginFailureHandler());
         customAuthenticationFilter.afterPropertiesSet();
         return customAuthenticationFilter;
     }
@@ -78,6 +85,5 @@ public class WebSecurityConfig {
 //    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
-
 
 }

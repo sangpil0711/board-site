@@ -1,7 +1,5 @@
 <ul dnd-list="files" dnd-drop="dropFile(files, index)">
-	<li ng-repeat="file in files"
-		dnd-dragstart="dragStartEvt(file)"
-		dnd-draggable="file" dnd-effect-allowed="move">
+	<li ng-repeat="file in files" dnd-dragstart="dragStartEvt(file)" dnd-draggable="file" dnd-effect-allowed="move">
 
 		<!-- 파일 펼치기 버튼 시작 -->
 		<img ng-if="file.isDirectory" ng-click="openFolder(file)"
@@ -14,7 +12,7 @@
 
 		<!-- 파일 이름 시작 -->
 		<span ng-style="{'width': 470 - file.depth * 31 + 'px'}" ng-if="!file.updateFileBox" ng-click="clickFile(file)"
-			ng-class="{'click': file.clickItem}">
+			ng-class="{'click': file.clickItem, 'hover': !file.clickItem}">
 			{{file.name}}
 		</span>
 		<!-- 파일 이름 끝 -->

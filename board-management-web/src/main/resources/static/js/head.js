@@ -1,4 +1,4 @@
-app.controller("BoardHead", function($scope, $location, $route) {
+app.controller("BoardHead", function($scope, $location, $route, $http) {
 
 	/**
 	 * @function redirectToMain main_display.html로 이동하는 함수
@@ -10,7 +10,7 @@ app.controller("BoardHead", function($scope, $location, $route) {
 		$location.path('/');
 		$route.reload();
 	};
-	
+
 	/**
 	 * @function redirectToGeneralBoard general_board.html로 이동 후 새로고침하는 함수
 	 * 
@@ -21,7 +21,7 @@ app.controller("BoardHead", function($scope, $location, $route) {
 		$location.path('/board');
 		$route.reload();
 	};
-	
+
 	/**
 	 * @function redirectToPhotoBoard photo_board.html로 이동 후 새로고침하는 함수
 	 * 
@@ -32,7 +32,7 @@ app.controller("BoardHead", function($scope, $location, $route) {
 		$location.path('/photo');
 		$route.reload();
 	};
-	
+
 	/**
 	 * @function redirectToReadFileExplorer file_explorer.html로 이동하는 함수
 	 * 

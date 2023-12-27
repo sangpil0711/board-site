@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import kr.co.ymtech.bm.repository.UserRepository;
@@ -24,30 +26,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) {
 
-	    Object principal = authentication.getPrincipal();
-	    Object password = authentication.getCredentials();
+		Object principal = authentication.getPrincipal();
+		Object password = authentication.getCredentials();
 
-	    UserVO user = userRepository.findByUsername((String) principal);
-
-	    if (user != null) {
-	    	
-	        List<GrantedAuthority> list = new ArrayList<>();
-	        UserGrade grade = UserGrade.getUserGrade(user.getGradeId(), user.getGradeName(), user.getDesc());
-	        GrantedAuthorityDetail detail = new GrantedAuthorityDetail(grade);
-	        list.add(detail);
-
-	        // #1. id, password로 DB에서 조회한 결과로 비교 후 반환 분기
-	        if (user.getPassword().equals(password)) {
-	            return new UsernamePasswordAuthenticationToken(principal, password, list);
-	        } else {
-	            return new UsernamePasswordAuthenticationToken(principal, password, AuthorityUtils.NO_AUTHORITIES);
-	        }
-	    } else {
-	        String errorMessage = "사용자가 없습니다";
-	        return new UsernamePasswordAuthenticationToken(errorMessage, null, AuthorityUtils.NO_AUTHORITIES);
-	    }
-	}
-
+		UserVO user = userRepository.findByUsername((String) principal);
+		
 
 //      // 명시적으로 타입 변환
 //      Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>(authorities);

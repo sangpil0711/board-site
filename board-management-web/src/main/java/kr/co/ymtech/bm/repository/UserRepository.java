@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.ymtech.bm.repository.vo.UserVO;
 
 @Repository
-public class UserRepository implements IUserRepository{
+public class UserRepository implements IUserRepository {
 
 	private final DataSource dataSource;
 
@@ -23,7 +23,7 @@ public class UserRepository implements IUserRepository{
 
 	// 사용자 아이디를 기반으로 사용자 정보 조회
 	public UserVO findByUsername(String username) {
-		String query = "SELECT * FROM \"user\" WHERE id = ?";
+		String query = "SELECT * FROM \"user\" INNER JOIN (SELECT * FROM grade) AS user_grade ON \"user\".grade_id = user_grade.id WHERE \"user\".id = ?";
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(query)) {
 			statement.setString(1, username);

@@ -10,10 +10,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import kr.co.ymtech.bm.config.PathConfig;
 import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
@@ -98,6 +102,8 @@ public class BoardService implements IBoardService {
 	 */
 	@Override
 	public Integer saveBoard(BoardDTO board) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String originalFileName = null;
 		String uniqueID = null;
@@ -111,6 +117,7 @@ public class BoardService implements IBoardService {
 		vo.setIndex(lastBoardIndex + 1);
 		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
+		vo.setUserId(auth.getName());
 		vo.setCategory(board.getCategory());
 		vo.setCreateDate(new Date().getTime());
 

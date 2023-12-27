@@ -109,7 +109,6 @@ public class BoardRepository implements IBoardRepository {
 	}
 
 	/**
-	 * 
 	 * @Method saveBoard 게시물 정보를 저장하는 메소드
 	 *
 	 * @see kr.co.ymtech.bm.repository.IBoardRepository#saveBoard(kr.co.ymtech.bm.repository.vo.BoardVO)
@@ -126,8 +125,8 @@ public class BoardRepository implements IBoardRepository {
 
 		// 게시글 정보를 DB에 저장
 		Integer boardDB = jdbcTemplate.update(
-				"INSERT INTO board(index, title, content, category, create_Date) VALUES(?, ?, ?, ?, ?)", board.getIndex(), board.getTitle(),
-				board.getText(), board.getCategory(), board.getCreateDate());
+				"INSERT INTO board(index, title, content, user_id, category, create_date) VALUES(?, ?, ?, ?, ?, ?)", board.getIndex(), board.getTitle(),
+				board.getText(), board.getUserId(), board.getCategory(), board.getCreateDate());
 
 		// 게시글에 업로드된 파일을 DB에 저장
 		for (FileVO files : file) {
