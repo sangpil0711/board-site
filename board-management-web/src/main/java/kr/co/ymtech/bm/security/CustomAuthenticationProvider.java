@@ -30,20 +30,19 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		Object password = authentication.getCredentials();
 
 		UserVO user = userRepository.findByUsername((String) principal);
-		
 
 //      // 명시적으로 타입 변환
 //      Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>(authorities);
 
 		List<GrantedAuthority> list = new ArrayList<>();
-		UserGrade grade = UserGrade.getUserGrade(0, "관리자", "관리자 권한");
-		GrantedAuthorityDetail detail = new GrantedAuthorityDetail(grade);
-		list.add(detail);
 
 		// #1. id, password로 DB에서 조회한 결과로 비교 후 반환 분기
-		if (user != null && user.getPassword().equals(password)) {
+		if (user.getId() != null && user.getPassword().equals(password)) {
+			UserGrade grade = UserGrade.getUserGrade(user.getGradeId(), user.getName(), user.getDescription());
+			GrantedAuthorityDetail detail = new GrantedAuthorityDetail(grade);
+			list.add(detail);
 	        return new UsernamePasswordAuthenticationToken(principal, password, list);
-	    } else if (user == null) {
+	    } else if (user.getId() == null) {
 	        throw new UsernameNotFoundException("계정이 존재하지 않습니다.");
 	    } else if (!user.getPassword().equals(password)) {
 	        throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
