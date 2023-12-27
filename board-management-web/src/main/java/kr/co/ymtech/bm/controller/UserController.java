@@ -36,8 +36,6 @@ public class UserController {
 		String saveUsername = (String) request.getSession().getAttribute("username");
 		model.addObject("username", saveUsername);
 
-		request.getSession().removeAttribute("username");
-
 		model.addObject("error", error);
 		model.addObject("exception", exception);
 

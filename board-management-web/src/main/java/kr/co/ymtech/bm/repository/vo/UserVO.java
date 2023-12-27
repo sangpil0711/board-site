@@ -8,6 +8,8 @@ public class UserVO {
 	private String email;
 	private Long createDate;
 	private Integer gradeId;
+	private String name;
+	private String description;
 
 	public String getId() {
 		return id;
@@ -56,6 +58,22 @@ public class UserVO {
 	public void setGradeId(Integer gradeId) {
 		this.gradeId = gradeId;
 	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	@Override
 	public String toString() {
@@ -72,7 +90,12 @@ public class UserVO {
 		builder.append(createDate);
 		builder.append(", gradeId=");
 		builder.append(gradeId);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", description=");
+		builder.append(description);
 		builder.append("]");
 		return builder.toString();
 	}
+
 }

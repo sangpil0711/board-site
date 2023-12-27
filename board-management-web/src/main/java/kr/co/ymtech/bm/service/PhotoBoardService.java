@@ -13,6 +13,8 @@ import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -112,6 +114,8 @@ public class PhotoBoardService implements IPhotoBoardService {
 	@Override
 	public Integer savePhotoBoard(PhotoBoardDTO photo) {
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
 		String originalFileName = null;
 		String uniqueID = null;
 		String filePath = null;
@@ -124,6 +128,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 		vo.setIndex(lastBoardIndex + 1);
 		vo.setTitle(photo.getTitle());
 		vo.setText(photo.getText());
+		vo.setUserId(auth.getName());
 		vo.setCategory(photo.getCategory());
 		vo.setCreateDate(new Date().getTime());
 

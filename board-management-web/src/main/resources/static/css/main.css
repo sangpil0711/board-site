@@ -66,18 +66,33 @@ button:hover {
 	box-shadow: none;
 }
 
-.user p{
+.menu a {
+	padding: 5px;
+	color: black;
+	font-size: 15px;
+}
+
+.menu a:hover {
+	cursor: pointer;
+}
+
+.menu p {
+	display: inline;
 	font-size: 18px;
+}
+
+.user {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.user span{
+	padding: 3px;
+	margin-right: 8px;
+	border-bottom: 1px solid black;
+	font-size: 17px;
 	font-weight: 500;
 	color: black;
-}
-
-.user a {
-	color: black;
-}
-
-.user a:hover {
-	cursor: pointer;
 }
 
 h3 {
@@ -389,6 +404,11 @@ h3 {
 .photo_p_date {
 	text-align: center;
 	font-size: 11px;
+}
+
+.none_search span{
+	padding-left: 550px;
+	font-size: 17px;
 }
 
 .comment td {
