@@ -29,10 +29,20 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	    Object principal = authentication.getPrincipal();
 	    Object password = authentication.getCredentials();
 
-	    UserVO user = userRepository.findByUsername((String) principal);
+		UserVO user = userRepository.findByUsername((String) principal);
 
-	    // 사용자가 없는 경우
-	    if (user == null) {
+//      // 명시적으로 타입 변환
+//      Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>(authorities);
+
+		List<GrantedAuthority> list = new ArrayList<>();
+
+		// #1. id, password로 DB에서 조회한 결과로 비교 후 반환 분기
+		if (user.getId() != null && user.getPassword().equals(password)) {
+			UserGrade grade = UserGrade.getUserGrade(user.getGradeId(), user.getName(), user.getDescription());
+			GrantedAuthorityDetail detail = new GrantedAuthorityDetail(grade);
+			list.add(detail);
+	        return new UsernamePasswordAuthenticationToken(principal, password, list);
+	    } else if (user.getId() == null) {
 	        throw new UsernameNotFoundException("계정이 존재하지 않습니다.");
 	    } else {
 	        List<GrantedAuthority> list = new ArrayList<>();
