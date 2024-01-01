@@ -16,43 +16,43 @@ import kr.co.ymtech.bm.repository.vo.UserVO;
 @Controller
 public class HomeController {
 
-	@Autowired
-	private final IUserRepository userRepository;
+   @Autowired
+   private final IUserRepository userRepository;
 
-	public HomeController(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+   public HomeController(UserRepository userRepository) {
+      this.userRepository = userRepository;
+   }
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView main() {
-		ModelAndView model = new ModelAndView();
+   @RequestMapping(value = "/", method = RequestMethod.GET)
+   public ModelAndView main() {
+      ModelAndView model = new ModelAndView();
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		// 로그인 여부 확인
-		if (auth == null || !UsernamePasswordAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
-			model.setViewName("login"); // 로그인 안되어 있으면 로그인 페이지로 이동
-		} else {
+      // 로그인 여부 확인
+      if (auth == null || !UsernamePasswordAuthenticationToken.class.isAssignableFrom(auth.getClass())) {
+         model.setViewName("login"); // 로그인 안되어 있으면 로그인 페이지로 이동
+      } else {
 
-			if (auth.getAuthorities().isEmpty()) {
-				model.setViewName("login");
-			} else {
-				model.setViewName("main");
+         if (auth.getAuthorities().isEmpty()) {
+            model.setViewName("login");
+         } else {
+            model.setViewName("main");
 
-				String username = auth.getName();
-				UserVO userVO = userRepository.findByUsername(username);
+            String username = auth.getName();
+            UserVO userVO = userRepository.findByUsername(username);
 
-				model.addObject("UserVO", userVO);
-			}
-		}
+            model.addObject("UserVO", userVO);
+         }
+      }
 
-		return model;
-	}
+      return model;
+   }
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login() {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("login");
-		return model;
-	}
+   @RequestMapping(value = "/login", method = RequestMethod.GET)
+   public ModelAndView login() {
+      ModelAndView model = new ModelAndView();
+      model.setViewName("login");
+      return model;
+   }
 }

@@ -37,7 +37,7 @@ public class UserRepository implements IUserRepository {
 					vo.setEmail(resultSet.getString("email"));
 					vo.setCreateDate(resultSet.getLong("create_date"));
 					vo.setGradeId(resultSet.getInt("grade_id"));
-					vo.setName(resultSet.getString("name"));
+					vo.setGradeName(query);
 					vo.setDescription(resultSet.getString("description"));
 
 					return vo;
