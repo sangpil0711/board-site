@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,41 +19,39 @@ import kr.co.ymtech.bm.security.model.UserGrade;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-	@Autowired
-	private UserRepository userRepository;
+   @Autowired
+   private UserRepository userRepository;
 
-	@Override
-	public Authentication authenticate(Authentication authentication) {
+   @Override
+   public Authentication authenticate(Authentication authentication) {
 
-		Object principal = authentication.getPrincipal();
-		Object password = authentication.getCredentials();
+       Object principal = authentication.getPrincipal();
+       Object password = authentication.getCredentials();
 
-		UserVO user = userRepository.findByUsername((String) principal);
+       UserVO user = userRepository.findByUsername((String) principal);
 
-//      // 명시적으로 타입 변환
-//      Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>(authorities);
+       // 사용자가 없는 경우
+       if (user == null) {
+           throw new UsernameNotFoundException("계정이 존재하지 않습니다.");
+       } else {
+           List<GrantedAuthority> list = new ArrayList<>();
+           UserGrade grade = UserGrade.getUserGrade(user.getGradeId(), user.getName(), user.getDescription());
+           GrantedAuthorityDetail detail = new GrantedAuthorityDetail(grade);
+           list.add(detail);
 
-		List<GrantedAuthority> list = new ArrayList<>();
+           // id, password로 DB에서 조회한 결과로 비교 후 반환
+           if (user.getPassword().equals(password)) {
+               return new UsernamePasswordAuthenticationToken(principal, password, list);
+           } else {
+               // 비밀번호가 일치하지 않는 경우
+               throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+           }
+       }
+   }
 
-		// #1. id, password로 DB에서 조회한 결과로 비교 후 반환 분기
-		if (user.getId() != null && user.getPassword().equals(password)) {
-			UserGrade grade = UserGrade.getUserGrade(user.getGradeId(), user.getName(), user.getDescription());
-			GrantedAuthorityDetail detail = new GrantedAuthorityDetail(grade);
-			list.add(detail);
-	        return new UsernamePasswordAuthenticationToken(principal, password, list);
-	    } else if (user.getId() == null) {
-	        throw new UsernameNotFoundException("계정이 존재하지 않습니다.");
-	    } else if (!user.getPassword().equals(password)) {
-	        throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
-	    } else {
-	        throw new AuthenticationServiceException("인증 과정 중 문제가 발생했습니다.");
-	    }
-		
-	}
 
-	// UsernamePasswordAuthenticationToken 클래스를 지원하는 메소드
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return authentication.equals(UsernamePasswordAuthenticationToken.class);
-	}
+   @Override
+   public boolean supports(Class<?> authentication) {
+      return authentication.equals(UsernamePasswordAuthenticationToken.class);
+   }
 }
