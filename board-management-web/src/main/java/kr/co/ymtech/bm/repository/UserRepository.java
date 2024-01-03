@@ -7,13 +7,20 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.springframework.boot.autoconfigure.batch.BatchProperties.Jdbc;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.co.ymtech.bm.controller.dto.UserDTO;
+import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
+import kr.co.ymtech.bm.repository.vo.UserListVO;
 import kr.co.ymtech.bm.repository.vo.UserVO;
 
 @Repository
 public class UserRepository implements IUserRepository {
-
+	
+	
+	private JdbcTemplate jdbcTemplate;
 	private final DataSource dataSource;
 
 	// 생성자를 통해 DataSource나 Connection을 주입받음
@@ -22,11 +29,11 @@ public class UserRepository implements IUserRepository {
 	}
 
 	// 사용자 아이디를 기반으로 사용자 정보 조회
-	public UserVO findByUsername(String username) {
+	public UserVO findByUsername(String id) {
 		String query = "SELECT * FROM \"user\" INNER JOIN (SELECT * FROM grade) AS user_grade ON \"user\".grade_id = user_grade.id WHERE \"user\".id = ?";
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(query)) {
-			statement.setString(1, username);
+			statement.setString(1, id);
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
@@ -37,7 +44,7 @@ public class UserRepository implements IUserRepository {
 					vo.setEmail(resultSet.getString("email"));
 					vo.setCreateDate(resultSet.getLong("create_date"));
 					vo.setGradeId(resultSet.getInt("grade_id"));
-					vo.setGradeName(query);
+					vo.setName(resultSet.getString("name"));
 					vo.setDescription(resultSet.getString("description"));
 
 					return vo;
@@ -49,5 +56,19 @@ public class UserRepository implements IUserRepository {
 		}
 
 		return null; // 사용자가 존재하지 않는 경우
+	}
+
+	@Override
+	public Integer saveUser(UserListVO user) {
+		
+		return jdbcTemplate.update(
+	            "INSERT INTO \"user\" (id, password, username, email, create_date, grade_id) VALUES (?, ?, ?, ?, ?, ?)",
+	            user.getId(),
+	            user.getPassword(),
+	            user.getUsername(),
+	            user.getEmail(),
+	            user.getCreateDate(),
+	            user.getGradeId()
+	    );
 	}
 }

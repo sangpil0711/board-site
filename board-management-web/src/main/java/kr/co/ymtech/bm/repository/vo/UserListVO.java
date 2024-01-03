@@ -1,6 +1,6 @@
-package kr.co.ymtech.bm.controller.dto;
+package kr.co.ymtech.bm.repository.vo;
 
-public class UserDTO {
+public class UserListVO {
 
 	private String id;
 	private String password;
