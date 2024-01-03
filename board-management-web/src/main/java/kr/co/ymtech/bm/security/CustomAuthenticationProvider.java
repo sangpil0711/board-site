@@ -9,12 +9,16 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import kr.co.ymtech.bm.repository.UserRepository;
 import kr.co.ymtech.bm.repository.vo.UserVO;
 import kr.co.ymtech.bm.security.model.UserGrade;
+
+
+
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {

@@ -43,89 +43,97 @@ public class PhotoBoardGetDTO {
 		return index;
 	}
 
-	public void setIndex(Integer index) {
-		this.index = index;
-	}
+   public void setUserLike(Integer userLike) {
+      this.userLike = userLike;
+   }
 
-	public String getTitle() {
-		return title;
-	}
+   public Integer getIndex() {
+      return index;
+   }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+   public void setIndex(Integer index) {
+      this.index = index;
+   }
 
-	public String getText() {
-		return text;
-	}
+   public String getTitle() {
+      return title;
+   }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+   public void setTitle(String title) {
+      this.title = title;
+   }
 
-	public String getUserId() {
-		return userId;
-	}
+   public String getText() {
+      return text;
+   }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+   public void setText(String text) {
+      this.text = text;
+   }
 
-	public Integer getCategory() {
-		return category;
-	}
+   public String getUserId() {
+      return userId;
+   }
 
-	public void setCategory(Integer category) {
-		this.category = category;
-	}
+   public void setUserId(String userId) {
+      this.userId = userId;
+   }
 
-	public Long getCreateDate() {
-		return createDate;
-	}
+   public Integer getCategory() {
+      return category;
+   }
 
-	public void setCreateDate(Long createDate) {
-		this.createDate = createDate;
-	}
-	
-	public Integer getLikeCount() {
-		return likeCount;
-	}
+   public void setCategory(Integer category) {
+      this.category = category;
+   }
 
-	public void setLikeCount(Integer likeCount) {
-		this.likeCount = likeCount;
-	}
-	
-	public List<FileVO> getFile() {
-		return file;
-	}
+   public Long getCreateDate() {
+      return createDate;
+   }
 
-	public void setFile(List<FileVO> file) {
-		this.file = file;
-	}
+   public void setCreateDate(Long createDate) {
+      this.createDate = createDate;
+   }
+   
+   public Integer getLikeCount() {
+      return likeCount;
+   }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("PhotoBoardGetDTO [index=");
-		builder.append(index);
-		builder.append(", title=");
-		builder.append(title);
-		builder.append(", text=");
-		builder.append(text);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", category=");
-		builder.append(category);
-		builder.append(", createDate=");
-		builder.append(createDate);
-		builder.append(", likeCount=");
-		builder.append(likeCount);
-		builder.append(", userLike=");
-		builder.append(userLike);
-		builder.append(", file=");
-		builder.append(file);
-		builder.append("]");
-		return builder.toString();
-	}
+   public void setLikeCount(Integer likeCount) {
+      this.likeCount = likeCount;
+   }
+   
+   public List<FileVO> getFile() {
+      return file;
+   }
+
+   public void setFile(List<FileVO> file) {
+      this.file = file;
+   }
+
+   @Override
+   public String toString() {
+      StringBuilder builder = new StringBuilder();
+      builder.append("PhotoBoardGetDTO [index=");
+      builder.append(index);
+      builder.append(", title=");
+      builder.append(title);
+      builder.append(", text=");
+      builder.append(text);
+      builder.append(", userId=");
+      builder.append(userId);
+      builder.append(", category=");
+      builder.append(category);
+      builder.append(", createDate=");
+      builder.append(createDate);
+      builder.append(", likeCount=");
+      builder.append(likeCount);
+      builder.append(", userLike=");
+      builder.append(userLike);
+      builder.append(", file=");
+      builder.append(file);
+      builder.append("]");
+      return builder.toString();
+   }
 
 }

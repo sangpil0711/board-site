@@ -27,6 +27,14 @@ public class UserVO {
 		return createDate;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public Integer getGradeId() {
 		return gradeId;
 	}
@@ -58,17 +66,9 @@ public class UserVO {
 	public void setGradeId(Integer gradeId) {
 		this.gradeId = gradeId;
 	}
-	
-	public String getName() {
-		return name;
-	}
 
 	public String getDescription() {
 		return description;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public void setDescription(String description) {

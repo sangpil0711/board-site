@@ -52,57 +52,65 @@ public class BoardGetDTO {
 		return likeCount;
 	}
 
-	public void setLikeCount(Integer likeCount) {
-		this.likeCount = likeCount;
-	}
+   public void setUserLike(Integer userLike) {
+      this.userLike = userLike;
+   }
 
-	public Integer getIndex() {
-		return index;
-	}
+   public List<FileVO> getFile() {
+      return file;
+   }
+   
+   public void setFile(List<FileVO> file) {
+      this.file = file;
+   }
+   
+   public Integer getLikeCount() {
+      return likeCount;
+   }
 
-	public void setIndex(Integer index) {
-		this.index = index;
-	}
+   public void setLikeCount(Integer likeCount) {
+      this.likeCount = likeCount;
+   }
 
-	public String getTitle() {
-		return title;
-	}
+   public Integer getIndex() {
+      return index;
+   }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+   public void setIndex(Integer index) {
+      this.index = index;
+   }
 
-	public String getText() {
-		return text;
-	}
+   public String getTitle() {
+      return title;
+   }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+   public void setTitle(String title) {
+      this.title = title;
+   }
 
-	public String getUserId() {
-		return userId;
-	}
+   public String getText() {
+      return text;
+   }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+   public void setText(String text) {
+      this.text = text;
+   }
 
-	public Integer getCategory() {
-		return category;
-	}
+   public String getUserId() {
+      return userId;
+   }
 
-	public void setCategory(Integer category) {
-		this.category = category;
-	}
+   public void setUserId(String userId) {
+      this.userId = userId;
+   }
 
-	public Long getCreateDate() {
-		return createDate;
-	}
+   public Integer getCategory() {
+      return category;
+   }
 
-	public void setCreateDate(Long createDate) {
-		this.createDate = createDate;
-	}
+   public void setCategory(Integer category) {
+      this.category = category;
+   }
 
 	@Override
 	public String toString() {
