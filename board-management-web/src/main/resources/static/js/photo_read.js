@@ -1,10 +1,21 @@
-app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoardFactory, CommentFactory, BoardFactory) {
+app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoardFactory, CommentFactory, BoardFactory, $http) {
 
 
 	// 라우팅으로 받아오는 게시글 번호
 	let index = $routeParams.index;
 
 	$scope.photoBoard = [];
+	// 사용자 게시글 추천 유무
+	$scope.userLike = false;
+
+	// 현재 로그인한 아이디
+	$http.get('/loginId')
+		.then(function(response) {
+			$scope.loginId = response.data;
+		})
+		.catch(function(error) {
+			console.error('현재 로그인된 아이디를 가져올 수 없습니다.', error);
+		});
 
 	/**
 	 * @function searchByPhotoIndex 게시판 번호에 맞는 데이터를 불러오는 함수
@@ -12,23 +23,28 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 * @author 박상현
 	 * @since 2023. 10. 26.
 	 */
-		let searchByPhotoIndex = function() {
-		      PhotoBoardFactory.readPhotoBoard({ index: index }, function(response) {
-		         $scope.photoBoard = response;
-		         $scope.thumbnail = function(file) {
-		            if (file !== undefined && file.fileSize > 0) {
-		               return '/files/' + file.fileId + '?fileName=' + file.fileName;
-		            }
-		         }
-		      },
-		         function(error) {
-		            alert("게시물 데이터 불러오기 실패");
-		            console.error("게시물 데이터 불러오기 실패", error);
-		         })
-		   };
-			searchByPhotoIndex();
-	
-	
+	let searchByPhotoIndex = function() {
+		PhotoBoardFactory.readPhotoBoard({ index: index }, function(response) {
+			$scope.photoBoard = response;
+			if ($scope.photoBoard.userLike == 1) {
+				$scope.userLike = true;
+			} else {
+				$scope.userLike = false;
+			}
+			$scope.thumbnail = function(file) {
+				if (file !== undefined && file.fileSize > 0) {
+					return '/files/' + file.fileId + '?fileName=' + file.fileName;
+				}
+			}
+		},
+			function(error) {
+				alert("게시물 데이터 불러오기 실패");
+				console.error("게시물 데이터 불러오기 실패", error);
+			})
+	};
+	searchByPhotoIndex();
+
+
 
 	/**
 	 * @function redirectToPhotoUpdate photo_update.html로 이동하는 함수
@@ -74,53 +90,19 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 		}
 	}
 
-	/**
-	 * @function findComment 댓글과 답글을 조회하는 함수
-	 * 
-	 * @author 황상필
-	 * @since 2023. 11. 03.
-	 */
-//	let findComment = function() {
-//		CommentFactory.getComment({
-//			boardIndex: index
-//		},
-//			function(response) {
-//				$scope.commentlist = response;
-//				let commentNewlist = [];
-//
-//				// 배열을 순회하면서 댓글과 대댓글을 리스트에 추가
-//				$scope.commentlist.forEach(function(comment) {
-//					commentNewlist.push(comment);
-//					comment.childCommentBox = false;
-//					if (comment.childs !== null) {
-//						comment.childs.forEach(function(childComment) {
-//							commentNewlist.push(childComment);
-//						})
-//					}
-//				})
-//
-//				$scope.commentlist = commentNewlist;
-//			},
-//			function(error) {
-//				console.error("댓글 정보 불러오기 실패", error);
-//			});
-//	};
-//
-//	findComment();
-
-		$scope.commentlist = [];
+	$scope.commentlist = [];
 	let findComment = function() {
 		CommentFactory.getComment(
-		{
-			boardIndex: index
-		},
-		function(response) {
-			$scope.commentlist = response;
-		},
-		function(error) {
-			console.error("댓글 정보 불러오기 실패", error);
-			
-		});
+			{
+				boardIndex: index
+			},
+			function(response) {
+				$scope.commentlist = response;
+			},
+			function(error) {
+				console.error("댓글 정보 불러오기 실패", error);
+
+			});
 	};
 	findComment();
 
@@ -237,16 +219,19 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	};
 
 	/**
-	 * @function likeAdd 추천 수가 1씩 증가하는 함수
+	 * @function updateLike 게시글 추천 수를 업데이트하는 함수
 	 * 
 	 * @author 황상필
-	 * @since 2023. 11. 03.
+	 * @since 2024. 01. 03.
 	 */
-	$scope.likeAdd = function() {
-		$scope.photoBoard.likeCount++
-		BoardFactory.boardLike({ index: index, likeCount: $scope.photoBoard.likeCount }, function() {
-
-		})
+	$scope.updateLike = function() {
+		BoardFactory.boardLike({ index: index }, function() {
+			searchByPhotoIndex();
+		},
+			function(error) {
+				alert("게시글 추천 오류");
+				console.error("게시글 추천 오류", error);
+			})
 	};
 
 });

@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<title>웹프로젝트</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/hwang.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/park.css}" />
+	<script type="text/javascript" th:src="@{/static/js/angularjs/angular.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/angularjs/angular-resource.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/signup.js}"></script>
+</head>
+
+<body ng-app="myApp">
+	<div id="container" ng-controller="BoardSignup">
+		<h1 class="signup_title">회원정보입력</h1>
+		<p class="key_input"><span>*</span>필수입력사항</p>
+
+		<table class="signup_input">
+			<tr>
+				<td class="signup_item"> 아이디<span>*</span> </td>&nbsp;&nbsp;
+				<td><input type="text"></td>
+				<td><button class="id_check">중복확인</button></td>
+			</tr>
+			<tr>
+				<td class="signup_item"> 비밀번호<span>*</span> </td>
+				<td><input type="password">&nbsp;&nbsp; <span style="font-size: 16px; font-weight: 600;">* 영문, 숫자포함 8~20글자</span></td>
+			</tr>
+			<tr>
+				<td class="signup_item"> 비밀번호확인<span>*</span> </td>
+				<td><input type="password"></td>
+			</tr>
+			<tr>
+				<td class="signup_item"> 이름<span>*</span> </td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td class="signup_item"> 이메일 </td>
+				<td><input style="width: 221px;" type="text">&nbsp;&nbsp;<span>@</span>&nbsp;&nbsp;<input style="width: 221px; margin: 0px;" type="text"></td>
+			</tr>
+		</table>
+		<div class="signup_decision">
+			<button class="signup_submit">확인</button>
+			<button class="signup_cancel" ng-click="redirectToLogin()">취소</button>
+		</div>
+	</div>
+</body>
+
+</html>

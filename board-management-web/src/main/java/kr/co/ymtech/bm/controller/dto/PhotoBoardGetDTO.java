@@ -26,8 +26,18 @@ public class PhotoBoardGetDTO {
 	private Long createDate;
 	/** likeCount : 게시글 추천 수 */
 	private Integer likeCount;
+	/** userLike : 사용자 추천 여부 */
+	private Integer userLike;
 	/** file : 게시글 파일 정보 */
 	private List<FileVO> file;
+
+	public Integer getUserLike() {
+		return userLike;
+	}
+
+	public void setUserLike(Integer userLike) {
+		this.userLike = userLike;
+	}
 
 	public Integer getIndex() {
 		return index;
@@ -110,6 +120,8 @@ public class PhotoBoardGetDTO {
 		builder.append(createDate);
 		builder.append(", likeCount=");
 		builder.append(likeCount);
+		builder.append(", userLike=");
+		builder.append(userLike);
 		builder.append(", file=");
 		builder.append(file);
 		builder.append("]");

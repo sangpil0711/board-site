@@ -4,8 +4,8 @@ import kr.co.ymtech.bm.repository.vo.UserVO;
 
 public interface IUserRepository {
 
-
 	UserVO findByUsername(String username);
-
+	
+	public Integer checkUserId(String userId);
 
 }

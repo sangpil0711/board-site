@@ -1,8 +1,7 @@
-app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFactory, $routeParams) {
+app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFactory, $routeParams, $http) {
 
 	// 해당 게시글 번호
 	let index = $routeParams.index;
-
 	// 조회한 게시글
 	$scope.board = {
 		title: "",
@@ -10,6 +9,17 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	};
 	// 게시글 추천 수
 	$scope.likeCount = 0;
+	// 사용자 게시글 추천 유무
+	$scope.userLike = false;
+
+	// 현재 로그인한 아이디
+	$http.get('/loginId')
+		.then(function(response) {
+			$scope.loginId = response.data;
+		})
+		.catch(function(error) {
+			console.error('현재 로그인된 아이디를 가져올 수 없습니다.', error);
+		});
 
 	/**
 	 * @function getDataByIndex 게시판 번호에 맞는 데이터를 불러오는 함수
@@ -20,6 +30,11 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	let getDataByIndex = function() {
 		BoardFactory.readBoard({ index: index }, function(response) {
 			$scope.board = response;
+			if ($scope.board.userLike == 1) {
+				$scope.userLike = true;
+			} else {
+				$scope.userLike = false;
+			}
 		},
 			function(error) {
 				alert("게시물 데이터 불러오기 실패");
@@ -39,7 +54,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 
 		// 게시물 삭제 시 알림창을 띄우고 확인을 누르면 게시물 삭제
 		if (confirm("게시물을 삭제하시겠습니까?")) {
-			BoardFactory.deleteBoard({ index: index }, function() {
+			BoardFactory.deleteBoard({ index: index, userId: $scope.board.userId }, function() {
 				$location.path('/board');
 			},
 				function(error) {
@@ -78,15 +93,15 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	$scope.commentlist = [];
 	let findComment = function() {
 		CommentFactory.getComment(
-		{
-			boardIndex: index
-		},
-		function(response) {
-			$scope.commentlist = response;
-		},
-		function(error) {
-			console.error("댓글 정보 불러오기 실패", error);
-		})
+			{
+				boardIndex: index
+			},
+			function(response) {
+				$scope.commentlist = response;
+			},
+			function(error) {
+				console.error("댓글 정보 불러오기 실패", error);
+			})
 	};
 	findComment();
 
@@ -203,16 +218,19 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	};
 
 	/**
-	 * @function likeAdd 추천 수가 1씩 증가하는 함수
+	 * @function updateLike 게시글 추천 수를 업데이트하는 함수
 	 * 
 	 * @author 황상필
-	 * @since 2023. 11. 03.
+	 * @since 2024. 01. 02.
 	 */
-	$scope.likeAdd = function() {
-		$scope.board.likeCount++
-		BoardFactory.boardLike({ index: index, likeCount: $scope.board.likeCount }, function() {
-
-		})
+	$scope.updateLike = function() {
+		BoardFactory.boardLike({ index: index }, function() {
+			getDataByIndex();
+		},
+			function(error) {
+				alert("게시글 추천 오류");
+				console.error("게시글 추천 오류", error);
+			})
 	};
 
 });

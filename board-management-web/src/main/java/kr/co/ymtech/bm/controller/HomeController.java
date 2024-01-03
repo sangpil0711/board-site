@@ -55,4 +55,11 @@ public class HomeController {
 		model.setViewName("login");
 		return model;
 	}
+	
+	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	public ModelAndView signup() {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("signup");
+		return model;
+	}
 }

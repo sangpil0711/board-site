@@ -121,9 +121,9 @@ public class PhotoBoardController {
 	 * @since 2023.10.25
 	 */
 	@DeleteMapping("/photos/{index}")
-	public ResponseEntity<Integer> deletePhotoBoard(@PathVariable Integer index) {
+	public ResponseEntity<Integer> deletePhotoBoard(@PathVariable Integer index, @RequestParam String userId) {
 
-		Integer photoboardlistDelete = photoBoardService.deletePhotoBoard(index);
+		Integer photoboardlistDelete = photoBoardService.deletePhotoBoard(index, userId);
 
 		return new ResponseEntity<Integer>(photoboardlistDelete, HttpStatus.OK);
 	}
@@ -158,12 +158,12 @@ public class PhotoBoardController {
 	 * @author 황상필
 	 * @since 2023. 11. 03.
 	 */
-	@PatchMapping("/photos/{index}/{likeCount}")
-	public ResponseEntity<Integer> boardLikeCount(@PathVariable Integer index, @PathVariable Integer likeCount) {
-
-		Integer boardLikeCount = boardService.boardLikeCount(index, likeCount);
-
-		return new ResponseEntity<Integer>(boardLikeCount, HttpStatus.OK);
+	@PatchMapping(value = "like")
+	public ResponseEntity<Integer> updateBoardLike(@RequestParam Integer index) {
+		
+		Integer updateBoardLike = boardService.updateBoardLike(index);
+		
+		return new ResponseEntity<Integer>(updateBoardLike, HttpStatus.OK);
 	}
 
 }
