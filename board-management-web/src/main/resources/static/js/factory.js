@@ -162,6 +162,7 @@ app.factory('BoardFactory', function($resource) {
 
 		boardLike: {
 			method: 'PATCH',
+			url: '/boards/like',
 			headers: {
 				"Content-Type": 'application/json'
 			},

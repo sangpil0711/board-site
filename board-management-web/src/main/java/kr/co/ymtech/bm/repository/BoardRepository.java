@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import kr.co.ymtech.bm.repository.vo.BoardVO;
@@ -156,7 +158,7 @@ public class BoardRepository implements IBoardRepository {
 	public Integer updateBoard(BoardVO board, List<FileVO> file) {
 
 		// 수정된 게시글 정보를 DB에 저장
-		Integer boardDB = jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ? ", board.getTitle(),
+		Integer boardDB = jdbcTemplate.update("UPDATE board SET title = ?, content = ? WHERE index = ?", board.getTitle(),
 				board.getText(), board.getIndex());
 
 		// 게시글에 추가된 파일을 DB에 저장
@@ -310,17 +312,67 @@ public class BoardRepository implements IBoardRepository {
 	 * @see kr.co.ymtech.bm.repository.IBoardRepository#boardLikeCount(java.lang.Integer,
 	 *      java.lang.Integer)
 	 *
-	 * @param index     해당 게시글 번호
-	 * @param likeCount 해당 게시글 추천 수
+	 * @param index 해당 게시글 번호
 	 * 
-	 * @return 해당 게시글의 추천 수를 수정하는 query 함수 실행
+	 * @return 해당 게시글의 추천 수를 반환하는 query 함수 실행
 	 *
 	 * @author 황상필
 	 * @since 2023. 11. 03.
 	 */
 	@Override
-	public Integer boardLikeCount(Integer index, Integer likeCount) {
-		return jdbcTemplate.update("UPDATE board SET like_count = ? WHERE index = ? ", likeCount, index);
+	public Integer boardLikeCount(Integer index) {
+		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"like\" WHERE board_index = ?", Integer.class, index);
+	}
+	
+	/**
+	 * @Method updateBoardLike 게시글 추천 수를 업데이트 하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#updateBoardLike(java.lang.Integer)
+	 *
+	 * @param index 해당 게시글 번호
+	 * 
+	 * @return 해당 게시글의 추천 수를 업데이트하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 02.
+	 */
+	@Override
+	public Integer updateBoardLike(Integer index) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		String sql = "SELECT COUNT(*) FROM \"like\" WHERE board_index = ? AND user_id = ?";
+	    Integer checkUserLike = jdbcTemplate.queryForObject(sql, Integer.class, index, auth.getName());
+	    
+	    if (checkUserLike == 0) {
+	    	return jdbcTemplate.update("INSERT INTO \"like\"(user_id, board_index) VALUES(?, ?)", auth.getName(), index);
+	    } else {
+	    	return jdbcTemplate.update("DELETE FROM \"like\" WHERE user_id = ? AND board_index = ?", auth.getName(), index);
+	    }
+	}
+	
+	@Override
+	public Integer checkUserBoardLike(Integer index) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"like\" WHERE board_index = ? AND user_id = ?", Integer.class, index, auth.getName());
+	}
+	
+	/**
+	 * @Method bestBoardLike 베스트 게시글 추천 수를 업데이트 하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#bestBoardLike(java.lang.Integer)
+	 *
+	 * @param index 해당 게시글 번호
+	 * 
+	 * @return 베스트 게시글의 추천 수를 업데이트하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 02.
+	 */
+	@Override
+	public Integer bestBoardLike(Integer index) {
+		Integer boardLikeCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"like\" WHERE board_index = ?", Integer.class, index);
+		
+		return jdbcTemplate.update("UPDATE board SET like_count = ? WHERE index = ?", boardLikeCount, index);
 	}
 
 	/**

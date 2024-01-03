@@ -4,9 +4,9 @@
 
 	<!-- 시작: 수정 삭제 목록 박스 -->
 	<div class="read_btn">
-		<button type="button" ng-click="redirectToPhotoUpdate(photoBoard.index)">수정</button>
-		<button type="button" ng-click="removePhoto(photoBoard.index)">삭제</button>
-		<button type="button" ng-click="redirectToPhotoBoard()">목록</button>
+		<button class="update_btn" ng-if="loginId === photoBoard.userId" ng-click="redirectToPhotoUpdate(photoBoard.index)">수정</button>
+		<button class="delete_btn" ng-if="loginId === photoBoard.userId" ng-click="removePhoto(photoBoard.index)">삭제</button>
+		<button ng-click="redirectToPhotoBoard()">목록</button>
 	</div>
 	<!-- 끝: 수정 삭제 목록 버튼박스 -->
 
@@ -30,7 +30,8 @@
 				<img class="image-container" ng-repeat="item in photoBoard.file" ng-src="{{thumbnail(item)}}" alt="이미지"
 					style="display: block; margin: 0 auto; margin-top: 50px; max-height: 400px; max-width: 1000px;">
 				<pre class="content">{{photoBoard.text}}</pre>
-				<img src="/static/image/like.jpg" alt="추천" ng-click="likeAdd()" class="like_btn">
+				<img ng-src="{{userLike ? '/static/image/free-icon-like.png' : '/static/image/free-icon-hearth.png'}}"
+					alt="추천" ng-click="updateLike()" class="like_btn">
 				<div class="like">
 					<p>{{photoBoard.likeCount}}</p>
 				</div>

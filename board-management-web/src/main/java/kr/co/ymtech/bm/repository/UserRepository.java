@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.springframework.boot.autoconfigure.batch.BatchProperties.Jdbc;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +19,9 @@ import kr.co.ymtech.bm.repository.vo.UserVO;
 @Repository
 public class UserRepository implements IUserRepository {
 	
-	
+	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
 	private final DataSource dataSource;
 
 	// 생성자를 통해 DataSource나 Connection을 주입받음
@@ -70,5 +71,8 @@ public class UserRepository implements IUserRepository {
 	            user.getCreateDate(),
 	            user.getGradeId()
 	    );
+	
+	public Integer checkUserId(String userId) {
+		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"user\" WHERE id = ?", Integer.class, userId);
 	}
 }

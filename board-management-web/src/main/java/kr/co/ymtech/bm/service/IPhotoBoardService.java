@@ -52,7 +52,7 @@ public interface IPhotoBoardService {
 	 * @author 박상현
 	 * @since  2023.10.25
 	 */
-	public Integer deletePhotoBoard(Integer index);
+	public Integer deletePhotoBoard(Integer index, String userId);
 
 	/**
 	 * Method : 사진게시물을 1개를 조회하는 메소드 
@@ -65,14 +65,13 @@ public interface IPhotoBoardService {
 	public PhotoBoardGetDTO searchByPhotoIndex(Integer index);
 	
 	/**
-	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
+	 * @Method updateBoardLike 게시글 추천 수를 업데이트하는 함수
 	 *
 	 * @param index 해당 게시글 번호
-	 * @param likeCount 해당 게시글 추천 수
 	 *
 	 * @author 황상필
-	 * @since 2023. 11. 03.
+	 * @since 2024. 01. 03.
 	 */
-	public Integer boardLikeCount(Integer index, Integer likeCount);
+	public Integer updateBoardLike(Integer index);
 
 }

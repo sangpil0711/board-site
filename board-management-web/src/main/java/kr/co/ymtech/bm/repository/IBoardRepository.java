@@ -124,12 +124,33 @@ public interface IBoardRepository {
 	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
 	 *
 	 * @param index 해당 게시글 번호
-	 * @param likeCount 해당 게시글 추천 수
 	 *
 	 * @author 황상필
 	 * @since 2023. 11. 03.
 	 */
-	public Integer boardLikeCount(Integer index, Integer likeCount);
+	public Integer boardLikeCount(Integer index);
+	
+	/**
+	 * @Method updateBoardLike 게시글 추천 수를 업데이트하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 02.
+	 */
+	public Integer updateBoardLike(Integer index);
+	
+	public Integer checkUserBoardLike(Integer index);
+	
+	/**
+	 * @Method bestBoardLike 베스트 게시글 추천 수를 업데이트하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 02.
+	 */
+	public Integer bestBoardLike(Integer index);
 	
 	/**
 	 * @Method bestBoard 추천 수가 많은 게시글을 반환하는 메소드

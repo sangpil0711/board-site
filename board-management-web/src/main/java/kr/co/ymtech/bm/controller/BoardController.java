@@ -112,9 +112,9 @@ public class BoardController {
 	 * @since 2023. 09. 18.
 	 */
 	@DeleteMapping(value = "{index}")
-	public ResponseEntity<Integer> deleteBoard(@PathVariable Integer index) {
+	public ResponseEntity<Integer> deleteBoard(@PathVariable Integer index, @RequestParam String userId) {
 
-		Integer boardlistDelete = boardService.deleteBoard(index);
+		Integer boardlistDelete = boardService.deleteBoard(index, userId);
 
 		return new ResponseEntity<Integer>(boardlistDelete, HttpStatus.OK);
 	}
@@ -138,25 +138,6 @@ public class BoardController {
 	}
 
 	/**
-	 * @Method boardLikeCount 해당 게시글의 추천 수를 반환하는 메소드
-	 *
-	 * @param index     해당 게시글 번호
-	 * @param likeCount 해당 게시글 추천 수
-	 * 
-	 * @return 게시글의 번호와 추천 수를 boardLikeCount 변수에 담고 ResponseEntity 를 사용하여 응답
-	 *
-	 * @author 황상필
-	 * @since 2023. 11. 03.
-	 */
-	@PatchMapping(value = "{index}/{likeCount}")
-	public ResponseEntity<Integer> boardLikeCount(@PathVariable Integer index, @PathVariable Integer likeCount) {
-
-		Integer boardLikeCount = boardService.boardLikeCount(index, likeCount);
-
-		return new ResponseEntity<Integer>(boardLikeCount, HttpStatus.OK);
-	}
-
-	/**
 	 * @Method bestBoard 추천 수가 많은 게시글을 반환하는 메소드
 	 *
 	 * @return 게시글의 정보를 bestBoard 변수에 담고 ResponseEntity 를 사용하여 응답
@@ -170,6 +151,24 @@ public class BoardController {
 		List<BoardGetDTO> bestBoard = boardService.bestBoard();
 
 		return new ResponseEntity<List<BoardGetDTO>>(bestBoard, HttpStatus.OK);
+	}
+	
+	/**
+	 * @Method updateBoardLike 게시글 추천 수를 업데이트하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * 
+	 * @return 게시글의 추천 수를 updateBoardLike 변수에 담고 ResponseEntity 를 사용하여 응답
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 02.
+	 */
+	@PatchMapping(value = "like")
+	public ResponseEntity<Integer> updateBoardLike(@RequestParam Integer index) {
+		
+		Integer updateBoardLike = boardService.updateBoardLike(index);
+		
+		return new ResponseEntity<Integer>(updateBoardLike, HttpStatus.OK);
 	}
 
 }
