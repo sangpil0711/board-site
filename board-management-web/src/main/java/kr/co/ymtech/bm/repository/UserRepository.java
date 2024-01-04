@@ -11,14 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import kr.co.ymtech.bm.controller.dto.UserDTO;
-import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 import kr.co.ymtech.bm.repository.vo.UserListVO;
 import kr.co.ymtech.bm.repository.vo.UserVO;
 
 @Repository
 public class UserRepository implements IUserRepository {
-	
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -58,21 +56,17 @@ public class UserRepository implements IUserRepository {
 
 		return null; // 사용자가 존재하지 않는 경우
 	}
-	
+
 	public Integer checkUserId(String userId) {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"user\" WHERE id = ?", Integer.class, userId);
+	}
 
 	@Override
 	public Integer saveUser(UserListVO user) {
-		
+
 		return jdbcTemplate.update(
-	            "INSERT INTO \"user\" (id, password, username, email, create_date, grade_id) VALUES (?, ?, ?, ?, ?, ?)",
-	            user.getId(),
-	            user.getPassword(),
-	            user.getUsername(),
-	            user.getEmail(),
-	            user.getCreateDate(),
-	            user.getGradeId()
-	    );
+				"INSERT INTO \"user\" (id, password, username, email, create_date, grade_id) VALUES (?, ?, ?, ?, ?, ?)",
+				user.getId(), user.getPassword(), user.getUsername(), user.getEmail(), user.getCreateDate(),
+				user.getGradeId());
 	}
 }

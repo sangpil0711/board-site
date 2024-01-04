@@ -31,7 +31,7 @@ public class BoardGetDTO {
 	private Integer userLike;
 	/** file : 등록된 게시글 첨부파일 */
 	private List<FileVO> file;
-	
+
 	public Integer getUserLike() {
 		return userLike;
 	}
@@ -43,74 +43,66 @@ public class BoardGetDTO {
 	public List<FileVO> getFile() {
 		return file;
 	}
-	
+
 	public void setFile(List<FileVO> file) {
 		this.file = file;
 	}
-	
+
 	public Integer getLikeCount() {
 		return likeCount;
 	}
 
-   public void setUserLike(Integer userLike) {
-      this.userLike = userLike;
-   }
+	public void setLikeCount(Integer likeCount) {
+		this.likeCount = likeCount;
+	}
 
-   public List<FileVO> getFile() {
-      return file;
-   }
-   
-   public void setFile(List<FileVO> file) {
-      this.file = file;
-   }
-   
-   public Integer getLikeCount() {
-      return likeCount;
-   }
+	public Integer getIndex() {
+		return index;
+	}
 
-   public void setLikeCount(Integer likeCount) {
-      this.likeCount = likeCount;
-   }
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
 
-   public Integer getIndex() {
-      return index;
-   }
+	public String getTitle() {
+		return title;
+	}
 
-   public void setIndex(Integer index) {
-      this.index = index;
-   }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-   public String getTitle() {
-      return title;
-   }
+	public String getText() {
+		return text;
+	}
 
-   public void setTitle(String title) {
-      this.title = title;
-   }
+	public void setText(String text) {
+		this.text = text;
+	}
 
-   public String getText() {
-      return text;
-   }
+	public String getUserId() {
+		return userId;
+	}
 
-   public void setText(String text) {
-      this.text = text;
-   }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-   public String getUserId() {
-      return userId;
-   }
+	public Integer getCategory() {
+		return category;
+	}
 
-   public void setUserId(String userId) {
-      this.userId = userId;
-   }
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
 
-   public Integer getCategory() {
-      return category;
-   }
+	public Long getCreateDate() {
+		return createDate;
+	}
 
-   public void setCategory(Integer category) {
-      this.category = category;
-   }
+	public void setCreateDate(Long createDate) {
+		this.createDate = createDate;
+	}
 
 	@Override
 	public String toString() {
@@ -136,5 +128,5 @@ public class BoardGetDTO {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

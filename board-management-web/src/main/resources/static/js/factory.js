@@ -209,7 +209,7 @@ app.factory('CommentFactory', function($resource) {
 			},
 		},
 
-	});
+	})
 });
 
 /**
@@ -257,7 +257,5 @@ app.factory('PhotoBoardFactory', function($resource) {
 		},
 
 	})
-})
-
-
+});
 

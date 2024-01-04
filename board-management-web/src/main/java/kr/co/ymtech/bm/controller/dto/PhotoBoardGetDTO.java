@@ -35,14 +35,6 @@ public class PhotoBoardGetDTO {
 		return userLike;
 	}
 
-	public void setUserLike(Integer userLike) {
-		this.userLike = userLike;
-	}
-
-	public Integer getIndex() {
-		return index;
-	}
-
    public void setUserLike(Integer userLike) {
       this.userLike = userLike;
    }
