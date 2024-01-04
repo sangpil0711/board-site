@@ -4,15 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import kr.co.ymtech.bm.controller.dto.UserDTO;
-import kr.co.ymtech.bm.repository.vo.PhotoBoardVO;
 import kr.co.ymtech.bm.repository.vo.UserListVO;
 import kr.co.ymtech.bm.repository.vo.UserVO;
 
@@ -63,14 +58,14 @@ public class UserRepository implements IUserRepository {
 	public Integer saveUser(UserListVO user) {
 		
 		return jdbcTemplate.update(
-	            "INSERT INTO \"user\" (id, password, username, email, create_date, grade_id) VALUES (?, ?, ?, ?, ?, ?)",
+	            "INSERT INTO \"user\" (id, password, username, email, create_date) VALUES (?, ?, ?, ?, ?)",
 	            user.getId(),
 	            user.getPassword(),
 	            user.getUsername(),
 	            user.getEmail(),
-	            user.getCreateDate(),
-	            user.getGradeId()
+	            user.getCreateDate()
 	    );
+	}
 	
 	public Integer checkUserId(String userId) {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"user\" WHERE id = ?", Integer.class, userId);

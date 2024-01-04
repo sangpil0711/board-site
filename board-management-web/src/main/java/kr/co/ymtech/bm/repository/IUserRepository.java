@@ -8,7 +8,6 @@ public interface IUserRepository {
 	public UserVO findByUsername(String username);
 
 	public Integer saveUser(UserListVO user);
-	UserVO findByUsername(String username);
 	
 	public Integer checkUserId(String userId);
 

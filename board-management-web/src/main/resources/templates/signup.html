@@ -25,11 +25,17 @@
 			</tr>
 			<tr>
 				<td class="signup_item"> 비밀번호<span>*</span> </td>
-				<td><input type="password">&nbsp;&nbsp; <span style="font-size: 16px; font-weight: 600;">* 영문, 숫자포함 8~20글자</span></td>
+				<td>
+        			<input type="password" ng-model="password" ng-blur="checkPassword()">
+       				 &nbsp;&nbsp;
+        			<span style="font-size: 16px; font-weight: 600;">* 영문, 숫자포함 8~20글자</span>
+  				</td>
 			</tr>
 			<tr>
 				<td class="signup_item"> 비밀번호확인<span>*</span> </td>
-				<td><input type="password"></td>
+    			<td>
+         		   <input type="password" ng-model="confirmPassword" ng-blur="checkPasswordMatch()">
+        		</td>
 			</tr>
 			<tr>
 				<td class="signup_item"> 이름<span>*</span> </td>
