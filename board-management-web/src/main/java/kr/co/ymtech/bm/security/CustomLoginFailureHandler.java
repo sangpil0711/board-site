@@ -33,7 +33,7 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
 		request.getSession().setAttribute("username", request.getParameter("username"));
 		
 		errorMessage = URLEncoder.encode(errorMessage, "UTF-8");
-		setDefaultFailureUrl("/login/error?error=true&exception=" + errorMessage);
+		setDefaultFailureUrl("/user/login/error?error=true&exception=" + errorMessage);
 		
 		super.onAuthenticationFailure(request, response, exception);
 	}

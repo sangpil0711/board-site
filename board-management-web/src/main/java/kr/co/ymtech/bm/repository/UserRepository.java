@@ -5,15 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
 import kr.co.ymtech.bm.repository.vo.UserListVO;
 import kr.co.ymtech.bm.repository.vo.UserVO;
 
 @Repository
 public class UserRepository implements IUserRepository {
-	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -54,20 +55,16 @@ public class UserRepository implements IUserRepository {
 		return null; // 사용자가 존재하지 않는 경우
 	}
 
-	@Override
-	public Integer saveUser(UserListVO user) {
-		
-		return jdbcTemplate.update(
-	            "INSERT INTO \"user\" (id, password, username, email, create_date) VALUES (?, ?, ?, ?, ?)",
-	            user.getId(),
-	            user.getPassword(),
-	            user.getUsername(),
-	            user.getEmail(),
-	            user.getCreateDate()
-	    );
-	}
-	
 	public Integer checkUserId(String userId) {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"user\" WHERE id = ?", Integer.class, userId);
+	}
+
+	@Override
+	public Integer saveUser(UserListVO user) {
+
+		return jdbcTemplate.update(
+				"INSERT INTO \"user\" (id, password, username, email, create_date, grade_id) VALUES (?, ?, ?, ?, ?, ?)",
+				user.getId(), user.getPassword(), user.getUsername(), user.getEmail(), user.getCreateDate(),
+				user.getGradeId());
 	}
 }

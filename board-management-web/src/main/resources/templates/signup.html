@@ -17,39 +17,38 @@
 		<h1 class="signup_title">회원정보입력</h1>
 		<p class="key_input"><span>*</span>필수입력사항</p>
 
-		<table class="signup_input">
-			<tr>
-				<td class="signup_item"> 아이디<span>*</span> </td>&nbsp;&nbsp;
-				<td><input type="text"></td>
-				<td><button class="id_check">중복확인</button></td>
-			</tr>
-			<tr>
-				<td class="signup_item"> 비밀번호<span>*</span> </td>
-				<td>
-        			<input type="password" ng-model="password" ng-blur="checkPassword()">
-       				 &nbsp;&nbsp;
-        			<span style="font-size: 16px; font-weight: 600;">* 영문, 숫자포함 8~20글자</span>
-  				</td>
-			</tr>
-			<tr>
-				<td class="signup_item"> 비밀번호확인<span>*</span> </td>
-    			<td>
-         		   <input type="password" ng-model="confirmPassword" ng-blur="checkPasswordMatch()">
-        		</td>
-			</tr>
-			<tr>
-				<td class="signup_item"> 이름<span>*</span> </td>
-				<td><input type="text"></td>
-			</tr>
-			<tr>
-				<td class="signup_item"> 이메일 </td>
-				<td><input style="width: 221px;" type="text">&nbsp;&nbsp;<span>@</span>&nbsp;&nbsp;<input style="width: 221px; margin: 0px;" type="text"></td>
-			</tr>
-		</table>
-		<div class="signup_decision">
-			<button class="signup_submit">확인</button>
-			<button class="signup_cancel" ng-click="redirectToLogin()">취소</button>
-		</div>
+		<form>
+			<table class="signup_input">
+				<tr>
+					<td class="signup_item"> 아이디<span>*</span> </td>&nbsp;&nbsp;
+					<td><input type="text" ng-model="id"></td>
+					<td><button class="id_check" ng-click="checkId(id)">중복확인</button></td>
+				</tr>
+				<tr>
+					<td class="signup_item"> 비밀번호<span>*</span> </td>
+					<td><input type="password" ng-model="password" autocomplete="off">&nbsp;&nbsp; <span
+							style="font-size: 16px; font-weight: 600;">* 영문, 숫자포함 8~20글자</span></td>
+				</tr>
+				<tr>
+					<td class="signup_item"> 비밀번호확인<span>*</span> </td>
+					<td><input type="password" ng-model="password_check" autocomplete="off"></td>
+				</tr>
+				<tr>
+					<td class="signup_item"> 이름<span>*</span> </td>
+					<td><input type="text" ng-model="name"></td>
+				</tr>
+				<tr>
+					<td class="signup_item"> 이메일 </td>
+					<td><input style="width: 221px;" type="text"
+							ng-model="email">&nbsp;&nbsp;<span>@</span>&nbsp;&nbsp;<input
+							style="width: 221px; margin: 0px;" type="text"></td>
+				</tr>
+			</table>
+			<div class="signup_decision">
+				<button class="signup_submit" ng-click="signup(id, password, password_check, name, email)">확인</button>
+				<button class="signup_cancel" ng-click="redirectToLogin()">취소</button>
+			</div>
+		</form>
 	</div>
 </body>
 

@@ -2,7 +2,10 @@ package kr.co.ymtech.bm.service;
 
 import java.util.Date;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Service;
+
 import kr.co.ymtech.bm.controller.dto.UserDTO;
 import kr.co.ymtech.bm.repository.IUserRepository;
 import kr.co.ymtech.bm.repository.UserRepository;
@@ -15,6 +18,10 @@ public class UserService implements IUserService {
 
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
+	}
+	
+	public Integer checkUserId(String userId) {
+		return userRepository.checkUserId(userId);
 	}
 
 	@Override
@@ -29,6 +36,8 @@ public class UserService implements IUserService {
 		vo.setUsername(user.getUsername());
 		vo.setEmail(user.getEmail());
 		vo.setCreateDate(new Date().getTime());
+		vo.setGradeId(1);
+		
 
 		return userRepository.saveUser(vo);
 	}
