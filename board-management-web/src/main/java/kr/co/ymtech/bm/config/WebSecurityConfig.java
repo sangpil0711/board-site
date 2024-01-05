@@ -14,7 +14,6 @@ import kr.co.ymtech.bm.security.CustomLoginFailureHandler;
 import kr.co.ymtech.bm.security.CustomLoginSuccessHandler;
 
 @Configuration
-//@EnableWebSecurity
 public class WebSecurityConfig {
    
    @Autowired
@@ -25,13 +24,18 @@ public class WebSecurityConfig {
       return (web) -> web.ignoring();
    } // 정적 자원에 대한 보안설정 무시
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
       // HTTP 보안 구성을 정의합니다.
-      http.headers(headers -> headers.frameOptions().sameOrigin()) // iframe에서의 동작을 설정합니다.
+      http.headers(headers -> headers.frameOptions().sameOrigin()) //보안 기능 
             .csrf(csrf -> csrf.disable()) // CSRF 보호를 비활성화합니다.
             .authorizeHttpRequests((authorize) -> authorize
-                  .antMatchers("/login/**","/user/**", "/signup/**", "/static/**","/register/**").permitAll() // 특정 경로에 대한 접근을 허용합니다.
+                  .antMatchers("/login/**",
+                		       "/user/**",
+                		       "/signup/**",
+                		       "/static/**",
+                		       "/register/**").permitAll() // 특정 경로에 대한 접근을 허용합니다.
                   .antMatchers("/fileExplorer/**").hasRole("ADMIN")
                             .anyRequest().authenticated()) // 나머지 요청은 인증이 필요합니다.
             .formLogin(login -> login
@@ -48,24 +52,48 @@ public class WebSecurityConfig {
       return http.build();
     }
     
+    /**
+     * Method : 로그인 성공에 대한 함수 
+     * 
+     * @return 로그인 성공시 CustomLoginSuccessHandler 반환
+     * 
+     * @author 박상현
+     * @since 2024. 1. 5.
+     */
     @Bean
     CustomLoginSuccessHandler customLoginSuccessHandler() {
         return new CustomLoginSuccessHandler();
     }
     
+    /**
+     * Method : 로그인 실패에 대한 함수 
+     * 
+     * @return 로그인 실패시 CustomLoginFailureHandler 반환
+     * 
+     * @author 박상현
+     * @since 2024. 1. 5.
+     */
     @Bean
     CustomLoginFailureHandler customLoginFailureHandler() {
         return new CustomLoginFailureHandler();
     }
     
+    /**
+     * Method : 사용자 정의 인증 필터 함수
+     * 
+     * @return 전부 설정된 customAuthenticationFilter 반환
+     *
+     * @author 박상현
+     * @since 2024. 1. 5.
+     */
     @Bean
     CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
-        customAuthenticationFilter.setFilterProcessesUrl("/j_security_check");
-        customAuthenticationFilter.setAuthenticationManager(provider::authenticate);
-        customAuthenticationFilter.setAuthenticationSuccessHandler(customLoginSuccessHandler());
-        customAuthenticationFilter.setAuthenticationFailureHandler(customLoginFailureHandler());
-        customAuthenticationFilter.afterPropertiesSet();
+        customAuthenticationFilter.setFilterProcessesUrl("/j_security_check"); //인증 필터가 사용할 URL 설정
+        customAuthenticationFilter.setAuthenticationManager(provider::authenticate); //Manager 설정 -> privider 에서 authenticate 메소드 사용
+        customAuthenticationFilter.setAuthenticationSuccessHandler(customLoginSuccessHandler());// 로그인 성공시 호출될 핸들러 설정
+        customAuthenticationFilter.setAuthenticationFailureHandler(customLoginFailureHandler());// 로그인 실패시 호출될 핸들러 설정
+        customAuthenticationFilter.afterPropertiesSet(); // 필터 속성들이 유효한지 확인, 필요한 속성이 설정되었는지 확인
         return customAuthenticationFilter;
     }
     

@@ -95,6 +95,15 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Method : 사용자 정보를 저장하는 메소드
+	 * 
+	 * @param user : 사용자 정보
+	 * @return 사용자 정보를 DB에 저장 하고 성공하면 1 실패하면 0 을 userList에 담아 반환
+	 *
+	 * @author 박상현
+	 * @since 2024. 1. 4.
+	 */
 	@PostMapping(value = "/register")
 	public ResponseEntity<Integer> saveUser(@RequestBody UserDTO user) {
 

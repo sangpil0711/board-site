@@ -20,12 +20,22 @@ public class UserRepository implements IUserRepository {
 
 	private final DataSource dataSource;
 
-	// 생성자를 통해 DataSource나 Connection을 주입받음
 	public UserRepository(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
-	// 사용자 아이디를 기반으로 사용자 정보 조회
+	/**
+	 * @Method findByUsername 사용자 아이디를 기반으로 사용자 정보 조회하는 메소드 
+	 *
+	 * @see kr.co.ymtech.bm.repository.IUserRepository#findByUsername(java.lang.String)
+	 *
+	 * @param id 사용자 아이디
+	 * 
+	 * @return 사용자 아이디를 기반으로 사용자 정보 조회하여 사용자 정보들을 vo로 반환
+	 *
+	 * @author 박상현
+	 * @since 2024. 01. 04.
+	 */
 	public UserVO findByUsername(String id) {
 		String query = "SELECT * FROM \"user\" INNER JOIN (SELECT * FROM grade) AS user_grade ON \"user\".grade_id = user_grade.id WHERE \"user\".id = ?";
 		try (Connection connection = dataSource.getConnection();
@@ -71,11 +81,27 @@ public class UserRepository implements IUserRepository {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"user\" WHERE id = ?", Integer.class, userId);
 	}
 
+	/**
+	 * Method : 사용자 정보를 저장하는 메소드
+	 * 
+	 * @see kr.co.ymtech.bm.repository.IUserRepository#saveUser(kr.co.ymtech.bm.repository.vo.UserListVO)
+	 * 
+	 * @return DB에 사용자 정보를 저장
+	 *
+	 * @author 박상현
+	 * @since 2024. 1. 5.
+	 */
 	@Override
 	public Integer saveUser(UserListVO user) {
+		
 		return jdbcTemplate.update(
-				"INSERT INTO \"user\" (id, password, username, email, create_date, grade_id) VALUES (?, ?, ?, ?, ?, ?)",
-				user.getId(), user.getPassword(), user.getUsername(), user.getEmail(), user.getCreateDate(),
-				user.getGradeId());
+	            "INSERT INTO \"user\" (id, password, username, email, create_date) VALUES (?, ?, ?, ?, ?)",
+	            user.getId(),
+	            user.getPassword(),
+	            user.getUsername(),
+	            user.getEmail(),
+	            user.getCreateDate()
+	    );
 	}
+	
 }
