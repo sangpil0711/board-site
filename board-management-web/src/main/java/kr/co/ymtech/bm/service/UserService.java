@@ -1,16 +1,18 @@
 package kr.co.ymtech.bm.service;
 
 import java.util.Date;
-
-import java.util.Date;
-
 import org.springframework.stereotype.Service;
-
 import kr.co.ymtech.bm.controller.dto.UserDTO;
 import kr.co.ymtech.bm.repository.IUserRepository;
 import kr.co.ymtech.bm.repository.UserRepository;
 import kr.co.ymtech.bm.repository.vo.UserListVO;
 
+/**
+ * 회원가입 IUserService 클래스
+ * 
+ * @author 박상현
+ * @since  2024.01.04
+ */
 @Service
 public class UserService implements IUserService {
 
@@ -24,12 +26,22 @@ public class UserService implements IUserService {
 		return userRepository.checkUserId(userId);
 	}
 
+
+	/**
+	 * Method : 사용자 정보를 저장하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IUserService#saveUser(kr.co.ymtech.bm.controller.dto.UserDTO)
+	 *
+	 * @author 박상현
+	 * @since 2024. 1. 5.
+	 */
 	@Override
 	public Integer saveUser(UserDTO user) {
 		if (!checkPassword(user.getPassword())) {
 			throw new IllegalArgumentException("비밀번호는 영문, 숫자를 포함하여 8~20자여야 합니다.");
+			
 		}
-
+		//dto -> vo 변환
 		UserListVO vo = new UserListVO();
 		vo.setId(user.getId());
 		vo.setPassword(user.getPassword());
