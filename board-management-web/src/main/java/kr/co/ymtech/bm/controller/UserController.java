@@ -29,8 +29,20 @@ public class UserController {
 		this.userService = userService;
 	}
 
+	/**
+	 * @Method loginException 로그인 실패 시 예외를 표시하는 메소드
+	 *
+	 * @param request http 요청
+	 * @param error 예외 발생 여부
+	 * @param exception 예외 설명
+	 * 
+	 * @return 입력한 아이디와 예외를 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 04.
+	 */
 	@GetMapping("/login/error")
-	public ModelAndView login(HttpServletRequest request, @RequestParam(value = "error", required = false) String error,
+	public ModelAndView loginException(HttpServletRequest request, @RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "exception", required = false) String exception) {
 
 		ModelAndView model = new ModelAndView("login");
@@ -44,12 +56,33 @@ public class UserController {
 		return model;
 	}
 
+	/**
+	 * 
+	 * @Method getUserId 현재 로그인한 유저 아이디를 가져오는 메소드
+	 *
+	 * @param request http 요청
+	 * 
+	 * @return 현재 로그인한 유저 아이디를 JSON 형식으로 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 04.
+	 */
 	@GetMapping(value = "/loginId", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getCurrentUser(HttpServletRequest request) {
+	public ResponseEntity<String> getUserId(HttpServletRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return new ResponseEntity<String>("\"" + auth.getName() + "\"", HttpStatus.OK);
 	}
 
+	/**
+	 * @Method checkUserId 입력된 아이디가 이미 생성된 아이디인지 확인하는 메소드
+	 *
+	 * @param userId 입력된 아이디
+	 * 
+	 * @return checkId 변수가 1이면 http 상태코드 502를 반환하고 0이면 http 상태코드 200을 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 1. 4.
+	 */
 	@PostMapping(value = "/checkId")
 	public ResponseEntity<Integer> checkUserId(@RequestBody String userId) {
 		
