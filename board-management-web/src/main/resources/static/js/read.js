@@ -13,7 +13,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	$scope.userLike = false;
 
 	// 현재 로그인한 아이디
-	$http.get('/loginId')
+	$http.get('/user/loginId')
 		.then(function(response) {
 			$scope.loginId = response.data;
 		})
