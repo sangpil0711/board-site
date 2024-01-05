@@ -2,36 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 
 <head>
-   <meta charset="utf-8">
-   <title>웹프로젝트</title>
-   <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
-   <link rel="stylesheet" type="text/css" th:href="@{/static/css/hwang.css}" />
-   <link rel="stylesheet" type="text/css" th:href="@{/static/css/park.css}" />
-   <script type="text/javascript" th:src="@{/static/js/angularjs/angular.min.js}"></script>
-   <script type="text/javascript" th:src="@{/static/js/angularjs/angular-resource.min.js}"></script>
-   <script type="text/javascript" th:src="@{/static/js/login.js}"></script>
+	<meta charset="utf-8">
+	<title>웹프로젝트</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/hwang.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/park.css}" />
+	<script type="text/javascript" th:src="@{/static/js/angularjs/angular.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/angularjs/angular-resource.min.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/login.js}"></script>
 </head>
 
 <body ng-app="myApp">
-   <div id="container" ng-controller="BoardLogin">
+	<div id="container" ng-controller="BoardLogin">
 
-      <form th:action="@{/j_security_check}" method="post">
-         <h1 class="login_title">IPP<span>게시판</span></h1>
+		<form th:action="@{/j_security_check}" method="post">
 
-         <input type="text" name="username" class="login_id" placeholder="아이디를 입력해주세요." th:value="${username}" required>
-         <input type="password" name="password" class="login_pw" placeholder="비밀번호를 입력해주세요." autocomplete="off"
-            required>
-            
-         <div th:if="${param.error}">
-            <p th:text="${exception}" class="login_alert"></p>
-         </div>
+			<!-- 시작: 회원가입 제목 표시 -->
+			<h1 class="login_title">IPP<span>게시판</span></h1>
+			<!-- 끝: 회원가입 제목 표시 -->
 
-         <button class="login_btn">로그인</button>
-      </form>
+			<!-- 시작: 아이디, 비밀번호 입력 박스 -->
+			<input type="text" name="username" class="login_id" placeholder="아이디를 입력해주세요." th:value="${username}"
+				required>
+			<input type="password" name="password" class="login_pw" placeholder="비밀번호를 입력해주세요." autocomplete="off"
+				required>
+			<!-- 끝: 아이디, 비밀번호 입력 박스 -->
 
-		<button class="signup_btn" ng-click="redirectToSignup()">회원가입</button>
+			<!-- 시작: 로그인 실패 시 예외 표시 박스 -->
+			<div th:if="${param.error}">
+				<p th:text="${exception}" class="login_alert"></p>
+			</div>
+			<!-- 끝: 로그인 실패 시 예외 표시 박스 -->
+
+			<!-- 시작: 로그인 버튼 -->
+			<button class="login_btn">로그인</button>
+			<!-- 끝: 로그인 버튼 -->
+			
+		</form>
 		
-   </div>
+		<!-- 시작: 회원가입 버튼 -->
+		<button class="signup_btn" ng-click="redirectToSignup()">회원가입</button>
+		<!-- 끝: 회원가입 버튼 -->
+		
+	</div>
 </body>
 
 </html>

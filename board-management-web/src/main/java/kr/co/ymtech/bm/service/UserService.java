@@ -2,8 +2,6 @@ package kr.co.ymtech.bm.service;
 
 import java.util.Date;
 
-import java.util.Date;
-
 import org.springframework.stereotype.Service;
 
 import kr.co.ymtech.bm.controller.dto.UserDTO;
@@ -20,6 +18,18 @@ public class UserService implements IUserService {
 		this.userRepository = userRepository;
 	}
 	
+	/**
+	 * @Method checkUserId 입력된 아이디가 이미 생성된 아이디인지 확인하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IUserService#checkUserId(java.lang.String)
+	 *
+	 * @param userId 입력된 아이디
+	 * 
+	 * @return 입력된 아이디가 존재하는지 확인하는 Repository 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 04.
+	 */
 	public Integer checkUserId(String userId) {
 		return userRepository.checkUserId(userId);
 	}

@@ -55,13 +55,24 @@ public class UserRepository implements IUserRepository {
 		return null; // 사용자가 존재하지 않는 경우
 	}
 
+	/**
+	 * @Method checkUserId 입력된 아이디가 이미 생성된 아이디인지 확인하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IUserRepository#checkUserId(java.lang.String)
+	 *
+	 * @param userId 입력된 아이디
+	 * 
+	 * @return 이미 생성된 아이디면 1을 반환하고 아니면 0을 반환하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 04.
+	 */
 	public Integer checkUserId(String userId) {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"user\" WHERE id = ?", Integer.class, userId);
 	}
 
 	@Override
 	public Integer saveUser(UserListVO user) {
-
 		return jdbcTemplate.update(
 				"INSERT INTO \"user\" (id, password, username, email, create_date, grade_id) VALUES (?, ?, ?, ?, ?, ?)",
 				user.getId(), user.getPassword(), user.getUsername(), user.getEmail(), user.getCreateDate(),

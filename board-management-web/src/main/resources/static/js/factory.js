@@ -5,7 +5,6 @@
  * 각 경로에 따른 라우팅 설정
  * 
  * $resource 함수를 사용하는 factory	생성
- * "/boards/:index" 경로에 따른 'GET', 'POST', 'PATCH', 'DELETE' 메소드 생성
  * 
  * @author 황상필
  * @since 2023. 09. 01.
@@ -65,6 +64,7 @@ app.factory('MainFactory', function($resource) {
 
 	})
 });
+
 /**
  * @Method : 파일탐색기 동작을 수행하는 함수
  * 

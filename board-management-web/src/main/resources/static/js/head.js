@@ -1,7 +1,7 @@
 app.controller("BoardHead", function($scope, $location, $route, $http) {
 
 	// 현재 로그인한 아이디
-	$http.get('/loginId')
+	$http.get('/user/loginId')
 		.then(function(response) {
 			$scope.loginId = response.data;
 		})
