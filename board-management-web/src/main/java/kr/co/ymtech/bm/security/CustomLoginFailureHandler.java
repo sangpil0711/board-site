@@ -2,19 +2,28 @@ package kr.co.ymtech.bm.security;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
+/**
+ *  로그인 CustomLoginFailureHandler 클래스 
+ */
 public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
+	/**
+	 *  * Method : 로그인 실패시 오류메세지를 나타나는 함수
+	 * 
+	 * @see org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler#onAuthenticationFailure(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.AuthenticationException)
+	 *
+	 * @author 황상필
+	 * @since 2024. 1. 5.
+	 */
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {

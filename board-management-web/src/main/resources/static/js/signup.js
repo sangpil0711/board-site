@@ -106,9 +106,14 @@ app.controller("BoardSignup", function($scope, $window, UserFactory) {
 			})
 		}
 	}
-
+	
+	/**
+	 * @function checkPassword 비밀번호 조건을 검사하는 함수
+	 * 
+	 * @author 박상현
+	 * @since 2024. 01. 04.
+	 */
 	$scope.password = "";
-
 	$scope.checkPassword = function() {
 		// 비밀번호 유효성 검사
 		const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;

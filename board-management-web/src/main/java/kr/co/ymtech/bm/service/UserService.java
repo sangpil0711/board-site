@@ -43,6 +43,8 @@ public class UserService implements IUserService {
 	 * Method : 사용자 정보를 저장하는 메소드
 	 *
 	 * @see kr.co.ymtech.bm.service.IUserService#saveUser(kr.co.ymtech.bm.controller.dto.UserDTO)
+	 * 
+	 * @return 사용자 정보를 저장하는 Repository 함수 실행
 	 *
 	 * @author 박상현
 	 * @since 2024. 1. 5.
@@ -67,7 +69,7 @@ public class UserService implements IUserService {
 	}
 
 	private boolean checkPassword(String password) {
-		// 비밀번호 유효성 검사를 위한 정규표현식
+		// 비밀번호 유효성 검사하는 정규표현식
 		String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,20}$";
 		return password.matches(passwordPattern);
 	}

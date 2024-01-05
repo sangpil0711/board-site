@@ -21,18 +21,6 @@ public interface IUserRepository {
 	 */
 	public UserVO findByUsername(String username);
 	
-	public Integer checkUserId(String userId);
-
-	/**
-	 * Method : 사용자 정보를 저장하는 메소드
-	 * 
-	 * @param user : 사용자 정보
-	 *
-	 * @author 박상현
-	 * @since 2024. 1. 4.
-	 */
-	UserVO findByUsername(String username);
-	
 	/**
 	 * @Method checkUserId 입력된 아이디가 이미 생성된 아이디인지 확인하는 메소드
 	 *
@@ -43,6 +31,14 @@ public interface IUserRepository {
 	 */
 	public Integer checkUserId(String userId);
 
+	/**
+	 * Method : 사용자 정보를 저장하는 메소드
+	 * 
+	 * @param user : 사용자 정보
+	 *
+	 * @author 박상현
+	 * @since 2024. 1. 4.
+	 */
 	public Integer saveUser(UserListVO user);
 
 }

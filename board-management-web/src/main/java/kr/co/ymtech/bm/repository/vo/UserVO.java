@@ -2,13 +2,21 @@ package kr.co.ymtech.bm.repository.vo;
 
 public class UserVO {
 
+	/** id : 사용자 아이디 */
 	private String id;
+	/** password : 사용자 비밀번호 */
 	private String password;
+	/** username : 사용자 이름 */
 	private String username;
+	/** email : 사용자 이메일 */
 	private String email;
+	/** createDate : 사용자 가입일 */
 	private Long createDate;
+	/** gradeId : 권한 번호 */
 	private Integer gradeId;
+	/** name : 권한 이름 */
 	private String name;
+	/** description : 권한 설명 */
 	private String description;
 
 	public String getId() {
