@@ -42,10 +42,11 @@ public class CommentRepository implements ICommentRepository {
 	@Override
 	public Integer insertComment(CommentVO comment) {
 
-		return jdbcTemplate.update("insert into \"comment\"(board_index,\"content\", parent_index, create_date) values(?, ?, ?, ?)",  
+		return jdbcTemplate.update("insert into \"comment\"(board_index,\"content\", parent_index, user_id, create_date) values(?, ?, ?, ?, ?)",  
 				comment.getBoardIndex(),
 				comment.getText(),
 				comment.getParentIndex(),
+				comment.getUserId(),
 				comment.getCreateDate()
 				);
 	}

@@ -9,12 +9,25 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	$scope.userLike = false;
 
 	// 현재 로그인한 아이디
-	$http.get('/loginId')
+	$http.get('/user/loginId')
 		.then(function(response) {
 			$scope.loginId = response.data;
 		})
 		.catch(function(error) {
 			console.error('현재 로그인된 아이디를 가져올 수 없습니다.', error);
+		});
+		
+	// 현재 로그인한 아이디의 권한정보
+	$http.get('/user/authority')
+		.then(function(response) {
+			if(response.data == 'ROLE_ADMIN') {
+				$scope.adminBtn = true;
+			} else {
+				$scope.adminBtn = false;
+			}
+		})
+		.catch(function(error) {
+			console.error('현재 로그인된 아이디의 권한정보를 가져올 수 없습니다.', error);
 		});
 
 	/**
@@ -76,7 +89,7 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 	 */
 	$scope.removePhoto = function() {
 		if (confirm("게시물을 삭제하시겠습니까?")) {
-			PhotoBoardFactory.deletePhotoBoard({ index: index }, function() {
+			PhotoBoardFactory.deletePhotoBoard({ index: index, userId: $scope.loginId }, function() {
 				$location.path('/photo');
 			},
 				function(error) {
@@ -122,7 +135,7 @@ app.controller("PhotoRead", function($scope, $location, $routeParams, PhotoBoard
 			boardIndex: index,
 			text: parentIndex === null ? $scope.newComment : newChildComment,
 			parentIndex: parentIndex,
-			userId: null,
+			userId: $scope.loginId,
 			createDate: null
 		}
 

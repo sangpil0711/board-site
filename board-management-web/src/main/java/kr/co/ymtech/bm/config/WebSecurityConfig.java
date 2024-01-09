@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -34,20 +35,24 @@ public class WebSecurityConfig {
                   .antMatchers("/login/**",
                 		       "/user/**",
                 		       "/signup/**",
-                		       "/static/**",
-                		       "/register/**").permitAll() // 특정 경로에 대한 접근을 허용합니다.
+                		       "/static/**").permitAll() // 특정 경로에 대한 접근을 허용합니다.
                   .antMatchers("/fileExplorer/**").hasRole("ADMIN")
                             .anyRequest().authenticated()) // 나머지 요청은 인증이 필요합니다.
             .formLogin(login -> login
                   .loginPage("/login") // 로그인 페이지의 URL을 설정합니다.
                   .successForwardUrl("/") // 로그인 성공시 이동할 페이지를 설정합니다.
-                  .failureForwardUrl("/user/login/error") // 로그인 실패시 이동할 페이지를 설정합니다.
+                  .failureForwardUrl("/") // 로그인 실패시 이동할 페이지를 설정합니다.
                   .usernameParameter("username") // 사용자명 파라미터의 이름을 설정합니다.
                   .passwordParameter("password")
                   )
             .logout(logout -> logout
                   .logoutUrl("/j_security_check_logout")
-                  .logoutSuccessUrl("/").invalidateHttpSession(false)).addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // 비밀번호 파라미터의 이름을 설정합니다.
+                  .logoutSuccessHandler((request, response, authentication) -> {
+                      request.getSession().removeAttribute("loginError");
+                      request.getSession().removeAttribute("username");
+                      response.sendRedirect("/"); // 로그아웃 후 리다이렉트할 경로
+                  })
+                  .invalidateHttpSession(false)).addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // 비밀번호 파라미터의 이름을 설정합니다.
 
       return http.build();
     }
@@ -97,9 +102,9 @@ public class WebSecurityConfig {
         return customAuthenticationFilter;
     }
     
-//    @Bean
-//    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

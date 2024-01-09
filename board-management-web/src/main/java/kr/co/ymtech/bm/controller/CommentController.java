@@ -1,6 +1,7 @@
 package kr.co.ymtech.bm.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import kr.co.ymtech.bm.controller.dto.CommentDTO;
 import kr.co.ymtech.bm.controller.dto.CommentGetDTO;
 import kr.co.ymtech.bm.controller.dto.CommentSearchDTO;
@@ -86,6 +89,7 @@ public class CommentController {
 	 * Method : 댓글 1개 정보를 삭제하는 메소드
 	 * 
 	 * @param index : index는 댓글 번호를 담고 있고 댓글 번호를 보고 삭제
+	 * @param userId : 로그인한 사용자 아이디
 	 * 
 	 * @return 댓글을 삭제 후 boardCommentDelete 변수에 담고 ResponseEntity 를 사용하여 응답한다.
 	 * 
@@ -93,9 +97,9 @@ public class CommentController {
 	 * @since  2023.09.20
 	 */
 	@DeleteMapping("/boards/{boardIndex}/comments/{index}")
-	public ResponseEntity<Integer> deleteComment(@PathVariable Integer index) {
+	public ResponseEntity<Integer> deleteComment(@PathVariable Integer index, @RequestParam String userId) {
 
-		Integer boardCommentDelete = commentService.deleteComment(index);
+		Integer boardCommentDelete = commentService.deleteComment(index, userId);
 
 		return new ResponseEntity<Integer>(boardCommentDelete, HttpStatus.OK);
 	}

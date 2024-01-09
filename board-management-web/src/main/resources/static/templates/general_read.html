@@ -4,10 +4,8 @@
 	<!-- 시작: 게시글 종류 및 수정, 삭제, 목록 버튼 -->
 	<strong>일반게시판</strong>
 	<div class="read_btn">
-		<button class="update_btn" ng-if="loginId === board.userId || loginId === 'admin'"
-			ng-click="redirectToUpdate()">수정</button>
-		<button class="delete_btn" ng-if="loginId === board.userId || loginId === 'admin'"
-			ng-click="remove()">삭제</button>
+		<button class="update_btn" ng-if="loginId == board.userId" ng-click="redirectToUpdate()">수정</button>
+		<button class="delete_btn" ng-if="loginId == board.userId || adminBtn == true" ng-click="remove()">삭제</button>
 		<button ng-click="redirectToBoard()">목록</button>
 	</div>
 	<!-- 끝: 게시글 종류 및 수정, 삭제, 목록 버튼 -->
@@ -31,7 +29,9 @@
 				<pre class="content">{{board.text}}</pre>
 				<img ng-src="{{userLike ? '/static/image/free-icon-like.png' : '/static/image/free-icon-hearth.png'}}"
 					alt="추천" ng-click="updateLike()" class="like_btn">
-				<div class="like"><p>{{board.likeCount}}</p></div>
+				<div class="like">
+					<p>{{board.likeCount}}</p>
+				</div>
 			</div>
 			<div class="board_file">
 				<p>첨부파일</p>
@@ -90,8 +90,11 @@
 
 					<!-- 시작: 댓글 수정, 삭제, 답글 버튼 -->
 					<td>
-						<input type="button" class="update_btn" value="수정" ng-click="updateComment(comment)" />
-						<input type="button" class="delete_btn" value="삭제" ng-click="deleteComment(comment.index)" />
+						<input type="button" class="update_btn" value="수정" ng-if="loginId == comment.userId"
+							ng-click="updateComment(comment)" />
+						<input type="button" class="delete_btn" value="삭제"
+							ng-if="loginId == comment.userId || adminBtn == true"
+							ng-click="deleteComment(comment.index)" />
 						<input type="button" class="child_comment_btn" value="답글" ng-click="insertChildComment(comment)"
 							ng-if="comment.parentIndex == null && !comment.childCommentBox" />
 					</td>
@@ -124,8 +127,10 @@
 
 					<!-- 시작: 댓글 수정, 삭제, 답글 버튼 -->
 					<td>
-						<input type="button" class="update_btn" value="수정" ng-click="updateComment(commentChildren)" />
+						<input type="button" class="update_btn" value="수정" ng-if="loginId == commentChildren.userId"
+							ng-click="updateComment(commentChildren)" />
 						<input type="button" class="delete_btn" value="삭제"
+							ng-if="loginId == commentChildren.userId || adminBtn == true"
 							ng-click="deleteComment(commentChildren.index)" />
 						<input type="button" class="child_comment_btn" value="답글"
 							ng-click="insertChildComment(commentChildren)"

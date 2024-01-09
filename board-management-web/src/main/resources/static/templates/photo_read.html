@@ -4,8 +4,10 @@
 
 	<!-- 시작: 수정 삭제 목록 박스 -->
 	<div class="read_btn">
-		<button class="update_btn" ng-if="loginId === photoBoard.userId" ng-click="redirectToPhotoUpdate(photoBoard.index)">수정</button>
-		<button class="delete_btn" ng-if="loginId === photoBoard.userId" ng-click="removePhoto(photoBoard.index)">삭제</button>
+		<button class="update_btn" ng-if="loginId === photoBoard.userId"
+			ng-click="redirectToPhotoUpdate(photoBoard.index)">수정</button>
+		<button class="delete_btn" ng-if="loginId === photoBoard.userId || adminBtn == true"
+			ng-click="removePhoto(photoBoard.index)">삭제</button>
 		<button ng-click="redirectToPhotoBoard()">목록</button>
 	</div>
 	<!-- 끝: 수정 삭제 목록 버튼박스 -->
@@ -60,7 +62,7 @@
 	<!-- 시작: 등록된 댓글 표시 -->
 	<div class="comment_box">
 		<table class="comment" ng-if="commentlist.length > 0">
-			<thead >
+			<thead>
 				<tr>
 					<th colspan="2">작성자</th>
 					<th>댓글내용</th>
@@ -68,7 +70,7 @@
 					<th>비고</th>
 				</tr>
 			</thead>
-			
+
 			<tbody ng-repeat="comment in commentlist">
 				<tr ng-class="{'child_comment': comment.parentIndex != null}">
 					<td ng-if="comment.parentIndex != null"></td>
@@ -92,15 +94,19 @@
 
 					<!-- 시작: 댓글 수정, 삭제, 답글 버튼 -->
 					<td>
-						<input type="button" class="update_btn" value="수정" ng-click="updateComment(comment)" />
-						<input type="button" class="delete_btn" value="삭제" ng-click="deleteComment(comment.index)" />
+						<input type="button" class="update_btn" value="수정" ng-if="loginId == comment.userId"
+							ng-click="updateComment(comment)" />
+						<input type="button" class="delete_btn" value="삭제"
+							ng-if="loginId == comment.userId || adminBtn == true"
+							ng-click="deleteComment(comment.index)" />
 						<input type="button" class="child_comment_btn" value="답글" ng-click="insertChildComment(comment)"
 							ng-if="comment.parentIndex == null && !comment.childCommentBox" />
 					</td>
 					<!-- 끝: 댓글 수정, 삭제, 답글 버튼 -->
 				</tr>
-				
-				<tr ng-repeat="commentChildren in comment.childs"  ng-class="{'child_comment': commentChildren.parentIndex != null}">
+
+				<tr ng-repeat="commentChildren in comment.childs"
+					ng-class="{'child_comment': commentChildren.parentIndex != null}">
 					<td ng-if="commentChildren.parentIndex != null"></td>
 					<td colspan="{{commentChildren.parentIndex != null ? 1 : 2}}">{{ commentChildren.userId }}</td>
 
@@ -110,8 +116,10 @@
 						<div ng-if="!commentChildren.update">{{ commentChildren.text }}</div>
 						<div ng-if="commentChildren.update">
 							<input type="text" class="update_write_box" ng-model="commentChildren.updatedText" />
-							<input type="button" class="update_btn" value="저장" ng-click="saveComment(commentChildren)" />
-							<input type="button" class="update_btn" value="취소" ng-click="cancelUpdate(commentChildren)" />
+							<input type="button" class="update_btn" value="저장"
+								ng-click="saveComment(commentChildren)" />
+							<input type="button" class="update_btn" value="취소"
+								ng-click="cancelUpdate(commentChildren)" />
 						</div>
 					</td>
 					<!-- 끝: 댓글 수정 -->
@@ -122,9 +130,13 @@
 
 					<!-- 시작: 댓글 수정, 삭제, 답글 버튼 -->
 					<td>
-						<input type="button" class="update_btn" value="수정" ng-click="updateComment(commentChildren)" />
-						<input type="button" class="delete_btn" value="삭제" ng-click="deleteComment(commentChildren.index)" />
-						<input type="button" class="child_comment_btn" value="답글" ng-click="insertChildComment(commentChildren)"
+						<input type="button" class="update_btn" value="수정" ng-if="loginId == commentChildren.userId"
+							ng-click="updateComment(commentChildren)" />
+						<input type="button" class="delete_btn" value="삭제"
+							ng-if="loginId == commentChildren.userId || adminBtn == true"
+							ng-click="deleteComment(commentChildren.index)" />
+						<input type="button" class="child_comment_btn" value="답글"
+							ng-click="insertChildComment(commentChildren)"
 							ng-if="commentChildren.parentIndex == null && !commentChildren.childCommentBox" />
 					</td>
 					<!-- 끝: 댓글 수정, 삭제, 답글 버튼 -->

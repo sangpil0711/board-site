@@ -177,8 +177,8 @@ public class BoardService implements IBoardService {
 		BoardVO vo = new BoardVO();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		// 로그인한 유저 아이디가 작성자 아이디와 같거나 "admin"이면 동작
-		if (board.getUserId().equals(auth.getName()) || "admin".equals(auth.getName())) {
+		// 로그인한 유저 아이디가 작성자 아이디와 같으면 동작
+		if (board.getUserId().equals(auth.getName())) {
 
 			// dto -> vo 변환
 			vo.setIndex(board.getIndex());
@@ -239,8 +239,9 @@ public class BoardService implements IBoardService {
 		List<FileVO> files = boardRepository.files(index);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		// 로그인한 유저 아이디가 작성자 아이디와 같거나 "admin"이면 동작
-		if (userId.equals(auth.getName()) || "admin".equals(auth.getName())) {
+		// 로그인한 유저 아이디가 작성자 아이디와 같거나 권한이 ROLE_ADMIN이면 동작
+		if (userId.equals(auth.getName()) || auth.getAuthorities().stream()
+		        .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()))) {
 
 			// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
 			for (FileVO file : files) {
@@ -277,8 +278,9 @@ public class BoardService implements IBoardService {
 		List<FileVO> fv = boardRepository.files(index);
 		BoardVO vo = boardRepository.searchByIndex(index);
 		BoardGetDTO dto = new BoardGetDTO();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Integer likeCount = boardRepository.boardLikeCount(index);
-		Integer userLike = boardRepository.checkUserBoardLike(index);
+		Integer userLike = boardRepository.checkUserBoardLike(index, auth.getName());
 
 		// vo -> dto 변환
 		dto.setIndex(vo.getIndex());

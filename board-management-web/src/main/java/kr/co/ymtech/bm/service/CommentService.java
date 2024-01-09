@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import kr.co.ymtech.bm.controller.dto.CommentDTO;
@@ -42,11 +44,14 @@ public class CommentService implements ICommentService {
 	@Override
 	public Integer insertComment(CommentDTO comment) {
 
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
 		// dto -> vo 변환
 		CommentVO vo = new CommentVO();
 		vo.setBoardIndex(comment.getBoardIndex());
 		vo.setText(comment.getText());
 		vo.setParentIndex(comment.getParentIndex());
+		vo.setUserId(auth.getName());
 		vo.setCreateDate(new Date().getTime());
 
 		return commentRepository.insertComment(vo);
@@ -65,36 +70,36 @@ public class CommentService implements ICommentService {
 	@Override
 	public List<CommentSearchDTO> findComments(Integer boardIndex) {
 		List<CommentVO> commentList = commentRepository.findComments(boardIndex);
-		
+
 		// 댓글 리스트
-		List<CommentSearchDTO> findComments = new ArrayList<>(); 
+		List<CommentSearchDTO> findComments = new ArrayList<>();
 
 		for (CommentVO vo : commentList) {
 			// dto -> vo 변환
-			CommentSearchDTO dto = new CommentSearchDTO(); 
+			CommentSearchDTO dto = new CommentSearchDTO();
 			dto.setIndex(vo.getIndex());
 			dto.setBoardIndex(vo.getBoardIndex());
 			dto.setText(vo.getText());
 			dto.setParentIndex(vo.getParentIndex());
 			dto.setUserId(vo.getUserId());
 			dto.setCreateDate(new Date(vo.getCreateDate()));
-			
+
 			// 대댓글이라면, 해당 댓글 ID에 대한 객체를 찾은 후, childs 변수에 넣어줌
-			if (vo.getParentIndex() != null) { 
+			if (vo.getParentIndex() != null) {
 				for (CommentSearchDTO searchDto : findComments) {
 					if (searchDto.getIndex().equals(vo.getParentIndex())) {
 						// NullPointerException 오류 처리
-						if (searchDto.getChilds() == null) { 
+						if (searchDto.getChilds() == null) {
 							// null 값을 가지고 있는 객체를 호출할 때 발생하니 null일시 처리해줌
-							searchDto.setChilds(new ArrayList<>()); 
+							searchDto.setChilds(new ArrayList<>());
 						}
 						searchDto.getChilds().add(dto);
 					}
 				}
-			} 
+			}
 			// 댓글인 경우, 바로 findComments 리스트에 추가
-			else { 
-				findComments.add(dto); 
+			else {
+				findComments.add(dto);
 			}
 		}
 
@@ -114,10 +119,15 @@ public class CommentService implements ICommentService {
 	@Override
 	public Integer updateComment(CommentGetDTO comment) {
 
-		// dto -> vo 변환
-		CommentVO vo = new CommentVO(); 
-		vo.setIndex(comment.getIndex());
-		vo.setText(comment.getText());
+		CommentVO vo = new CommentVO();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if (comment.getUserId().equals(auth.getName())) {
+			// dto -> vo 변환
+			vo.setIndex(comment.getIndex());
+			vo.setText(comment.getText());
+
+		}
 
 		return commentRepository.updateComment(vo);
 	}
@@ -125,7 +135,8 @@ public class CommentService implements ICommentService {
 	/**
 	 * @Method 댓글을 삭제하는 메소드
 	 * 
-	 * @param index 댓글의 번호를 담고 있고 댓글의 번호를 보고 삭제
+	 * @param index  댓글의 번호를 담고 있고 댓글의 번호를 보고 삭제
+	 * @param userId 로그인한 사용자 아이디
 	 * 
 	 * @return CommentRepository 에서 deleteComment 함수 실행
 	 * 
@@ -133,11 +144,19 @@ public class CommentService implements ICommentService {
 	 * @since 2023. 09. 27.
 	 */
 	@Override
-	public Integer deleteComment(Integer index) {
-	    // 댓글과 관련된 대댓글을 모두 삭제
-	    commentRepository.deleteChildComments(index);
+	public Integer deleteComment(Integer index, String userId) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-	    return commentRepository.deleteComment(index);
+		// 로그인한 유저 아이디가 작성자 아이디와 같거나 권한이 ROLE_ADMIN이면 동작
+		if (userId.equals(auth.getName()) || auth.getAuthorities().stream()
+				.anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()))) {
+
+			// 댓글과 관련된 대댓글을 모두 삭제
+			commentRepository.deleteChildComments(index);
+		}
+
+		return commentRepository.deleteComment(index);
 	}
 
 }

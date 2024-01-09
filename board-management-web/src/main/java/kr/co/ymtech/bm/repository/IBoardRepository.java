@@ -140,7 +140,16 @@ public interface IBoardRepository {
 	 */
 	public Integer updateBoardLike(Integer index);
 	
-	public Integer checkUserBoardLike(Integer index);
+	/**
+	 * @Method checkUserBoardLike 로그인한 유저가 해당 게시글에 추천을 눌렀는지 확인하는 메소드
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param userId 로그인한 아이디
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 02.
+	 */
+	public Integer checkUserBoardLike(Integer index, String userId);
 	
 	/**
 	 * @Method bestBoardLike 베스트 게시글 추천 수를 업데이트하는 메소드

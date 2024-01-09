@@ -188,7 +188,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 		PhotoBoardVO vo = new PhotoBoardVO();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		if (photo.getUserId().equals(auth.getName()) || "admin".equals(auth.getName())) {
+		if (photo.getUserId().equals(auth.getName())) {
 
 			// dto -> vo 변환
 			vo.setIndex(photo.getIndex());
@@ -251,7 +251,8 @@ public class PhotoBoardService implements IPhotoBoardService {
 		String filePath = null;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		if (userId.equals(auth.getName()) || "admin".equals(auth.getName())) {
+		if (userId.equals(auth.getName()) || auth.getAuthorities().stream()
+		        .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()))) {
 
 			// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
 			for (FileVO file : files) {
@@ -288,9 +289,10 @@ public class PhotoBoardService implements IPhotoBoardService {
 
 		List<FileVO> fv = photoBoardRepository.files(index);
 		PhotoBoardVO vo = photoBoardRepository.searchByPhotoIndex(index);
-		PhotoBoardGetDTO dto = new PhotoBoardGetDTO(); 
+		PhotoBoardGetDTO dto = new PhotoBoardGetDTO();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Integer likeCount = boardRepository.boardLikeCount(index);
-		Integer userLike = boardRepository.checkUserBoardLike(index);
+		Integer userLike = boardRepository.checkUserBoardLike(index, auth.getName());
 		
 		// vo -> dto 변환
 		dto.setIndex(vo.getIndex());

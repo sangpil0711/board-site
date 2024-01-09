@@ -6,6 +6,8 @@ public class UserDTO {
 	private String id;
 	/** password : 사용자 비밀번호 */
 	private String password;
+	/** password : 사용자 비밀번호확인 */
+	private String passwordCheck;
 	/** username : 사용자 이름 */
 	private String username;
 	/** email : 사용자 이메일 */
@@ -21,6 +23,10 @@ public class UserDTO {
 
 	public String getPassword() {
 		return password;
+	}
+	
+	public String getPasswordCheck() {
+		return passwordCheck;
 	}
 
 	public String getUsername() {
@@ -43,6 +49,10 @@ public class UserDTO {
 		this.id = id;
 	}
 
+	public void setPasswordCheck(String passwordCheck) {
+		this.passwordCheck = passwordCheck;
+	}
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -66,10 +76,12 @@ public class UserDTO {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("UserVO [id=");
+		builder.append("UserDTO [id=");
 		builder.append(id);
 		builder.append(", password=");
 		builder.append(password);
+		builder.append(", passwordCheck=");
+		builder.append(passwordCheck);
 		builder.append(", username=");
 		builder.append(username);
 		builder.append(", email=");
@@ -81,4 +93,5 @@ public class UserDTO {
 		builder.append("]");
 		return builder.toString();
 	}
+
 }

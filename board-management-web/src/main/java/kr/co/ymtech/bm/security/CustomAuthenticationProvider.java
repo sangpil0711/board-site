@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import kr.co.ymtech.bm.repository.UserRepository;
@@ -24,6 +25,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
    @Autowired
    private UserRepository userRepository;
+   
+   @Autowired
+   private BCryptPasswordEncoder passwordEncoder;
 
    /**
     * 
@@ -43,7 +47,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
        // 사용자가 존재하지 않는 경우
        if (user == null) {
-           throw new UsernameNotFoundException("계정이 존재하지 않습니다.");
+           throw new UsernameNotFoundException("아이디 또는 비밀번호가 일치하지 않습니다.");
        } else {
     	   //사용자 권한 정보를 생성
            List<GrantedAuthority> list = new ArrayList<>();
@@ -52,11 +56,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
            list.add(detail);
 
            // 입력된 password와 DB에서 가져온 password가 일치하는 경우
-           if (user.getPassword().equals(password)) {
+           if (passwordEncoder.matches((String) password, user.getPassword())) {
                return new UsernamePasswordAuthenticationToken(principal, password, list);
            } else {
                // 비밀번호가 일치하지 않는 경우
-               throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+               throw new BadCredentialsException("아이디 또는 비밀번호가 일치하지 않습니다.");
            }
        }
    }
