@@ -45,7 +45,7 @@
 				<tr class="board_list" ng-if="boardlist.length > 0" ng-repeat="item in boardlist">
 					<td>{{item.index}}</td>
 					<td><a ng-click="redirectToRead(item.index)">{{item.title}}</a></td>
-					<td>{{item.userId}}</td>
+					<td>{{item.username}}</td>
 					<td>
 						{{item.createDate | date:'yyyy-MM-dd'}}<br>{{item.createDate | date:'HH:mm:ss'}}
 					</td>

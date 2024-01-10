@@ -31,6 +31,18 @@ public class BoardGetDTO {
 	private Integer userLike;
 	/** file : 등록된 게시글 첨부파일 */
 	private List<FileVO> file;
+	/** username : 사용자 이름 */
+	private String username;
+	
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 
 	public Integer getUserLike() {
 		return userLike;
@@ -125,6 +137,8 @@ public class BoardGetDTO {
 		builder.append(userLike);
 		builder.append(", file=");
 		builder.append(file);
+		builder.append(", username=");
+		builder.append(username);
 		builder.append("]");
 		return builder.toString();
 	}

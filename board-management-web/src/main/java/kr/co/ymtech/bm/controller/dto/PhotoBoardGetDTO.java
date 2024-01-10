@@ -28,6 +28,8 @@ public class PhotoBoardGetDTO {
 	private Integer likeCount;
 	/** userLike : 사용자 추천 여부 */
 	private Integer userLike;
+	/** username : 사용자 이름 */
+	private String username;
 	/** file : 게시글 파일 정보 */
 	private List<FileVO> file;
 
@@ -35,97 +37,107 @@ public class PhotoBoardGetDTO {
 		return userLike;
 	}
 
-   public void setUserLike(Integer userLike) {
-      this.userLike = userLike;
-   }
+	public String getUsername() {
+		return username;
+	}
 
-   public Integer getIndex() {
-      return index;
-   }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-   public void setIndex(Integer index) {
-      this.index = index;
-   }
+	public void setUserLike(Integer userLike) {
+		this.userLike = userLike;
+	}
 
-   public String getTitle() {
-      return title;
-   }
+	public Integer getIndex() {
+		return index;
+	}
 
-   public void setTitle(String title) {
-      this.title = title;
-   }
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
 
-   public String getText() {
-      return text;
-   }
+	public String getTitle() {
+		return title;
+	}
 
-   public void setText(String text) {
-      this.text = text;
-   }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-   public String getUserId() {
-      return userId;
-   }
+	public String getText() {
+		return text;
+	}
 
-   public void setUserId(String userId) {
-      this.userId = userId;
-   }
+	public void setText(String text) {
+		this.text = text;
+	}
 
-   public Integer getCategory() {
-      return category;
-   }
+	public String getUserId() {
+		return userId;
+	}
 
-   public void setCategory(Integer category) {
-      this.category = category;
-   }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-   public Long getCreateDate() {
-      return createDate;
-   }
+	public Integer getCategory() {
+		return category;
+	}
 
-   public void setCreateDate(Long createDate) {
-      this.createDate = createDate;
-   }
-   
-   public Integer getLikeCount() {
-      return likeCount;
-   }
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
 
-   public void setLikeCount(Integer likeCount) {
-      this.likeCount = likeCount;
-   }
-   
-   public List<FileVO> getFile() {
-      return file;
-   }
+	public Long getCreateDate() {
+		return createDate;
+	}
 
-   public void setFile(List<FileVO> file) {
-      this.file = file;
-   }
+	public void setCreateDate(Long createDate) {
+		this.createDate = createDate;
+	}
 
-   @Override
-   public String toString() {
-      StringBuilder builder = new StringBuilder();
-      builder.append("PhotoBoardGetDTO [index=");
-      builder.append(index);
-      builder.append(", title=");
-      builder.append(title);
-      builder.append(", text=");
-      builder.append(text);
-      builder.append(", userId=");
-      builder.append(userId);
-      builder.append(", category=");
-      builder.append(category);
-      builder.append(", createDate=");
-      builder.append(createDate);
-      builder.append(", likeCount=");
-      builder.append(likeCount);
-      builder.append(", userLike=");
-      builder.append(userLike);
-      builder.append(", file=");
-      builder.append(file);
-      builder.append("]");
-      return builder.toString();
-   }
+	public Integer getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(Integer likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public List<FileVO> getFile() {
+		return file;
+	}
+
+	public void setFile(List<FileVO> file) {
+		this.file = file;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PhotoBoardGetDTO [index=");
+		builder.append(index);
+		builder.append(", title=");
+		builder.append(title);
+		builder.append(", text=");
+		builder.append(text);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", category=");
+		builder.append(category);
+		builder.append(", createDate=");
+		builder.append(createDate);
+		builder.append(", likeCount=");
+		builder.append(likeCount);
+		builder.append(", userLike=");
+		builder.append(userLike);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", file=");
+		builder.append(file);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

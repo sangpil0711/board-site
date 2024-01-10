@@ -289,6 +289,7 @@ public class BoardService implements IBoardService {
 		dto.setCreateDate(new Long(vo.getCreateDate()));
 		dto.setLikeCount(likeCount);
 		dto.setUserLike(userLike);
+		dto.setUsername(vo.getUsername());
 		dto.setFile(fv);
 		return dto;
 	}
@@ -338,6 +339,7 @@ public class BoardService implements IBoardService {
 			dto.setCategory(vo.getCategory());
 			dto.setCreateDate(vo.getCreateDate());
 			dto.setLikeCount(vo.getLikeCount());
+			dto.setUsername(vo.getUsername());
 			dto.setFile(files);
 
 			dtoList.add(dto);

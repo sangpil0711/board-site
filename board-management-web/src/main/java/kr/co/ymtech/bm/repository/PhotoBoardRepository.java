@@ -52,7 +52,7 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	public List<PhotoBoardVO> findPhotoBoard(Integer pageNumber, Integer itemSize, String searchType, String keyword,
 			Integer category) {
 		Integer offset = (pageNumber - 1) * itemSize;
-		String sql = "SELECT * FROM board WHERE category = ?"; // 기본 쿼리
+		String sql = "SELECT * FROM board INNER JOIN \"user\" ON board.user_id = \"user\".id WHERE board.category = ?"; // 기본 쿼리
 
 		// 검색 조건을 추가
 		if ("title".equals(searchType)) {
@@ -68,7 +68,7 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 			public PhotoBoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				PhotoBoardVO member = new PhotoBoardVO(rs.getInt("index"), rs.getString("title"),
 						rs.getString("content"), rs.getString("user_id"), rs.getInt("category"),
-						rs.getLong("create_date"), rs.getInt("like_count"));
+						rs.getLong("create_date"), rs.getInt("like_count"), rs.getString("username"));
 				return member;
 			}
 		};
@@ -196,13 +196,13 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 			public PhotoBoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				PhotoBoardVO member = new PhotoBoardVO(rs.getInt("index"), rs.getString("title"),
 						rs.getString("content"), rs.getString("user_id"), rs.getInt("category"),
-						rs.getLong("create_date"), rs.getInt("like_count"));
+						rs.getLong("create_date"), rs.getInt("like_count"), rs.getString("username"));
 
 				return member;
 			}
 		};
 
-		return jdbcTemplate.queryForObject("select * from board where index = ?", mapper, index);
+		return jdbcTemplate.queryForObject("SELECT * FROM board INNER JOIN \"user\" ON board.user_id = \"user\".id where index = ?", mapper, index);
 	}
 	
 	/**

@@ -54,7 +54,7 @@ public class BoardRepository implements IBoardRepository {
 		Integer offset = (pageNumber - 1) * itemSize;
 
 		// 기본 쿼리
-		String sql = "SELECT * FROM board WHERE category = ?";
+		String sql = "SELECT * FROM board INNER JOIN \"user\" ON board.user_id = \"user\".id WHERE board.category = ?";
 
 		// 검색 조건을 추가
 		if ("title".equals(searchType)) {
@@ -70,7 +70,7 @@ public class BoardRepository implements IBoardRepository {
 			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
 						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"),
-						rs.getInt("like_count"));
+						rs.getInt("like_count"),rs.getString("username"));
 				return member;
 			}
 		};
@@ -142,7 +142,6 @@ public class BoardRepository implements IBoardRepository {
 	}
 
 	/**
-	 * 
 	 * @Method updateBoard 게시물을 수정 하는 메소드
 	 *
 	 * @see kr.co.ymtech.bm.repository.IBoardRepository#updateBoard(kr.co.ymtech.bm.repository.vo.BoardVO)
@@ -212,13 +211,13 @@ public class BoardRepository implements IBoardRepository {
 			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
 						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"),
-						rs.getInt("like_count"));
+						rs.getInt("like_count"),rs.getString("username"));
 
 				return member;
 			}
 		};
 
-		return jdbcTemplate.queryForObject("SELECT * FROM board WHERE index = ?", mapper, index);
+		return jdbcTemplate.queryForObject("SELECT * FROM board INNER JOIN \"user\" ON board.user_id = \"user\".id WHERE index = ?", mapper, index);
 	}
 
 	/**
@@ -395,13 +394,13 @@ public class BoardRepository implements IBoardRepository {
 			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
 						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"),
-						rs.getInt("like_count"));
+						rs.getInt("like_count"),rs.getString("username"));
 
 				return member;
 			}
 		};
 		return jdbcTemplate.query(
-				"SELECT * FROM board WHERE to_timestamp(create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, to_timestamp(create_date / 1000) DESC OFFSET 0 LIMIT 8",
+				"SELECT * FROM board INNER JOIN \"user\" ON board.user_id = \"user\".id WHERE to_timestamp(board.create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, to_timestamp(board.create_date / 1000) DESC OFFSET 0 LIMIT 8",
 				mapper);
 	}
 

@@ -301,7 +301,9 @@ public class PhotoBoardService implements IPhotoBoardService {
 		dto.setCreateDate(new Long(vo.getCreateDate()));
 		dto.setLikeCount(likeCount);
 		dto.setUserLike(userLike);
+		dto.setUsername(vo.getUsername());
 		dto.setFile(fv);
+		
 		return dto;
 	}
 	
