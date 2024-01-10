@@ -47,12 +47,7 @@ public class WebSecurityConfig {
                   )
             .logout(logout -> logout
                   .logoutUrl("/j_security_check_logout")
-                  .logoutSuccessHandler((request, response, authentication) -> {
-                      request.getSession().removeAttribute("loginError");
-                      request.getSession().removeAttribute("username");
-                      response.sendRedirect("/"); // 로그아웃 후 리다이렉트할 경로
-                  })
-                  .invalidateHttpSession(false)).addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // 비밀번호 파라미터의 이름을 설정합니다.
+                  .logoutSuccessUrl("/").invalidateHttpSession(false)).addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // 비밀번호 파라미터의 이름을 설정합니다.
 
       return http.build();
     }

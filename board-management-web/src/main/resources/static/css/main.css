@@ -1327,3 +1327,14 @@ pre {
 	left: 1100px;
 }
 
+.visitor_chart {
+    position: absolute;
+    top: 420px;
+    left: 320px;
+}
+
+.post_chart {
+    position: absolute;
+    top: 420px;
+    left: 1092px;
+}
