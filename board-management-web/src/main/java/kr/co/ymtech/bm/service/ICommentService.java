@@ -47,11 +47,12 @@ public interface ICommentService {
 	 * Method : 게시물 1개 정보를 삭제
 	 * 
 	 * @param index : index는 댓글 번호를 담고 있고 댓글 번호를 보고 삭제
+	 * @param userId : 로그인한 사용자 아이디
 	 * 
 	 * @author 박상현
 	 * @since  2023.09.27
 	 */
-	public Integer deleteComment(Integer index);
+	public Integer deleteComment(Integer index, String userId);
 	
 
 

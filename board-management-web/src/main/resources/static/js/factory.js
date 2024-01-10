@@ -9,7 +9,7 @@
  * @author 황상필
  * @since 2023. 09. 01.
  */
-var app = angular.module("myApp", ['ngResource', 'ngRoute', 'ui.bootstrap', 'ngFileUpload', 'dndLists']);
+var app = angular.module("myApp", ['ngResource', 'ngRoute', 'ui.bootstrap', 'ngFileUpload', 'dndLists', 'chart.js']);
 
 app.config(function($routeProvider) {
 	$routeProvider
@@ -42,6 +42,9 @@ app.config(function($routeProvider) {
 		})
 		.when("/file", {
 			templateUrl: "static/templates/file_explorer.html"
+		})
+		.when("/chart", {
+			templateUrl: "static/templates/chart.html"
 		});
 });
 

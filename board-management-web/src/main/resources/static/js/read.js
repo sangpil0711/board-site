@@ -13,12 +13,25 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	$scope.userLike = false;
 
 	// 현재 로그인한 아이디
-	$http.get('/loginId')
+	$http.get('/user/loginId')
 		.then(function(response) {
 			$scope.loginId = response.data;
 		})
 		.catch(function(error) {
 			console.error('현재 로그인된 아이디를 가져올 수 없습니다.', error);
+		});
+		
+	// 현재 로그인한 아이디의 권한정보
+	$http.get('/user/authority')
+		.then(function(response) {
+			if(response.data == 'ROLE_ADMIN') {
+				$scope.adminBtn = true;
+			} else {
+				$scope.adminBtn = false;
+			}
+		})
+		.catch(function(error) {
+			console.error('현재 로그인된 아이디의 권한정보를 가져올 수 없습니다.', error);
 		});
 
 	/**
@@ -121,7 +134,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 			boardIndex: index,
 			text: parentIndex === null ? $scope.newComment : newChildComment,
 			parentIndex: parentIndex,
-			userId: null,
+			userId: $scope.loginId,
 			createDate: null
 		}
 
@@ -211,7 +224,7 @@ app.controller("BoardRead", function($scope, $location, BoardFactory, CommentFac
 	 */
 	$scope.deleteComment = function(commentIndex) {
 		if (confirm("댓글을 삭제하시겠습니까?")) {
-			CommentFactory.deleteComment({ index: commentIndex, boardIndex: index }, function() {
+			CommentFactory.deleteComment({ index: commentIndex, boardIndex: index, userId: $scope.loginId}, function() {
 				findComment();
 			})
 		}

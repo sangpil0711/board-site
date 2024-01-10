@@ -1,0 +1,16 @@
+<div id="container" ng-controller="BoardChart">
+
+	<div class="chart_title">차트</div>
+
+	<div class="today_visitor">오늘 방문자 수:</div>
+	<div class="today_post">오늘 게시글 수:</div>
+
+	<canvas class="visitor_chart chart-line" chart-data="data" chart-labels="labels" chart-series="series"
+		chart-options="options" chart-dataset-override="datasetOverride" width="500" height="400">
+	</canvas>
+	
+	<canvas class="post_chart chart-line" chart-data="data" chart-labels="labels" chart-series="series"
+		chart-options="options" chart-dataset-override="datasetOverride" width="500" height="400">
+	</canvas>
+
+</div>

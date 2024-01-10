@@ -6,14 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.ymtech.bm.controller.dto.UserDTO;
 import kr.co.ymtech.bm.service.IUserService;
@@ -27,33 +26,6 @@ public class UserController {
 
 	public UserController(UserService userService) {
 		this.userService = userService;
-	}
-
-	/**
-	 * @Method loginException 로그인 실패 시 예외를 표시하는 메소드
-	 *
-	 * @param request http 요청
-	 * @param error 예외 발생 여부
-	 * @param exception 예외 설명
-	 * 
-	 * @return 입력한 아이디와 예외를 반환
-	 *
-	 * @author 황상필
-	 * @since 2024. 01. 04.
-	 */
-	@GetMapping("/login/error")
-	public ModelAndView loginException(HttpServletRequest request, @RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "exception", required = false) String exception) {
-
-		ModelAndView model = new ModelAndView("login");
-
-		String saveUsername = (String) request.getSession().getAttribute("username");
-		model.addObject("username", saveUsername);
-
-		model.addObject("error", error);
-		model.addObject("exception", exception);
-
-		return model;
 	}
 
 	/**
@@ -71,6 +43,27 @@ public class UserController {
 	public ResponseEntity<String> getUserId(HttpServletRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return new ResponseEntity<String>("\"" + auth.getName() + "\"", HttpStatus.OK);
+	}
+	
+	/**
+	 * @Method getUserAuthority 현재 로그인한 유저 아이디의 권한정보를 가져오는 메소드
+	 *
+	 * @param request http 요청
+	 * 
+	 * @return 현재 로그인한 유저 아이디의 권한정보를 JSON 형식으로 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 08.
+	 */
+	@GetMapping(value = "/authority", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getUserAuthority(HttpServletRequest request) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userAuthority = auth.getAuthorities().stream()
+		        .filter(authority -> authority.getAuthority().equals("ROLE_ADMIN") || authority.getAuthority().equals("ROLE_USER"))
+		        .findFirst()
+		        .map(GrantedAuthority::getAuthority)
+		        .orElse(null);
+		 return new ResponseEntity<String>("\"" + userAuthority + "\"", HttpStatus.OK);
 	}
 
 	/**

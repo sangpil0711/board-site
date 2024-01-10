@@ -1206,6 +1206,7 @@ pre {
 }
 
 .signup_input {
+	width: 1000px;
 	padding-left: 30px;
 	padding-right: 30px;
 	border-collapse: separate;
@@ -1229,7 +1230,7 @@ pre {
 }
 
 .id_check {
-	margin-left: -170px;
+	margin-left: -220px;
 	width: 150px;
 	height: 45px;
 	font-size: 20px;
@@ -1249,6 +1250,11 @@ pre {
 
 .signup_input span {
 	font-size: 20px;
+}
+
+.signup_input img {
+	margin-left: 15px;
+	width: 20px;
 }
 
 .email_input {
@@ -1280,4 +1286,55 @@ pre {
 	background-color: white;
 	border: 2px solid black;
 	color: black;
+}
+
+.chart_title {
+	border: 2px solid rgb(79, 114, 228);
+	color: rgb(79, 114, 228);
+	padding: 5px 0;
+	text-align: center;
+	width: 700px;
+	font-size: 25px;
+	font-weight: 600;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.today_visitor {
+	border: 2px solid rgb(79, 114, 228);
+	color: rgb(79, 114, 228);
+	padding: 5px 0;
+	text-align: center;
+	width: 500px;
+	font-size: 20px;
+	font-weight: 600;
+	position: relative;
+	top: 43px;
+	left: 330px;
+}
+
+.today_post {
+	border: 2px solid rgb(79, 114, 228);
+	color: rgb(79, 114, 228);
+	padding: 5px 0;
+	text-align: center;
+	width: 500px;
+	font-size: 20px;
+	font-weight: 600;
+	position: relative;
+	left: 1100px;
+}
+
+.visitor_chart {
+    position: absolute;
+    top: 420px;
+    left: 320px;
+}
+
+.post_chart {
+    position: absolute;
+    top: 420px;
+    left: 1092px;
 }

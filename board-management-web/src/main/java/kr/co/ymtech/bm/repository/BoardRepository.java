@@ -349,10 +349,22 @@ public class BoardRepository implements IBoardRepository {
 	    }
 	}
 	
+	/**
+	 * @Method checkUserBoardLike 로그인한 유저가 해당 게시글에 추천을 눌렀는지 확인하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#checkUserBoardLike(java.lang.Integer)
+	 *
+	 * @param index 해당 게시글 번호
+	 * @param userId 로그인한 아이디
+	 * 
+	 * @return 유저가 게시글 추천을 눌렀는지 확인하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 02.
+	 */
 	@Override
-	public Integer checkUserBoardLike(Integer index) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"like\" WHERE board_index = ? AND user_id = ?", Integer.class, index, auth.getName());
+	public Integer checkUserBoardLike(Integer index, String userId) {
+		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"like\" WHERE board_index = ? AND user_id = ?", Integer.class, index, userId);
 	}
 	
 	/**

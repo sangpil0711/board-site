@@ -37,12 +37,14 @@ app.factory('UserFactory', function($resource) {
 });
 
 app.controller("BoardSignup", function($scope, $window, UserFactory) {
+	
+	$scope.successCheck = false;
 
 	/**
 	 * @function redirectToLogin "/login" 경로로 이동하는 함수
 	 * 
 	 * @author 황상필
-	 * @since 2024. 01. 03.
+	 * @since 2024. 01. 04.
 	 */
 	$scope.redirectToLogin = function() {
 		$window.location.href = "/login";
@@ -59,8 +61,10 @@ app.controller("BoardSignup", function($scope, $window, UserFactory) {
 	$scope.checkId = function(id) {
 		UserFactory.checkUserId({}, id, function() {
 			$scope.userId = id;
+			$scope.successCheck = true;
 			alert("사용가능한 아이디입니다.")
 		}, function() {
+			$scope.successCheck = false;
 			alert("이미 생성된 아이디입니다.");
 		});
 	};
@@ -77,35 +81,36 @@ app.controller("BoardSignup", function($scope, $window, UserFactory) {
 	 * @author 황상필
 	 * @since 2024. 01. 04.
 	 */
-	$scope.signup = function(id, password, password_check, name, email) {
+	$scope.signup = function(id, password, passwordCheck, name, email) {
 
 		// 회원가입 시 필요한 데이터
 		const signupData = {
-			id: $scope.userId,
+			id: id,
 			password: password,
+			passwordCheck: passwordCheck,
 			username: name,
 			email: email
 		};
 
-		// 필수입력항목이 입력되지 않았을 경우 동작
-		if (id == null || password == null || password_check == null || name == null) {
-			alert("필수입력사항을 확인해주세요.")
-		}
-		// 입력한 아이디가 중복확인한 아이디와 일치하지 않을 경우 동작
-		else if (id !== $scope.userId) {
-			alert("아이디 중복확인을 해주세요.");
-		}
-		// 비밀번호와 비밀번호확인이 일치하지 않을 경우 동작
-		else if (password !== password_check) {
-			alert("입력한 비밀번호와 비밀번호확인이 일치하지 않습니다.")
-		}
-		else {
+//		// 필수입력항목이 입력되지 않았을 경우 동작
+//		if (id == "" || password == "" || passwordCheck == "" || name == "") {
+//			alert("필수입력사항을 확인해주세요.");
+//		}
+//		// 입력한 아이디가 중복확인한 아이디와 일치하지 않을 경우 동작
+//		else if (id != $scope.userId) {
+//			alert("아이디 중복확인을 해주세요.");
+//		}
+//		// 비밀번호와 비밀번호확인이 일치하지 않을 경우 동작
+//		else if (password !== passwordCheck) {
+//			alert("입력한 비밀번호와 비밀번호확인이 일치하지 않습니다.");
+//		}
+//		else {
 			UserFactory.saveUser({}, signupData, function() {
-				alert("회원가입이 정상적으로 완료되었습니다.")
+				alert("회원가입이 정상적으로 완료되었습니다.");
 				$window.location.href = "/login";
 			})
-		}
-	}
+//		}
+	};
 	
 	/**
 	 * @function checkPassword 비밀번호 조건을 검사하는 함수
@@ -123,6 +128,5 @@ app.controller("BoardSignup", function($scope, $window, UserFactory) {
 			$scope.password = "";
 		}
 	};
-
 
 });

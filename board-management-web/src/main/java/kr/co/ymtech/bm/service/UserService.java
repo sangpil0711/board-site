@@ -1,7 +1,11 @@
 package kr.co.ymtech.bm.service;
 
 import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import kr.co.ymtech.bm.controller.dto.UserDTO;
 import kr.co.ymtech.bm.repository.IUserRepository;
 import kr.co.ymtech.bm.repository.UserRepository;
@@ -15,6 +19,9 @@ import kr.co.ymtech.bm.repository.vo.UserListVO;
  */
 @Service
 public class UserService implements IUserService {
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	private final IUserRepository userRepository;
 
@@ -51,19 +58,28 @@ public class UserService implements IUserService {
 	 */
 	@Override
 	public Integer saveUser(UserDTO user) {
+		
+		UserListVO vo = new UserListVO();
+		Integer checkId = userRepository.checkUserId(user.getId());
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
+		
 		if (!checkPassword(user.getPassword())) {
 			throw new IllegalArgumentException("비밀번호는 영문, 숫자를 포함하여 8~20자여야 합니다.");
-			
+		} else if (user.getId() == null || user.getUsername() == null || user.getPassword() == null || user.getPasswordCheck() == null) {
+			throw new IllegalArgumentException("필수입력사항을 확인해주세요.");
+		} else if (checkId == 1) {
+			throw new IllegalArgumentException("이미 생성된 아이디입니다.");
+		} else if (user.getPassword() == user.getPasswordCheck()) {
+			throw new IllegalArgumentException("비밀번호와 비밀번호확인이 일치하지 않습니다.");
+		} else {
+			//dto -> vo 변환
+			vo.setId(user.getId());
+			vo.setPassword(encodedPassword);
+			vo.setUsername(user.getUsername());
+			vo.setEmail(user.getEmail());
+			vo.setCreateDate(new Date().getTime());
+			vo.setGradeId(1);
 		}
-		//dto -> vo 변환
-		UserListVO vo = new UserListVO();
-		vo.setId(user.getId());
-		vo.setPassword(user.getPassword());
-		vo.setUsername(user.getUsername());
-		vo.setEmail(user.getEmail());
-		vo.setCreateDate(new Date().getTime());
-		vo.setGradeId(1);
-		
 
 		return userRepository.saveUser(vo);
 	}
