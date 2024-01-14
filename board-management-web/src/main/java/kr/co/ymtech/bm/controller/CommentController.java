@@ -58,7 +58,6 @@ public class CommentController {
 	 * @author 박상현
 	 * @since  2023.09.20
 	 */
-//	@GetMapping("/comments/{boardIndex}")
 	@GetMapping("/boards/{boardIndex}/comments")
 	public ResponseEntity<List<CommentSearchDTO>> findComments(@PathVariable Integer boardIndex) {
 		

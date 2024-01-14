@@ -1,23 +1,35 @@
-app.controller("BoardChart", function($scope) {
+app.controller("BoardChart", function($scope, ChartFactory) {
 
-	$scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-	$scope.series = ['Series A'];
-	$scope.data = [
-		[65, 59, 80, 81, 56, 55, 40]
-	];
-	$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+	ChartFactory.todayVisitor(function(response) {
+		$scope.todayVisitor = response.countVisitor;
+		$scope.todayPost = response.countPost;
+		$scope.visitorData = response.visitorData;
+		$scope.postData = response.postData
+	});
+
+	$scope.visitorLabels = ["6일전", "5일전", "4일전", "3일전", "2일전", "1일전", "오늘"];
+	$scope.visitorSeries = ['방문자 수'];
+
+	$scope.postLabels = ["6일전", "5일전", "4일전", "3일전", "2일전", "1일전", "오늘"];
+	$scope.postSeries = ['게시글 수'];
+
 	$scope.options = {
 		responsive: false,
 		scales: {
-			yAxes: [
-				{
-					id: 'y-axis-1',
-					type: 'linear',
-					display: true,
-					position: 'left'
-				},
-			]
+			x: {
+				beginAtZero: true
+			},
+			y: {
+				beginAtZero: true
+			}
+		},
+
+		elements: {
+			line: {
+				tension: 0 // 0은 직선, 1에 가까울수록 곡선
+			},
 		}
+
 	};
 
 })

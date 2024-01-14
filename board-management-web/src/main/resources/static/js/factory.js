@@ -175,7 +175,7 @@ app.factory('BoardFactory', function($resource) {
 });
 
 /**
- * @Method : 해당 게시글에 댓글을 추가,수정,삭제,조회 하는 함수
+ * @Method : 해당 게시글에 댓글을 추가,수정,삭제,조회하는 함수
  * 
  * @author 박상현
  * @since 2023. 10. 11.
@@ -216,7 +216,7 @@ app.factory('CommentFactory', function($resource) {
 });
 
 /**
- * @Method : 사진 게시물에 게시물을 추가,수정,삭제,조회 하는 함수
+ * @Method : 사진 게시물에 게시물을 추가,수정,삭제,조회하는 함수
  * 
  * @author 박상현
  * @since 2023. 10. 24.
@@ -258,6 +258,26 @@ app.factory('PhotoBoardFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
+
+	})
+});
+
+/**
+ * @Method : 게시판 차트 정보를 조회하는 함수
+ * 
+ * @author 황상필
+ * @since 2024. 01. 12.
+ */
+app.factory('ChartFactory', function($resource) {
+	return $resource('/', null, {
+
+		todayVisitor: {
+			method: 'GET',
+			url: '/visitor'
+//			headers: {
+//				"Content-Type": 'application/json'
+//			},
+		}
 
 	})
 });

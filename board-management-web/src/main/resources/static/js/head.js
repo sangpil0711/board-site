@@ -1,27 +1,27 @@
 app.controller("BoardHead", function($scope, $location, $route, $http) {
 
-   // 현재 로그인한 아이디
-   $http.get('/user/loginId')
-      .then(function(response) {
-         $scope.loginId = response.data;
-      })
-      .catch(function(error) {
-         console.error('현재 로그인된 아이디를 가져올 수 없습니다.', error);
-      });
-      
-   // 현재 로그인한 아이디의 권한정보   
-   $http.get('/user/authority')
-      .then(function(response) {
-         $scope.userRole = response.data;
-         if($scope.userRole == 'ROLE_ADMIN') {
-            $scope.adminMenu = true;
-         } else {
-            $scope.adminMenu = false;
-         }
-      })
-      .catch(function(error) {
-         console.error('현재 로그인된 아이디의 권한정보를 가져올 수 없습니다.', error);
-      });
+	// 현재 로그인한 아이디
+	$http.get('/user/loginId')
+		.then(function(response) {
+			$scope.loginId = response.data;
+		})
+		.catch(function(error) {
+			console.error('현재 로그인된 아이디를 가져올 수 없습니다.', error);
+		});
+		
+	// 현재 로그인한 아이디의 권한정보	
+	$http.get('/user/authority')
+		.then(function(response) {
+			$scope.userRole = response.data;
+			if($scope.userRole == 'ROLE_ADMIN') {
+				$scope.adminMenu = true;
+			} else {
+				$scope.adminMenu = false;
+			}
+		})
+		.catch(function(error) {
+			console.error('현재 로그인된 아이디의 권한정보를 가져올 수 없습니다.', error);
+		});
 
    /**
     * @function redirectToMain main_display.html로 이동하는 함수

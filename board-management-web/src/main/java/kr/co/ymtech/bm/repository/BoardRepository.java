@@ -412,7 +412,7 @@ public class BoardRepository implements IBoardRepository {
 			}
 		};
 		return jdbcTemplate.query(
-				"SELECT * FROM board INNER JOIN \"user\" ON board.user_id = \"user\".id WHERE to_timestamp(board.create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, to_timestamp(board.create_date / 1000) DESC OFFSET 0 LIMIT 8",
+				"SELECT * FROM board INNER JOIN \"user\" ON board.user_id = \"user\".id WHERE TO_TIMESTAMP(board.create_date / 1000) >= CURRENT_TIMESTAMP + '-7 days' ORDER BY like_count DESC, TO_TIMESTAMP(board.create_date / 1000) DESC OFFSET 0 LIMIT 8",
 				mapper);
 	}
 
