@@ -1,9 +1,13 @@
 package kr.co.ymtech.bm.security;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import kr.co.ymtech.bm.repository.ChartRepository;
 import kr.co.ymtech.bm.repository.UserRepository;
 import kr.co.ymtech.bm.repository.vo.UserVO;
 import kr.co.ymtech.bm.security.model.UserGrade;
@@ -25,9 +30,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
    @Autowired
    private UserRepository userRepository;
-   
+   @Autowired
+   private ChartRepository chartRepository;
    @Autowired
    private BCryptPasswordEncoder passwordEncoder;
+   
+   private Set<String> loggedInUsers = new HashSet<>();
+
+   @Scheduled(cron = "0 0 0 * * *")
+   public void clearSession() {
+	   chartRepository.deleteVisitData();
+	   loggedInUsers.clear();
+   }
 
    /**
     * 
@@ -57,6 +71,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
            // 입력된 password와 DB에서 가져온 password가 일치하는 경우
            if (passwordEncoder.matches((String) password, user.getPassword())) {
+        	   if (!loggedInUsers.contains(principal)) {
+                   chartRepository.boardVisitor(new Date().getTime());
+                   loggedInUsers.add((String) principal);
+                   return new UsernamePasswordAuthenticationToken(principal, password, list);
+               }
                return new UsernamePasswordAuthenticationToken(principal, password, list);
            } else {
                // 비밀번호가 일치하지 않는 경우
