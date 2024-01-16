@@ -74,9 +74,10 @@ app.controller("BoardSignup", function($scope, $window, UserFactory) {
 	 * 
 	 * @param id 입력한 아이디
 	 * @param password 입력한 비밀번호
-	 * @param password_check 입력한 비밀번호확인
+	 * @param passwordCheck 입력한 비밀번호확인
 	 * @param name 입력한 이름
-	 * @param email 입력한 이메일
+	 * @param beforeEmail 입력한 이메일 앞부분
+	 * @param afterEmail 입력한 이메일 뒷부분
 	 * 
 	 * @author 황상필
 	 * @since 2024. 01. 04.

@@ -1,5 +1,11 @@
 app.controller("BoardInfo", function($scope, $location, $route, InfoFactory, $window) {
 
+	/**
+	 * @function userInfo 개인정보수정 시 필요한 유저 데이터를 가져오는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2024. 01. 15.
+	 */
 	InfoFactory.userInfo({}, function(response) {
 		$scope.userInfo = response;
 		if ($scope.userInfo.email) {
@@ -12,6 +18,19 @@ app.controller("BoardInfo", function($scope, $location, $route, InfoFactory, $wi
 		console.error("유저 정보 불러오기 실패", error);
 	});
 
+	/**
+	 * @function updateUserInfo 유저 데이터를 업데이트하는 함수
+	 * 
+	 * @param currentPassword 현재 비밀번호
+	 * @param newPassword 새 비밀번호
+	 * @param newPasswordCheck 새 비밀번호 확인
+	 * @param name 이름
+	 * @param beforeEmail 이메일 앞부분
+	 * @param afterEmail 이메일 뒷부분
+	 * 
+	 * @author 황상필
+	 * @since 2024. 01. 16.
+	 */
 	$scope.updateUserInfo = function(currentPassword, newPassword, newPasswordCheck, name, beforeEmail, afterEmail) {
 
 		const updateData = {
@@ -56,9 +75,14 @@ app.controller("BoardInfo", function($scope, $location, $route, InfoFactory, $wi
 		$route.reload();
 	};
 
+	/**
+	 * @function checkPassword 비밀번호 조건을 검사하는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2024. 01. 15.
+	 */
 	$scope.newPassword = "";
 	$scope.checkPassword = function() {
-		// 비밀번호 유효성 검사
 		const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
 		if (!passwordPattern.test($scope.newPassword)) {

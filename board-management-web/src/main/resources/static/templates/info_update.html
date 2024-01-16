@@ -1,10 +1,10 @@
 <div id="container" ng-controller="BoardInfo">
 
-	<!-- 시작: 개인정보수정 제목과 필수입력사항 표시 -->
+	<!-- 시작: 개인정보수정 제목 -->
 	<h1 class="info_title">개인정보수정</h1>
-	<!-- 끝: 개인정보수정 제목과 필수입력사항 표시 -->
+	<!-- 끝: 개인정보수정 제목 -->
 
-	<!-- 시작: 회원정보입력 박스 -->
+	<!-- 시작: 개인정보수정 박스 -->
 	<table class="signup_input">
 		<tr>
 			<td class="signup_item">아이디</td>&nbsp;&nbsp;
@@ -35,15 +35,14 @@
 					style="width: 232px; margin: 0px;" type="text" ng-model="afterEmail" ng-value="afterEmail"></td>
 		</tr>
 	</table>
-	<!-- 끝: 회원정보입력 박스 -->
+	<!-- 끝: 개인정보수정 박스 -->
 
-	<!-- 시작: 회원가입 확인, 취소 버튼 -->
+	<!-- 시작: 개인정보수정 확인, 취소 버튼 -->
 	<div class="info_decision">
 		<button class="signup_submit"
 			ng-click="updateUserInfo(currentPassword, newPassword, newPasswordCheck, name, beforeEmail, afterEmail)">확인</button>
 		<button class="signup_cancel" ng-click="redirectToMain()">취소</button>
 	</div>
-	<!-- 끝: 회원가입 확인, 취소 버튼 -->
-
+	<!-- 끝: 개인정보수정 확인, 취소 버튼 -->
 
 </div>

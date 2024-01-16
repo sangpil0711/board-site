@@ -25,6 +25,16 @@ public class InfoService implements IInfoService {
 		this.infoRepository = infoRepository;
 	}
 
+	/**
+	 * @Method getUserInfo 개인정보수정 시 필요한 유저 데이터를 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IInfoService#getUserInfo()
+	 *
+	 * @return 유저의 정보를 담은 dto를 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 15.
+	 */
 	@Override
 	public InfoDTO getUserInfo() {
 
@@ -40,6 +50,18 @@ public class InfoService implements IInfoService {
 		return dto;
 	}
 
+	/**
+	 * @Method updateUserInfo 유저의 정보를 업데이트하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IInfoService#updateUserInfo(kr.co.ymtech.bm.controller.dto.UserUpdateDTO)
+	 *
+	 * @param updateInfo 업데이트할 유저 정보
+	 * 
+	 * @return 업데이트할 정보를 담아서 repository 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 16.
+	 */
 	@Override
 	public Integer updateUserInfo(UserUpdateDTO updateInfo) {
 
@@ -81,7 +103,6 @@ public class InfoService implements IInfoService {
 	}
 
 	private boolean checkPassword(String password) {
-		// 비밀번호 유효성 검사하는 정규표현식
 		String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,20}$";
 		return password.matches(passwordPattern);
 	}

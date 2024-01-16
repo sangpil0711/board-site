@@ -285,6 +285,12 @@ app.factory('ChartFactory', function($resource) {
 	})
 });
 
+/**
+ * @Method : 개인정보수정 시 필요한 함수를 실행하는 함수
+ * 
+ * @author 황상필
+ * @since 2024. 01. 15.
+ */
 app.factory('InfoFactory', function($resource) {
 	return $resource('/', null, {
 
