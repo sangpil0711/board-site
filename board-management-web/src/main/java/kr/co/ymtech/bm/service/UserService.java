@@ -69,7 +69,7 @@ public class UserService implements IUserService {
 			throw new IllegalArgumentException("필수입력사항을 확인해주세요.");
 		} else if (checkId == 1) {
 			throw new IllegalArgumentException("이미 생성된 아이디입니다.");
-		} else if (user.getPassword() == user.getPasswordCheck()) {
+		} else if (user.getPassword() != user.getPasswordCheck()) {
 			throw new IllegalArgumentException("비밀번호와 비밀번호확인이 일치하지 않습니다.");
 		} else {
 			//dto -> vo 변환

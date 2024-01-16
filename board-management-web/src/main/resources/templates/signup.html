@@ -44,15 +44,15 @@
 			<tr>
 				<td class="signup_item"> 이메일 </td>
 				<td><input style="width: 221px;" type="text"
-						ng-model="email">&nbsp;&nbsp;<span>@</span>&nbsp;&nbsp;<input style="width: 221px; margin: 0px;"
-						type="text"></td>
+						ng-model="beforeEmail">&nbsp;&nbsp;<span>@</span>&nbsp;&nbsp;<input style="width: 221px; margin: 0px;"
+						type="text" ng-model="afterEmail"></td>
 			</tr>
 		</table>
 		<!-- 끝: 회원정보입력 박스 -->
 
 		<!-- 시작: 회원가입 확인, 취소 버튼 -->
 		<div class="signup_decision">
-			<button class="signup_submit" ng-click="signup(id, password, passwordCheck, name, email)">확인</button>
+			<button class="signup_submit" ng-click="signup(id, password, passwordCheck, name, beforeEmail, afterEmail)">확인</button>
 			<button class="signup_cancel" ng-click="redirectToLogin()">취소</button>
 		</div>
 		<!-- 끝: 회원가입 확인, 취소 버튼 -->

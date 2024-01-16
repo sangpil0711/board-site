@@ -1,0 +1,49 @@
+<div id="container" ng-controller="BoardInfo">
+
+	<!-- 시작: 개인정보수정 제목과 필수입력사항 표시 -->
+	<h1 class="info_title">개인정보수정</h1>
+	<!-- 끝: 개인정보수정 제목과 필수입력사항 표시 -->
+
+	<!-- 시작: 회원정보입력 박스 -->
+	<table class="signup_input">
+		<tr>
+			<td class="signup_item">아이디</td>&nbsp;&nbsp;
+			<td class="info_id">{{userInfo.id}}</td>
+		</tr>
+		<tr>
+			<td class="signup_item">현재비밀번호</td>
+			<td><input type="password" ng-model="currentPassword" autocomplete="off"></td>
+		</tr>
+		<tr>
+			<td class="signup_item">새 비밀번호</td>
+			<td><input type="password" ng-model="newPassword" ng-blur="checkPassword()" autocomplete="off">&nbsp;&nbsp;
+				<span style="font-size: 16px; font-weight: 600;">* 영문, 숫자포함 8~20글자</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="signup_item">새 비밀번호확인</td>
+			<td><input type="password" ng-model="newPasswordCheck" autocomplete="off"></td>
+		</tr>
+		<tr>
+			<td class="signup_item">이름</td>
+			<td><input type="text" ng-model="name" ng-value="userInfo.username"></td>
+		</tr>
+		<tr>
+			<td class="signup_item">이메일</td>
+			<td><input style="width: 232px;" type="text" ng-model="beforeEmail"
+					ng-value="beforeEmail">&nbsp;&nbsp;<span>@</span>&nbsp;&nbsp;<input
+					style="width: 232px; margin: 0px;" type="text" ng-model="afterEmail" ng-value="afterEmail"></td>
+		</tr>
+	</table>
+	<!-- 끝: 회원정보입력 박스 -->
+
+	<!-- 시작: 회원가입 확인, 취소 버튼 -->
+	<div class="info_decision">
+		<button class="signup_submit"
+			ng-click="updateUserInfo(currentPassword, newPassword, newPasswordCheck, name, beforeEmail, afterEmail)">확인</button>
+		<button class="signup_cancel" ng-click="redirectToMain()">취소</button>
+	</div>
+	<!-- 끝: 회원가입 확인, 취소 버튼 -->
+
+
+</div>
