@@ -30,6 +30,7 @@
 	<script type="text/javascript" th:src="@{static/js/photo_write.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/file.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/chart.js}"></script>
+	<script type="text/javascript" th:src="@{static/js/info.js}"></script>
 </head>
 
 <body ng-app="myApp">
@@ -44,7 +45,7 @@
 			<li><button class="btn" ng-click="redirectToChart()">통계</button></li>
 			<li><button class="btn" ng-if="adminMenu" ng-click="redirectToFileExplorer()">파일탐색기</button></li>
 			<li><div class="user"><span th:text="${UserVO.username} + '님'"></span></div>
-				<a ng-href="/j_security_check_logout">로그아웃</a> <p>/</p> <a>개인정보수정</a></li>
+				<a ng-href="/j_security_check_logout">로그아웃</a> <p>/</p> <a ng-click="redirectToInfo()">개인정보수정</a></li>
 		</ul>
 		<!-- 끝: 상단 메뉴 -->
 

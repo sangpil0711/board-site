@@ -45,6 +45,9 @@ app.config(function($routeProvider) {
 		})
 		.when("/chart", {
 			templateUrl: "static/templates/chart.html"
+		})
+		.when("/info", {
+			templateUrl: "static/templates/info_update.html"
 		});
 });
 
@@ -273,10 +276,38 @@ app.factory('ChartFactory', function($resource) {
 
 		todayVisitor: {
 			method: 'GET',
-			url: '/visitor'
-//			headers: {
-//				"Content-Type": 'application/json'
-//			},
+			url: '/visitor',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		}
+
+	})
+});
+
+/**
+ * @Method : 개인정보수정 시 필요한 함수를 실행하는 함수
+ * 
+ * @author 황상필
+ * @since 2024. 01. 15.
+ */
+app.factory('InfoFactory', function($resource) {
+	return $resource('/', null, {
+
+		userInfo: {
+			method: 'GET',
+			url: '/userInfo',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+		
+		userUpdate: {
+			method: 'PATCH',
+			url: '/userUpdate',
+			headers: {
+				"Content-Type": 'application/json'
+			},
 		}
 
 	})

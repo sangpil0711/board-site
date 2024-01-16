@@ -1,13 +1,4 @@
 app.controller("BoardHead", function($scope, $location, $route, $http) {
-
-	// 현재 로그인한 아이디
-	$http.get('/user/loginId')
-		.then(function(response) {
-			$scope.loginId = response.data;
-		})
-		.catch(function(error) {
-			console.error('현재 로그인된 아이디를 가져올 수 없습니다.', error);
-		});
 		
 	// 현재 로그인한 아이디의 권한정보	
 	$http.get('/user/authority')
@@ -79,6 +70,17 @@ app.controller("BoardHead", function($scope, $location, $route, $http) {
     */
    $scope.redirectToChart = function() {
       $location.path('/chart');
+      $route.reload();
+   };
+   
+   /**
+    * @function redirectToInfo info_update.html로 이동 후 새로고침하는 함수
+    * 
+    * @author 황상필
+    * @since 2024. 01. 15.
+    */
+   $scope.redirectToInfo = function() {
+      $location.path('/info');
       $route.reload();
    };
 

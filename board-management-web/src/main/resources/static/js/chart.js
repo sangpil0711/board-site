@@ -3,8 +3,8 @@ app.controller("BoardChart", function($scope, ChartFactory) {
 	ChartFactory.todayVisitor(function(response) {
 		$scope.todayVisitor = response.countVisitor;
 		$scope.todayPost = response.countPost;
-		$scope.visitorData = response.visitorData;
-		$scope.postData = response.postData
+		$scope.visitorData = [response.visitorData];
+		$scope.postData = [response.postData];
 	});
 
 	$scope.visitorLabels = ["6일전", "5일전", "4일전", "3일전", "2일전", "1일전", "오늘"];
@@ -27,9 +27,31 @@ app.controller("BoardChart", function($scope, ChartFactory) {
 		elements: {
 			line: {
 				tension: 0 // 0은 직선, 1에 가까울수록 곡선
-			},
+			}
+		},
+		
+		legend: {
+			display: true,
+			position: 'right',
+			labels: {
+				fontSize: 16
+			}
 		}
 
 	};
+
+	$scope.visitorDataset = [
+		{
+			fill: false,
+			borderColor: 'green'
+		}
+	];
+
+	$scope.postDataset = [
+		{
+			fill: false,
+			borderColor: 'orange'
+		}
+	];
 
 })
