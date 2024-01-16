@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                              "/user/**",
                              "/signup/**",
                              "/static/**",
-                             "/boards**").permitAll() // 특정 경로에 대한 접근을 허용합니다.
+                             "/updateInformation/**").permitAll() // 특정 경로에 대한 접근을 허용합니다.
                   .antMatchers("/fileExplorer/**").hasRole("ADMIN")
                             .anyRequest().authenticated()) // 나머지 요청은 인증이 필요합니다.
             .formLogin(login -> login

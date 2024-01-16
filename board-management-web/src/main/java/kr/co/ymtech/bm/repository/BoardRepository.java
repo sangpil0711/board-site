@@ -209,9 +209,16 @@ public class BoardRepository implements IBoardRepository {
 			// ResultSet에 결과값을 담아 BoardVO에 담음
 			@Override
 			public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				BoardVO member = new BoardVO(rs.getInt("index"), rs.getString("title"), rs.getString("content"),
-						rs.getString("user_id"), rs.getInt("category"), rs.getLong("create_date"),
-						rs.getInt("like_count"),rs.getString("username"));
+				BoardVO member = new BoardVO(
+						rs.getInt("index"),
+						rs.getString("title"),
+						rs.getString("content"),
+						rs.getString("user_id"),
+						rs.getInt("category"),
+						rs.getLong("create_date"),
+						rs.getInt("like_count"),
+						rs.getString("username")
+						);
 
 				return member;
 			}

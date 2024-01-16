@@ -81,22 +81,39 @@ app.controller("BoardSignup", function($scope, $window, UserFactory) {
 	 * @author 황상필
 	 * @since 2024. 01. 04.
 	 */
-	$scope.signup = function(id, password, passwordCheck, name, email) {
+	$scope.signup = function(id, password, passwordCheck, name, beforeEmail, afterEmail) {
 
-		// 회원가입 시 필요한 데이터
-		const signupData = {
-			id: id,
-			password: password,
-			passwordCheck: passwordCheck,
-			username: name,
-			email: email
-		};
+      // 회원가입 시 필요한 데이터
+      const signupData = {
+         id: id,
+         password: password,
+         passwordCheck: passwordCheck,
+         username: name,
+         email: beforeEmail + '@' + afterEmail
+      };
 
-			UserFactory.saveUser({}, signupData, function() {
-				alert("회원가입이 정상적으로 완료되었습니다.");
-				$window.location.href = "/login";
-			})
-	};
+      // 필수입력항목이 입력되지 않았을 경우 동작
+      if (!id || !password || !passwordCheck || !name) {
+         alert("필수입력사항을 확인해주세요.");
+      }
+      // 입력한 아이디가 중복확인한 아이디와 일치하지 않을 경우 동작
+      else if (id != $scope.userId) {
+         alert("아이디 중복확인을 해주세요.");
+      }
+      // 비밀번호와 비밀번호확인이 일치하지 않을 경우 동작
+      else if (password !== passwordCheck) {
+         alert("입력한 비밀번호와 비밀번호확인이 일치하지 않습니다.");
+      }
+      else if ((!beforeEmail && afterEmail) || (beforeEmail && !afterEmail)) {
+         alert("이메일을 입력해주세요.");
+      }
+      else {
+         UserFactory.saveUser({}, signupData, function() {
+            alert("회원가입이 정상적으로 완료되었습니다.");
+            $window.location.href = "/login";
+         })
+      }
+   };
 	
 	/**
 	 * @function checkPassword 비밀번호 조건을 검사하는 함수

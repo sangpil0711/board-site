@@ -2,62 +2,62 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 
 <head>
-	<meta charset="utf-8">
-	<title>웹프로젝트</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{/static/css/hwang.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{/static/css/park.css}" />
-	<script type="text/javascript" th:src="@{/static/js/angularjs/angular.min.js}"></script>
-	<script type="text/javascript" th:src="@{/static/js/angularjs/angular-resource.min.js}"></script>
-	<script type="text/javascript" th:src="@{/static/js/signup.js}"></script>
+   <meta charset="utf-8">
+   <title>웹프로젝트</title>
+   <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
+   <link rel="stylesheet" type="text/css" th:href="@{/static/css/hwang.css}" />
+   <link rel="stylesheet" type="text/css" th:href="@{/static/css/park.css}" />
+   <script type="text/javascript" th:src="@{/static/js/angularjs/angular.min.js}"></script>
+   <script type="text/javascript" th:src="@{/static/js/angularjs/angular-resource.min.js}"></script>
+   <script type="text/javascript" th:src="@{/static/js/signup.js}"></script>
 </head>
 
 <body ng-app="myApp">
-	<div id="container" ng-controller="BoardSignup">
+   <div id="container" ng-controller="BoardSignup">
 
-		<!-- 시작: 회원가입 제목과 필수입력사항 표시 -->
-		<h1 class="signup_title">회원정보입력</h1>
-		<p class="key_input"><span>*</span>필수입력사항</p>
-		<!-- 끝: 회원가입 제목과 필수입력사항 표시 -->
+      <!-- 시작: 회원가입 제목과 필수입력사항 표시 -->
+      <h1 class="signup_title">회원정보입력</h1>
+      <p class="key_input"><span>*</span>필수입력사항</p>
+      <!-- 끝: 회원가입 제목과 필수입력사항 표시 -->
 
-		<!-- 시작: 회원정보입력 박스 -->
-		<table class="signup_input">
-			<tr>
-				<td class="signup_item"> 아이디<span>*</span> </td>&nbsp;&nbsp;
-				<td><input type="text" ng-model="id"></td>
-				<td><button class="id_check" ng-click="checkId(id)">중복확인</button>
-				<img src="/static/image/free-icon-mark.png" ng-if="successCheck"></td>
-			</tr>
-			<tr>
-				<td class="signup_item"> 비밀번호<span>*</span> </td>
-				<td><input type="password" ng-model="password" ng-blur="checkPassword()" autocomplete="off">&nbsp;&nbsp;
-					<span style="font-size: 16px; font-weight: 600;">* 영문, 숫자포함 8~20글자</span></td>
-			</tr>
-			<tr>
-				<td class="signup_item"> 비밀번호확인<span>*</span> </td>
-				<td><input type="password" ng-model="passwordCheck" autocomplete="off"></td>
-			</tr>
-			<tr>
-				<td class="signup_item"> 이름<span>*</span> </td>
-				<td><input type="text" ng-model="name"></td>
-			</tr>
-			<tr>
-				<td class="signup_item"> 이메일 </td>
-				<td><input style="width: 221px;" type="text"
-						ng-model="email">&nbsp;&nbsp;<span>@</span>&nbsp;&nbsp;<input style="width: 221px; margin: 0px;"
-						type="text"></td>
-			</tr>
-		</table>
-		<!-- 끝: 회원정보입력 박스 -->
+      <!-- 시작: 회원정보입력 박스 -->
+      <table class="signup_input">
+         <tr>
+            <td class="signup_item"> 아이디<span>*</span> </td>&nbsp;&nbsp;
+            <td><input type="text" ng-model="id"></td>
+            <td><button class="id_check" ng-click="checkId(id)">중복확인</button>
+            <img src="/static/image/free-icon-mark.png" ng-if="successCheck"></td>
+         </tr>
+         <tr>
+            <td class="signup_item"> 비밀번호<span>*</span> </td>
+            <td><input type="password" ng-model="password" ng-blur="checkPassword()" autocomplete="off">&nbsp;&nbsp;
+               <span style="font-size: 16px; font-weight: 600;">* 영문, 숫자포함 8~20글자</span></td>
+         </tr>
+         <tr>
+            <td class="signup_item"> 비밀번호확인<span>*</span> </td>
+            <td><input type="password" ng-model="passwordCheck" autocomplete="off"></td>
+         </tr>
+         <tr>
+            <td class="signup_item"> 이름<span>*</span> </td>
+            <td><input type="text" ng-model="name"></td>
+         </tr>
+         <tr>
+            <td class="signup_item"> 이메일 </td>
+            <td><input style="width: 221px;" type="text"
+                  ng-model="beforeEmail">&nbsp;&nbsp;<span>@</span>&nbsp;&nbsp;<input style="width: 221px; margin: 0px;"
+                  type="text" ng-model="afterEmail"></td>
+         </tr>
+      </table>
+      <!-- 끝: 회원정보입력 박스 -->
 
-		<!-- 시작: 회원가입 확인, 취소 버튼 -->
-		<div class="signup_decision">
-			<button class="signup_submit" ng-click="signup(id, password, passwordCheck, name, email)">확인</button>
-			<button class="signup_cancel" ng-click="redirectToLogin()">취소</button>
-		</div>
-		<!-- 끝: 회원가입 확인, 취소 버튼 -->
+      <!-- 시작: 회원가입 확인, 취소 버튼 -->
+      <div class="signup_decision">
+         <button class="signup_submit" ng-click="signup(id, password, passwordCheck, name, beforeEmail, afterEmail)">확인</button>
+         <button class="signup_cancel" ng-click="redirectToLogin()">취소</button>
+      </div>
+      <!-- 끝: 회원가입 확인, 취소 버튼 -->
 
-	</div>
+   </div>
 </body>
 
 </html>
