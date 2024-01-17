@@ -1,4 +1,4 @@
-app.controller("BoardSystem", function() {
+app.controller("BoardUser", function() {
 
 
 

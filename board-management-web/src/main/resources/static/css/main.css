@@ -1457,7 +1457,6 @@ pre {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	max-width: 583px;
 }
 
 .system tbody td a {

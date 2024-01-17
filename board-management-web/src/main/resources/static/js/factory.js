@@ -319,3 +319,25 @@ app.factory('InfoFactory', function($resource) {
 	})
 });
 
+app.factory('SystemFactory', function($resource) {
+	return $resource('/', null, {
+
+		createSystem: {
+			method: 'POST',
+			url: '/createSystem',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+		
+		findPage: {
+			method: 'GET',
+			url: '/systemPage',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		}
+
+	})
+});
+
