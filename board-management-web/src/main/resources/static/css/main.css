@@ -34,7 +34,7 @@ ul li {
 	align-items: center;
 }
 
-.menu li {
+.user_menu li {
 	padding: 0 0 0 80px;
 }
 
@@ -1357,4 +1357,114 @@ pre {
 	position: absolute;
 	top: 730px;
 	left: 840px;
+}
+
+.system_all {
+	font-size: 17px;
+	position: absolute;
+	top: 200px;
+	right: 400px;
+}
+
+.system_select {
+	width: 120px;
+	padding: 7px;
+	padding-left: 10px;
+	border: 1px solid black;
+	appearance: none;
+	font-size: 15px;
+	color: black;
+	background-color: white;
+	background: url(../image/arrow_down_18dp.png) no-repeat right 50%;
+	background-size: 30px;
+	position: relative;
+	top: 50px;
+	left: 1550px;
+}
+
+.system {
+	border-collapse: collapse;
+	width: 1500px;
+	text-align: center;
+	margin-top: 80px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.system button {
+	border: none;
+	background-color: white;
+	height: 20px;
+}
+
+.system tbody {
+	display: inline-block;
+	width: 1500px;
+	max-height: 251px;
+	overflow: overlay;
+}
+
+.system tbody tr {
+	height: 50px;
+	background-color: white;
+	color: black;
+	font-size: 17px;
+	width: 1500px;
+}
+
+.system thead tr th {
+	display: inline-block;
+	position: sticky;
+	top: 0;
+	background-color: #fff;
+	border: 1px solid grey;
+	border-width: 2px 0;
+	color: black;
+	font-size: 20px;
+	text-align: center;
+}
+
+.system td:first-child,
+.system th:first-child {
+	width: 300px;
+}
+
+.system td:nth-child(2),
+.system th:nth-child(2) {
+	width: 650px;
+}
+
+.system td:nth-child(3),
+.system th:nth-child(3) {
+	width: 350px;
+}
+
+.system td:nth-child(4),
+.system th:nth-child(4) {
+	width: 200px;
+}
+
+.system tbody td {
+	border: 1px solid grey;
+	border-width: 1px 0;
+	border-top: none;
+}
+
+.system tbody .system_list td {
+	border: 1px solid grey;
+	border-width: 1px 0;
+	border-top: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.system tbody td a {
+	text-decoration: none;
+	color: black;
+}
+
+.system tbody td a:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }

@@ -48,6 +48,12 @@ app.config(function($routeProvider) {
 		})
 		.when("/info", {
 			templateUrl: "static/templates/info_update.html"
+		})
+		.when("/system", {
+			templateUrl: "static/templates/system.html"
+		})
+		.when("/user", {
+			templateUrl: "static/templates/user.html"
 		});
 });
 
@@ -305,6 +311,28 @@ app.factory('InfoFactory', function($resource) {
 		userUpdate: {
 			method: 'PATCH',
 			url: '/userUpdate',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		}
+
+	})
+});
+
+app.factory('SystemFactory', function($resource) {
+	return $resource('/', null, {
+
+		createSystem: {
+			method: 'POST',
+			url: '/createSystem',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+		
+		findPage: {
+			method: 'GET',
+			url: '/systemPage',
 			headers: {
 				"Content-Type": 'application/json'
 			},

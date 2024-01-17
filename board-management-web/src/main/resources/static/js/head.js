@@ -83,5 +83,27 @@ app.controller("BoardHead", function($scope, $location, $route, $http) {
       $location.path('/info');
       $route.reload();
    };
+   
+   /**
+    * @function redirectToSystemManagement system.html로 이동 후 새로고침하는 함수
+    * 
+    * @author 황상필
+    * @since 2024. 01. 16.
+    */
+   $scope.redirectToSystemManagement = function() {
+      $location.path('/system');
+      $route.reload();
+   };
+   
+   /**
+    * @function redirectToUserManagement info_update.html로 이동 후 새로고침하는 함수
+    * 
+    * @author 황상필
+    * @since 2024. 01. 16.
+    */
+   $scope.redirectToUserManagement = function() {
+      $location.path('/user');
+      $route.reload();
+   };
 
 });
