@@ -60,6 +60,9 @@ app.controller("BoardInfo", function($scope, $location, $route, InfoFactory, $wi
 			InfoFactory.userUpdate({}, updateData, function() {
 				alert("개인정보수정이 정상적으로 완료되었습니다.");
 				$window.location.href = "/";
+			}, function(error) {
+				alert("현재비밀번호가 일치하지 않습니다.");
+				console.error("현재비밀번호가 일치하지 않습니다.", error);
 			})
 		}
 	};

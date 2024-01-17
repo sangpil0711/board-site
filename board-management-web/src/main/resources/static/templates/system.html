@@ -1,0 +1,47 @@
+<div id="container" ng-controller="BoardSystem">
+
+	<!-- 게시글 총 개수 및 페이지당 게시글 수 선택 박스 시작 -->
+	<div>
+		<p class="system_all">15 페이지중 1</p>
+		<select class="system_select" ng-model="itemsPerPage" ng-change="updatePage()"
+			ng-options="option.value as option.name for option in options"></select>
+	</div>
+	<!-- 게시글 총 개수 및 페이지당 게시글 수 선택 박스 끝 -->
+
+	<!-- 시작: 게시글 리스트 -->
+	<table class="system">
+		<thead>
+			<tr>
+				<th>key</th>
+				<th>value</th>
+				<th>description</th>
+				<th style="height: 32.56px;"><button ng-click="add()">+</button></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="system_list" ng-if="addSystem">
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td></td>
+			</tr>
+			<tr class="system_list" ng-repeat="item in boardlist">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- 끝: 게시글 리스트 -->
+
+	<!-- 시작: 페이지네이션 -->
+	<div>
+		<ul uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" max-size="maxSize"
+			ng-change="updatePage()" items-per-page="itemsPerPage" class="pagination-lg" previous-text="&lsaquo;"
+			next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+		</ul>
+	</div>
+	<!-- 끝: 페이지네이션 -->
+
+</div>

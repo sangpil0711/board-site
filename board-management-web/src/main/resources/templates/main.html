@@ -31,6 +31,8 @@
 	<script type="text/javascript" th:src="@{static/js/file.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/chart.js}"></script>
 	<script type="text/javascript" th:src="@{static/js/info.js}"></script>
+	<script type="text/javascript" th:src="@{static/js/system.js}"></script>
+	<script type="text/javascript" th:src="@{static/js/user.js}"></script>
 </head>
 
 <body ng-app="myApp">
@@ -38,12 +40,14 @@
 
 
 		<!-- 시작: 상단 메뉴 -->
-		<ul class="menu">
+		<ul class="menu" ng-class="{'user_menu':!adminMenu }">
 			<li><button class="ipp_btn" ng-click="redirectToMain()" title="메인화면으로 이동">IPP <span class="span">게시판</span></button></li>
 			<li><button class="btn" ng-click="redirectToGeneralBoard()">일반게시판</button></li>
 			<li><button class="btn" ng-click="redirectToPhotoBoard()">사진게시판</button></li>
 			<li><button class="btn" ng-click="redirectToChart()">통계</button></li>
-			<li><button class="btn" ng-if="adminMenu" ng-click="redirectToFileExplorer()">파일탐색기</button></li>
+			<li ng-if="adminMenu"><button class="btn" ng-click="redirectToFileExplorer()">파일탐색기</button></li>
+			<li ng-if="adminMenu"><button class="btn" ng-click="redirectToSystemManagement()">시스템관리</button></li>
+			<li ng-if="adminMenu"><button class="btn" ng-click="redirectToUserManagement()">사용자관리</button></li>
 			<li><div class="user"><span th:text="${UserVO.username} + '님'"></span></div>
 				<a ng-href="/j_security_check_logout">로그아웃</a> <p>/</p> <a ng-click="redirectToInfo()">개인정보수정</a></li>
 		</ul>

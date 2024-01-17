@@ -48,6 +48,12 @@ app.config(function($routeProvider) {
 		})
 		.when("/info", {
 			templateUrl: "static/templates/info_update.html"
+		})
+		.when("/system", {
+			templateUrl: "static/templates/system.html"
+		})
+		.when("/user", {
+			templateUrl: "static/templates/user.html"
 		});
 });
 
