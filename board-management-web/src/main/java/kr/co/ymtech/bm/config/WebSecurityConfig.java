@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import kr.co.ymtech.bm.security.CustomAuthenticationFilter;
 import kr.co.ymtech.bm.security.CustomAuthenticationProvider;
 import kr.co.ymtech.bm.security.CustomLoginFailureHandler;
@@ -33,10 +32,13 @@ public class WebSecurityConfig {
             .csrf(csrf -> csrf.disable()) // CSRF 보호를 비활성화합니다.
             .authorizeHttpRequests((authorize) -> authorize
                   .antMatchers("/login/**",
-                		       "/user/**",
-                		       "/signup/**",
-                		       "/static/**").permitAll() // 특정 경로에 대한 접근을 허용합니다.
-                  .antMatchers("/fileExplorer/**").hasRole("ADMIN")
+                             "/user/**",
+                             "/signup/**",
+                             "/static/**",
+                             "/userManage",
+                             "/gradeUpdate"
+                             ).permitAll() // 특정 경로에 대한 접근을 허용합니다.
+                  .antMatchers("/createSystem/**","systemPage").hasRole("ADMIN")
                             .anyRequest().authenticated()) // 나머지 요청은 인증이 필요합니다.
             .formLogin(login -> login
                   .loginPage("/login") // 로그인 페이지의 URL을 설정합니다.

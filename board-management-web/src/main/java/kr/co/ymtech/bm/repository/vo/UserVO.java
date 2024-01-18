@@ -18,6 +18,8 @@ public class UserVO {
 	private String name;
 	/** description : 권한 설명 */
 	private String description;
+	
+	
 
 	public String getId() {
 		return id;

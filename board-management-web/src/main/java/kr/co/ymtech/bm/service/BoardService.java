@@ -111,10 +111,13 @@ public class BoardService implements IBoardService {
 		FileVO boardFile = null;
 		List<FileVO> boardFiles = new ArrayList<FileVO>();
 		Integer lastBoardIndex = boardRepository.lastBoardIndex();
-
 		// dto -> vo 변환
 		BoardVO vo = new BoardVO();
-		vo.setIndex(lastBoardIndex + 1);
+		if(lastBoardIndex == null) {
+			vo.setIndex(1);
+		}else { 
+			vo.setIndex(lastBoardIndex + 1);
+		}
 		vo.setTitle(board.getTitle());
 		vo.setText(board.getText());
 		vo.setUserId(auth.getName());

@@ -19,31 +19,31 @@ import kr.co.ymtech.bm.repository.vo.UserListVO;
  */
 @Service
 public class UserService implements IUserService {
-	
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+   
+   @Autowired
+   private BCryptPasswordEncoder passwordEncoder;
 
-	private final IUserRepository userRepository;
+   private final IUserRepository userRepository;
 
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-	
-	/**
-	 * @Method checkUserId 입력된 아이디가 이미 생성된 아이디인지 확인하는 메소드
-	 *
-	 * @see kr.co.ymtech.bm.service.IUserService#checkUserId(java.lang.String)
-	 *
-	 * @param userId 입력된 아이디
-	 * 
-	 * @return 입력된 아이디가 존재하는지 확인하는 Repository 함수 실행
-	 *
-	 * @author 황상필
-	 * @since 2024. 01. 04.
-	 */
-	public Integer checkUserId(String userId) {
-		return userRepository.checkUserId(userId);
-	}
+   public UserService(UserRepository userRepository) {
+      this.userRepository = userRepository;
+   }
+   
+   /**
+    * @Method checkUserId 입력된 아이디가 이미 생성된 아이디인지 확인하는 메소드
+    *
+    * @see kr.co.ymtech.bm.service.IUserService#checkUserId(java.lang.String)
+    *
+    * @param userId 입력된 아이디
+    * 
+    * @return 입력된 아이디가 존재하는지 확인하는 Repository 함수 실행
+    *
+    * @author 황상필
+    * @since 2024. 01. 04.
+    */
+   public Integer checkUserId(String userId) {
+      return userRepository.checkUserId(userId);
+   }
 
 
 	/**
@@ -89,12 +89,12 @@ public class UserService implements IUserService {
 			vo.setGradeId(1);
 		}
 
-		return userRepository.saveUser(vo);
-	}
+      return userRepository.saveUser(vo);
+   }
 
-	private boolean checkPassword(String password) {
-		// 비밀번호 유효성 검사하는 정규표현식
-		String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,20}$";
-		return password.matches(passwordPattern);
-	}
+   private boolean checkPassword(String password) {
+      // 비밀번호 유효성 검사하는 정규표현식
+      String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,20}$";
+      return password.matches(passwordPattern);
+   }
 }

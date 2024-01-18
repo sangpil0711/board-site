@@ -17,6 +17,16 @@ public class UserDTO {
 	/** gradeId : 권한 번호 */
 	private Integer gradeId;
 
+	public UserDTO(String id, String password, String username, String email, long createDate,
+			int gradeId) {
+		this.id = id;
+		this.password = password;
+		this.username = username;
+		this.createDate = createDate;
+		this.gradeId = gradeId;
+	}
+
+
 	public String getId() {
 		return id;
 	}

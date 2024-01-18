@@ -121,8 +121,8 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	public Integer savePhotoBoard(PhotoBoardVO photo, List<FileVO> file) {
 
 		// 게시글 정보를 DB에 저장
-		Integer boardDB = jdbcTemplate.update("INSERT INTO board(index, title, content, category, create_Date) VALUES(?, ?, ?, ?, ?)",
-				photo.getIndex(), photo.getTitle(), photo.getText(), photo.getCategory(), photo.getCreateDate());
+		Integer boardDB = jdbcTemplate.update("INSERT INTO board(index, title, content, user_id, category, create_Date) VALUES(?, ?, ?, ?, ?, ?)",
+				photo.getIndex(), photo.getTitle(), photo.getText(), photo.getUserId(), photo.getCategory(), photo.getCreateDate());
 
 		// 게시글에 업로드된 파일을 DB에 저장
 		for (FileVO files : file) {

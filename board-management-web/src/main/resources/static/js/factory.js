@@ -224,6 +224,8 @@ app.factory('CommentFactory', function($resource) {
 	})
 });
 
+
+
 /**
  * @Method : 사진 게시물에 게시물을 추가,수정,삭제,조회하는 함수
  * 
@@ -357,6 +359,35 @@ app.factory('SystemFactory', function($resource) {
 			url: '/updateSystem',
 			headers: {
 				"Content-Type": 'application/json'
+			},
+		},
+
+	})
+});
+
+app.factory('UserManageFactory', function($resource) {
+	return $resource('/', null, {
+
+		getUserInfo: {
+			method: 'GET',
+			url: '/userManage',
+			isArray: true,
+			headers: {
+				"Content-Type": 'application/json',
+			},
+		},
+
+		updateGrade: {
+			method: 'PATCH',
+			headers: {
+				"Content-Type": 'application/json',
+			},
+		},
+
+		deleteUser: {
+			method: 'DELETE',
+			headers: {
+				"Content-Type": 'application/json',
 			},
 		},
 

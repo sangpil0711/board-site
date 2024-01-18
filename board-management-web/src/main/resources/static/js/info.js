@@ -20,20 +20,20 @@ app.controller("BoardInfo", function($scope, $location, $route, InfoFactory, $wi
 		console.error("유저 정보 불러오기 실패", error);
 	});
 
-	/**
-	 * @function updateUserInfo 유저 데이터를 업데이트하는 함수
-	 * 
-	 * @param currentPassword 현재 비밀번호
-	 * @param newPassword 새 비밀번호
-	 * @param newPasswordCheck 새 비밀번호 확인
-	 * @param name 이름
-	 * @param beforeEmail 이메일 앞부분
-	 * @param afterEmail 이메일 뒷부분
-	 * 
-	 * @author 황상필
-	 * @since 2024. 01. 16.
-	 */
-	$scope.updateUserInfo = function(currentPassword, newPassword, newPasswordCheck, name, beforeEmail, afterEmail) {
+   /**
+    * @function updateUserInfo 유저 데이터를 업데이트하는 함수
+    * 
+    * @param currentPassword 현재 비밀번호
+    * @param newPassword 새 비밀번호
+    * @param newPasswordCheck 새 비밀번호 확인
+    * @param name 이름
+    * @param beforeEmail 이메일 앞부분
+    * @param afterEmail 이메일 뒷부분
+    * 
+    * @author 황상필
+    * @since 2024. 01. 16.
+    */
+   $scope.updateUserInfo = function(currentPassword, newPassword, newPasswordCheck, name, beforeEmail, afterEmail) {
 
 		// 수정 시 필요한 데이터
 		const updateData = {
@@ -83,16 +83,16 @@ app.controller("BoardInfo", function($scope, $location, $route, InfoFactory, $wi
 		}
 	};
 
-	/**
-	 * @function redirectToMain main.html로 이동 후 새로고침하는 함수
-	 * 
-	 * @author 황상필
-	 * @since 2024. 01. 15.
-	 */
-	$scope.redirectToMain = function() {
-		$location.path('/');
-		$route.reload();
-	};
+   /**
+    * @function redirectToMain main.html로 이동 후 새로고침하는 함수
+    * 
+    * @author 황상필
+    * @since 2024. 01. 15.
+    */
+   $scope.redirectToMain = function() {
+      $location.path('/');
+      $route.reload();
+   };
 
 	/**
 	 * @function checkPassword 비밀번호 조건을 검사하는 함수

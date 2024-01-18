@@ -120,12 +120,16 @@ public class PhotoBoardService implements IPhotoBoardService {
 		String uniqueID = null;
 		String filePath = null;
 		FileVO boardFile = null;
-		Integer lastBoardIndex = boardRepository.lastBoardIndex();
 		List<FileVO> boardFiles = new ArrayList<FileVO>();
+		Integer lastBoardIndex = boardRepository.lastBoardIndex();
 
 		// dto -> vo 변환
 		PhotoBoardVO vo = new PhotoBoardVO();
-		vo.setIndex(lastBoardIndex + 1);
+		if(lastBoardIndex == null) {
+			vo.setIndex(1);
+		}else { 
+			vo.setIndex(lastBoardIndex + 1);
+		}
 		vo.setTitle(photo.getTitle());
 		vo.setText(photo.getText());
 		vo.setUserId(auth.getName());
