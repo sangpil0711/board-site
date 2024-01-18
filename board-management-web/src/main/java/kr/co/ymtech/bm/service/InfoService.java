@@ -69,25 +69,39 @@ public class InfoService implements IInfoService {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String currentPassword = infoRepository.getUserPassword(auth.getName());
 		UserUpdateVO vo = new UserUpdateVO();
-
+		
+		// 새 비밀번호가 null값이 아니고 비밀번호 규칙을 만족하지 못했을 경우 동작
 		if (updateInfo.getNewPassword() != null && !checkPassword(updateInfo.getNewPassword())) {
 			throw new IllegalArgumentException("비밀번호는 영문, 숫자를 포함하여 8~20자여야 합니다.");
-		} else if (updateInfo.getUsername() == null) {
+		} 
+		// 이름이 null값일 경우 동작
+		else if (updateInfo.getUsername() == null) {
 			throw new IllegalArgumentException("이름을 입력해주세요.");
-		} else if (updateInfo.getNewPassword() != null && updateInfo.getCurrentPassword() != null
+		} 
+		// 새 비밀번호와 현재비밀번호가 null값이 아니고 현재 비밀번호와 새 비밀번호가 일치할 경우 동작
+		else if (updateInfo.getNewPassword() != null && updateInfo.getCurrentPassword() != null
 				&& updateInfo.getCurrentPassword().equals(updateInfo.getNewPassword())) {
 			throw new IllegalArgumentException("현재비밀번호와 새 비밀번호가 일치합니다.");
-		} else if (updateInfo.getNewPassword() != null
+		} 
+		// 새 비밀번호가 null값이 아니고 새 비밀번호와 새 비밀번호확인이 일치하지 않을 경우 동작
+		else if (updateInfo.getNewPassword() != null
 				&& !updateInfo.getNewPassword().equals(updateInfo.getNewPasswordCheck())) {
-			throw new IllegalArgumentException("비밀번호와 비밀번호확인이 일치하지 않습니다.");
-		} else if (updateInfo.getCurrentPassword() != null
+			throw new IllegalArgumentException("새 비밀번호와 새 비밀번호확인이 일치하지 않습니다.");
+		} 
+		// 현재비밀번호가 null값이 아니고 입력한 현재비밀번호가 일치하지 않을 경우 동작
+		else if (updateInfo.getCurrentPassword() != null
 				&& !passwordEncoder.matches(updateInfo.getCurrentPassword(), currentPassword)) {
 			throw new IllegalArgumentException("현재비밀번호가 일치하지 않습니다.");
-		} else if (updateInfo.getCurrentPassword() != null && updateInfo.getNewPassword() == null) {
+		} 
+		// 현재비밀번호가 null값이 아니고 새 비밀번호가 null값일 경우 동작
+		else if (updateInfo.getCurrentPassword() != null && updateInfo.getNewPassword() == null) {
 			throw new IllegalArgumentException("새 비밀번호를 입력해주세요.");
-		} else if (updateInfo.getCurrentPassword() == null && updateInfo.getNewPassword() != null) {
+		} 
+		// 현재비밀번호가 null값이고 새 비밀번호가 null값이 아닐경우 동작
+		else if (updateInfo.getCurrentPassword() == null && updateInfo.getNewPassword() != null) {
 			throw new IllegalArgumentException("현재비밀번호를 입력해주세요.");
-		} else {
+		} 
+		else {
 			vo.setId(auth.getName());
 			if (updateInfo.getCurrentPassword() == null && updateInfo.getNewPassword() == null) {
 				vo.setNewPassword(currentPassword);

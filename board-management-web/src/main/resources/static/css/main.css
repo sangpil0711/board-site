@@ -2,8 +2,9 @@
 	overflow-x: hidden;
 	width: 100%;
 }
+
 body {
-  margin: 0 auto;
+	margin: 0 auto;
 }
 
 ul {
@@ -89,7 +90,7 @@ button:hover {
 	margin-bottom: 5px;
 }
 
-.user span{
+.user span {
 	padding: 3px;
 	margin-right: 8px;
 	border-bottom: 1px solid black;
@@ -409,7 +410,7 @@ h3 {
 	font-size: 11px;
 }
 
-.none_search span{
+.none_search span {
 	padding-left: 550px;
 	font-size: 17px;
 }
@@ -1211,7 +1212,7 @@ pre {
 	padding-left: 30px;
 	padding-right: 30px;
 	border-collapse: separate;
-    border-spacing: 0 20px;
+	border-spacing: 0 20px;
 	position: absolute;
 	top: 290px;
 	left: 430px;
@@ -1329,15 +1330,15 @@ pre {
 }
 
 .visitor_chart {
-    position: absolute;
-    top: 420px;
-    left: 320px;
+	position: absolute;
+	top: 420px;
+	left: 320px;
 }
 
 .post_chart {
-    position: absolute;
-    top: 420px;
-    left: 1092px;
+	position: absolute;
+	top: 420px;
+	left: 1092px;
 }
 
 .info_title {
@@ -1400,7 +1401,7 @@ pre {
 .system tbody {
 	display: inline-block;
 	width: 1500px;
-	max-height: 251px;
+	max-height: 301px;
 	overflow: overlay;
 }
 
@@ -1467,4 +1468,29 @@ pre {
 .system tbody td a:hover {
 	text-decoration: underline;
 	cursor: pointer;
+}
+
+.system_list img:hover {
+	cursor: pointer
+}
+
+.system_list button {
+	border: 1px solid black;
+	width: 40px;
+    height: 25px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.system_update {
+	width: 25px;
+	height: 25px;
+	content: url(/static/image/pen-to-square-regular.svg);
+}
+
+.system_remove {
+	width: 25px;
+	height: 25px;
+	margin-left: 10px;
+	content: url(/static/image/trash-can-solid.svg);
 }
