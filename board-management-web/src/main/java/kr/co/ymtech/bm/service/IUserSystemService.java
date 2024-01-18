@@ -1,12 +1,12 @@
 package kr.co.ymtech.bm.service;
 
-import java.util.List;
 
 import kr.co.ymtech.bm.controller.dto.UserManageDTO;
+import kr.co.ymtech.bm.controller.dto.UserManagePageDTO;
 
 public interface IUserSystemService {
 
-	public List<UserManageDTO> getUserInfo();
+	public UserManagePageDTO getUserInfo(Integer pageNumber, Integer itemSize);
 
 	public Integer updateGrade(UserManageDTO updateInfo);
 }

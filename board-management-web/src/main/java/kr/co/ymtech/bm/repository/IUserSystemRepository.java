@@ -6,8 +6,10 @@ import kr.co.ymtech.bm.repository.vo.UserManageVO;
 
 public interface IUserSystemRepository {
 
-	public List<UserManageVO> getUserInfo();
+	public List<UserManageVO> getUserInfo(Integer pageNumber, Integer itemSize);
 
 	public Integer updateGrade(UserManageVO vo);
+
+	public Integer findCount();
 
 }

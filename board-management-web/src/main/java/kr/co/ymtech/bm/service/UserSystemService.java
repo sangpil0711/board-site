@@ -1,10 +1,10 @@
 package kr.co.ymtech.bm.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import kr.co.ymtech.bm.controller.dto.UserManageDTO;
+import kr.co.ymtech.bm.controller.dto.UserManagePageDTO;
 import kr.co.ymtech.bm.repository.IUserSystemRepository;
 import kr.co.ymtech.bm.repository.vo.UserManageVO;
 
@@ -19,24 +19,19 @@ public class UserSystemService implements IUserSystemService {
 	}
 
 	@Override
-	public List<UserManageDTO> getUserInfo() {
+	public UserManagePageDTO getUserInfo(Integer pageNumber, Integer itemSize) {
 
-		List<UserManageVO> userInfoList = userSystemRepository.getUserInfo();
-
-		List<UserManageDTO> findUserInfo = new ArrayList<>();
-
-		for (UserManageVO vo : userInfoList) {
-
-			UserManageDTO dto = new UserManageDTO();
-			dto.setId(vo.getId());
-			dto.setUsername(vo.getUsername());
-			dto.setEmail(vo.getEmail());
-			dto.setGradeId(vo.getGradeId());
+		List<UserManageVO> userInfoList = userSystemRepository.getUserInfo(pageNumber, itemSize);
+		Integer totalCount = userSystemRepository.findCount();
+		
+		
+		UserManagePageDTO userPage = new UserManagePageDTO();
+		
+		userPage.setUserList(userInfoList);
+		userPage.setTotalCount(totalCount);
 			
-			findUserInfo.add(dto);
-
-		}
-		return findUserInfo;
+		
+		return userPage;
 
 	}
 	

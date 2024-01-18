@@ -17,7 +17,10 @@ public class UserSystemRepository implements IUserSystemRepository {
 	
 	
 	@Override
-	public List<UserManageVO> getUserInfo() {
+	public List<UserManageVO> getUserInfo(Integer pageNumber, Integer itemSize) {
+		
+		Integer offset = (pageNumber - 1) * itemSize;
+		
 	    RowMapper<UserManageVO> mapper = new RowMapper<UserManageVO>() {
 
 	        @Override
@@ -32,14 +35,15 @@ public class UserSystemRepository implements IUserSystemRepository {
 	        }
 	    };
 	    
-	    List<UserManageVO> result = jdbcTemplate.query("SELECT * FROM \"user\"", mapper);
-	    
-	    if (result == null) {
-	        System.out.println("Query result is null.");
-	    }
-	    
-	    return result;
+	    return jdbcTemplate.query("SELECT * FROM \"user\" ORDER BY grade_id DESC OFFSET ? LIMIT ?", mapper, offset, itemSize);
 	}
+	
+	@Override
+	public Integer findCount() {
+		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"user\"", Integer.class);
+	}
+	
+	
 
 	
 	@Override

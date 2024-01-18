@@ -1,6 +1,5 @@
 package kr.co.ymtech.bm.controller;
 
-import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import kr.co.ymtech.bm.controller.dto.UserManageDTO;
+import kr.co.ymtech.bm.controller.dto.UserManagePageDTO;
 import kr.co.ymtech.bm.service.IUserSystemService;
 import kr.co.ymtech.bm.service.UserSystemService;
 
@@ -22,11 +22,11 @@ public class UserSystemController {
 	}
 	
 	@GetMapping(value = "/userManage")
-	public ResponseEntity<List<UserManageDTO>> getUserInfo() {
+	public ResponseEntity<UserManagePageDTO> getUserInfo(Integer pageNumber, Integer itemSize) {
 
-		List<UserManageDTO> userInfo = userSystemService.getUserInfo();
+		UserManagePageDTO userList = userSystemService.getUserInfo(pageNumber, itemSize);
 
-		return new ResponseEntity<List<UserManageDTO>>(userInfo, HttpStatus.OK);
+		return new ResponseEntity<UserManagePageDTO>(userList, HttpStatus.OK);
 	}
 	
 	@PatchMapping(value = "/gradeUpdate")
