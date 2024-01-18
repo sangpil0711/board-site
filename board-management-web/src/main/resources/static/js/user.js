@@ -14,27 +14,27 @@ app.controller("BoardUser", function($scope, UserManageFactory) {
 		{ name: '20개씩 보기', value: 20 }
 	];
 
-		let getUserInfo = function() {
-   		UserManageFactory.getUserInfo({ pageNumber: $scope.currentPage, itemSize: $scope.itemsPerPage },function(response) {
-       	 	$scope.userList = response.userList;
-      		$scope.totalPage = Math.ceil(response.totalCount / $scope.itemsPerPage);
+	let getUserInfo = function() {
+		UserManageFactory.getUserInfo({ pageNumber: $scope.currentPage, itemSize: $scope.itemsPerPage }, function(response) {
+			$scope.userList = response.userList;
+			$scope.totalPage = Math.ceil(response.totalCount / $scope.itemsPerPage);
 			$scope.totalItems = response.totalCount;
-			
-        for (let i = 0; i < $scope.userList.length; i++) {
-            let user = $scope.userList[i];
 
-            if (user.gradeId === 0) {
-                user.gradeId = "관리자";
-            } else  
-                user.gradeId = "사용자";
-        }
-    }, function(error) {
-        alert("사용자 데이터 불러오기 실패");
-        console.error("사용자 데이터 불러오기 실패", error);
-    });
-};
+			for (let i = 0; i < $scope.userList.length; i++) {
+				let user = $scope.userList[i];
 
-getUserInfo();
+				if (user.gradeId === 0) {
+					user.gradeId = "관리자";
+				} else
+					user.gradeId = "사용자";
+			}
+		}, function(error) {
+			alert("사용자 데이터 불러오기 실패");
+			console.error("사용자 데이터 불러오기 실패", error);
+		});
+	};
+
+	getUserInfo();
 
 
 });

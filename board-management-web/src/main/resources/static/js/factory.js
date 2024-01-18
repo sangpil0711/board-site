@@ -371,7 +371,6 @@ app.factory('UserManageFactory', function($resource) {
 		getUserInfo: {
 			method: 'GET',
 			url: '/userManage',
-			isArray: true,
 			headers: {
 				"Content-Type": 'application/json',
 			},

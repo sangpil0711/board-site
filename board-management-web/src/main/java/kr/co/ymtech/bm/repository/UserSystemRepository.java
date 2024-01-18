@@ -35,16 +35,13 @@ public class UserSystemRepository implements IUserSystemRepository {
 	        }
 	    };
 	    
-	    return jdbcTemplate.query("SELECT * FROM \"user\" ORDER BY grade_id DESC OFFSET ? LIMIT ?", mapper, offset, itemSize);
+	    return jdbcTemplate.query("SELECT * FROM \"user\" ORDER BY grade_id ASC OFFSET ? LIMIT ?", mapper, offset, itemSize);
 	}
 	
 	@Override
 	public Integer findCount() {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM \"user\"", Integer.class);
 	}
-	
-	
-
 	
 	@Override
 	public Integer updateGrade(UserManageVO updateInfo) {
