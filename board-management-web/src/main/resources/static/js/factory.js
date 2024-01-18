@@ -319,6 +319,12 @@ app.factory('InfoFactory', function($resource) {
 	})
 });
 
+/**
+ * @Method : 시스템관리에 필요한 함수를 실행하는 함수
+ * 
+ * @author 황상필
+ * @since 2024. 01. 17.
+ */
 app.factory('SystemFactory', function($resource) {
 	return $resource('/', null, {
 
@@ -336,7 +342,23 @@ app.factory('SystemFactory', function($resource) {
 			headers: {
 				"Content-Type": 'application/json'
 			},
-		}
+		},
+		
+		deleteSystem: {
+			method: 'DELETE',
+			url: '/deleteSystem',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+		
+		updateSystem: {
+			method: 'PATCH',
+			url: '/updateSystem',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
 
 	})
 });

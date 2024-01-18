@@ -1,42 +1,49 @@
 <div id="container" ng-controller="BoardSystem">
 
-	<!-- 게시글 총 개수 및 페이지당 게시글 수 선택 박스 시작 -->
+	<!-- 시스템 총 개수 및 페이지당 시스템 수 선택 박스 시작 -->
 	<div>
-		<p class="system_all">15 페이지중 1</p>
+		<p class="system_all">{{totalPage}} 페이지중 {{currentPage}}</p>
 		<select class="system_select" ng-model="itemsPerPage" ng-change="updatePage()"
 			ng-options="option.value as option.name for option in options"></select>
 	</div>
-	<!-- 게시글 총 개수 및 페이지당 게시글 수 선택 박스 끝 -->
+	<!-- 시스템 총 개수 및 페이지당 시스템 수 선택 박스 끝 -->
 
-	<!-- 시작: 게시글 리스트 -->
+	<!-- 시작: 시스템 리스트 -->
 	<table class="system">
 		<thead>
 			<tr>
 				<th>key</th>
 				<th>value</th>
 				<th>description</th>
-				<th style="height: 32.56px;"><button ng-click="add()">+</button></th>
+				<th style="height: 32.56px;"><button ng-click="showAddSystemBox()">+</button></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="system_list" ng-if="addSystem">
+			<tr class="system_list" ng-if="addSystemBox">
 				<td><input type="text" ng-model="key"></td>
 				<td><input type="text" ng-model="value"></td>
 				<td><input type="text" ng-model="description"></td>
 				<td>
 					<button ng-click="create(key, value, description)">확인</button>
-					<button ng-click="cancel()">취소</button>
+					<button ng-click="cancelAddSystemBox()" style="margin-left: 5px;">취소</button>
 				</td>
 			</tr>
-			<tr class="system_list" ng-repeat="item in boardlist">
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+			<tr class="system_list" ng-repeat="item in systemList">
+				<td>{{item.key}}</td>
+				<td ng-if="!item.updateBox">{{item.value}}</td>
+				<td ng-if="item.updateBox"><input type="text" ng-model="item.value"></td>
+				<td ng-if="!item.updateBox">{{item.description}}</td>
+				<td ng-if="item.updateBox"><input type="text" ng-model="item.description"></td>
+				<td>
+					<img class="system_update" ng-click="showUpdateBox(item)" ng-if="!item.updateBox">
+					<img class="system_remove" ng-click="delete(item.key)" ng-if="!item.updateBox">
+					<button ng-click="update(item.key, item.value, item.description)" ng-if="item.updateBox">확인</button>
+					<button ng-click="cancelUpdateBox(item)" style="margin-left: 5px;" ng-if="item.updateBox">취소</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>
-	<!-- 끝: 게시글 리스트 -->
+	<!-- 끝: 시스템 리스트 -->
 
 	<!-- 시작: 페이지네이션 -->
 	<div>
