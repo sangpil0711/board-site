@@ -44,5 +44,10 @@ public class UserSystemService implements IUserSystemService {
 		
 		return userSystemRepository.updateGrade(vo);
 	}
+	
+	@Override
+	public Integer deleteUser(String id) {
+		return userSystemRepository.deleteUser(id);
+	}
 
 }

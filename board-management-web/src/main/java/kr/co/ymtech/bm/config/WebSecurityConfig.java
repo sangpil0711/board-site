@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                              "/user/**",
                              "/signup/**",
                              "/static/**",
-                             "/userManage",
+                             "/deleteUser",
                              "/gradeUpdate"
                              ).permitAll() // 특정 경로에 대한 접근을 허용합니다.
                   .antMatchers("/createSystem/**","systemPage").hasRole("ADMIN")
