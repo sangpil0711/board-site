@@ -12,4 +12,6 @@ public interface IUserSystemRepository {
 
 	public Integer findCount();
 
+	public Integer deleteUser(String id);
+
 }

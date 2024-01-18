@@ -51,6 +51,11 @@ public class UserSystemRepository implements IUserSystemRepository {
 		return jdbcTemplate.update("UPDATE \"user\" SET grade_id = ? WHERE id = ?",
 				 updateInfo.getGradeId(),updateInfo.getId());
 	}
+	
+	@Override
+	public Integer deleteUser(String id) {
+		return jdbcTemplate.update("DELETE FROM \"user\" WHERE id = ?", id);
+	}
 
 
 }

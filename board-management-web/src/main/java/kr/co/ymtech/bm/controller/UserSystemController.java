@@ -3,9 +3,11 @@ package kr.co.ymtech.bm.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import kr.co.ymtech.bm.controller.dto.UserManageDTO;
 import kr.co.ymtech.bm.controller.dto.UserManagePageDTO;
@@ -35,6 +37,14 @@ public class UserSystemController {
 		Integer updateGrade = userSystemService.updateGrade(updateInfo);
 
 		return new ResponseEntity<Integer>(updateGrade, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/deleteUser")
+	public ResponseEntity<Integer> deleteUser(@RequestParam String id) {
+
+		Integer deleteUser = userSystemService.deleteUser(id);
+
+		return new ResponseEntity<Integer>(deleteUser, HttpStatus.OK);
 	}
 	
 	

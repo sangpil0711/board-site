@@ -9,4 +9,6 @@ public interface IUserSystemService {
 	public UserManagePageDTO getUserInfo(Integer pageNumber, Integer itemSize);
 
 	public Integer updateGrade(UserManageDTO updateInfo);
+
+	public Integer deleteUser(String id);
 }

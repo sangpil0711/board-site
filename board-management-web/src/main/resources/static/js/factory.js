@@ -371,7 +371,6 @@ app.factory('UserManageFactory', function($resource) {
 		getUserInfo: {
 			method: 'GET',
 			url: '/userManage',
-			isArray: true,
 			headers: {
 				"Content-Type": 'application/json',
 			},
@@ -379,6 +378,7 @@ app.factory('UserManageFactory', function($resource) {
 
 		updateGrade: {
 			method: 'PATCH',
+			url: '/gradeUpdate',
 			headers: {
 				"Content-Type": 'application/json',
 			},
@@ -386,6 +386,7 @@ app.factory('UserManageFactory', function($resource) {
 
 		deleteUser: {
 			method: 'DELETE',
+			url: '/deleteUser',
 			headers: {
 				"Content-Type": 'application/json',
 			},
