@@ -18,6 +18,11 @@ app.controller("BoardUser", function($scope, UserManageFactory) {
 		getUserInfo();
 	};
 
+	$scope.gradeOptions = [
+		{ name: '사용자', value: 1 },
+		{ name: '관리자', value: 0 }
+	];
+
 	let getUserInfo = function() {
 		UserManageFactory.getUserInfo({ pageNumber: $scope.currentPage, itemSize: $scope.itemsPerPage }, function(response) {
 			$scope.userList = response.userList;
@@ -26,12 +31,17 @@ app.controller("BoardUser", function($scope, UserManageFactory) {
 
 			for (let i = 0; i < $scope.userList.length; i++) {
 				let user = $scope.userList[i];
+				
+				user.selectedGrade = user.gradeId;
 
-				if (user.gradeId === 0) {
+				if (user.gradeId == 0) {
 					user.gradeId = "관리자";
-				} else
+				} else {
 					user.gradeId = "사용자";
+				}
+				
 			}
+
 		}, function(error) {
 			alert("사용자 데이터 불러오기 실패");
 			console.error("사용자 데이터 불러오기 실패", error);
@@ -56,14 +66,12 @@ app.controller("BoardUser", function($scope, UserManageFactory) {
 
 		const updateGrade = {
 			id: id,
-			gradeId: gradeId,
-		}
-
-		// value와 description 중 하나라도 입력되지 않았을 경우 동작
+			gradeId: gradeId
+		};
 
 		UserManageFactory.updateGrade({}, updateGrade, function() {
 			alert("권한 수정이 완료되었습니다.");
-			findPage();
+			getUserInfo();
 		}, function(error) {
 			alert("권한 수정 실패");
 			console.error("권한 수정 실패", error);
@@ -71,16 +79,27 @@ app.controller("BoardUser", function($scope, UserManageFactory) {
 	};
 
 
-	$scope.showUpdateBox = function(system) {
-		system.updateBox = true;
-		changeOtherState($scope.systemList, system, false);
-		$scope.addSystemBox = false;
+	$scope.showUpdateBox = function(user) {
+		user.updateBox = true;
+		changeOtherState($scope.userList, user, false);
 	};
 
-	$scope.showUpdateBox = function(system) {
-		system.updateBox = true;
-		changeOtherState($scope.systemList, system, false);
+	let changeOtherState = function(userList, selectItem, updateBox) {
+		userList.forEach(function(user) {
+			if (user !== selectItem) {
+				user.updateBox = updateBox;
+			}
+		})
+	};
+
+	$scope.cancelUpdateBox = function(user) {
+		user.updateBox = false;
+		getUserInfo();
+	};
+	
+	$scope.updatePage = function() {
 		$scope.addSystemBox = false;
+		getUserInfo();
 	};
 
 });

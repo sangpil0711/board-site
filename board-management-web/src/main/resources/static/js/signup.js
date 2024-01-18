@@ -102,7 +102,7 @@ app.controller("BoardSignup", function($scope, $window, UserFactory) {
 			alert("아이디 중복확인을 해주세요.");
 		}
 		// 비밀번호와 비밀번호확인이 일치하지 않을 경우 동작
-		else if (password !== passwordCheck) {
+		else if (password != passwordCheck) {
 			alert("입력한 비밀번호와 비밀번호확인이 일치하지 않습니다.");
 		}
 		else if ((!beforeEmail && afterEmail) || (beforeEmail && !afterEmail)) {
@@ -122,14 +122,12 @@ app.controller("BoardSignup", function($scope, $window, UserFactory) {
 	 * @author 박상현
 	 * @since 2024. 01. 04.
 	 */
-	$scope.password = "";
 	$scope.checkPassword = function() {
 		// 비밀번호 유효성 검사
 		const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
 		if (!passwordPattern.test($scope.password)) {
 			alert("비밀번호는 영문, 숫자를 포함하여 8~20자여야 합니다.");
-			$scope.password = "";
 		}
 	};
 

@@ -1401,8 +1401,12 @@ pre {
 .system tbody {
 	display: inline-block;
 	width: 1500px;
-	max-height: 301px;
+	max-height: 251px;
 	overflow: overlay;
+}
+
+.system tbody.add {
+	max-height: 301px;
 }
 
 .system tbody tr {
