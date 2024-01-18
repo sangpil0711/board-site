@@ -13,6 +13,10 @@ app.controller("BoardUser", function($scope, UserManageFactory) {
 		{ name: '15개씩 보기', value: 15 },
 		{ name: '20개씩 보기', value: 20 }
 	];
+	$scope.updatePage = function() {
+		$scope.addSystemBox = false;
+		getUserInfo();
+	};
 
 	let getUserInfo = function() {
 		UserManageFactory.getUserInfo({ pageNumber: $scope.currentPage, itemSize: $scope.itemsPerPage }, function(response) {
