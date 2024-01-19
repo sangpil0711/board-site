@@ -10,7 +10,7 @@ public interface IInfoRepository {
 	 *
 	 * @param userId 유저 아이디
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	public InfoVO getUserInfo(String userId);
@@ -20,7 +20,7 @@ public interface IInfoRepository {
 	 *
 	 * @param updateInfo 업데이트할 유저의 정보
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	public Integer updateUserInfo(UserUpdateVO updateInfo);
@@ -30,7 +30,7 @@ public interface IInfoRepository {
 	 *
 	 * @param userId 유저 아이디
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	public String getUserPassword(String userId);

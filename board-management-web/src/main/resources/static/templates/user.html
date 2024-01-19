@@ -31,8 +31,7 @@
 					<img class="system_update" ng-click="showUpdateBox(item)" ng-if="!item.updateBox">
 					<img class="system_remove" ng-click="deleteUser(item.id)" ng-if="!item.updateBox">
 					<button ng-click="updateGrade(item.id, item.selectedGrade)" ng-if="item.updateBox">확인</button>
-					<button ng-click="cancelUpdateBox(item)" style="margin-left: 5px;"
-						ng-if="item.updateBox">취소</button>
+					<button ng-click="cancelUpdateBox(item)" style="margin-left: 5px;" ng-if="item.updateBox">취소</button>
 				</td>
 			</tr>
 		</tbody>

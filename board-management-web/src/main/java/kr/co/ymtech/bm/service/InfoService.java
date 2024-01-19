@@ -32,7 +32,7 @@ public class InfoService implements IInfoService {
 	 *
 	 * @return 유저의 정보를 담은 dto를 반환
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	@Override
@@ -59,7 +59,7 @@ public class InfoService implements IInfoService {
 	 * 
 	 * @return 업데이트할 정보를 담아서 repository 함수 실행
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 16.
 	 */
 	@Override
