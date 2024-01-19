@@ -39,10 +39,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
    
    private Set<String> loggedInUsers = new HashSet<>();
 
-   @Scheduled(cron = "0 23 13 19 * ?")
+   @Scheduled(cron = "0 0 0 * * *")
    public void clearSession() {
 	   chartRepository.deleteVisitData();
-	   System.out.println("aaaa");
 	   loggedInUsers.clear();
    }
 
