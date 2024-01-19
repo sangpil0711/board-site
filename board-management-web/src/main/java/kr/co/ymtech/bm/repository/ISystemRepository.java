@@ -47,6 +47,12 @@ public interface ISystemRepository {
 	 */
 	public Integer updateSystem(SystemVO system);
 	
+	/**
+	 * @Method findCount 시스템 수를 조회하는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 18.
+	 */
 	public Integer findCount();
 
 }

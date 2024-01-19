@@ -100,6 +100,16 @@ public class SystemRepository implements ISystemRepository {
 				system.getDescription(), system.getUpdateDate(), system.getKey());
 	}
 	
+	/**
+	 * @Method findCount 시스템 수를 조회하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.ISystemRepository#findCount()
+	 *
+	 * @return 시스템 수를 조회하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 18.
+	 */
 	@Override
 	public Integer findCount() {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM property", Integer.class);
