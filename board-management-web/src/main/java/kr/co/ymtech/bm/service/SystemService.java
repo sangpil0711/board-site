@@ -113,6 +113,8 @@ public class SystemService implements ISystemService {
 		
 		// value와 description 중 하나라도 null값일 경우 동작
 		if (system.getValue() == null || system.getDescription() == null) {
+			throw new IllegalArgumentException("입력하지 않은 항목이 있습니다.");
+		} else {
 			vo.setKey(system.getKey());
 			vo.setValue(system.getValue());
 			vo.setDescription(system.getDescription());

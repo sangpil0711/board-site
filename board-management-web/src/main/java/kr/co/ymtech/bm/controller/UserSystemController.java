@@ -7,14 +7,17 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import kr.co.ymtech.bm.controller.dto.UserManageDTO;
 import kr.co.ymtech.bm.controller.dto.UserManagePageDTO;
 import kr.co.ymtech.bm.service.IUserSystemService;
 import kr.co.ymtech.bm.service.UserSystemService;
 
 @RestController
+@RequestMapping("/grade")
 public class UserSystemController {
 
 	private final IUserSystemService userSystemService;
@@ -23,7 +26,7 @@ public class UserSystemController {
 		this.userSystemService = userSystemService;
 	}
 	
-	@GetMapping(value = "/userManage")
+	@GetMapping(value = "/manage")
 	public ResponseEntity<UserManagePageDTO> getUserInfo(Integer pageNumber, Integer itemSize) {
 
 		UserManagePageDTO userList = userSystemService.getUserInfo(pageNumber, itemSize);
@@ -31,7 +34,7 @@ public class UserSystemController {
 		return new ResponseEntity<UserManagePageDTO>(userList, HttpStatus.OK);
 	}
 	
-	@PatchMapping(value = "/gradeUpdate")
+	@PatchMapping(value = "/update")
 	public ResponseEntity<Integer> updateGrade(@RequestBody UserManageDTO updateInfo) {
 
 		Integer updateGrade = userSystemService.updateGrade(updateInfo);
@@ -39,7 +42,7 @@ public class UserSystemController {
 		return new ResponseEntity<Integer>(updateGrade, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value = "/deleteUser")
+	@DeleteMapping(value = "/delete")
 	public ResponseEntity<Integer> deleteUser(@RequestParam String id) {
 
 		Integer deleteUser = userSystemService.deleteUser(id);

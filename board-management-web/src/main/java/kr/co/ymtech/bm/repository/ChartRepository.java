@@ -86,7 +86,7 @@ public class ChartRepository implements IChartRepository {
 	 */
 	@Override
 	public Integer deleteVisitData() {
-		return jdbcTemplate.update("DELETE FROM visitor WHERE TO_TIMESTAMP(date / 1000) > CURRENT_STAMP + '-7days'");
+		return jdbcTemplate.update("DELETE FROM visitor WHERE TO_TIMESTAMP(date / 1000) < CURRENT_TIMESTAMP + '-7days'");
 	}
 	
 	/**

@@ -95,6 +95,7 @@ public class SystemRepository implements ISystemRepository {
 	 */
 	@Override
 	public Integer updateSystem(SystemVO system) {
+		
 		return jdbcTemplate.update("UPDATE property SET value = ?, description = ?, update_date = ? WHERE key = ?", system.getValue(),
 				system.getDescription(), system.getUpdateDate(), system.getKey());
 	}

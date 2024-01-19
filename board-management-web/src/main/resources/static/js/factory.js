@@ -332,7 +332,7 @@ app.factory('SystemFactory', function($resource) {
 
 		createSystem: {
 			method: 'POST',
-			url: '/createSystem',
+			url: '/system/create',
 			headers: {
 				"Content-Type": 'application/json'
 			},
@@ -340,7 +340,7 @@ app.factory('SystemFactory', function($resource) {
 		
 		findPage: {
 			method: 'GET',
-			url: '/systemPage',
+			url: '/system/page',
 			headers: {
 				"Content-Type": 'application/json'
 			},
@@ -348,7 +348,7 @@ app.factory('SystemFactory', function($resource) {
 		
 		deleteSystem: {
 			method: 'DELETE',
-			url: '/deleteSystem',
+			url: '/system/delete',
 			headers: {
 				"Content-Type": 'application/json'
 			},
@@ -356,7 +356,7 @@ app.factory('SystemFactory', function($resource) {
 		
 		updateSystem: {
 			method: 'PATCH',
-			url: '/updateSystem',
+			url: '/system/update',
 			headers: {
 				"Content-Type": 'application/json'
 			},
@@ -370,7 +370,7 @@ app.factory('UserManageFactory', function($resource) {
 
 		getUserInfo: {
 			method: 'GET',
-			url: '/userManage',
+			url: '/grade/manage',
 			headers: {
 				"Content-Type": 'application/json',
 			},
@@ -378,7 +378,7 @@ app.factory('UserManageFactory', function($resource) {
 
 		updateGrade: {
 			method: 'PATCH',
-			url: '/gradeUpdate',
+			url: '/grade/update',
 			headers: {
 				"Content-Type": 'application/json',
 			},
@@ -386,7 +386,7 @@ app.factory('UserManageFactory', function($resource) {
 
 		deleteUser: {
 			method: 'DELETE',
-			url: '/deleteUser',
+			url: '/grade/delete',
 			headers: {
 				"Content-Type": 'application/json',
 			},

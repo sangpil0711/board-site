@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ import kr.co.ymtech.bm.service.ISystemService;
 import kr.co.ymtech.bm.service.SystemService;
 
 @RestController
+@RequestMapping("/system")
 public class SystemController {
 
 	private final ISystemService systemService;
@@ -34,7 +36,7 @@ public class SystemController {
 	 * @author 황상필
 	 * @since 2024. 01. 17.
 	 */
-	@PostMapping(value = "/createSystem")
+	@PostMapping(value = "/create")
 	public ResponseEntity<Integer> createSystem(@RequestBody SystemDTO system) {
 
 		Integer systemData = systemService.createSystem(system);
@@ -53,7 +55,7 @@ public class SystemController {
 	 * @author 황상필
 	 * @since 2024. 01. 17.
 	 */
-	@GetMapping(value = "/systemPage")
+	@GetMapping(value = "/page")
 	public ResponseEntity<SystemPageDTO> findPage(Integer pageNumber, Integer itemSize) {
 
 		SystemPageDTO systemList = systemService.findPage(pageNumber, itemSize);
@@ -71,7 +73,7 @@ public class SystemController {
 	 * @author 황상필
 	 * @since 2024. 01. 17.
 	 */
-	@DeleteMapping(value = "/deleteSystem")
+	@DeleteMapping(value = "/delete")
 	public ResponseEntity<Integer> deleteSystem(@RequestParam String key) {
 
 		Integer deleteData = systemService.deleteSystem(key);
@@ -89,7 +91,7 @@ public class SystemController {
 	 * @author 황상필
 	 * @since 2024. 01. 17.
 	 */
-	@PatchMapping(value = "/updateSystem")
+	@PatchMapping(value = "/update")
 	public ResponseEntity<Integer> updateSystem(@RequestBody SystemDTO system) {
 
 		Integer updateData = systemService.updateSystem(system);

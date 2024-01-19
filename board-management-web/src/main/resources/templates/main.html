@@ -46,7 +46,7 @@
 			<li><button class="btn" ng-click="redirectToGeneralBoard()">일반게시판</button></li>
 			<li><button class="btn" ng-click="redirectToPhotoBoard()">사진게시판</button></li>
 			<li><button class="btn" ng-click="redirectToChart()">통계</button></li>
-			<li><button class="btn" ng-click="redirectToFileExplorer()">파일탐색기</button></li>
+			<li ng-if="adminMenu"><button class="btn" ng-click="redirectToFileExplorer()">파일탐색기</button></li>
 			<li ng-if="adminMenu"><button class="btn" ng-click="redirectToSystemManagement()">시스템관리</button></li>
 			<li ng-if="adminMenu"><button class="btn" ng-click="redirectToUserManagement()">사용자관리</button></li>
 			<li><div class="user"><span th:text="${UserVO.username} + '님'"></span></div>

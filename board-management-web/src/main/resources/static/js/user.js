@@ -41,8 +41,9 @@ app.controller("BoardUser", function($scope, UserManageFactory) {
 		}, function(error) {
 			alert("사용자 데이터 불러오기 실패");
 			console.error("사용자 데이터 불러오기 실패", error);
-		});
+		})
 	};
+	
 	getUserInfo();
 
 	$scope.deleteUser = function(id) {

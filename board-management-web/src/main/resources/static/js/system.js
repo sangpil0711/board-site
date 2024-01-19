@@ -195,7 +195,7 @@ app.controller("BoardSystem", function($scope, SystemFactory) {
 			key: key,
 			value: value,
 			description: description
-		}
+		};
 		
 		// value와 description 중 하나라도 입력되지 않았을 경우 동작
 		if (!value || !description) {

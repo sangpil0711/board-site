@@ -38,7 +38,7 @@ public class WebSecurityConfig {
                              "/deleteUser",
                              "/gradeUpdate"
                              ).permitAll() // 특정 경로에 대한 접근을 허용합니다.
-                  .antMatchers("/createSystem/**","systemPage").hasRole("ADMIN")
+                  .antMatchers("/system/**","/grade/**", "/fileExplorer/**").hasRole("ADMIN")
                             .anyRequest().authenticated()) // 나머지 요청은 인증이 필요합니다.
             .formLogin(login -> login
                   .loginPage("/login") // 로그인 페이지의 URL을 설정합니다.

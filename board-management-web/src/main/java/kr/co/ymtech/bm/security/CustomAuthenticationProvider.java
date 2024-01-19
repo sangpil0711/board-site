@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +26,7 @@ import kr.co.ymtech.bm.security.model.UserGrade;
 /**
  * 로그인 CustomAuthenticationProvider 클래스
  */
+@EnableScheduling
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
@@ -37,9 +39,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
    
    private Set<String> loggedInUsers = new HashSet<>();
 
-   @Scheduled(cron = "0 0 0 * * *")
+   @Scheduled(cron = "0 23 13 19 * ?")
    public void clearSession() {
 	   chartRepository.deleteVisitData();
+	   System.out.println("aaaa");
 	   loggedInUsers.clear();
    }
 
