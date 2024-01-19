@@ -26,7 +26,7 @@ public class InfoController {
 	 *
 	 * @return 유저 데이터를 ResponseEntity를 통해 반환
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	@GetMapping(value = "/userInfo")
@@ -44,7 +44,7 @@ public class InfoController {
 	 * 
 	 * @return 업대이트할 유저 정보를 ResponseEntity를 통해 반환
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	@PatchMapping(value = "/userUpdate")

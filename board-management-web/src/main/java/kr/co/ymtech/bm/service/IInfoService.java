@@ -8,7 +8,7 @@ public interface IInfoService {
 	/**
 	 * @Method getUserInfo 개인정보수정 시 필요한 유저 데이터를 가져오는 메소드
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	public InfoDTO getUserInfo();
@@ -18,7 +18,7 @@ public interface IInfoService {
 	 *
 	 * @param updateInfo 업데이트할 유저 정보
 	 * 
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	public Integer updateUserInfo(UserUpdateDTO updateInfo);

@@ -26,7 +26,7 @@ public class InfoRepository implements IInfoRepository {
 	 * 
 	 * @return 유저 데이터를 가져오는 query 함수 실행
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	@Override
@@ -52,7 +52,7 @@ public class InfoRepository implements IInfoRepository {
 	 * 
 	 * @return 유저의 정보를 업데이트하는 query 함수 실행
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	@Override
@@ -70,7 +70,7 @@ public class InfoRepository implements IInfoRepository {
 	 * 
 	 * @return 유저의 비밀번호를 가져오는 query 함수 실행
 	 *
-	 * @author 황상필
+	 * @author 박상현
 	 * @since 2024. 01. 15.
 	 */
 	@Override

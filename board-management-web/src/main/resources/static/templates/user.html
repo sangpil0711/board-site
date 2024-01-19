@@ -1,14 +1,14 @@
 <div id="container" ng-controller="BoardUser">
 
-	<!-- 시스템 총 개수 및 페이지당 시스템 수 선택 박스 시작 -->
+	<!-- 사용자 총 명수 및 페이지당 사용자 수 선택 박스 시작 -->
 	<div>
 		<p class="system_all">{{totalPage}} 페이지중 {{currentPage}}</p>
 		<select class="system_select" ng-model="itemsPerPage" ng-change="updatePage()"
 			ng-options="option.value as option.name for option in options"></select>
 	</div>
-	<!-- 시스템 총 개수 및 페이지당 시스템 수 선택 박스 끝 -->
+	<!-- 사용자 총 명수 및 페이지당 사용자 수 선택 박스 끝 -->
 
-	<!-- 시작: 게시글 리스트 -->
+	<!-- 시작: 사용자 리스트 -->
 	<table class="system">
 		<thead>
 			<tr>
@@ -31,13 +31,12 @@
 					<img class="system_update" ng-click="showUpdateBox(item)" ng-if="!item.updateBox">
 					<img class="system_remove" ng-click="deleteUser(item.id)" ng-if="!item.updateBox">
 					<button ng-click="updateGrade(item.id, item.selectedGrade)" ng-if="item.updateBox">확인</button>
-					<button ng-click="cancelUpdateBox(item)" style="margin-left: 5px;"
-						ng-if="item.updateBox">취소</button>
+					<button ng-click="cancelUpdateBox(item)" style="margin-left: 5px;" ng-if="item.updateBox">취소</button>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-	<!-- 끝: 게시글 리스트 -->
+	<!-- 끝: 사용자 리스트 -->
 
 	<!-- 시작: 페이지네이션 -->
 	<div>
