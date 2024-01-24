@@ -66,8 +66,12 @@ app.controller("BoardSignup", function($scope, $window, UserFactory) {
 		}, function() {
 			$scope.successCheck = false;
 			alert("이미 생성된 아이디입니다.");
-		});
+		})
 	};
+	
+	 $scope.resetSuccessCheck = function() {
+        $scope.successCheck = false;
+    };
 
 	/**
 	 * @function signup 입력한 회원정보를 서버로 보내주는 함수

@@ -164,8 +164,6 @@ public interface IBoardRepository {
 	/**
 	 * @Method bestBoard 추천 수가 많은 게시글을 반환하는 메소드
 	 *
-	 * @return 추천 수가 많은 게시글 5개를 반환하는 query 함수 실행
-	 *
 	 * @author 황상필
 	 * @since 2023. 11. 06.
 	 */
@@ -174,15 +172,35 @@ public interface IBoardRepository {
 	/**
 	 * @Method bestBoardFile 추천 수가 많은 게시글에 업로드된 파일 정보를 받아오는 메소드
 	 *
-	 * @see kr.co.ymtech.bm.repository.IBoardRepository#bestBoardFile(java.lang.Integer)
-	 *
 	 * @param index 추천 수가 많은 게시글 번호
-	 * 
-	 * @return 추천 수가 많은 게시글 5개의 파일 정보를 반환하는 query 함수 실행
 	 *
 	 * @author 황상필
 	 * @since 2023. 11. 08.
 	 */
 	public List<FileVO> bestBoardFile(Integer index);
+	
+	/**
+	 * @Method getFileType 업로드 가능한 파일 유형을 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	public String getFileType();
+	
+	/**
+	 * @Method getPostPerPage 페이지당 표시되는 게시글 수를 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	public String getPostPerPage();
+	
+	/**
+	 * @Method getMaxPage 한 번에 표시되는 최대 페이지 값을 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	public Integer getMaxPage();
 
 }

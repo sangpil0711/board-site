@@ -6,6 +6,7 @@ import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
+import kr.co.ymtech.bm.controller.dto.PageDTO;
 
 /**
  * 일반게시판 IboardService 인터페이스
@@ -86,5 +87,21 @@ public interface IBoardService {
 	 * @since 2023. 11. 06.
 	 */
 	public List<BoardGetDTO> bestBoard();
-
+	
+	/**
+	 * @Method getFileType 업로드 가능한 파일 유형을 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	public String getFileType();
+	
+	/**
+	 * @Method getPostPerPage 페이지네이션에 필요한 값을 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	public PageDTO getPageValue();
+	
 }

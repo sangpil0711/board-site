@@ -1,16 +1,48 @@
 <div id="container" ng-controller="BoardChart">
 
+	<!-- 시작: 차트 제목 -->
 	<div class="chart_title">차트</div>
+	<!-- 끝: 차트 제목 -->
 
+	<!-- 시작: 방문자 수 게시글 수 박스 -->
 	<div class="today_visitor">오늘 방문자 수: {{todayVisitor}}</div>
 	<div class="today_post">오늘 게시글 수: {{todayPost}}</div>
+	<!-- 끝: 방문자 수 게시글 수 박스 -->
 
-	<canvas class="visitor_chart chart-line" chart-data="visitorData" chart-labels="visitorLabels" chart-series="visitorSeries"
-		chart-options="options" chart-dataset-override="visitorDataset" width="600" height="400">
+	<!-- 시작: 방문자 수 차트 -->
+	<canvas class="visitor_chart chart-line" chart-data="visitorData" chart-labels="chartDate"
+		chart-series="visitorSeries" chart-options="options" chart-dataset-override="visitorDataset" width="650"
+		height="350">
 	</canvas>
-	
-	<canvas class="post_chart chart-line" chart-data="postData" chart-labels="postLabels" chart-series="postSeries"
-		chart-options="options" chart-dataset-override="postDataset" width="600" height="400">
+	<!-- 끝: 방문자 수 차트 -->
+
+	<!-- 시작: 게시글 수 차트 -->
+	<canvas class="post_chart chart-line" chart-data="postData" chart-labels="chartDate" chart-series="postSeries"
+		chart-options="options" chart-dataset-override="postDataset" width="650" height="350">
 	</canvas>
+	<!-- 끝: 게시글 수 차트 -->
+
+	<!-- 시작: 유저 리스트 -->
+	<table class="user_record">
+		<thead>
+			<tr>
+				<th>아이디</th>
+				<th>이름</th>
+				<th>권한</th>
+				<th ng-if="!visitorChart && !postChart">비고</th>
+				<th ng-if="visitorChart">방문횟수</th>
+				<th ng-if="postChart">게시글 수</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in userList">
+				<td>{{item.id}}</td>
+				<td>{{item.username}}</td>
+				<td>{{item.gradeId}}</td>
+				<td>{{item.userCount}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- 끝: 유저 리스트 -->
 
 </div>

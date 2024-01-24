@@ -1,6 +1,6 @@
 app.controller("BoardSystem", function($scope, SystemFactory) {
 
-	// 게시판 현재 페이지
+	// 현재 페이지
 	$scope.currentPage = 1;
 	// 페이지당 시스템 수	
 	$scope.itemsPerPage = 5;

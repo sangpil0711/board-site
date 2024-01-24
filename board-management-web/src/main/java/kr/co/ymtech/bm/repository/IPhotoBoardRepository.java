@@ -127,7 +127,12 @@ public interface IPhotoBoardRepository {
 	public List<FileVO> photoBoardFile(Integer index, Integer pageNumber, Integer itemSize, String searchType, String keyword,
 			Integer category);
 	
-	
-
+	/**
+	 * @Method getImageType 업로드 가능한 이미지 유형을 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	public String getImageType();
 
 }

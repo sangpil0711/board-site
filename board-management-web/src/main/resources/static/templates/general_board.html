@@ -24,7 +24,7 @@
 		<!-- 게시글 총 개수 및 페이지당 게시글 수 선택 박스 시작 -->
 		<div>
 			<p class="board_all">전체 {{totalItems}}개</p>
-			<select class="board_select" ng-model="itemsPerPage" ng-change="updatePage()"
+			<select class="board_select" ng-model="itemsPerPage" ng-change="updatePage(itemsPerPage)"
 				ng-options="option.value as option.name for option in options"></select>
 		</div>
 		<!-- 게시글 총 개수 및 페이지당 게시글 수 선택 박스 끝 -->
@@ -61,7 +61,7 @@
 	<!-- 시작: 페이지네이션 -->
 	<div>
 		<ul uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" max-size="maxSize"
-			ng-change="updatePage()" items-per-page="itemsPerPage" class="pagination-lg" previous-text="&lsaquo;"
+			ng-change="updatePage(itemsPerPage)" items-per-page="itemsPerPage" class="pagination-lg" previous-text="&lsaquo;"
 			next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
 		</ul>
 	</div>

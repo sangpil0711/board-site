@@ -24,7 +24,7 @@
 		<table class="signup_input">
 			<tr>
 				<td class="signup_item"> 아이디<span>*</span> </td>&nbsp;&nbsp;
-				<td><input type="text" ng-model="id"></td>
+				<td><input type="text" ng-model="id" ng-change="resetSuccessCheck()"></td>
 				<td><button class="id_check" ng-click="checkId(id)">중복확인</button>
 				<img src="/static/image/free-icon-mark.png" ng-if="successCheck"></td>
 			</tr>

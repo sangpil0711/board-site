@@ -330,5 +330,20 @@ public class PhotoBoardService implements IPhotoBoardService {
 		boardRepository.updateBoardLike(index);
 		return boardRepository.bestBoardLike(index);
 	}
+	
+	/**
+	 * @Method getImageType 업로드 가능한 이미지 유형을 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IPhotoBoardService#getImageType()
+	 *
+	 * @return photoBoardRepository의 getImageType 메소드 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@Override
+	public String getImageType() {
+		return photoBoardRepository.getImageType();
+	}
 
 }

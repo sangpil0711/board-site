@@ -47,7 +47,6 @@ app.controller("BoardInfo", function($scope, $location, $route, InfoFactory, $wi
 		if (beforeEmail) {
 			updateData.email = beforeEmail + '@' + afterEmail;
 		}
-
 		// 새 비밀번호가 입력되어있고 새 비밀번호와 새 비밀번호확인이 일치하지 않을 경우 동작
 		if (newPassword && newPassword != newPasswordCheck) {
 			alert("입력한 비밀번호와 비밀번호확인이 일치하지 않습니다.");

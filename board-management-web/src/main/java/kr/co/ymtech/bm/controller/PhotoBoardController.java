@@ -165,5 +165,13 @@ public class PhotoBoardController {
 		
 		return new ResponseEntity<Integer>(updateBoardLike, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "imageType")
+	public ResponseEntity<String> getImageType() {
+		
+		String imageType = photoBoardService.getImageType();
+		
+		return new ResponseEntity<String>(imageType, HttpStatus.OK);
+	}
 
 }

@@ -180,6 +180,26 @@ app.factory('BoardFactory', function($resource) {
 			},
 		},
 
+		getFileType: {
+			method: 'GET',
+			url: '/boards/fileType',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+			transformResponse:
+				function(data) {
+					return { data }
+				}
+		},
+		
+		getPageValue: {
+			method: 'GET',
+			url: '/boards/pageValue',
+			headers: {
+				"Content-Type": 'application/json'
+			}
+		},
+
 	})
 });
 
@@ -270,6 +290,18 @@ app.factory('PhotoBoardFactory', function($resource) {
 			},
 		},
 
+		getImageType: {
+			method: 'GET',
+			url: '/imageType',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+			transformResponse:
+				function(data) {
+					return { data }
+				}
+		},
+
 	})
 });
 
@@ -282,13 +314,29 @@ app.factory('PhotoBoardFactory', function($resource) {
 app.factory('ChartFactory', function($resource) {
 	return $resource('/', null, {
 
-		todayVisitor: {
+		chartData: {
 			method: 'GET',
-			url: '/visitor',
+			url: '/chart',
 			headers: {
 				"Content-Type": 'application/json'
 			},
-		}
+		},
+
+		visitUserData: {
+			method: 'GET',
+			url: '/visitUser',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
+
+		postUserData: {
+			method: 'GET',
+			url: '/postUser',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+		},
 
 	})
 });
@@ -309,7 +357,7 @@ app.factory('InfoFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-		
+
 		userUpdate: {
 			method: 'PATCH',
 			url: '/userUpdate',
@@ -337,7 +385,7 @@ app.factory('SystemFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-		
+
 		findPage: {
 			method: 'GET',
 			url: '/system/page',
@@ -345,7 +393,7 @@ app.factory('SystemFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-		
+
 		deleteSystem: {
 			method: 'DELETE',
 			url: '/system/delete',
@@ -353,7 +401,7 @@ app.factory('SystemFactory', function($resource) {
 				"Content-Type": 'application/json'
 			},
 		},
-		
+
 		updateSystem: {
 			method: 'PATCH',
 			url: '/system/update',

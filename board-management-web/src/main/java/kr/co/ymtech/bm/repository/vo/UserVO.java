@@ -18,8 +18,21 @@ public class UserVO {
 	private String name;
 	/** description : 권한 설명 */
 	private String description;
+	/** userCount : 유저 방문횟수, 게시글 수 */
+	private Integer userCount; 
 	
-	
+	public UserVO() {                       
+		super();
+	}
+
+	public UserVO(String id, String password, String username, String email, Long createDate, Integer gradeId) {
+		this.id = id;
+		this.password = password;
+		this.username = username;
+		this.email = email;
+		this.createDate = createDate;
+		this.gradeId = gradeId;
+	}
 
 	public String getId() {
 		return id;
@@ -27,6 +40,10 @@ public class UserVO {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public String getUsername() {
+		return username;
 	}
 
 	public String getEmail() {
@@ -37,16 +54,20 @@ public class UserVO {
 		return createDate;
 	}
 
+	public Integer getGradeId() {
+		return gradeId;
+	}
+
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getDescription() {
+		return description;
 	}
 
-	public Integer getGradeId() {
-		return gradeId;
+	public Integer getUserCount() {
+		return userCount;
 	}
 
 	public void setId(String id) {
@@ -55,10 +76,6 @@ public class UserVO {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getUsername() {
-		return username;
 	}
 
 	public void setUsername(String username) {
@@ -77,14 +94,18 @@ public class UserVO {
 		this.gradeId = gradeId;
 	}
 
-	public String getDescription() {
-		return description;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	public void setUserCount(Integer userCount) {
+		this.userCount = userCount;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -104,6 +125,8 @@ public class UserVO {
 		builder.append(name);
 		builder.append(", description=");
 		builder.append(description);
+		builder.append(", userCount=");
+		builder.append(userCount);
 		builder.append("]");
 		return builder.toString();
 	}

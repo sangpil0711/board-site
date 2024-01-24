@@ -457,6 +457,49 @@ public class BoardRepository implements IBoardRepository {
 	            mapper, index);
 	   }
 	
+	/**
+	 * @Method getFileType 업로드 가능한 파일 유형을 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#getFileType()
+	 *
+	 * @return 업로드 가능한 파일 유형을 가져오는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@Override
+	public String getFileType() {
+		return jdbcTemplate.queryForObject("SELECT value FROM property WHERE key = 'board.post.file-type'",String.class);
+	}
 	
+	/**
+	 * @Method getPostPerPage 페이지당 표시되는 게시글 수를 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#getPostPerPage()
+	 *
+	 * @return 페이지 당 표시되는 게시글 수를 가져오는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@Override
+	public String getPostPerPage() {
+		return jdbcTemplate.queryForObject("SELECT value FROM property WHERE key = 'board.post.per-page'",String.class);
+	}
+	
+	/**
+	 * @Method getMaxPage 한 번에 표시되는 최대 페이지 값을 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IBoardRepository#getMaxPage()
+	 *
+	 * @return 한 번에 표시되는 최대 페이지 값을 가져오는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@Override
+	public Integer getMaxPage() {
+		return jdbcTemplate.queryForObject("SELECT value FROM property WHERE key = 'board.page.max-page'",Integer.class);
+	}
 
 }

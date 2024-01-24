@@ -23,6 +23,7 @@ import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
+import kr.co.ymtech.bm.controller.dto.PageDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.repository.ICommentRepository;
 import kr.co.ymtech.bm.repository.vo.BoardVO;
@@ -350,6 +351,41 @@ public class BoardService implements IBoardService {
 			dtoList.add(dto);
 		}
 		return dtoList;
+	}
+	
+	/**
+	 * @Method getFileType 업로드 가능한 파일 유형을 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IBoardService#getFileType()
+	 *
+	 * @return boardRepository의 getFileType 메소드 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@Override
+	public String getFileType() {
+		return boardRepository.getFileType();
+	}
+	
+	/**
+	 * @Method getPageValue 페이지네이션에 필요한 값을 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IBoardService#getPostPerPage()
+	 * 
+	 * @return 페이지당 표시되는 게시글 수와 한 번에 표시되는 최대 페이지 수를 page 변수에 담아 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@Override
+	public PageDTO getPageValue() {
+		
+		PageDTO page = new PageDTO();
+		page.setPostPerPage(boardRepository.getPostPerPage());
+		page.setMaxPage(boardRepository.getMaxPage());
+		
+		return page;
 	}
 
 }

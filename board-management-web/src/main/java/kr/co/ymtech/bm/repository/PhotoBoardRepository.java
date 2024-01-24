@@ -322,4 +322,19 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 	            mapper, category, "%" + keyword + "%", offset, itemSize, index);
 	   }
 	
+	/**
+	 * @Method getPhotoType 업로드 가능한 이미지 유형을 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IPhotoBoardRepository#getImageType()
+	 *
+	 * @return 업로드 가능한 이미지 유형을 가져오는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@Override
+	public String getImageType() {
+		return jdbcTemplate.queryForObject("SELECT value FROM property WHERE key = 'photo.post.image-type'",String.class);
+	}
+	
 }

@@ -18,6 +18,7 @@ import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
+import kr.co.ymtech.bm.controller.dto.PageDTO;
 import kr.co.ymtech.bm.service.BoardService;
 import kr.co.ymtech.bm.service.IBoardService;
 
@@ -62,6 +63,8 @@ public class BoardController {
 	@GetMapping(value = "")
 	public ResponseEntity<BoardPageDTO> findBoardPage(@RequestParam Integer pageNumber, @RequestParam Integer itemSize,
 			@RequestParam String searchType, @RequestParam String keyword, @RequestParam Integer category) {
+		
+		System.out.println(itemSize);
 
 		BoardPageDTO boardlist = boardService.findBoardPage(pageNumber, itemSize, searchType, keyword, category);
 
@@ -169,6 +172,30 @@ public class BoardController {
 		Integer updateBoardLike = boardService.updateBoardLike(index);
 		
 		return new ResponseEntity<Integer>(updateBoardLike, HttpStatus.OK);
+	}
+	
+	/**
+	 * @Method getFileType 업로드 가능한 파일 유형을 가져오는 메소드
+	 *
+	 * @return ResponseEntity를 사용하여 fileType 변수를 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@GetMapping(value = "fileType")
+	public ResponseEntity<String> getFileType() {
+		
+		String fileType = boardService.getFileType();
+		
+		return new ResponseEntity<String>(fileType, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "pageValue")
+	public ResponseEntity<PageDTO> getPageValue() {
+		
+		PageDTO postPerPage = boardService.getPageValue();
+		
+		return new ResponseEntity<PageDTO>(postPerPage, HttpStatus.OK);
 	}
 
 }

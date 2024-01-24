@@ -1332,13 +1332,13 @@ pre {
 .visitor_chart {
 	position: absolute;
 	top: 420px;
-	left: 320px;
+	left: 310px;
 }
 
 .post_chart {
 	position: absolute;
 	top: 420px;
-	left: 1092px;
+	left: 1082px;
 }
 
 .info_title {
@@ -1464,16 +1464,6 @@ pre {
    text-overflow: ellipsis;
 }
 
-.system tbody td a {
-   text-decoration: none;
-   color: black;
-}
-
-.system tbody td a:hover {
-	text-decoration: underline;
-	cursor: pointer;
-}
-
 .system_list img:hover {
 	cursor: pointer
 }
@@ -1497,4 +1487,80 @@ pre {
 	height: 25px;
 	margin-left: 10px;
 	content: url(/static/image/trash-can-solid.svg);
+}
+
+.user_record {
+   margin-top: 470px;
+   margin-left: 360px;
+   margin-bottom: 30px;
+   border-collapse: collapse;
+   width: 1200px;
+   text-align: center;
+}
+
+.user_record tbody {
+	display: inline-block;
+	width: 1200px;
+	max-height: 251px;
+}
+
+.user_record tbody {
+	display: inline-block;
+	width: 1200px;
+	max-height: 251px;
+}
+
+.user_record tbody tr {
+   height: 50px;
+   background-color: white;
+   color: black;
+   font-size: 17px;
+   width: 1200px;
+}
+
+.user_record thead tr th {
+   display: inline-block;
+   position: sticky;
+   top: 0;
+   background-color: #fff;
+   border: 1px solid grey;
+   border-width: 2px 0;
+   color: black;
+   font-size: 20px;
+   text-align: center;
+}
+
+.user_record td:first-child,
+.user_record th:first-child {
+   width: 300px;
+}
+
+.user_record td:nth-child(2),
+.user_record th:nth-child(2) {
+   width: 300px;
+}
+
+.user_record td:nth-child(3),
+.user_record th:nth-child(3) {
+   width: 300px;
+}
+
+.user_record td:nth-child(4),
+.user_record th:nth-child(4) {
+   width: 300px;
+}
+
+.user_record tbody td {
+   border: 1px solid grey;
+   border-width: 1px 0;
+   border-top: none;
+}
+
+.user_record tbody .system_list td {
+   border: 1px solid grey;
+   border-width: 1px 0;
+   border-top: none;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
 }

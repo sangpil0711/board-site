@@ -1,4 +1,4 @@
-app.controller("BoardWrite", function($scope, $location, Upload) {
+app.controller("BoardWrite", function($scope, $location, Upload, BoardFactory) {
 
 	// 업로드되는 파일 크기의 합
 	let totalSize = 0;
@@ -89,5 +89,15 @@ app.controller("BoardWrite", function($scope, $location, Upload) {
 			$scope.fileNames.splice(index, 1);
 			$scope.selectedFiles.splice(index, 1);
 		}
-	}
+	};
+	
+	/**
+	 * @function getFileType 업로드 가능한 파일 유형을 가져오는 메소드
+	 * 
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	BoardFactory.getFileType(function(response) {
+		$scope.fileType = response.data;
+	});
 });

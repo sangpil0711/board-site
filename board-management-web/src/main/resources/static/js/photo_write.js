@@ -1,4 +1,4 @@
-app.controller("PhotoWrite", function($scope, $location, Upload) {
+app.controller("PhotoWrite", function($scope, $location, Upload, PhotoBoardFactory) {
 	
 	// 업로드되는 파일 크기의 합
 	let totalSize = 0;
@@ -87,5 +87,14 @@ app.controller("PhotoWrite", function($scope, $location, Upload) {
 		}
 	}
 	
+	/**
+	 * @function getImageType 업로드 가능한 이미지 유형을 가져오는 메소드
+	 * 
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	PhotoBoardFactory.getImageType(function(response) {
+		$scope.imageType = response.data;
+	});
 	
 });
