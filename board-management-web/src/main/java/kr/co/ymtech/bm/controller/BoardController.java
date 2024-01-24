@@ -188,6 +188,14 @@ public class BoardController {
 		return new ResponseEntity<String>(fileType, HttpStatus.OK);
 	}
 	
+	/**
+	 * @Method getPageValue 페이지네이션에 필요한 값을 가져오는 메소드
+	 *
+	 * @return ResponseEntity를 사용하여 postPerPage 변수를 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
 	@GetMapping(value = "pageValue")
 	public ResponseEntity<PageDTO> getPageValue() {
 		

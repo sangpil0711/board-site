@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.ymtech.bm.controller.dto.PageDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
@@ -166,12 +167,36 @@ public class PhotoBoardController {
 		return new ResponseEntity<Integer>(updateBoardLike, HttpStatus.OK);
 	}
 	
+	/**
+	 * @Method getImageType 업로드 가능한 이미지 유형을 가져오는 메소드
+	 *
+	 * @return ResponseEntity를 사용하여 imageType 변수를 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
 	@GetMapping(value = "imageType")
 	public ResponseEntity<String> getImageType() {
 		
 		String imageType = photoBoardService.getImageType();
 		
 		return new ResponseEntity<String>(imageType, HttpStatus.OK);
+	}
+	
+	/**
+	 * @Method getPageValue 페이지네이션에 필요한 값을 가져오는 메소드
+	 *
+	 * @return ResponseEntity를 사용하여 postPerPage 변수를 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@GetMapping(value = "pageValue")
+	public ResponseEntity<PageDTO> getPageValue() {
+		
+		PageDTO postPerPage = photoBoardService.getPageValue();
+		
+		return new ResponseEntity<PageDTO>(postPerPage, HttpStatus.OK);
 	}
 
 }

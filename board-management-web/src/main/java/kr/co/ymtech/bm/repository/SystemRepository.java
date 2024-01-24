@@ -114,5 +114,22 @@ public class SystemRepository implements ISystemRepository {
 	public Integer findCount() {
 		return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM property", Integer.class);
 	}
+	
+	/**
+	 * @Method checkKey 키 중복여부를 확인하는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.ISystemRepository#checkKey(java.lang.String)
+	 *
+	 * @param key 확인할 키
+	 * 
+	 * @return 키 중복여부를 확인하는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@Override
+	public Integer checkKey(String key) {
+		return jdbcTemplate.queryForObject("SELECT Count(*) FROM property WHERE key = ?", Integer.class, key);
+	}
 
 }

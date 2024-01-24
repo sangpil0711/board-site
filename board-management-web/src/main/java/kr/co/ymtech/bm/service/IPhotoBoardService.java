@@ -1,6 +1,7 @@
 package kr.co.ymtech.bm.service;
 
 
+import kr.co.ymtech.bm.controller.dto.PageDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
@@ -81,5 +82,13 @@ public interface IPhotoBoardService {
 	 * @since 2024. 01. 24.
 	 */
 	public String getImageType();
+	
+	/**
+	 * @Method getPostPerPage 페이지네이션에 필요한 값을 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	public PageDTO getPageValue();
 
 }

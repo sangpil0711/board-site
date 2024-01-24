@@ -1,8 +1,5 @@
 app.controller("BoardCtrl", function($scope, BoardFactory, $location, $route) {
-
-
-	// 페이지당 게시글 수	
-	//	$scope.itemsPerPage = $scope.firstPage
+	
 	// 게시판 현재 페이지
 	$scope.currentPage = 1;
 	// 검색 유형 기본 값

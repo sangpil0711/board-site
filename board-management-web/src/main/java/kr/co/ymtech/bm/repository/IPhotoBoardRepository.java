@@ -134,5 +134,21 @@ public interface IPhotoBoardRepository {
 	 * @since 2024. 01. 24.
 	 */
 	public String getImageType();
+	
+	/**
+	 * @Method getPostPerPage 페이지당 표시되는 게시글 수를 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	public String getPostPerPage();
+	
+	/**
+	 * @Method getMaxPage 한 번에 표시되는 최대 페이지 값을 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	public Integer getMaxPage();
 
 }

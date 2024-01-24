@@ -301,6 +301,14 @@ app.factory('PhotoBoardFactory', function($resource) {
 					return { data }
 				}
 		},
+		
+		getPageValue: {
+			method: 'GET',
+			url: '/pageValue',
+			headers: {
+				"Content-Type": 'application/json'
+			}
+		},
 
 	})
 });

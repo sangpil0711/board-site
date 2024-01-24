@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.ymtech.bm.config.PathConfig;
+import kr.co.ymtech.bm.controller.dto.PageDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardPageDTO;
@@ -344,6 +345,26 @@ public class PhotoBoardService implements IPhotoBoardService {
 	@Override
 	public String getImageType() {
 		return photoBoardRepository.getImageType();
+	}
+	
+	/**
+	 * @Method getPageValue 페이지네이션에 필요한 값을 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.service.IBoardService#getPostPerPage()
+	 * 
+	 * @return 페이지당 표시되는 게시글 수와 한 번에 표시되는 최대 페이지 수를 page 변수에 담아 반환
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	@Override
+	public PageDTO getPageValue() {
+		
+		PageDTO page = new PageDTO();
+		page.setPostPerPage(photoBoardRepository.getPostPerPage());
+		page.setMaxPage(photoBoardRepository.getMaxPage());
+		
+		return page;
 	}
 
 }

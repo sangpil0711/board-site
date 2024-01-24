@@ -54,5 +54,15 @@ public interface ISystemRepository {
 	 * @since 2024. 01. 18.
 	 */
 	public Integer findCount();
+	
+	/**
+	 * @Method checkKey 키 중복여부를 확인하는 메소드
+	 *
+	 * @param key 확인할 키
+	 * 
+	 * @author 황상필
+	 * @since 2024. 01. 24.
+	 */
+	public Integer checkKey(String key);
 
 }

@@ -84,22 +84,9 @@ app.controller("BoardSystem", function($scope, SystemFactory) {
 			value: value,
 			description: description
 		}
-
-		let existKey = false;
-
-		// systemList를 돌면서 같은 key가 존재하면 existKey를 true로 설정
-		$scope.systemList.forEach(function(system) {
-			if (system.key == key) {
-				existKey = true;
-			}
-		});
-
-		// existKey가 true면 동작
-		if (existKey) {
-			alert("시스템 프로퍼티의 key값이 중복되었습니다.");
-		}
+		
 		// key, value, description 중 하나라도 입력되지 않으면 동작
-		else if (!key || !value || !description) {
+		if (!key || !value || !description) {
 			alert("입력하지 않은 항목이 있습니다.");
 		}
 		else {
@@ -108,8 +95,8 @@ app.controller("BoardSystem", function($scope, SystemFactory) {
 				$scope.addSystemBox = false;
 				findPage();
 			}, function(error) {
-				alert("시스템 생성 실패");
-				console.error("시스템 생성 실패", error);
+				alert("시스템 프로퍼티 키 값이 중복되었습니다.");
+				console.error("시스템 프로퍼티 키 값이 중복되었습니다.", error);
 			});
 		}
 	};
