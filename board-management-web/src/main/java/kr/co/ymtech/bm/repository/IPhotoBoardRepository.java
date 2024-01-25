@@ -150,5 +150,13 @@ public interface IPhotoBoardRepository {
 	 * @since 2024. 01. 24.
 	 */
 	public Integer getMaxPage();
+	
+	/**
+	 * @Method getMaxImageSize 최대 이미지 용량을 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 1. 25.
+	 */
+	public Integer getMaxImageSize();
 
 }

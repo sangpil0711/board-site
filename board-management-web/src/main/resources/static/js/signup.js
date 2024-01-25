@@ -69,6 +69,12 @@ app.controller("BoardSignup", function($scope, $window, UserFactory) {
 		})
 	};
 	
+	/**
+	 * @function resetSuccessCheck 중복 확인여부를 초기화 시키는 함수
+	 * 
+	 * @author 황상필
+	 * @since 2024. 01. 22.
+	 */
 	 $scope.resetSuccessCheck = function() {
         $scope.successCheck = false;
     };

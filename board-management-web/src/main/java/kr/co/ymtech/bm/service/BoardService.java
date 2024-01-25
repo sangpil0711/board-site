@@ -23,6 +23,7 @@ import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
+import kr.co.ymtech.bm.controller.dto.FileSetDTO;
 import kr.co.ymtech.bm.controller.dto.PageDTO;
 import kr.co.ymtech.bm.repository.IBoardRepository;
 import kr.co.ymtech.bm.repository.ICommentRepository;
@@ -112,11 +113,13 @@ public class BoardService implements IBoardService {
 		FileVO boardFile = null;
 		List<FileVO> boardFiles = new ArrayList<FileVO>();
 		Integer lastBoardIndex = boardRepository.lastBoardIndex();
+		Integer maxFileSize = boardRepository.getMaxFileSize();
+		
 		// dto -> vo 변환
 		BoardVO vo = new BoardVO();
-		if(lastBoardIndex == null) {
+		if (lastBoardIndex == null) {
 			vo.setIndex(1);
-		}else { 
+		} else {
 			vo.setIndex(lastBoardIndex + 1);
 		}
 		vo.setTitle(board.getTitle());
@@ -125,29 +128,34 @@ public class BoardService implements IBoardService {
 		vo.setCategory(board.getCategory());
 		vo.setCreateDate(new Date().getTime());
 
-		// 게시글 작성 시 선택된 파일을 업로드
-		for (MultipartFile file : board.getFiles()) {
-			originalFileName = file.getOriginalFilename();
-			uniqueID = UUID.randomUUID().toString();
-			filePath = Paths.get(PathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize()
-					.toString();
+		// 선택한 파일의 합이 허용된 최대 용량을 초과하면 동작
+		if (board.getTotalSize() > maxFileSize * 1024 * 1024) {
+			throw new IllegalArgumentException("선택한 파일의 용량이 " + maxFileSize + "MB를 초과합니다.");
+		} 
+		else {
+			for (MultipartFile file : board.getFiles()) {
+				originalFileName = file.getOriginalFilename();
+				uniqueID = UUID.randomUUID().toString();
+				filePath = Paths.get(PathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize()
+						.toString();
 
-			boardFile = new FileVO();
-			boardFile.setFileId(uniqueID);
-			boardFile.setBoardIndex(lastBoardIndex + 1);
-			boardFile.setFilePath(PathConfig.getImagePath());
-			boardFile.setFileName(originalFileName);
-			boardFile.setFileSize(file.getSize());
+				boardFile = new FileVO();
+				boardFile.setFileId(uniqueID);
+				boardFile.setBoardIndex(lastBoardIndex + 1);
+				boardFile.setFilePath(PathConfig.getImagePath());
+				boardFile.setFileName(originalFileName);
+				boardFile.setFileSize(file.getSize());
 
-			boardFiles.add(boardFile);
+				boardFiles.add(boardFile);
 
-			// 업로드 되는 파일을 지정된 경로의 폴더에 저장
-			try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
-				IOUtils.copy(input, output);
-			} catch (IOException e) {
-				System.out.println("파일 업로드 실패");
+				// 업로드 되는 파일을 지정된 경로의 폴더에 저장
+				try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
+					IOUtils.copy(input, output);
+				} catch (IOException e) {
+					System.out.println("파일 업로드 실패");
+				}
+
 			}
-
 		}
 
 		return boardRepository.saveBoard(vo, boardFiles);
@@ -245,7 +253,7 @@ public class BoardService implements IBoardService {
 
 		// 로그인한 유저 아이디가 작성자 아이디와 같거나 권한이 ROLE_ADMIN이면 동작
 		if (userId.equals(auth.getName()) || auth.getAuthorities().stream()
-		        .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()))) {
+				.anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()))) {
 
 			// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
 			for (FileVO file : files) {
@@ -352,22 +360,27 @@ public class BoardService implements IBoardService {
 		}
 		return dtoList;
 	}
-	
+
 	/**
-	 * @Method getFileType 업로드 가능한 파일 유형을 가져오는 메소드
+	 * @Method getFileSet 파일 설정 정보를 가져오는 메소드
 	 *
-	 * @see kr.co.ymtech.bm.service.IBoardService#getFileType()
+	 * @see kr.co.ymtech.bm.service.IPhotoBoardService#getImageType()
 	 *
-	 * @return boardRepository의 getFileType 메소드 실행
+	 * @return 파일 유형과 파일 최대 용량을 dto에 담아 반환
 	 *
 	 * @author 황상필
-	 * @since 2024. 01. 24.
+	 * @since 2024. 01. 25.
 	 */
 	@Override
-	public String getFileType() {
-		return boardRepository.getFileType();
+	public FileSetDTO getFileSet() {
+		FileSetDTO dto = new FileSetDTO();
+
+		dto.setFileType(boardRepository.getFileType());
+		dto.setFileMaxSize(boardRepository.getMaxFileSize());
+
+		return dto;
 	}
-	
+
 	/**
 	 * @Method getPageValue 페이지네이션에 필요한 값을 가져오는 메소드
 	 *
@@ -380,11 +393,11 @@ public class BoardService implements IBoardService {
 	 */
 	@Override
 	public PageDTO getPageValue() {
-		
+
 		PageDTO page = new PageDTO();
 		page.setPostPerPage(boardRepository.getPostPerPage());
 		page.setMaxPage(boardRepository.getMaxPage());
-		
+
 		return page;
 	}
 

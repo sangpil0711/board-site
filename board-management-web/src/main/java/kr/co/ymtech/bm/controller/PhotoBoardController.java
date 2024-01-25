@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.ymtech.bm.controller.dto.ImageSetDTO;
 import kr.co.ymtech.bm.controller.dto.PageDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
@@ -168,19 +169,19 @@ public class PhotoBoardController {
 	}
 	
 	/**
-	 * @Method getImageType 업로드 가능한 이미지 유형을 가져오는 메소드
+	 * @Method getImageType 이미지 설정 정보를 가져오는 메소드
 	 *
-	 * @return ResponseEntity를 사용하여 imageType 변수를 반환
+	 * @return ResponseEntity를 사용하여 imageSet 변수를 반환
 	 *
 	 * @author 황상필
-	 * @since 2024. 01. 24.
+	 * @since 2024. 01. 25.
 	 */
-	@GetMapping(value = "imageType")
-	public ResponseEntity<String> getImageType() {
+	@GetMapping(value = "imageSet")
+	public ResponseEntity<ImageSetDTO> getImageSet() {
 		
-		String imageType = photoBoardService.getImageType();
+		ImageSetDTO imageSet = photoBoardService.getImageSet();
 		
-		return new ResponseEntity<String>(imageType, HttpStatus.OK);
+		return new ResponseEntity<ImageSetDTO>(imageSet, HttpStatus.OK);
 	}
 	
 	/**

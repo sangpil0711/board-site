@@ -18,6 +18,7 @@ import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
+import kr.co.ymtech.bm.controller.dto.FileSetDTO;
 import kr.co.ymtech.bm.controller.dto.PageDTO;
 import kr.co.ymtech.bm.service.BoardService;
 import kr.co.ymtech.bm.service.IBoardService;
@@ -173,19 +174,19 @@ public class BoardController {
 	}
 	
 	/**
-	 * @Method getFileType 업로드 가능한 파일 유형을 가져오는 메소드
+	 * @Method getFileSet 파일 설정 정보를 가져오는 메소드
 	 *
-	 * @return ResponseEntity를 사용하여 fileType 변수를 반환
+	 * @return ResponseEntity를 사용하여 fileSet 변수를 반환
 	 *
 	 * @author 황상필
-	 * @since 2024. 01. 24.
+	 * @since 2024. 01. 25.
 	 */
-	@GetMapping(value = "fileType")
-	public ResponseEntity<String> getFileType() {
+	@GetMapping(value = "fileSet")
+	public ResponseEntity<FileSetDTO> getFileSet() {
 		
-		String fileType = boardService.getFileType();
+		FileSetDTO fileSet = boardService.getFileSet();
 		
-		return new ResponseEntity<String>(fileType, HttpStatus.OK);
+		return new ResponseEntity<FileSetDTO>(fileSet, HttpStatus.OK);
 	}
 	
 	/**

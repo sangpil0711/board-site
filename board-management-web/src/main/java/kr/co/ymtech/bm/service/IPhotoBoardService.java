@@ -1,6 +1,7 @@
 package kr.co.ymtech.bm.service;
 
 
+import kr.co.ymtech.bm.controller.dto.ImageSetDTO;
 import kr.co.ymtech.bm.controller.dto.PageDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
@@ -76,12 +77,12 @@ public interface IPhotoBoardService {
 	public Integer updateBoardLike(Integer index);
 	
 	/**
-	 * @Method getImageType 업로드 가능한 이미지 유형을 가져오는 메소드
+	 * @Method getImageType 이미지 설정 정보를 가져오는 메소드
 	 *
 	 * @author 황상필
-	 * @since 2024. 01. 24.
+	 * @since 2024. 01. 25.
 	 */
-	public String getImageType();
+	public ImageSetDTO getImageSet();
 	
 	/**
 	 * @Method getPostPerPage 페이지네이션에 필요한 값을 가져오는 메소드

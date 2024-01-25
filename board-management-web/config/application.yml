@@ -7,8 +7,8 @@ server:
 spring:
   servlet:
     multipart:
-      maxFileSize: 100MB
-      maxRequestSize: 100MB
+      maxFileSize: -1
+      maxRequestSize: -1
       enabled: true
   mvc:
     static-path-pattern: static/**

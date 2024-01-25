@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.ymtech.bm.config.PathConfig;
+import kr.co.ymtech.bm.controller.dto.ImageSetDTO;
 import kr.co.ymtech.bm.controller.dto.PageDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardDTO;
 import kr.co.ymtech.bm.controller.dto.PhotoBoardGetDTO;
@@ -123,12 +124,13 @@ public class PhotoBoardService implements IPhotoBoardService {
 		FileVO boardFile = null;
 		List<FileVO> boardFiles = new ArrayList<FileVO>();
 		Integer lastBoardIndex = boardRepository.lastBoardIndex();
+		Integer maxImageSize = photoBoardRepository.getMaxImageSize();
 
 		// dto -> vo 변환
 		PhotoBoardVO vo = new PhotoBoardVO();
-		if(lastBoardIndex == null) {
+		if (lastBoardIndex == null) {
 			vo.setIndex(1);
-		}else { 
+		} else {
 			vo.setIndex(lastBoardIndex + 1);
 		}
 		vo.setTitle(photo.getTitle());
@@ -137,29 +139,33 @@ public class PhotoBoardService implements IPhotoBoardService {
 		vo.setCategory(photo.getCategory());
 		vo.setCreateDate(new Date().getTime());
 
-		// 게시글 작성 시 선택된 파일을 업로드
-		for (MultipartFile file : photo.getFiles()) {
-			originalFileName = file.getOriginalFilename();
-			uniqueID = UUID.randomUUID().toString();
-			filePath = Paths.get(PathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize()
-					.toString();
+		// 선택한 파일의 합이 허용된 최대 용량을 초과하면 동작
+		if (photo.getTotalSize() > maxImageSize * 1024 * 1024) {
+			throw new IllegalArgumentException("선택한 파일의 용량이 " + maxImageSize + "MB를 초과합니다. ");
+		} else {
+			for (MultipartFile file : photo.getFiles()) {
+				originalFileName = file.getOriginalFilename();
+				uniqueID = UUID.randomUUID().toString();
+				filePath = Paths.get(PathConfig.getImagePath()).resolve(uniqueID + "_" + originalFileName).normalize()
+						.toString();
 
-			boardFile = new FileVO();
-			boardFile.setFileId(uniqueID);
-			boardFile.setBoardIndex(lastBoardIndex + 1);
-			boardFile.setFilePath(PathConfig.getImagePath());
-			boardFile.setFileName(originalFileName);
-			boardFile.setFileSize(file.getSize());
+				boardFile = new FileVO();
+				boardFile.setFileId(uniqueID);
+				boardFile.setBoardIndex(lastBoardIndex + 1);
+				boardFile.setFilePath(PathConfig.getImagePath());
+				boardFile.setFileName(originalFileName);
+				boardFile.setFileSize(file.getSize());
 
-			boardFiles.add(boardFile);
+				boardFiles.add(boardFile);
 
-			// 업로드 되는 파일을 지정된 경로의 폴더에 저장
-			try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
-				IOUtils.copy(input, output);
-			} catch (IOException e) {
-				System.out.println("파일 업로드 실패");
+				// 업로드 되는 파일을 지정된 경로의 폴더에 저장
+				try (InputStream input = file.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
+					IOUtils.copy(input, output);
+				} catch (IOException e) {
+					System.out.println("파일 업로드 실패");
+				}
+
 			}
-
 		}
 
 		return photoBoardRepository.savePhotoBoard(vo, boardFiles);
@@ -241,7 +247,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 	/**
 	 * Method : 사진게시물을 삭제하는 메소드
 	 * 
-	 * @param index: 사진게시물 번호
+	 * @param index:  사진게시물 번호
 	 * @param userId: 작성자 아이디
 	 * 
 	 * @return : 사진게시물을 DB에서 삭제하고 성공하면 1, 실패하면 0을 photoboardlistDelete 변수에 담아 반환한다.
@@ -257,7 +263,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		if (userId.equals(auth.getName()) || auth.getAuthorities().stream()
-		        .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()))) {
+				.anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()))) {
 
 			// 삭제하려는 게시글에 업로드된 파일을 지정된 경로의 폴더에서 삭제
 			for (FileVO file : files) {
@@ -298,7 +304,7 @@ public class PhotoBoardService implements IPhotoBoardService {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Integer likeCount = boardRepository.boardLikeCount(index);
 		Integer userLike = boardRepository.checkUserBoardLike(index, auth.getName());
-		
+
 		// vo -> dto 변환
 		dto.setIndex(vo.getIndex());
 		dto.setTitle(vo.getTitle());
@@ -310,10 +316,10 @@ public class PhotoBoardService implements IPhotoBoardService {
 		dto.setUserLike(userLike);
 		dto.setUsername(vo.getUsername());
 		dto.setFile(fv);
-		
+
 		return dto;
 	}
-	
+
 	/**
 	 * @Method updateBoardLike 게시글 추천 수를 업데이트하는 메소드
 	 *
@@ -331,22 +337,28 @@ public class PhotoBoardService implements IPhotoBoardService {
 		boardRepository.updateBoardLike(index);
 		return boardRepository.bestBoardLike(index);
 	}
-	
+
 	/**
-	 * @Method getImageType 업로드 가능한 이미지 유형을 가져오는 메소드
+	 * @Method getImageSet 이미지 설정 정보를 가져오는 메소드
 	 *
 	 * @see kr.co.ymtech.bm.service.IPhotoBoardService#getImageType()
 	 *
-	 * @return photoBoardRepository의 getImageType 메소드 실행
+	 * @return 이미지 유형과 이미지 최대 용량을 dto에 담아 반환
 	 *
 	 * @author 황상필
-	 * @since 2024. 01. 24.
+	 * @since 2024. 01. 25.
 	 */
 	@Override
-	public String getImageType() {
-		return photoBoardRepository.getImageType();
+	public ImageSetDTO getImageSet() {
+
+		ImageSetDTO dto = new ImageSetDTO();
+
+		dto.setImageType(photoBoardRepository.getImageType());
+		dto.setImageMaxSize(photoBoardRepository.getMaxImageSize());
+
+		return dto;
 	}
-	
+
 	/**
 	 * @Method getPageValue 페이지네이션에 필요한 값을 가져오는 메소드
 	 *
@@ -359,11 +371,11 @@ public class PhotoBoardService implements IPhotoBoardService {
 	 */
 	@Override
 	public PageDTO getPageValue() {
-		
+
 		PageDTO page = new PageDTO();
 		page.setPostPerPage(photoBoardRepository.getPostPerPage());
 		page.setMaxPage(photoBoardRepository.getMaxPage());
-		
+
 		return page;
 	}
 

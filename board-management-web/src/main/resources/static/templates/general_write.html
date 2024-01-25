@@ -17,7 +17,7 @@
 
 	<!-- 시작: 파일선택 버튼 -->
 	<div>
-		<button class="file_btn" ngf-select="onFileSelect($files)" accept={{fileType}} multiple>파일선택<br>(최대 100MB)</button>
+		<button class="file_btn" ngf-select="onFileSelect($files)" accept={{fileType}} multiple>파일선택<br>(최대 {{fileMaxSize}}MB)</button>
 	</div>
 	<!-- 끝: 파일선택 버튼 -->
 

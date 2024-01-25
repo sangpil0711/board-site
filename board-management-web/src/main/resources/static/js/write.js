@@ -1,7 +1,7 @@
 app.controller("BoardWrite", function($scope, $location, Upload, BoardFactory) {
 
 	// 업로드되는 파일 크기의 합
-	let totalSize = 0;
+	$scope.totalSize = 0;
 	// 업로드되는 파일 이름
 	$scope.fileNames = [];
 	// 업로드되는 파일 데이터
@@ -20,21 +20,20 @@ app.controller("BoardWrite", function($scope, $location, Upload, BoardFactory) {
 		let exceedSizeFile = false;
 
 		$files.forEach(function(file) {
-			if (totalSize + file.size > 100 * 1024 * 1024) {
+			if ($scope.totalSize + file.size > $scope.fileMaxSize * 1024 * 1024) {
 				exceedSizeFile = true;
 			} 
-			
-			// 선택된 파일의 크기가 100MB를 초과하지 않으면 각 변수에 파일 데이터 할당 
+			// 선택된 파일의 크기가 허용된 최대 용량을 초과하지 않으면 각 변수에 파일 데이터 할당 
 			else {
 				$scope.selectedFiles.push(file);
 				$scope.fileNames.push(file.name);
-				totalSize += file.size;
+				$scope.totalSize += file.size;
 			}
 		})
 
-		// 선택된 파일의 크기가 100MB를 초과하면 알림창 표시
+		// 선택된 파일의 크기가 허용된 최대 용량을 초과하면 알림창 표시
 		if (exceedSizeFile) {
-			alert("선택한 파일의 용량이 100MB를 초과합니다.");
+			alert("선택한 파일의 용량이 " + $scope.fileMaxSize + "MB를 초과합니다.");
 		}
 	};
 
@@ -57,6 +56,7 @@ app.controller("BoardWrite", function($scope, $location, Upload, BoardFactory) {
 				category: 0,
 				createDate: $scope.board.createDate,
 				files: $scope.selectedFiles,
+				totalSize: $scope.totalSize
 			},
 		}).success(function() {
 			$scope.redirectToBoard();
@@ -85,19 +85,20 @@ app.controller("BoardWrite", function($scope, $location, Upload, BoardFactory) {
 	 */
 	$scope.excludeFile = function(index) {
 		if (confirm("파일을 삭제하시겠습니까?")) {
-			totalSize -= $scope.selectedFiles[index].size;
+			$scope.totalSize -= $scope.selectedFiles[index].size;
 			$scope.fileNames.splice(index, 1);
 			$scope.selectedFiles.splice(index, 1);
 		}
 	};
 	
 	/**
-	 * @function getFileType 업로드 가능한 파일 유형을 가져오는 메소드
+	 * @function getFileSet 파일 설정 정보를 가져오는 함수
 	 * 
 	 * @author 황상필
-	 * @since 2024. 01. 24.
+	 * @since 2024. 01. 25.
 	 */
-	BoardFactory.getFileType(function(response) {
-		$scope.fileType = response.data;
+	BoardFactory.getFileSet(function(response) {
+		$scope.fileType = response.fileType;
+		$scope.fileMaxSize = response.fileMaxSize;
 	});
 });

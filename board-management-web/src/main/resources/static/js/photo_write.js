@@ -1,7 +1,7 @@
 app.controller("PhotoWrite", function($scope, $location, Upload, PhotoBoardFactory) {
 	
 	// 업로드되는 파일 크기의 합
-	let totalSize = 0;
+	$scope.totalSize = 0;
 	// 업로드되는 파일 크기의 합
 	$scope.fileNames = [];
 	// 업로드되는 파일 데이터
@@ -20,17 +20,17 @@ app.controller("PhotoWrite", function($scope, $location, Upload, PhotoBoardFacto
 		let exceedSizeFile = false;
 
 		$files.forEach(function(file) {
-			if (totalSize + file.size > 100 * 1024 * 1024) {
+			if ($scope.totalSize + file.size > $scope.imageMaxSize * 1024 * 1024) {
 				exceedSizeFile = true;
 			} 
 			else {
 				$scope.selectedFiles.push(file);
 				$scope.fileNames.push(file.name);
-				totalSize += file.size;
+				$scope.totalSize += file.size;
 			}
 		})
 		if (exceedSizeFile) {
-			alert("선택한 파일의 용량이 100MB를 초과합니다.");
+			alert("선택한 파일의 용량이 " + $scope.imageMaxSize + "MB를 초과합니다.");
 		}
 	};
 	
@@ -63,6 +63,7 @@ app.controller("PhotoWrite", function($scope, $location, Upload, PhotoBoardFacto
 					category: 1,
 					createDate: $scope.photoBoard.createDate,
 					files: $scope.selectedFiles,
+					totalSize: $scope.totalSize
 				},
 			}).success(function() {
 				$scope.redirectToPhotoBoard();
@@ -81,20 +82,21 @@ app.controller("PhotoWrite", function($scope, $location, Upload, PhotoBoardFacto
 	 */
 		$scope.excludeFile = function(index) {
 		if (confirm("파일을 삭제하시겠습니까?")) {
-			totalSize -= $scope.selectedFiles[index].size;
+			$scope.totalSize -= $scope.selectedFiles[index].size;
 			$scope.fileNames.splice(index, 1);
 			$scope.selectedFiles.splice(index, 1);
 		}
 	}
 	
 	/**
-	 * @function getImageType 업로드 가능한 이미지 유형을 가져오는 메소드
+	 * @function getImageSet 이미지 설정 정보를 가져오는 함수
 	 * 
 	 * @author 황상필
 	 * @since 2024. 01. 24.
 	 */
-	PhotoBoardFactory.getImageType(function(response) {
-		$scope.imageType = response.data;
+	PhotoBoardFactory.getImageSet(function(response) {
+		$scope.imageType = response.imageType;
+		$scope.imageMaxSize = response.imageMaxSize
 	});
 	
 });

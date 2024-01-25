@@ -202,5 +202,13 @@ public interface IBoardRepository {
 	 * @since 2024. 01. 24.
 	 */
 	public Integer getMaxPage();
+	
+	/**
+	 * @Method getMaxFileSize 최대 파일 용량을 가져오는 메소드
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 25.
+	 */
+	public Integer getMaxFileSize();
 
 }

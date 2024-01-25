@@ -501,5 +501,20 @@ public class BoardRepository implements IBoardRepository {
 	public Integer getMaxPage() {
 		return jdbcTemplate.queryForObject("SELECT value FROM property WHERE key = 'board.page.max-page'",Integer.class);
 	}
+	
+	/**
+	 * @Method getMaxFileSize 최대 파일 용량을 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IPhotoBoardRepository#getMaxImageSize()
+	 *
+	 * @return 최대 파일 용량을 가져오는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 25.
+	 */
+	@Override
+	public Integer getMaxFileSize() {
+		return jdbcTemplate.queryForObject("SELECT value FROM property WHERE key = 'board.post.max-file-size'",Integer.class);
+	}
 
 }

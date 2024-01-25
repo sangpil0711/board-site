@@ -6,6 +6,7 @@ import kr.co.ymtech.bm.controller.dto.BoardDTO;
 import kr.co.ymtech.bm.controller.dto.BoardGetDTO;
 import kr.co.ymtech.bm.controller.dto.BoardPageDTO;
 import kr.co.ymtech.bm.controller.dto.BoardUpdateDTO;
+import kr.co.ymtech.bm.controller.dto.FileSetDTO;
 import kr.co.ymtech.bm.controller.dto.PageDTO;
 
 /**
@@ -89,12 +90,12 @@ public interface IBoardService {
 	public List<BoardGetDTO> bestBoard();
 	
 	/**
-	 * @Method getFileType 업로드 가능한 파일 유형을 가져오는 메소드
+	 * @Method getFileSet 파일 설정 정보를 가져오는 메소드
 	 *
 	 * @author 황상필
-	 * @since 2024. 01. 24.
+	 * @since 2024. 01. 25.
 	 */
-	public String getFileType();
+	public FileSetDTO getFileSet();
 	
 	/**
 	 * @Method getPostPerPage 페이지네이션에 필요한 값을 가져오는 메소드

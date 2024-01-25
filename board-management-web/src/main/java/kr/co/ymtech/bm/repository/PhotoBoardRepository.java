@@ -367,4 +367,19 @@ public class PhotoBoardRepository implements IPhotoBoardRepository {
 		return jdbcTemplate.queryForObject("SELECT value FROM property WHERE key = 'photo.page.max-page'",Integer.class);
 	}
 	
+	/**
+	 * @Method getMaxImageSize 최대 이미지 용량을 가져오는 메소드
+	 *
+	 * @see kr.co.ymtech.bm.repository.IPhotoBoardRepository#getMaxImageSize()
+	 *
+	 * @return 최대 이미지 용량을 가져오는 query 함수 실행
+	 *
+	 * @author 황상필
+	 * @since 2024. 01. 25.
+	 */
+	@Override
+	public Integer getMaxImageSize() {
+		return jdbcTemplate.queryForObject("SELECT value FROM property WHERE key = 'photo.post.max-image-size'",Integer.class);
+	}
+	
 }

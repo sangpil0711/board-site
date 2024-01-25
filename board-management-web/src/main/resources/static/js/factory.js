@@ -180,16 +180,12 @@ app.factory('BoardFactory', function($resource) {
 			},
 		},
 
-		getFileType: {
+		getFileSet: {
 			method: 'GET',
-			url: '/boards/fileType',
+			url: '/boards/fileSet',
 			headers: {
 				"Content-Type": 'application/json'
 			},
-			transformResponse:
-				function(data) {
-					return { data }
-				}
 		},
 		
 		getPageValue: {
@@ -290,16 +286,12 @@ app.factory('PhotoBoardFactory', function($resource) {
 			},
 		},
 
-		getImageType: {
+		getImageSet: {
 			method: 'GET',
-			url: '/imageType',
+			url: '/imageSet',
 			headers: {
 				"Content-Type": 'application/json'
 			},
-			transformResponse:
-				function(data) {
-					return { data }
-				}
 		},
 		
 		getPageValue: {

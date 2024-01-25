@@ -27,6 +27,8 @@ public class PhotoBoardDTO {
 	private Long createDate;
 	/** files : 게시글 첨부파일 */
 	private List<MultipartFile> files = new ArrayList<MultipartFile>();
+	/** totalSize : 선택한 이미지 크기의 합 */
+	private Integer totalSize;
 	
 	public List<MultipartFile> getFiles() {
 		return files;
@@ -84,6 +86,14 @@ public class PhotoBoardDTO {
 		this.createDate = createDate;
 	}
 
+	public Integer getTotalSize() {
+		return totalSize;
+	}
+
+	public void setTotalSize(Integer totalSize) {
+		this.totalSize = totalSize;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -101,6 +111,8 @@ public class PhotoBoardDTO {
 		builder.append(createDate);
 		builder.append(", files=");
 		builder.append(files);
+		builder.append(", totalSize=");
+		builder.append(totalSize);
 		builder.append("]");
 		return builder.toString();
 	}
